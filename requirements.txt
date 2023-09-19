@@ -12,3 +12,4 @@ parse-type==0.6.2
 six==1.16.0
 Werkzeug==2.3.7
 zipp==3.16.2
+
