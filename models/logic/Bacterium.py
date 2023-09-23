@@ -4,7 +4,7 @@ class Bacterium(Ente):
 
     #Constructor
     def __init__(self, moves:int):
-        self.moves = moves
+      self.moves = max(0, moves)
 
     #Suma de movimiento de bacteria
     def add_move(self):
@@ -19,18 +19,11 @@ class Bacterium(Ente):
     def moves(self, value:int):
       self.__moves = value
 
-
     def isReproducible(self):
       pass
 
-    #Eliminacion
-    def __del__(self):
-      del self
-
     def __str__(self):
         pass
-
-
 
     @staticmethod
     def from_string(cell_str):
@@ -38,9 +31,9 @@ class Bacterium(Ente):
           return BacteriumNormal(0)
       elif cell_str == BacteriumStrong(0).__str__():
           return BacteriumStrong(0)
-      elif cell_str == BacteriumInfected(0):
+      elif cell_str == BacteriumInfected(0).__str__():
           return BacteriumInfected(0)
-      elif cell_str == BacteriumWeak(0):
+      elif cell_str == BacteriumWeak(0).__str__():
           return BacteriumWeak(0)
       else:
           raise ValueError(f'Invalid Bacterium string: {cell_str}')
