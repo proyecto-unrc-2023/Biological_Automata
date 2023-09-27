@@ -6,6 +6,7 @@ from models.logic.Bacterium import *
 
 from models.logic.cell import Cell
 
+from models.logic.Bacteriophage import Bacteriophage
 
 @pytest.fixture
 def board():
@@ -48,11 +49,19 @@ def test_set_spawn_other_error(board):
      with pytest.raises(ValueError):
           board.set_position_spawn_bacterium(0,0)
      assert board.get_position_spawn_bacterium()==None
-                                                      
-def test_add_antibiotico(board):
+
+def test_eq_board_error(board):
+     board_aux = Board(3,2)
+     assert not board.__eq__(board_aux)
+
+def test_eq_board(board):
+     board_aux = Board(2,2)
+     assert  board.__eq__(board_aux)
+                                                        
+def test_add_antibiotic(board):
      assert board._rows == 2
      assert board._columns == 2
-     board.add_antibiotico(1,1,1)
+     board.set_antibiotics(1,1,1)
      assert board.get_cell(0, 0).is_empty()
      assert board.get_cell(0, 1).is_empty()
      assert board.get_cell(1, 0).is_empty()
@@ -65,22 +74,19 @@ def test_empty_board_to_string(board):
     assert expected == res
 
 def test_add_bacteria_Normal_board_to_string(board):
-   bacte = BacteriumNormal(0)
-   bacte1 = BacteriumStrong(0)
-   board.add_bacteria(1,1,bacte)
-   board.add_bacteria(1,1,bacte1)
+   board.set_bacterium(1,1,BacteriumNormal(0))
+   board.set_bacterium(1,1,BacteriumStrong(0))
    res = board.__str__()
    expected = ' | \n'\
-              ' |fb '
+              ' |bf'
    assert expected == res
 
 def test_add_4_x_4_bacteria_Strong_board_to_string():
    board = Board(4, 4)
-   bacte = BacteriumStrong(0)
-   board.add_bacteria(1,1,bacte)
+   board.set_bacterium(1,1,BacteriumStrong(0))
    res = board.__str__()
    expected = ' | | | \n'\
-              ' |f | | \n'\
+              ' |f| | \n'\
               ' | | | \n'\
               ' | | | '
    assert expected == res
@@ -88,17 +94,14 @@ def test_add_4_x_4_bacteria_Strong_board_to_string():
 
 def test_add_3_4_x_4_bacteria_Strong_board_to_string():
    board = Board(4, 4)
-   bacte = BacteriumStrong(0)
-   bacte2 = BacteriumNormal(0) 
-   bacte1 = BacteriumNormal(0) 
-   board.add_bacteria(1,1,bacte)
-   board.add_bacteria(3,3,bacte1)
-   board.add_bacteria(1,1,bacte2)
+   board.set_bacterium(1,1,BacteriumStrong(0))
+   board.set_bacterium(3,3,BacteriumNormal(0) )
+   board.set_bacterium(1,1,BacteriumNormal(0) )
    res = board.__str__()
    expected = ' | | | \n'\
-              ' |bf | | \n'\
+              ' |bf| | \n'\
               ' | | | \n'\
-              ' | | |b '
+              ' | | |b'
    assert expected == res
 
 
