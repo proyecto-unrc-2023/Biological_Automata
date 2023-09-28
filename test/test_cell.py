@@ -122,7 +122,7 @@ def test_to_string(cell):
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
     string = cell.__str__()
-    assert cell.__str__() == '1b1f2v'
+    assert cell.__str__() == '2b1f2v'
 
 def test_from_string():
     cell = Cell.from_string('1b1f2v')

@@ -1,10 +1,10 @@
 import random
 
-from models.logic.cell import Cell
+# from models.logic.cell import Cell
 
-from models.logic.Bacterium import *
+# from models.logic.Bacterium import *
 
-from models.logic.Bacteriophage import Bacteriophage
+# from models.logic.Bacteriophage import Bacteriophage
 
 
 class Board:
@@ -130,3 +130,53 @@ class Board:
             return True
         else:
             return False 
+  
+    #new
+    def get_random_move (self, i, j):
+        possible_moves = self.get_possible_moves(i,j)
+        if possible_moves:
+            random_move = random.choise(possible_moves)
+            return random_move
+        else:
+            return None
+        
+    def get_possible_moves(self, i,j):
+        moves = []
+        for x in range(i-1,i+2):
+            for y in range(j-1,j+2):
+                if (x,y) != (i, j):
+                    if 0 <= x < self.rows and 0 <= y < self.columns:
+                        if not board[x][y].is_spawn():
+                            moves.append((x, y))
+        return moves
+
+    def update_board(self, x, y):
+        new_board = Board(self._rows,self._colums)
+        new_board.set_position_spawn_other(self.get_position_spawn_other())
+        new_board.set_position_spawn_bacterium(self.get_position_spawn_bacterium())
+        for row in range(self._rows):
+            for colum in range(self._columns):
+            #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento 
+                self._board[row][colum].update_cell()
+                #metodo que pasa todo lo que queda en una celda, a las celdas vecinas en un tablero nuevo
+                new_board = move_entities(self, row, colum, new_board)
+        self.board = new_board
+		
+        def move_entities(self, x, y, new_board):
+            new_x = None
+            new_y = None
+            for bacterium in self.board[x][y]._bacteria:
+                new_x, new_y = self.get_random_move(self, x,y)
+                bacterium.add_move()
+                new_board[new_x][new_y]._bacterium = bacterium
+
+            for i in range(self.board[x][y]._antibiotics):
+                new_x, new_y = self.get_random_move(self, x,y)
+                new_board[new_x][new_y].add_antibiotic()
+
+            for bacteriophage in self.board[x][y]._bacteriophages:
+                new_x, new_y = self.get_random_move(self, x,y)
+                bacteriophage.add_move()
+                new_board[new_x][new_y]._bacteriophage = bacteriophage
+        
+            return new_board
