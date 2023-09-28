@@ -78,7 +78,7 @@ def test_add_bacteria_Normal_board_to_string(board):
    board.set_bacterium(1,1,BacteriumStrong(0))
    res = board.__str__()
    expected = ' | \n'\
-              ' |bf'
+              ' |1b1f'
    assert expected == res
 
 def test_add_4_x_4_bacteria_Strong_board_to_string():
@@ -86,7 +86,7 @@ def test_add_4_x_4_bacteria_Strong_board_to_string():
    board.set_bacterium(1,1,BacteriumStrong(0))
    res = board.__str__()
    expected = ' | | | \n'\
-              ' |f| | \n'\
+              ' |1f| | \n'\
               ' | | | \n'\
               ' | | | '
    assert expected == res
@@ -99,9 +99,9 @@ def test_add_3_4_x_4_bacteria_Strong_board_to_string():
    board.set_bacterium(1,1,BacteriumNormal(0) )
    res = board.__str__()
    expected = ' | | | \n'\
-              ' |bf| | \n'\
+              ' |1b1f| | \n'\
               ' | | | \n'\
-              ' | | |b'
+              ' | | |1b'
    assert expected == res
 
 
@@ -114,3 +114,11 @@ def test_4x4_board_to_string():
                ' | | | \n'\
                ' | | | '
     assert expected == res
+    
+def test_4x4_board_from_string():
+     board_str=' | | | \n'\
+               ' | | | \n'\
+               ' | | | \n'\
+               ' | | | '
+     board = Board.from_string(board_str)
+     assert board.__eq__(Board(4,4))
