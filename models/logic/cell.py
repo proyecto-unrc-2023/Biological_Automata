@@ -4,7 +4,6 @@ from models.logic.Bacteriophage import Bacteriophage
 
 class Cell:
 
-
 	def __init__(self):
 		self.__bacteria = []
 		self.__antibiotics = 0
@@ -15,67 +14,58 @@ class Cell:
 	def __str__(self):
 		if self.is_empty():
 			return ' '
-		res =''
-		for _ in range(0,self.__antibiotics): 
-			res = res + self.__antibiotics.__str__()
-		for bac in self.__bacteria:
-			res = res + bac.__str__() 
-		for vir in self.__bacteriophages:
-		 	res = res + vir.__str__()
+		res = ''
+		cant =self.cant_ente('a')
+		if cant != 0:
+			res = res + cant.__str__() + 'a'
+		cant =self.cant_ente('b')
+		if cant != 0:
+			res = res + cant.__str__() + 'b'
+		cant =self.cant_ente('f')
+		if cant != 0:
+			res = res + cant.__str__() + 'f'
+		cant =self.cant_ente('d')
+		if cant != 0:
+			res = res + cant.__str__() + 'd'
+		cant =self.cant_ente('i')
+		if cant != 0:
+			res = res + cant.__str__() + 'i'
+		cant =  self.cant_bacteriophages()
+		if cant != 0:
+			res = res + cant.__str__() + 'v'
 		return res
-	#def __str__(self):
-	#	res = ''
-	#	cant =self.cant_ente('a')
-	#	if cant != 0:
-	#		res = res + cant.__str__() + 'a'
-	#	cant =self.cant_ente('b')
-	#	if cant != 0:
-	#		res = res + cant.__str__() + 'b'
-	#	cant =self.cant_ente('f')
-	#	if cant != 0:
-	#		res = res + cant.__str__() + 'f'
-	#	cant =self.cant_ente('d')
-	#	if cant != 0:
-	#		res = res + cant.__str__() + 'd'
-	#	cant =self.cant_ente('i')
-	#	if cant != 0:
-	#		res = res + cant.__str__() + 'i'
-	#	cant =  self.cant_bacteriophages()
-	#	if cant != 0:
-	#		res = res + cant.__str__() + 'v'
-	#	return res
 			
 	@staticmethod
 	def from_string(cell_str):
 		cell = Cell()
 		for i in range (cell_str.__len__()-1):
-			x= cell_str[int(i)]
-			if cell_str[int(i)+1] == 'b':
-				for _ in  range(int(cell_str[int(i)])):
+			num = cell_str[i]
+			if cell_str[i+1] == 'b':
+				for _ in  range(int(num)):
 					cell._bacterium = BacteriumNormal(0)
 				i += 1
 				continue
-			if cell_str[int(i)+1] == 'f':
-				for _ in  range(int(cell_str[int(i)])):
+			if cell_str[i+1] == 'f':
+				for _ in  range(int(num)):
 					cell._bacterium = BacteriumStrong(0)
 				i += 1
 				continue
-			elif cell_str[int(i)+1] == 'i':
-				for _ in range(int(cell_str[int(i)])):
+			elif cell_str[i+1] == 'i':
+				for _ in range(num):
 					cell._bacterium = BacteriumInfected(0)
 				i += 1
 				continue
-			elif cell_str[int(i)+1] == 'd':
-				for _ in range(int(cell_str[int(i)])):
+			elif cell_str[i+1] == 'd':
+				for _ in range(int(num)):
 					cell._bacterium = BacteriumWeak(0)
 				i += 1
 				continue
-			elif cell_str[int(i)+1] == 'a':
+			elif cell_str[i+1] == 'a':
 				cell._antibiotics = int(i)
 				i += 1
 				continue
-			elif cell_str[int(i)+1] == 'v':
-				for _ in  range(int(cell_str[int(i)])):
+			elif cell_str[i+1] == 'v':
+				for _ in  range(int(num)):
 					cell._bacteriophage = Bacteriophage(4)
 				i += 1
 				continue
@@ -157,9 +147,6 @@ class Cell:
 			return True
 		return False
 	
-	#def is_spwn(self):
-	#	return self.get_spawn_bacterium() or self.get_spawn_other()
-	
 	def cant_ente(self,type):
 		if type =='a':
 			return self._antibiotics
@@ -171,4 +158,64 @@ class Cell:
 				cant += 1
 		return cant 
 	
+	#new
+	def is_spwn(self):
+		return self.get_spawn_bacterium() or self.get_spawn_other()
+
+	def update_cell(self):
+	#aplico regla de sobrepoblación
+		if self.cant_bacteria() >= 4:
+			self.overpopulation(x,y)
+
+	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento 
+		if self._antibiotics > 0 and self.cant_bacteria() > 0:
+			if self._antibiotics > cant_bacterias():
+				self.high_dose_antibiotic()
+			else:
+				self.low_dose_antibiotic()
+		
+		for bacterium in self._bacteria:
+			#chequeo las bacterias que están en condiciones de reproducirse
+			if bacterium.isReproducible():
+				self.bacterium.append(bacterium.reproducir())
+		#una vez aplicadas todas las reglas de cruzamiento, le resto un movimiento a todo lo que quedo
+		self.add_move()
 	
+	def high_dose_antibiotic(self):
+		#esa celda se queda sin bacterias y sin antibioticos
+		self._bacterias = []
+		self.cant_antibiotics = 0
+
+	def low_dose_antibiotic(self):
+		total_antibiotics = self._antibiotics
+		new_bacteria = []
+		for bacterium in self._bacteria:
+			if bacterium.__str__() == 'f':
+				#ver si los movimientos se acumulan
+				new_bacterias.append(BacteriumWeak())
+		self._bacteria = new_bacteria
+		self._antibiotics = 0
+
+	def overpopulation(self):
+		strongest = None
+		#ciclo para quedarme con la bacteria más fuerte de la celda
+		for bacterium in self._bacteria:
+			if bacterium.__str__() == 'f':
+				strongest = bacterium
+				break
+			else:
+				if bacterium.__str__() == 'b':
+					strongest = bacterium
+		#si no encontre ninguno fuerte ni normal, es porque tengo todos debiles
+		#asigno cualquiera, en este caso el primero
+		if strongest == None:
+			strongest = self._bacteria[0]
+		
+		self._bacterium(strongest)
+
+	def add_move(self):
+		for bacterium in self._bacteria:
+			bacterium.add_move()
+		for bacteriophage in self._bacteriophage:
+			bacteriophage.add_move()
+		
