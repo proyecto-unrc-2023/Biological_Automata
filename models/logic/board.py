@@ -1,10 +1,10 @@
 import random
 
-# from models.logic.cell import Cell
+from models.logic.cell import Cell
 
-# from models.logic.Bacterium import *
+from models.logic.Bacterium import *
 
-# from models.logic.Bacteriophage import Bacteriophage
+from models.logic.Bacteriophage import Bacteriophage
 
 
 class Board:
