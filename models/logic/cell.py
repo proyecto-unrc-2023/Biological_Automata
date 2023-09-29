@@ -106,7 +106,7 @@ class Cell:
 		return self.__bacteria
 	
 	@_bacteria.setter
-	def _bacterium(self, bacterium: Bacterium ):
+	def _bacterium(self, bacterium: Bacterium):
 		self.__bacteria.append(bacterium)
 
 	def add_bacterium(self, moves:int, state):
@@ -159,17 +159,17 @@ class Cell:
 		return cant 
 	
 	#new
-	def is_spwn(self):
+	def is_spawn(self):
 		return self.get_spawn_bacterium() or self.get_spawn_other()
 
 	def update_cell(self):
 	#aplico regla de sobrepoblación
 		if self.cant_bacteria() >= 4:
-			self.overpopulation(x,y)
+			self.overpopulation()
 
 	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento 
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
-			if self._antibiotics > cant_bacterias():
+			if self._antibiotics > self.cant_bacteria():
 				self.high_dose_antibiotic()
 			else:
 				self.low_dose_antibiotic()
@@ -177,7 +177,7 @@ class Cell:
 		for bacterium in self._bacteria:
 			#chequeo las bacterias que están en condiciones de reproducirse
 			if bacterium.isReproducible():
-				self.bacterium.append(bacterium.reproducir())
+				self._bacterium.append(bacterium.reproducir())
 		#una vez aplicadas todas las reglas de cruzamiento, le resto un movimiento a todo lo que quedo
 		self.add_move()
 	
@@ -187,13 +187,13 @@ class Cell:
 		self.cant_antibiotics = 0
 
 	def low_dose_antibiotic(self):
-		total_antibiotics = self._antibiotics
+		# total_antibiotics = self._antibiotics
 		new_bacteria = []
 		for bacterium in self._bacteria:
 			if bacterium.__str__() == 'f':
 				#ver si los movimientos se acumulan
-				new_bacterias.append(BacteriumWeak())
-		self._bacteria = new_bacteria
+				new_bacteria.append(BacteriumWeak(0))
+		self.__bacteria = new_bacteria
 		self._antibiotics = 0
 
 	def overpopulation(self):
@@ -210,8 +210,9 @@ class Cell:
 		#asigno cualquiera, en este caso el primero
 		if strongest == None:
 			strongest = self._bacteria[0]
-		
-		self._bacterium(strongest)
+		self.__bacteria.clear()
+		self.__bacteria.append(strongest)
+		# self._bacterium = strongest
 
 	def add_move(self):
 		for bacterium in self._bacteria:
