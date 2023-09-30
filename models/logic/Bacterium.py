@@ -22,6 +22,9 @@ class Bacterium(Ente):
     def isReproducible(self):
       pass
 
+    def isRecoverable(self):
+       pass
+
     def __str__(self):
         pass
 
@@ -52,6 +55,8 @@ class BacteriumNormal(Bacterium):
         return True
       return False
 
+    def isRecoverable(self):
+       return False
 
     def __str__(self):
       return 'b'
@@ -74,6 +79,9 @@ class BacteriumStrong(Bacterium):
       if (self.moves == 3):
         return True
       return False
+    
+    def isRecoverable(self):
+       return False
 
     def __str__(self):
       return 'f'
@@ -106,10 +114,13 @@ class BacteriumWeak(Bacterium):
     def isReproducible(self):
       return False
 
-    def returnState(self):
+    def isRecoverable(self):
       if (self.moves == 6):
         return True
       return False
+    
+    def recover(self):
+       return BacteriumStrong(0)
 
     def __str__(self):
       return 'd'

@@ -174,17 +174,17 @@ class Cell:
 			else:
 				self.low_dose_antibiotic()
 		
-		for bacterium in self._bacteria:
-			#chequeo las bacterias que están en condiciones de reproducirse
-			if bacterium.isReproducible():
-				self._bacterium.append(bacterium.reproducir())
-		#una vez aplicadas todas las reglas de cruzamiento, le resto un movimiento a todo lo que quedo
-		self.add_move()
+	#actualizo por la reproduccion de bacterias
+		self.update_for_reproduction()
+		
+	#actualizo por la recuperación de bacterias
+		self.update_for_recovery()
+
 	
 	def high_dose_antibiotic(self):
 		#esa celda se queda sin bacterias y sin antibioticos
-		self._bacterias = []
-		self.cant_antibiotics = 0
+		self.__bacteria = []
+		self.__antibiotics = 0
 
 	def low_dose_antibiotic(self):
 		# total_antibiotics = self._antibiotics
@@ -194,7 +194,7 @@ class Cell:
 				#ver si los movimientos se acumulan
 				new_bacteria.append(BacteriumWeak(0))
 		self.__bacteria = new_bacteria
-		self._antibiotics = 0
+		self.__antibiotics = 0
 
 	def overpopulation(self):
 		strongest = None
@@ -213,6 +213,28 @@ class Cell:
 		self.__bacteria.clear()
 		self.__bacteria.append(strongest)
 		# self._bacterium = strongest
+
+	def update_for_reproduction(self):
+		for bacterium in self._bacteria:
+			#chequeo las bacterias que están en condiciones de reproducirse
+			if bacterium.isReproducible():
+				self._bacterium.append(bacterium.reproducir())
+
+	def update_for_recovery(self):
+		bacteria_to_add = []
+		bacteria_to_remove = []
+		for bacterium in self._bacteria:
+			#chequeo las bacterias debiles que están en condiciones de recuperarse
+			if bacterium.isRecoverable():
+				bacteria_to_add.append(bacterium.recover())
+				bacteria_to_remove.append(bacterium)
+
+		for bacterium in bacteria_to_add:
+			self._bacterium.append(bacterium)
+
+		for bacterium in bacteria_to_remove:
+			self._bacterium.remove(bacterium)
+
 
 	def add_move(self):
 		for bacterium in self._bacteria:

@@ -154,3 +154,124 @@ def test_overpoblation_debiles(cell):
     cell.add_bacterium(0,'d')
     cell.overpopulation()
     assert cell.__str__() == '1d'
+
+def test_low_dose_antibiotic(cell):
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'd')
+    cell.add_antibiotic()
+    cell.low_dose_antibiotic()
+    assert cell.__str__() == '1d'
+
+def test_high_dose_antibiotic(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'b')
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.high_dose_antibiotic()
+    assert cell.__str__() == ' '
+
+def test_update_cell_with_3_strongs_and_1_antibiotic(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_antibiotic()
+    cell.update_cell()
+    assert cell.__str__() == '3d'
+
+def test_update_cell_with_2_strongs_and_3_antibiotic(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.update_cell()
+    assert cell.__str__() == ' '
+
+def test_update_cell_with_1_strongs_1_weak_and_2_antibiotic(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'd')
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.update_cell()
+    assert cell.__str__() == '1d'
+
+def test_update_cell_with_2_strongs_4_normal_and_1_weak(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'd')
+    cell.update_cell()
+    assert cell.__str__() == '1f'
+
+def test_update_cell_with_1_strongs_4_normal_1_weak_and_2_antibiotic(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'b')
+    cell.add_bacterium(0, 'd')
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.update_cell()
+    assert cell.__str__() == ' '
+
+def test_update_cell_with_1_bacterium_ready_to_reproduce(cell):
+    cell.add_bacterium(3, 'b')
+    cell.update_cell()
+    assert cell.cant_bacteria() == 2
+
+def test_update_cell_with_1_bacterium_not_ready_to_reproduce(cell):
+    cell.add_bacterium(2, 'b')
+    cell.update_cell()
+    assert cell.__str__() == '1b'
+
+def test_update_cell_with_1_weak_ready_to_recover(cell):
+    cell.add_bacterium(6, 'd')
+    cell.update_cell()
+    assert cell.__str__() == '1f'
+
+def test_update_cell_with_1_weak_not_ready_to_recover(cell):
+    cell.add_bacterium(3, 'd')
+    cell.update_cell()
+    assert cell.__str__() == '1d'
+
+def test_update_cell_with_2_weak_ready_to_recover_and_1_weak_not_ready(cell):
+    cell.add_bacterium(6, 'd')
+    cell.add_bacterium(6, 'd')
+    cell.add_bacterium(3, 'd')
+    cell.update_cell()
+    assert cell.__str__() == '2f1d'
+
+def test_update_cell_with_4_weak_ready_to_recover_and_1_weak_not_ready(cell):
+    cell.add_bacterium(6, 'd')
+    cell.add_bacterium(6, 'd')
+    cell.add_bacterium(6, 'd')
+    cell.add_bacterium(6, 'd')
+    cell.add_bacterium(3, 'd')
+    cell.update_cell()
+    assert cell.__str__() == '1f'
+
+def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
+    cell.add_bacterium(3, 'b')
+    cell.add_bacterium(3, 'b')
+    cell.add_bacterium(3, 'b')
+    cell.add_bacterium(3, 'b')
+    cell.update_cell()
+    assert cell.__str__() == '2b'
+
+def test_update_cell_with_4_bacterium_strong_amd_2_antibiotics(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_antibiotic()
+    cell.add_antibiotic()
+    cell.update_cell()
+    assert cell.__str__() == ' '
