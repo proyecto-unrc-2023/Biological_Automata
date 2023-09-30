@@ -2,7 +2,7 @@
 
 Característica: Comportamiento de las entidades
 #10
-  Escenario: Una bacteria normal o fuerte se reproduce
+  Esquema del escenario: Una bacteria normal o fuerte se reproduce
     Dado que hay 1 bacteria <tipo-s> con 3 movimientos en la celda <pos>
     Cuando se mueve 1 bacteria <tipo-s> de <pos> a <end>
     #Entonces el tablero deberia quedar con bacterias <type-p> en <end> y en <end2>
@@ -19,7 +19,7 @@ Característica: Comportamiento de las entidades
       |(2,1) |(1,1) |(1,0) |fuerte |fuertes |
 
 #11
-  Escenario: La bacteria normal se reproduce con una mutación y produce una bacteria fuerte
+  Esquema del escenario: La bacteria normal se reproduce con una mutación y produce una bacteria fuerte
     Dado que hay 1 bacteria con 3 movimientos en la celda <pos>
     Cuando se mueve 1 bacteria de <pos> a <end>
     #Preguntar esto, dificil de codear en el juego
@@ -33,9 +33,8 @@ Característica: Comportamiento de las entidades
       |(0,2) |(1,3) |(2,4) |
       |(5,3) |(4,3) |(4,2) |
 
-#12
 #13
-Escenario: Una bacteria debil no se reproduce
+Esquema del escenario: Una bacteria debil no se reproduce
     Dado que hay 1 bacteria debil con 3 movimientos en la celda <pos>
     Cuando se mueve 1 bacteria debil de <pos> a <end>
     Entonces el tablero tiene 1 bacteria debil en <end>
@@ -51,7 +50,7 @@ Escenario: Una bacteria debil no se reproduce
 
 
 #14 Ver escritura y ver que pasa con las variantes de tiempo para permane
-Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
+Esquema del escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
     Dado que hay 1 bacteria <tipo-s> en la celda <pos>
     Y 1 bacterias <tipo-p> en la celda <pos1>
     Y 1 bacterias <tipo-p> en la celda <pos2>
@@ -73,7 +72,7 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
 
 
 #15
-  Escenario: Bacterias se vuelven fuertes despues de un tiempo
+  Esquema del escenario: Bacterias se vuelven fuertes despues de un tiempo
     Dado que hay 1 bacteria debil con 5 movimientos en la celda <pos>
     Cuando se mueve 1 bacteria debil de <pos> a <end>
     Entonces el tablero tiene 1 bacteria fuerte en <end>
@@ -85,14 +84,14 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
       |(0,4) |(1,5) |
       |(2,4) |(3,5) |
       |(1,0) |(2,1) |
-      |(3,3)| (4,4) |
+      |(3,3) |(4,4) |
 
 
 
 
 #  Comportamiento de las bacterias en modo bacteriofago
 #18
-  Escenario: Varia la cualidad de infección de en los entes
+  Esquema del escenario: Varia la cualidad de infección de en los entes
     Dado que hay <entidad> en la posicion <pos>
     Y un <cualidad> de infeccion <grado-c>
     Cuando se mueve a la celda <end>
@@ -100,25 +99,16 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
     Y deberia tener un <cualidad> de infeccion de <grado-p> 
 
     Ejemplos:
-      |pos   |end   |grado-c|grado-p|entidad                |cualidad|
-      |(5,0) |(5,1) |1      |2      |una bacteria infectada|grado  |
-      |(1,2) |(2,3) |2      |3      |una bacteria infectada|grado  |
-      |(5,0) |(5,1) |4      |3      |un bacteriofago       |poder  |
-      |(1,2) |(2,3) |3      |2      |un bacteriofago       |poder  |
-      |(2,3) |(2,4) |2      |1      |un bacteriofago       |poder  |
-
-# ??????
-# 21
-# Escenario: Disminucion de poder de bacteriofago                               
-#     Dado que el estado del juego es
-#     Y el bacteriofago tiene poder de infeccion 3
-#     Cuando el bacteriofago se mueva a la celda (3,3)  
-#     Y el bacteriofago deberia tener poder de infeccion 2
-# #
+      |pos   |end   |grado-c|grado-p|entidad               |cualidad|
+      |(5,0) |(5,1) |1      |2      |una bacteria infectada|grado   |
+      |(1,2) |(2,3) |2      |3      |una bacteria infectada|grado   |
+      |(5,0) |(5,1) |4      |3      |un bacteriofago       |poder   |
+      |(1,2) |(2,3) |3      |2      |un bacteriofago       |poder   |
+      |(2,3) |(2,4) |2      |1      |un bacteriofago       |poder   |
 
 
 #19
-  Escenario: Una bacteria infectada explota generando bacteriofagos
+  Esquema del escenario: Una bacteria infectada explota generando bacteriofagos
     Dado que hay una bacteria infectada en la posicion <pos>
     Y la bacteria tiene grado de infeccion <grado-c>
     Cuando la bacteria se mueve a la celda <end>
@@ -134,7 +124,7 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
 
 #  Comportamiento de bacteriofagos
 #20
-Escenario: Un bacteriofago desaparece tras cierto tiempo
+Esquema del escenario: Un bacteriofago desaparece tras cierto tiempo
     Dado que hay un bacteriofago en la posicion <pos>
     Y el bacteriofago tiene poder de infeccion 1
     Cuando el bacteriofago se mueva a la celda <end>  

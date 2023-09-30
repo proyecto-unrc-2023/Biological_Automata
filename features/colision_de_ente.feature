@@ -4,7 +4,7 @@ Característica: Colisión de entidades
 
 # Bacterias y antibioticos
 #9
-Escenario: Los antibioticos desaparecen al tener contacto con cualquier tipo de bacteria
+  Esquema del escenario: Los antibioticos desaparecen al tener contacto con cualquier tipo de bacteria
     Dado que hay 1 antibiotico en la celda <apos>
     Y que hay 1 bacteria <tipo> en la celda <bpos>
     Cuando se mueve 1 antibiotico de <apos> a <crash>
@@ -18,7 +18,7 @@ Escenario: Los antibioticos desaparecen al tener contacto con cualquier tipo de 
     |(4,1) |(5,3) |fuerte|(4,2) |
 
 #10
-Escenario: Una bacteria que no sea fuerte muere al encontrarse con un antibiótico
+  Esquema del escenario: Una bacteria que no sea fuerte muere al encontrarse con un antibiótico
     Dado que hay 1 antibiotico en la celda <apos>
     Y que hay 1 bacteria <tipo> en la celda <bpos>
     Cuando se mueve 1 antibiotico de <apos> a <crash>
@@ -34,7 +34,7 @@ Escenario: Una bacteria que no sea fuerte muere al encontrarse con un antibióti
   
 #11
 
-Escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
+  Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
     Dado que hay 1 antibiotico en la celda <apos>
     Y que hay 1 bacteria fuerte en la celda <bpos>
     Cuando se mueve 1 antibiotico de <apos> a <crash>
@@ -52,7 +52,7 @@ Escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
     |(3,1)  |(4,2)  |(3,2)  |   
 
 #12
-Escenario: El numero de antibioticos es menor o igual al numero de bacterias en una celda
+  Esquema del escenario: El numero de antibioticos es menor o igual al numero de bacterias en una celda
     Dado que hay 1 antibiotico en la celda <apos>
     Y que hay 1 bacteria normal en la celda <bpos>
     Y que hay 1 bacteria debil en la celda <bpos>
@@ -73,7 +73,7 @@ Escenario: El numero de antibioticos es menor o igual al numero de bacterias en 
     |(4,3)  |(5,4)  |(4,4)  |
 
 #13
-Escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
+  Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
     Dado que hay 1 antibiotico en la celda <apos>
     Y que hay 1 antibiotico en la celda <apos2>
     Y que hay 1 antibiotico en la celda <apos3>
@@ -100,7 +100,7 @@ Escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la 
 
 
 #14
-# Escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes
+#   Esquema del escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes
 #     Dado que hay una antibiotico en la celda (3,3)
 #     Y hay una bacteria normal en la celda (3,2)
 #     Y hay una bacteria debil en la celda (3,2)
@@ -112,7 +112,7 @@ Escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la 
 
 # Bacterias y bacteriófagos    
 #22
-Escenario: Una bacteria se cruza con un bacteriófago                            
+  Esquema del escenario: Una bacteria se cruza con un bacteriófago                            
     Dado que hay una bacteria <tipo> en la celda <bpos>
     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder> 
     Cuando la bacteria y el bacteriofago se mueven a la posición <crash>
@@ -129,7 +129,7 @@ Escenario: Una bacteria se cruza con un bacteriófago
 
 
 #23
-Escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
+  Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
     Dado que hay una bacteria infectada en la celda <bpos> con grado de infeccion <grado>
     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder> 
     Cuando la bacteria y el bacteriofago se mueven a la celda <crash>
@@ -143,7 +143,7 @@ Escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacte
     |(2,3)  |(2,5)  |(2,4)  |2    |1        |2    |3       |
 
 #24
-Escenario: Una bacteria es infectada por dos bacteriófagos                                    
+  Esquema del escenario: Una bacteria es infectada por dos bacteriófagos                                    
     Dado que hay una bacteria <tipo> en la celda <bpos>
     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
     Y un bacteriofago en la celda <bfpos2> con poder de infeccion <poder2>
@@ -159,7 +159,7 @@ Escenario: Una bacteria es infectada por dos bacteriófagos
 
 
 #25
-Escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago                
+  Esquema del escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago                
     Dado que hay una bacteria <tipo> en la celda <bpos>
     Y hay una bacteria <tipo> en la celda <bpos2>
     Y hay una bacteria <tipo> en la celda <bpos3>
