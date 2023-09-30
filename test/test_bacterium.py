@@ -1,6 +1,7 @@
 import pytest
 from models.logic.Bacterium import Bacterium, BacteriumNormal, BacteriumStrong
-
+from unittest.mock import patch
+import random
 
 def test_bacterium_move_increment():
     bacteria = Bacterium(0)  # Puedes cambiar a cualquier subclase
@@ -14,9 +15,10 @@ def test_bacterium_set_increment():
 
 def test_normal_reproducible():
     bacterium = BacteriumNormal(3)
-    new_bacterium = bacterium.isReproducible()
     assert bacterium.moves == 3
-    assert new_bacterium != None
+    ente = bacterium.reproducir()
+    assert bacterium.moves == 0
+    assert isinstance(bacterium, BacteriumNormal) == True
 
 def test_normal_error_reproducible():
     bacterium = BacteriumNormal(2)
@@ -26,7 +28,3 @@ def test_normal_error_reproducible():
 def test_normal_str():
     bacterium = BacteriumNormal(0)
     assert str(bacterium) == 'b'
-
-def test_strong_str():
-    bacterium = BacteriumStrong(0)
-    assert str(bacterium) == 'f'

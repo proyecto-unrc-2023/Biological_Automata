@@ -19,6 +19,12 @@ def test_lithic_state():
     with pytest.raises(AssertionError):
         assert bacterium == None
 
+
+def test_lithic_state_false():
+    bacterium = BacteriumInfected(3)
+    result = bacterium.lithic_State()
+    assert result == False
+
 def test_infectedBacterium_not_reproducible():
     bacterium = BacteriumInfected(3)
     assert bacterium.isReproducible() == False
