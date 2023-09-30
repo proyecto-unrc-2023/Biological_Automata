@@ -1,3 +1,5 @@
+import random
+
 from .Ente import Ente
 
 class Bacterium(Ente):
@@ -22,6 +24,9 @@ class Bacterium(Ente):
     def isReproducible(self):
       pass
 
+    def isRecoverable(self):
+       pass
+
     def __str__(self):
         pass
 
@@ -43,8 +48,17 @@ class BacteriumNormal(Bacterium):
 
     def reproducir(self):
       if (self.isReproducible()):
+        mutation_probability = 0.01
+
+        #genero un numero aleatorio entre 0 y 1
+        random_number = random.random()
+
         self.moves = 0
-        return BacteriumNormal(0)
+        if random_number > mutation_probability:
+          return BacteriumNormal(0)
+        else:
+           return BacteriumStrong(0)
+
       raise ValueError("El número de movimientos no es 3") #ver que error tirar
 
     def isReproducible(self):
@@ -52,6 +66,8 @@ class BacteriumNormal(Bacterium):
         return True
       return False
 
+    def isRecoverable(self):
+       return False
 
     def __str__(self):
       return 'b'
@@ -66,14 +82,26 @@ class BacteriumStrong(Bacterium):
 
     def reproducir(self):
       if (self.isReproducible()):
+        mutation_probability = 0.01
+
+        #genero un numero aleatorio
+        random_number = random.random()
+
         self.moves = 0
-        return BacteriumStrong(0)
-      return ValueError #ver que error tira
+        if random_number > mutation_probability:
+          return BacteriumStrong(0)
+        else:
+           return BacteriumNormal(0)
+
+      raise ValueError("El número de movimientos no es 3") #ver que error tirar
 
     def isReproducible(self):
       if (self.moves == 3):
         return True
       return False
+    
+    def isRecoverable(self):
+       return False
 
     def __str__(self):
       return 'f'
@@ -106,10 +134,13 @@ class BacteriumWeak(Bacterium):
     def isReproducible(self):
       return False
 
-    def returnState(self):
+    def isRecoverable(self):
       if (self.moves == 6):
         return True
       return False
+    
+    def recover(self):
+       return BacteriumStrong(0)
 
     def __str__(self):
       return 'd'

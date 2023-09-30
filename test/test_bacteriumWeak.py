@@ -34,11 +34,11 @@ def test_weakBacterium_not_reproducible():
 
 def test_weakBacterium_return_state():
     bacterium = BacteriumWeak(6)
-    assert bacterium.returnState() == True
+    assert bacterium.isRecoverable() == True
 
 def test_weakBacterium_not_return_state():
     bacterium = BacteriumWeak(3)
-    assert bacterium.returnState() == False
+    assert bacterium.isRecoverable() == False
 
 def test_weakBacterium_str():
     bacterium = BacteriumWeak(0)
