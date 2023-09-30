@@ -103,17 +103,17 @@ def test_add_diferent_bacteriophages(cell):
     cell_aux.add_bacteriophage(2)
     assert cell.__eq__(cell_aux)
 
-def test_to_string(cell):
+def test_to_string_1(cell):
     cell.add_bacterium(0,'b')
     cell.add_bacterium(0,'f')
     assert cell.cant_ente('b') == 1
     assert cell.cant_ente('f') == 1
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
-    string = cell.__str__()
+    # string = cell.__str__()
     assert cell.__str__() == '1b1f2v'
 
-def test_to_string(cell):
+def test_to_string_2(cell):
     cell.add_bacterium(0,'b')
     cell.add_bacterium(0,'f')
     cell.add_bacterium(0,'b')
@@ -121,7 +121,7 @@ def test_to_string(cell):
     assert cell.cant_ente('f') == 1
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
-    string = cell.__str__()
+    # string = cell.__str__()
     assert cell.__str__() == '2b1f2v'
 
 def test_from_string():
@@ -131,3 +131,26 @@ def test_from_string():
     assert cell.cant_ente('v') == 2
     assert cell.__str__() == '1b1f2v'
 
+def test_overpoblation_strongest(cell):
+    cell.add_bacterium(0,'b')
+    cell.add_bacterium(0,'b')
+    cell.add_bacterium(0,'d')
+    cell.add_bacterium(0,'f')
+    cell.overpopulation()
+    assert cell.__str__() == '1f'
+
+def test_overpoblation_sin_strongest(cell):
+    cell.add_bacterium(0,'b')
+    cell.add_bacterium(0,'d')
+    cell.add_bacterium(0,'d')
+    cell.add_bacterium(0,'b')
+    cell.overpopulation()
+    assert cell.__str__() == '1b'
+
+def test_overpoblation_debiles(cell):
+    cell.add_bacterium(0,'d')
+    cell.add_bacterium(0,'d')
+    cell.add_bacterium(0,'d')
+    cell.add_bacterium(0,'d')
+    cell.overpopulation()
+    assert cell.__str__() == '1d'

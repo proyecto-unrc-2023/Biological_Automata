@@ -84,23 +84,23 @@ class Board:
     def get_position_spawn_other(self):
         return self.__position_spawn_other
 
-    def set_position_spawn_other(self, row, colum):
+    def set_position_spawn_other(self, position):
         try:
-            self.__board[row][colum].set_spawn_other()
+            self.__board[position[0]][position[1]].set_spawn_other()
         except ValueError:
             raise ValueError(f'no se puede poner un spawn')
-        self.__position_spawn_other = (row,colum)
+        self.__position_spawn_other = position
 
 
     def get_position_spawn_bacterium(self):
         return self.__position_spawn_bacterium
 
-    def set_position_spawn_bacterium(self, row, colum):
+    def set_position_spawn_bacterium(self, position):
         try:
-            self.__board[row][colum].set_spawn_bacterium()
+            self.__board[position[0]][position[1]].set_spawn_bacterium()
         except ValueError:
             raise ValueError(f'no se puede poner un spawn')
-        self.__position_spawn_bacterium = (row,colum)
+        self.__position_spawn_bacterium = position
 
     def is_empty(self):
         for row in range(self.__rows):
@@ -119,7 +119,7 @@ class Board:
         self.__board[row][colum].add_antibiotic()
     
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
-        self.__board[row][colum]._bacteriophages = bacteriophage
+        self.__board[row][colum]._bacteriophage = bacteriophage
 
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
@@ -135,7 +135,7 @@ class Board:
     def get_random_move (self, i, j):
         possible_moves = self.get_possible_moves(i,j)
         if possible_moves:
-            random_move = random.choise(possible_moves)
+            random_move = random.choice(possible_moves)
             return random_move
         else:
             return None
@@ -145,38 +145,44 @@ class Board:
         for x in range(i-1,i+2):
             for y in range(j-1,j+2):
                 if (x,y) != (i, j):
-                    if 0 <= x < self.rows and 0 <= y < self.columns:
-                        if not board[x][y].is_spawn():
+                    if 0 <= x < self.__rows and 0 <= y < self.__columns:
+                        if not self.__board[x][y].is_spawn():
                             moves.append((x, y))
         return moves
 
-    def update_board(self, x, y):
-        new_board = Board(self._rows,self._colums)
+    def update_board(self):
+        new_board = Board(self._rows,self._columns)
         new_board.set_position_spawn_other(self.get_position_spawn_other())
         new_board.set_position_spawn_bacterium(self.get_position_spawn_bacterium())
         for row in range(self._rows):
             for colum in range(self._columns):
             #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento 
-                self._board[row][colum].update_cell()
+                self.__board[row][colum].update_cell()
                 #metodo que pasa todo lo que queda en una celda, a las celdas vecinas en un tablero nuevo
-                new_board = move_entities(self, row, colum, new_board)
+                new_board = self.move_entities(row, colum, new_board)
         self.board = new_board
 		
-        def move_entities(self, x, y, new_board):
-            new_x = None
-            new_y = None
-            for bacterium in self.board[x][y]._bacteria:
-                new_x, new_y = self.get_random_move(self, x,y)
-                bacterium.add_move()
+    def move_entities(self, x, y, new_board):
+        new_x = None
+        new_y = None
+        for bacterium in self.__board[x][y]._bacteria:
+            resultMoves = self.get_random_move(x, y)
+            if resultMoves != None:
+                new_x, new_y = resultMoves
                 new_board[new_x][new_y]._bacterium = bacterium
-
-            for i in range(self.board[x][y]._antibiotics):
-                new_x, new_y = self.get_random_move(self, x,y)
+                bacterium.add_move()
+            
+        for i in range(self.__board[x][y]._antibiotics):
+            resultMoves = self.get_random_move(x, y)
+            if resultMoves != None:
+                new_x, new_y = resultMoves
                 new_board[new_x][new_y].add_antibiotic()
-
-            for bacteriophage in self.board[x][y]._bacteriophages:
-                new_x, new_y = self.get_random_move(self, x,y)
+            
+        for bacteriophage in self.__board[x][y]._bacteriophages:
+            resultMoves = self.get_random_move(x, y)
+            if resultMoves != None:
+                new_x, new_y = resultMoves
                 bacteriophage.add_move()
                 new_board[new_x][new_y]._bacteriophage = bacteriophage
-        
-            return new_board
+    
+        return new_board
