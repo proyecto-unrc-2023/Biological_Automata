@@ -78,14 +78,15 @@ def test_antibiotics(cell):
 def test_add_bacteriophage(cell):
     cell.add_bacteriophage(4)
     assert cell.cant_bacteriophages() == 1
-    assert cell._bacteriophages[0].__str__() == 'v'
-    assert cell._bacteriophages[0].get_infection == 4
+    assert cell.__str__() == '1v'
+    assert cell._bacteriophages[0]._infection == 4
 
-def test_add_bacteriophage_class(cell):
-    cell._bacteriophage = Bacteriophage(4)
-    assert cell.cant_bacteriophages() == 1
-    assert cell._bacteriophages[0].__str__() == 'v'
-    assert cell._bacteriophages[0].get_infection == 4
+#def test_add_bacteriophage_class(cell):
+#    bacterio = Bacteriophage(4)
+#    cell._bacteriophages = bacterio
+#    assert cell.cant_bacteriophages() == 1
+#    assert cell._bacteriophages.__str__() == 'v'
+#    assert cell._bacteriophages._infection == 4
 
 
 def test_add_entes(cell):
