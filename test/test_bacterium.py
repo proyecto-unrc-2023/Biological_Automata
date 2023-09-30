@@ -1,5 +1,5 @@
 import pytest
-from models.logic.Bacterium import *
+from models.logic.Bacterium import Bacterium, BacteriumNormal, BacteriumStrong
 
 
 def test_bacterium_move_increment():

@@ -1,8 +1,8 @@
 import random
 
-from .Ente import Ente
+from .Entity import Entity
 
-class Bacterium(Ente):
+class Bacterium(Entity):
 
     #Constructor
     def __init__(self, moves:int):
@@ -72,34 +72,18 @@ class BacteriumNormal(Bacterium):
     def __str__(self):
       return 'b'
 
-    @staticmethod
-    def from_string():
-      pass
-
-
-
 class BacteriumStrong(Bacterium):
 
     def reproducir(self):
       if (self.isReproducible()):
-        mutation_probability = 0.01
-
-        #genero un numero aleatorio
-        random_number = random.random()
-
-        self.moves = 0
-        if random_number > mutation_probability:
-          return BacteriumStrong(0)
-        else:
-           return BacteriumNormal(0)
-
-      raise ValueError("El número de movimientos no es 3") #ver que error tirar
+        return BacteriumStrong(0)
+      raise ValueError("El numero de movimientos es inferior a 3") #ver que error tirar
 
     def isReproducible(self):
       if (self.moves == 3):
         return True
       return False
-    
+
     def isRecoverable(self):
        return False
 
@@ -138,7 +122,7 @@ class BacteriumWeak(Bacterium):
       if (self.moves == 6):
         return True
       return False
-    
+
     def recover(self):
        return BacteriumStrong(0)
 

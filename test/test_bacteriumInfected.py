@@ -1,8 +1,8 @@
 import pytest
-from models.logic.Bacterium import *
+from models.logic.Bacterium import BacteriumInfected, Bacterium
 
 def test_bacterium_move_increment():
-    bacteria = BacteriumInfected(0)  
+    bacteria = BacteriumInfected(0)
     bacteria.add_move()
     assert bacteria.moves == 1
 

@@ -1,4 +1,6 @@
-class Bacteriophage:
+from .Entity import Entity
+
+class Bacteriophage(Entity):
 
     def __init__(self, levelInfection:int):
       self.__infection = levelInfection
