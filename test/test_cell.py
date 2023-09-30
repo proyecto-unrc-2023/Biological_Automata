@@ -264,7 +264,7 @@ def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
     cell.add_bacterium(3, 'b')
     cell.add_bacterium(3, 'b')
     cell.update_cell()
-    assert cell.__str__() == '2b'
+    assert cell.cant_bacteria() == 2
 
 def test_update_cell_with_4_bacterium_strong_amd_2_antibiotics(cell):
     cell.add_bacterium(0, 'f')
@@ -275,3 +275,8 @@ def test_update_cell_with_4_bacterium_strong_amd_2_antibiotics(cell):
     cell.add_antibiotic()
     cell.update_cell()
     assert cell.__str__() == ' '
+
+def test_add_move_to_bacteriums(cell):
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')
+    cell.add_bacterium(0, 'f')

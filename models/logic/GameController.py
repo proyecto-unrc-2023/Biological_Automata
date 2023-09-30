@@ -1,5 +1,5 @@
 from enum import Enum
-from Board import Board
+from board import Board
 
 class Game_Mode(Enum):
     NOT_STARTER = 1     #Todavia no empezo el juego
