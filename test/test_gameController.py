@@ -35,7 +35,7 @@ def test_set_spawn_bacterium(game):
 def test_set_spawn_other(game):
   game.config(6,6)
   pos = (2,2)
-  game.set_spawn_antibiotic(pos)
+  game.set_spawn_other(pos)
   position = game._board.get_position_spawn_other()
   if position != None:
     assert position[0] == 2
