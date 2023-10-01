@@ -40,3 +40,43 @@ class GameController:
         self.__cant_bacteria = 10
         self.__cant_bacteriophage = 10
         self.__cant_antibiotic = 20
+
+    def set_spawn_bacterium(self, position):
+        self.__board.set_position_spawn_bacterium(position)
+
+    def set_spawn_antibiotic(self, position):
+        self.__board.set_position_spawn_other(position)
+
+    @property
+    def _board(self):
+        return self.__board
+
+    def spawn_bacterium(self):
+        spawn = self.__board.get_position_spawn_bacterium()
+        if spawn != None:
+            move = self.__board.get_random_move(spawn[0], spawn[1])
+            bacterium = BacteriumNormal(0)
+            if move != None:
+                self._board.set_bacterium(move[0], move[1], bacterium)
+                self.__cant_bacteria -= 1
+
+    def spawn_other(self):
+        spawn = self.__board.get_position_spawn_other()
+        if spawn != None:
+            move = self.__board.get_random_move(spawn[0], spawn[1])
+            if move != None:
+                if self.__game_mode == Game_Mode.ANTIBIOTIC:
+                    self._board.set_antibiotics(move[0],move[1], 1)
+                    self.__cant_antibiotic -= 1
+                else:
+                    ente = Bacteriophage(4)
+                    self.__board.set_bacteriophage(move[0], move[1], ente)
+                    self.__cant_bacteriophage -= 1
+
+    def refresh_board(self):
+        self.__board.update_board()
+        self.__frecuency += 1
+        if (self.__frecuency == 2):
+            self.spawn_bacterium()
+            self.spawn_other()
+            self.__frecuency = 0

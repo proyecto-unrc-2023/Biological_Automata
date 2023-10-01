@@ -6,11 +6,11 @@ class Bacterium(Entity):
 
     #Constructor
     def __init__(self, moves:int):
-      self.moves = max(0, moves)
+      self.__moves = max(0, moves)
 
     #Suma de movimiento de bacteria
     def add_move(self):
-        self.moves = self.moves + 1
+        self.__moves = self.__moves + 1
 
     @property
     def moves(self):
@@ -53,7 +53,7 @@ class BacteriumNormal(Bacterium):
         #genero un numero aleatorio entre 0 y 1
         random_number = random.random()
 
-        self.moves = 0
+        self.__moves = 0
         if random_number > mutation_probability:
           return BacteriumNormal(0)
         else:
@@ -62,7 +62,7 @@ class BacteriumNormal(Bacterium):
       raise ValueError("El número de movimientos no es 3") #ver que error tirar
 
     def isReproducible(self):
-      if (self.moves == 3):
+      if (self.__moves == 3):
         return True
       return False
 
@@ -80,7 +80,7 @@ class BacteriumStrong(Bacterium):
       raise ValueError("El numero de movimientos es inferior a 3") #ver que error tirar
 
     def isReproducible(self):
-      if (self.moves == 3):
+      if (self.__moves == 3):
         return True
       return False
 
@@ -95,7 +95,7 @@ class BacteriumInfected(Bacterium):
 
     #Esta en condiciones de explotar?
     def lithic_State(self):
-      if (self.moves == 4):
+      if (self.__moves == 4):
           return True
       return False
 
@@ -119,7 +119,7 @@ class BacteriumWeak(Bacterium):
       return False
 
     def isRecoverable(self):
-      if (self.moves == 6):
+      if (self.__moves == 6):
         return True
       return False
 

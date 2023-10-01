@@ -6,11 +6,11 @@ class Bacteriophage(Entity):
       self.__infection = levelInfection
 
     @property
-    def get_infection(self):
+    def infection(self):
       return self.__infection
 
-    @get_infection.setter
-    def set_infection(self, levelInfection):
+    @infection.setter
+    def infection(self, levelInfection):
       self.__infection = levelInfection
 
     #Suma
