@@ -41,15 +41,19 @@ class GameController:
         self.__cant_bacteriophage = 10
         self.__cant_antibiotic = 20
 
+    @property
+    def _board(self):
+        return self.__board
+
+    @property
+    def _frecuency(self):
+        return self.__frecuency
+
     def set_spawn_bacterium(self, position):
         self.__board.set_position_spawn_bacterium(position)
 
     def set_spawn_other(self, position):
         self.__board.set_position_spawn_other(position)
-
-    @property
-    def _board(self):
-        return self.__board
 
     def spawn_bacterium(self):
         spawn = self.__board.get_position_spawn_bacterium()

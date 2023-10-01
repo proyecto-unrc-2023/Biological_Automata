@@ -1,5 +1,6 @@
 import pytest
 from models.logic.GameController import GameController, Game_Mode
+from models.logic.Bacterium import *
 
 @pytest.fixture
 def game():
@@ -40,3 +41,45 @@ def test_set_spawn_other(game):
   if position != None:
     assert position[0] == 2
     assert position[1] == 2
+
+def test_spawn_bacterium(game):
+  game.config(6,6)
+  pos = (2,2)
+  game.set_spawn_bacterium(pos)
+  game.spawn_bacterium()
+  moves_n = game._board.get_possible_moves(pos[0],pos[1])
+  bacteria_found = any(len(game._board.get_cell(x, y)._bacteria) > 0 for x, y in moves_n)
+  assert bacteria_found
+
+def test_spawn_other_antibiotic(game):
+  game.config(6,6)
+  pos = (2,2)
+  game.set_mode(Game_Mode.ANTIBIOTIC)
+  game.set_spawn_other(pos)
+  game.spawn_other()
+  moves_n = game._board.get_possible_moves(pos[0],pos[1])
+  bacteria_found = any(game._board.get_cell(x, y)._antibiotics > 0 for x, y in moves_n)
+  assert bacteria_found
+
+
+def test_spawn_bacteriophage(game):
+  game.config(6,6)
+  pos = (2,2)
+  game.set_mode(Game_Mode.BACTERIOPHAGE)
+  game.set_spawn_other(pos)
+  game.spawn_other()
+  moves_n = game._board.get_possible_moves(pos[0],pos[1])
+  bacteria_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for x, y in moves_n)
+  assert bacteria_found
+
+
+def test_refresh_board(game):
+  game.config(6,6)
+  game.set_mode(Game_Mode.ANTIBIOTIC)
+  game.set_spawn_other((0,0))
+  game.set_spawn_bacterium((2,2))
+  assert game._frecuency == 0
+  game.refresh_board()
+  assert game._frecuency == 1
+  game.refresh_board()
+  assert game._frecuency == 0
