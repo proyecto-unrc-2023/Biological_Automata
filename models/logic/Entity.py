@@ -1,7 +1,7 @@
 # class bacterium is a implementation of game's bacterium
 from abc import ABC, abstractmethod
 
-class Ente(ABC):
+class Entity(ABC):
 
   #Eliminacion
   def delete(self):
