@@ -1,8 +1,8 @@
 import pytest
-from models.logic.Bacterium import *
+from models.logic.Bacterium import BacteriumInfected, Bacterium
 
 def test_bacterium_move_increment():
-    bacteria = BacteriumInfected(0)  
+    bacteria = BacteriumInfected(0)
     bacteria.add_move()
     assert bacteria.moves == 1
 
@@ -18,6 +18,12 @@ def test_lithic_state():
     bacterium.exploid()
     with pytest.raises(AssertionError):
         assert bacterium == None
+
+
+def test_lithic_state_false():
+    bacterium = BacteriumInfected(3)
+    result = bacterium.lithic_State()
+    assert result == False
 
 def test_infectedBacterium_not_reproducible():
     bacterium = BacteriumInfected(3)

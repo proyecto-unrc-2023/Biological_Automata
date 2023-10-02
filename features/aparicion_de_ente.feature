@@ -9,6 +9,7 @@ Característica: Sale una entidad de un spawn
     Cuando el usuario da inicio al juego
     Entonces en la posicion (<x2>,<y2>) aparece 1 <entidad>
     
+
     Ejemplos:
       |modo         | x1 | y1 | x2 | y2 | sx | sy | cant | frec |entidad     |
       |antibioticos | 1  | 1  | 2  | 2  | 1  | 1  |  2   |  3   |bacteria    |
