@@ -14,6 +14,13 @@ class Cell:
 	def __str__(self):
 		if self.is_empty():
 			return ' '
+		
+		if self.__spawn_bacterium:
+			return 'sb'
+		
+		if self.__spawn_other:
+			return 'so'
+		
 		res = ''
 		cant =self.cant_ente('a')
 		if cant != 0:
@@ -66,7 +73,7 @@ class Cell:
 				continue
 			elif cell_str[i+1] == 'v':
 				for _ in  range(int(num)):
-					cell._bacteriophage = Bacteriophage(4)
+					cell._bacteriophages = Bacteriophage(4)
 				i += 1
 				continue
 		return cell
@@ -133,11 +140,12 @@ class Cell:
 		return self.__bacteriophages
 
 	@_bacteriophages.setter
-	def _bacteriophage(self, bacteriophage:Bacteriophage):
+	def _bacteriophages(self, bacteriophage:Bacteriophage):
 		self.__bacteriophages.append(bacteriophage)
 
 	def add_bacteriophage(self, levelInfection:int):
-		self.__bacteriophages.append(Bacteriophage(levelInfection))
+		bacteriophage = Bacteriophage(levelInfection)
+		self.__bacteriophages.append(bacteriophage)
 
 	def cant_bacteriophages(self):
 		return self.__bacteriophages.__len__()
@@ -245,5 +253,5 @@ class Cell:
 	def add_move(self):
 		for bacterium in self._bacteria:
 			bacterium.add_move()
-		for bacteriophage in self._bacteriophage:
+		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()

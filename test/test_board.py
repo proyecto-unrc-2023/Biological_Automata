@@ -149,3 +149,63 @@ def test_random_move():
     pos = board.get_random_move(1,1)
     assert board.get_random_move(-2,-2) == None
     assert pos == (0,0) or pos == (1,0) or pos == (2,0) or pos == (2,1) or pos == (2,2) or pos == (1,2) or pos == (0,2) or pos == (0,1)
+
+def test_update_board():
+    board =Board(3,3)
+    board.get_cell(2, 2).add_antibiotic()
+    board.set_position_spawn_bacterium((0,0))
+    board.set_position_spawn_other((2,1))
+    assert board.get_cell(0, 0).get_spawn_bacterium() == True
+    assert board.get_cell(2, 1).get_spawn_other() == True
+    assert board.get_cell(0, 1).is_empty()
+    assert board.get_cell(0, 2).is_empty()
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(1, 2).is_empty()
+    assert board.get_cell(2, 0).is_empty()
+    actualizado = board.update_board()
+    res = actualizado.__str__()
+        
+    expected1 = 'sb| | \n'\
+                ' | |1a\n'\
+                ' |so| '
+    
+    expected2 = 'sb| | \n'\
+                ' |1a| \n'\
+                ' |so| '
+
+    assert  res == expected1 or res == expected2 
+
+
+def test_update_board_2():
+    board =Board(3,3)
+    board.set_bacterium(0,1,BacteriumStrong(0))
+    board.set_position_spawn_bacterium((0,0))
+    board.set_position_spawn_other((2,1))
+    assert board.get_cell(0, 0).get_spawn_bacterium() == True
+    assert board.get_cell(2, 1).get_spawn_other() == True
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(0, 2).is_empty()
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(1, 2).is_empty()
+    assert board.get_cell(2, 0).is_empty()
+    actualizado = board.update_board()
+    res = actualizado.__str__()
+        
+    expected1 = 'sb| |1f\n'\
+                ' | | \n'\
+                ' |so| '
+    
+    expected2 = 'sb| | \n'\
+                ' |1f| \n'\
+                ' |so| '
+
+    expected3 = 'sb| | \n'\
+                ' | |1f\n'\
+                ' |so| '
+
+    expected4 = 'sb| | \n'\
+                '1f| | \n'\
+                ' |so| '
+    assert  res == expected1 or res == expected2 or res == expected3 or res == expected4 
+
+
