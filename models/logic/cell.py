@@ -14,13 +14,13 @@ class Cell:
 	def __str__(self):
 		if self.is_empty():
 			return ' '
-		
+
 		if self.__spawn_bacterium:
 			return 'sb'
-		
+
 		if self.__spawn_other:
 			return 'so'
-		
+
 		res = ''
 		cant =self.cant_ente('a')
 		if cant != 0:

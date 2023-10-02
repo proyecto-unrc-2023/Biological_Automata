@@ -154,17 +154,22 @@ class Board:
                             moves.append((x, y))
         return moves
 
-    def update_board(self):
-        new_board = Board(self.__rows,self.__columns)
+
+    def move_entity(self):
+        new_board = Board(self.__rows, self.__columns)
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
         for row in range(self.__rows):
             for colum in range(self.__columns):
             #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
-                self.__board[row][colum].update_cell()
-                #metodo que pasa todo lo que queda en una celda, a las celdas vecinas en un tablero nuevo
                 new_board = self.move_entities(row, colum, new_board)
         return new_board
+
+    def crossing_board(self):
+        for row in range(self.__rows):
+            for colum in range(self.__columns):
+            #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
+                self.__board[row][colum].update_cell()
 
     def move_entities(self, x, y, new_board):
         #board_actualizado = Board(self.__rows,self.__columns)
@@ -178,18 +183,17 @@ class Board:
                 new_x, new_y = resultMoves
                 new_board.get_cell(new_x,new_y)._bacterium = bacterium
                 bacterium.add_move()
-            
+
         for _ in range(self.__board[x][y]._antibiotics):
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 new_board.get_cell(new_x,new_y).add_antibiotic()
-            
+
         for bacteriophage in self.__board[x][y]._bacteriophages:
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
-                new_board[new_x][new_y].add_bacteriophage(bacteriophage._infection(bacteriophage._infection-1))	
-  
+                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage._infection(bacteriophage._infection-1))
         return new_board

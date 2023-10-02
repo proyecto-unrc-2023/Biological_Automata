@@ -55,7 +55,7 @@ class GameController:
     def set_spawn_other(self, position):
         self.__board.set_position_spawn_other(position)
 
-    def spawn_bacterium(self):
+    def generate_bacterium(self):
         spawn = self.__board.get_position_spawn_bacterium()
         if spawn != None:
             move = self.__board.get_random_move(spawn[0], spawn[1])
@@ -64,7 +64,7 @@ class GameController:
                 self._board.set_bacterium(move[0], move[1], bacterium)
                 self.__cant_bacteria -= 1
 
-    def spawn_other(self):
+    def generate_other(self):
         spawn = self.__board.get_position_spawn_other()
         if spawn != None:
             move = self.__board.get_random_move(spawn[0], spawn[1])
@@ -77,10 +77,22 @@ class GameController:
                     self.__board.set_bacteriophage(move[0], move[1], ente)
                     self.__cant_bacteriophage -= 1
 
+
+    def generate_entities(self):
+        if(self.__cant_bacteria > 0):
+            self.generate_bacterium()
+        elif(self.__cant_antibiotic > 0):
+            self.generate_other()
+        else:
+            self.generate_other()
+
+
     def refresh_board(self):
-        self.__board.update_board()
+        actualizado = self._board.move_entity()
+        actualizado.crossing_board()
+        self.__board = actualizado
         self.__frecuency += 1
         if (self.__frecuency == 2):
-            self.spawn_bacterium()
-            self.spawn_other()
+            self.generate_entities()
             self.__frecuency = 0
+
