@@ -2,7 +2,7 @@
 
 Característica: Movimientos de una entidad                                                                          
 #1
-Esquema del escenario: Un ente se mueve de posicion a un casillero contiguo              
+  Esquema del escenario: Un ente se mueve de posicion a un casillero contiguo              
     Dado que hay 1 <ente> en la celda <x>
     Y tiene 8 posibilidades de movimiento <a>, <b>, <c>, <d>, <e>, <f>, <g> y <h>
     Cuando se mueve 1 <ente> de la celda <x> a <d> 
@@ -16,7 +16,7 @@ Esquema del escenario: Un ente se mueve de posicion a un casillero contiguo
       |bacteriofagos|(1,2)|(1,3)|(1,4)|(2,2)|(2,4)|(3,2)|(3,3)|(3,4)|(2,3)|
 
 #2
-Esquema del escenario: Un ente se mueve de algun borde a un casillero valido
+  Esquema del escenario: Un ente se mueve de algun borde a un casillero valido
     Dado que hay 1 <ente> en la celda <x>
     Y tiene 5 posibilidades de movimiento <a>, <b>, <c>, <d> y <e>
     Cuando se mueve 1 <ente> de la celda <x> a <d>
@@ -32,7 +32,7 @@ Esquema del escenario: Un ente se mueve de algun borde a un casillero valido
 
 
 #3
-Esquema del escenario: Un ente se mueve de una esquina a un casillero valido
+  Esquema del escenario: Un ente se mueve de una esquina a un casillero valido
     Dado que hay 1 <ente> en la celda <a>
     Y tiene 3 posibilidades de movimiento <b>, <c> y <d>
     Cuando se mueve 1 <ente> de la celda <a> a <d>
@@ -55,7 +55,7 @@ Esquema del escenario: Un ente se mueve de una esquina a un casillero valido
       |bacteriofagos|(1,1)  |(1,2)  |(2,2)  |(2,1)  |
 
 #4
-Esquema del escenario: Las entidades no interactuan entre si
+  Esquema del escenario: Las entidades no interactuan entre si
     Dado que hay 1 <ente> en la celda <a>
     Y que hay 1 <ente> en la celda <b>
     Y que hay 1 <ente> en la celda <c>
