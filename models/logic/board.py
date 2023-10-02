@@ -195,5 +195,6 @@ class Board:
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
-                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage._infection(bacteriophage._infection-1))
+                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection-1)	
+    
         return new_board
