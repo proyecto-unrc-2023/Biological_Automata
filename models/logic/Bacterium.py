@@ -25,23 +25,23 @@ class Bacterium(Entity):
       pass
 
     def isRecoverable(self):
-       pass
+      pass
 
     def __str__(self):
-        pass
+      pass
 
     @staticmethod
     def from_string(cell_str):
       if cell_str == BacteriumNormal(0).__str__():
-          return BacteriumNormal(0)
+        return BacteriumNormal(0)
       elif cell_str == BacteriumStrong(0).__str__():
-          return BacteriumStrong(0)
+        return BacteriumStrong(0)
       elif cell_str == BacteriumInfected(0).__str__():
-          return BacteriumInfected(0)
+        return BacteriumInfected(0)
       elif cell_str == BacteriumWeak(0).__str__():
-          return BacteriumWeak(0)
+        return BacteriumWeak(0)
       else:
-          raise ValueError(f'Invalid Bacterium string: {cell_str}')
+        raise ValueError(f'Invalid Bacterium string: {cell_str}')
 
 
 class BacteriumNormal(Bacterium):
@@ -53,16 +53,16 @@ class BacteriumNormal(Bacterium):
         #genero un numero aleatorio entre 0 y 1
         random_number = random.random()
 
-        self.__moves = 0
+        self.moves = 0
         if random_number > mutation_probability:
           return BacteriumNormal(0)
         else:
-           return BacteriumStrong(0)
+          return BacteriumStrong(0)
 
       raise ValueError("El número de movimientos no es 3") #ver que error tirar
 
     def isReproducible(self):
-      if (self.__moves == 3):
+      if (self.moves == 3):
         return True
       return False
 
@@ -80,7 +80,7 @@ class BacteriumStrong(Bacterium):
       raise ValueError("El numero de movimientos es inferior a 3") #ver que error tirar
 
     def isReproducible(self):
-      if (self.__moves == 3):
+      if (self.moves == 3):
         return True
       return False
 
@@ -95,7 +95,7 @@ class BacteriumInfected(Bacterium):
 
     #Esta en condiciones de explotar?
     def lithic_State(self):
-      if (self.__moves == 4):
+      if (self.moves == 4):
           return True
       return False
 
@@ -119,7 +119,7 @@ class BacteriumWeak(Bacterium):
       return False
 
     def isRecoverable(self):
-      if (self.__moves == 6):
+      if (self.moves == 6):
         return True
       return False
 

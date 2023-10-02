@@ -34,7 +34,7 @@ class Cell:
 		if cant != 0:
 			res = res + cant.__str__() + 'v'
 		return res
-			
+
 	@staticmethod
 	def from_string(cell_str):
 		cell = Cell()
@@ -82,7 +82,7 @@ class Cell:
 
 	def get_spawn_bacterium(self):
 		return self.__spawn_bacterium
-	
+
 	def set_spawn_bacterium(self):
 		if self.is_empty():
 			self.__spawn_bacterium = True
@@ -104,7 +104,7 @@ class Cell:
 	@property
 	def _bacteria(self):
 		return self.__bacteria
-	
+
 	@_bacteria.setter
 	def _bacterium(self, bacterium: Bacterium):
 		self.__bacteria.append(bacterium)
@@ -113,10 +113,10 @@ class Cell:
 		bacterium = Bacterium.from_string(state)
 		bacterium.moves = moves
 		self.__bacteria.append(bacterium)
-	
+
 	def cant_bacteria(self):
 		return self.__bacteria.__len__()
-	
+
 	@property
 	def _antibiotics(self):
 		return self.__antibiotics
@@ -124,10 +124,10 @@ class Cell:
 	@_antibiotics.setter
 	def _antibiotics(self, cant:int):
 		self.__antibiotics = cant
-	
+
 	def add_antibiotic(self):
 		self.__antibiotics += 1
-	
+
 	@property
 	def _bacteriophages(self):
 		return self.__bacteriophages
@@ -135,7 +135,7 @@ class Cell:
 	@_bacteriophages.setter
 	def _bacteriophage(self, bacteriophage:Bacteriophage):
 		self.__bacteriophages.append(bacteriophage)
-	
+
 	def add_bacteriophage(self, levelInfection:int):
 		self.__bacteriophages.append(Bacteriophage(levelInfection))
 
@@ -146,7 +146,7 @@ class Cell:
 		if self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other):
 			return True
 		return False
-	
+
 	def cant_ente(self,type):
 		if type =='a':
 			return self._antibiotics
@@ -156,31 +156,37 @@ class Cell:
 		for bacterium in self.__bacteria:
 			if type == bacterium.__str__():
 				cant += 1
-		return cant 
-	
+		return cant
+
 	#new
 	def is_spawn(self):
 		return self.get_spawn_bacterium() or self.get_spawn_other()
+
+	def is_spawn_bacterium(self):
+		return self.get_spawn_bacterium()
+
+	def is_spawn_other(self):
+		return self.get_spawn_other()
 
 	def update_cell(self):
 	#aplico regla de sobrepoblación
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
 
-	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento 
+	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
 			if self._antibiotics > self.cant_bacteria():
 				self.high_dose_antibiotic()
 			else:
 				self.low_dose_antibiotic()
-		
+
 	#actualizo por la reproduccion de bacterias
 		self.update_for_reproduction()
-		
+
 	#actualizo por la recuperación de bacterias
 		self.update_for_recovery()
 
-	
+
 	def high_dose_antibiotic(self):
 		#esa celda se queda sin bacterias y sin antibioticos
 		self.__bacteria = []
@@ -241,4 +247,3 @@ class Cell:
 			bacterium.add_move()
 		for bacteriophage in self._bacteriophage:
 			bacteriophage.add_move()
-		
