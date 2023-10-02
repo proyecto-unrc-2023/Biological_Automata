@@ -46,7 +46,8 @@ def test_spawn_bacterium(game):
   game.config(6,6)
   pos = (2,2)
   game.set_spawn_bacterium(pos)
-  game.generate_bacterium()
+  game.set_mode(Game_Mode.ANTIBIOTIC)
+  game.generate_entities()
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
   bacteria_found = any(len(game._board.get_cell(x, y)._bacteria) > 0 for x, y in moves_n)
   assert bacteria_found
@@ -55,8 +56,10 @@ def test_spawn_other_antibiotic(game):
   game.config(6,6)
   pos = (2,2)
   game.set_mode(Game_Mode.ANTIBIOTIC)
+  assert game.get_mode() == Game_Mode.ANTIBIOTIC
   game.set_spawn_other(pos)
-  game.generate_other()
+  game.set_spawn_bacterium((5,5))
+  game.generate_entities()
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
   bacteria_found = any(game._board.get_cell(x, y)._antibiotics > 0 for x, y in moves_n)
   assert bacteria_found
@@ -67,7 +70,7 @@ def test_spawn_bacteriophage(game):
   pos = (2,2)
   game.set_mode(Game_Mode.BACTERIOPHAGE)
   game.set_spawn_other(pos)
-  game.generate_other()
+  game.generate_entities()
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
   bacteria_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for x, y in moves_n)
   assert bacteria_found
