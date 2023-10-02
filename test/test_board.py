@@ -163,7 +163,7 @@ def test_update_board():
     assert board.get_cell(1, 2).is_empty()
     assert board.get_cell(2, 0).is_empty()
     actualizado = board.move_entity()
-    actualizado.cruce_board()
+    actualizado.crossing_board()
     res = actualizado.__str__()
 
     expected1 = 'sb| | \n'\
@@ -190,7 +190,7 @@ def test_update_board_2():
     assert board.get_cell(1, 2).is_empty()
     assert board.get_cell(2, 0).is_empty()
     actualizado = board.move_entity()
-    actualizado.cruce_board()
+    actualizado.crossing_board()
     res = actualizado.__str__()
 
     expected1 = 'sb| |1f\n'\

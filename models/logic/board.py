@@ -165,7 +165,7 @@ class Board:
                 new_board = self.move_entities(row, colum, new_board)
         return new_board
 
-    def cruce_board(self):
+    def crossing_board(self):
         for row in range(self.__rows):
             for colum in range(self.__columns):
             #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
