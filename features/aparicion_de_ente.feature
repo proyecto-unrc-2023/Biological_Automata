@@ -8,7 +8,7 @@ Característica: Sale una entidad de un spawn
     Y el spawn esta en la posicion <celdaI>
     Cuando el usuario da inicio al juego
     Entonces en la posicion <celdaF> aparece 1 <entidad>
-    
+
     Ejemplos:
       |modo         |celdaI|celdaF|parametros   |entidad     |
       |antibioticos |(1,1) |(2,2) |((1,1), 2, 3)|bacteria    |

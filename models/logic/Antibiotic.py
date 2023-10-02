@@ -1,4 +1,6 @@
-class Antibiotic:
+from .Entity import Entity
+
+class Antibiotic(Entity):
 
     def __init__(self):
       pass
@@ -10,9 +12,8 @@ class Antibiotic:
     @staticmethod
     def from_string(cell_str):
       if (cell_str == 'a'):
-        return Antibiotic
-      return TypeError #ver que error ponerle
-
+        return Antibiotic()
+      raise ValueError("Invalid input: 'cell_str' must be 'a'")
 
     def __str__(self):
       return 'a'

@@ -1,14 +1,16 @@
-class Bacteriophage:
+from .Entity import Entity
+
+class Bacteriophage(Entity):
 
     def __init__(self, levelInfection:int):
       self.__infection = levelInfection
 
     @property
-    def _infection(self):
+    def infection(self):
       return self.__infection
 
-    @_infection.setter
-    def _infection(self, levelInfection):
+    @infection.setter
+    def infection(self, levelInfection):
       self.__infection = levelInfection
 
     #Suma

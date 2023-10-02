@@ -16,7 +16,7 @@ def test_initial_cell(cell):
     assert cell.get_spawn_bacterium() == False
     assert cell.get_spawn_other() == False
     assert cell.is_empty()
-    
+
 def test_spawn_bacterium_cell(cell):
     cell.set_spawn_bacterium()
     assert cell._antibiotics == 0
@@ -79,7 +79,7 @@ def test_add_bacteriophage(cell):
     cell.add_bacteriophage(4)
     assert cell.cant_bacteriophages() == 1
     assert cell.__str__() == '1v'
-    assert cell._bacteriophages[0]._infection == 4
+    assert cell._bacteriophages[0].infection == 4
 
 #def test_add_bacteriophage_class(cell):
 #    bacterio = Bacteriophage(4)

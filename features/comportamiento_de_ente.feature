@@ -13,7 +13,7 @@ Característica: Comportamiento de las entidades
       |pos   |end   |end2  |tipo-s | tipo-p |
       |(1,2) |(1,3) |(2,2) |normal |normales|
       |(5,3) |(5,4) |(4,5) |normal |normales|
-      |(4,2) |(3,2) |(3,1) |normal |normales|            
+      |(4,2) |(3,2) |(3,1) |normal |normales|
       |(1,2) |(1,3) |(2,2) |fuerte |fuertes |
       |(5,0) |(5,1) |(4,2) |fuerte |fuertes |
       |(2,1) |(1,1) |(1,0) |fuerte |fuertes |
@@ -97,7 +97,7 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
     Y un <cualidad> de infeccion <grado-c>
     Cuando se mueve a la celda <end>
     Entonces el tablero deberia contener <entidad> en <end>
-    Y deberia tener un <cualidad> de infeccion de <grado-p> 
+    Y deberia tener un <cualidad> de infeccion de <grado-p>
 
     Ejemplos:
       |pos   |end   |grado-c|grado-p|entidad                |cualidad|
@@ -109,10 +109,10 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
 
 # ??????
 # 21
-# Escenario: Disminucion de poder de bacteriofago                               
+# Escenario: Disminucion de poder de bacteriofago
 #     Dado que el estado del juego es
 #     Y el bacteriofago tiene poder de infeccion 3
-#     Cuando el bacteriofago se mueva a la celda (3,3)  
+#     Cuando el bacteriofago se mueva a la celda (3,3)
 #     Y el bacteriofago deberia tener poder de infeccion 2
 # #
 
@@ -122,22 +122,22 @@ Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
     Dado que hay una bacteria infectada en la posicion <pos>
     Y la bacteria tiene grado de infeccion <grado-c>
     Cuando la bacteria se mueve a la celda <end>
-    Entonces el tablero deberia contener 4 bacteriofagos en <f1>, <f2>, <f3> y <f4> 
+    Entonces el tablero deberia contener 4 bacteriofagos en <f1>, <f2>, <f3> y <f4>
     Y los cuatro bacteriofagos deberian tener poder de infeccion <grado-p>
- 
+
     Ejemplos:
       |pos    |end    |grado-c|grado-p|f1     |f2     |f3     |f4     |
       |(4,0)  |(4,1)  |3      |4      |(3,0)  |(3,2)  |(5,0)  |(5,2)  |
       |(2,0)  |(2,1)  |3      |4      |(1,0)  |(1,2)  |(3,0)  |(3,2)  |
       |(3,3)  |(3,4)  |3      |4      |(2,3)  |(2,5)  |(4,3)  |(4,5)  |
-  
+
 
 #  Comportamiento de bacteriofagos
 #20
 Escenario: Un bacteriofago desaparece tras cierto tiempo
     Dado que hay un bacteriofago en la posicion <pos>
     Y el bacteriofago tiene poder de infeccion 1
-    Cuando el bacteriofago se mueva a la celda <end>  
+    Cuando el bacteriofago se mueva a la celda <end>
     Entonces el bacteriofago de saparece del tablero, dejando la celda <end> vacia
 
     Ejemplos:
@@ -145,7 +145,7 @@ Escenario: Un bacteriofago desaparece tras cierto tiempo
       |(5,0) |(5,1) |
       |(1,2) |(2,3) |
       |(3,0) |(4,1) |
-      |(2,4) |(3,5) |      
+      |(2,4) |(3,5) |
       |(0,3) |(1,4) |
       |(1,1) |(2,2) |
       |(1,0) |(2,1) |
