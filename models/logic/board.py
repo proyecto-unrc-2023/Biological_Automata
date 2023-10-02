@@ -164,7 +164,6 @@ class Board:
                 self.__board[row][colum].update_cell()
                 #metodo que pasa todo lo que queda en una celda, a las celdas vecinas en un tablero nuevo
                 new_board = self.move_entities(row, colum, new_board)
-    
         return new_board
 
     def move_entities(self, x, y, new_board):
@@ -192,5 +191,5 @@ class Board:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
                 new_board[new_x][new_y].add_bacteriophage(bacteriophage._infection(bacteriophage._infection-1))	
-    
+  
         return new_board
