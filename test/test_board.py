@@ -176,6 +176,32 @@ def test_update_board():
 
     assert  res == expected1 or res == expected2
 
+def test_update_board_1():
+    board =Board(3,3)
+    board.get_cell(2, 2).add_bacteriophage(4)
+    board.set_position_spawn_bacterium((0,0))
+    board.set_position_spawn_other((2,1))
+    assert board.get_cell(0, 0).get_spawn_bacterium() == True
+    assert board.get_cell(2, 1).get_spawn_other() == True
+    assert board.get_cell(0, 1).is_empty()
+    assert board.get_cell(0, 2).is_empty()
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(1, 2).is_empty()
+    assert board.get_cell(2, 0).is_empty()
+    actualizado = board.move_entity()
+    actualizado.crossing_board()
+    res = actualizado.__str__()
+        
+    expected1 = 'sb| | \n'\
+                ' | |1v\n'\
+                ' |so| '
+    
+    expected2 = 'sb| | \n'\
+                ' |1v| \n'\
+                ' |so| '
+
+    assert  res == expected1 or res == expected2 
+
 
 def test_update_board_2():
     board =Board(3,3)
@@ -211,3 +237,65 @@ def test_update_board_2():
     assert  res == expected1 or res == expected2 or res == expected3 or res == expected4
 
 
+
+
+
+def test_update_board_2_con_cruzamiento():
+    board =Board(3,3)
+    board.set_bacterium(0,1,BacteriumNormal(0))
+    board.get_cell(2, 2).add_antibiotic()
+    board.set_position_spawn_bacterium((0,0))
+    board.set_position_spawn_other((2,1))
+    assert board.get_cell(0, 0).get_spawn_bacterium() == True
+    assert board.get_cell(2, 1).get_spawn_other() == True
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(0, 2).is_empty()
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(1, 2).is_empty()
+    assert board.get_cell(2, 0).is_empty()
+    actualizado = board.move_entity()
+    actualizado.crossing_board()
+    res = actualizado.__str__()
+        
+    expected1 = 'sb| |1b\n'\
+                ' | |1a\n'\
+                ' |so|'
+    
+    expected2 = 'sb| |1b\n'\
+                ' |1a| \n'\
+                ' |so| '
+
+    expected3 = 'sb| |  \n'\
+                ' | | \n'\
+                ' |so| '
+    
+    expected4 = 'sb| | \n'\
+                ' |1a|1b\n'\
+                ' |so| '
+    
+    expected5 = 'sb| | \n'\
+                ' |1b|1a\n'\
+                ' |so| '
+    
+    expected6 = 'sb| | \n'\
+                ' | | \n'\
+                ' |so| '
+
+    expected7 = 'sb| | \n'\
+                '1b| |1a\n'\
+                ' |so| '
+    
+    expected8 = 'sb| | \n'\
+                '1b|1a| \n'\
+                ' |so| '
+
+
+
+    expected9 = 'sb| | \n'\
+                ' | |1f\n'\
+                ' |so| '
+
+    expected10 = 'sb| | \n'\
+                '1f| | \n'\
+                ' |so| '
+    assert  res == expected1 or res == expected2 or res == expected3 or res == expected4 or res == expected5 or res == expected6 or res == expected7 or res == expected8 or res == expected9 or res == expected10 
