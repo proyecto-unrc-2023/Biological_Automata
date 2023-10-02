@@ -38,7 +38,7 @@ class GameController:
         self.__recovery_moves = 6
         self.__exploit_moves = 4
         self.__cant_bacteria = 10
-        self.__cant_bacteriophage = 10
+        self.__cant_bacteriophage = 20
         self.__cant_antibiotic = 20
 
     @property
@@ -81,18 +81,20 @@ class GameController:
     def generate_entities(self):
         if(self.__cant_bacteria > 0):
             self.generate_bacterium()
-        elif(self.__cant_antibiotic > 0):
+
+        if(self.get_mode.__eq__(Game_Mode.ANTIBIOTIC) and self.__cant_antibiotic > 0):
             self.generate_other()
-        else:
+
+        if(self.get_mode.__eq__(Game_Mode.BACTERIOPHAGE) and self.__cant_bacteriophage > 0):
             self.generate_other()
 
 
     def refresh_board(self):
         actualizado = self._board.move_entity()
-        actualizado.crossing_board()
         self.__board = actualizado
         self.__frecuency += 1
         if (self.__frecuency == 2):
             self.generate_entities()
             self.__frecuency = 0
+        actualizado.crossing_board()
 

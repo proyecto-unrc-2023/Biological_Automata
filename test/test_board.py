@@ -237,9 +237,6 @@ def test_update_board_2():
     assert  res == expected1 or res == expected2 or res == expected3 or res == expected4
 
 
-
-
-
 def test_update_board_2_con_cruzamiento():
     board =Board(3,3)
     board.set_bacterium(0,1,BacteriumNormal(0))
@@ -288,8 +285,6 @@ def test_update_board_2_con_cruzamiento():
     expected8 = 'sb| | \n'\
                 '1b|1a| \n'\
                 ' |so| '
-
-
 
     expected9 = 'sb| | \n'\
                 ' | |1f\n'\
