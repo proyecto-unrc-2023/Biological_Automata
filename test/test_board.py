@@ -2,7 +2,7 @@ import pytest
 
 from models.logic.board import Board
 
-from models.logic.Bacterium import * 
+from models.logic.Bacterium import *
 
 from models.logic.cell import Cell
 
@@ -25,11 +25,11 @@ def test_initial_board(board):
 
 def test_board_set_spwn(board):
      board.set_position_spawn_bacterium((0,0))
-     board.set_position_spawn_other((1,1)) 
+     board.set_position_spawn_other((1,1))
      assert board.get_cell(0, 0).get_spawn_bacterium() == True
      assert board.get_cell(0, 1).is_empty()
      assert board.get_cell(1, 0).is_empty()
-     assert board.get_cell(1, 1).get_spawn_other() == True   
+     assert board.get_cell(1, 1).get_spawn_other() == True
      assert not(board.is_empty())
 
 def test_set_spawn_bacterium_error(board):
@@ -58,13 +58,13 @@ def test_eq_board_error_2(board):
 def test_eq_board(board):
      board_aux = Board(2,2)
      assert  board.__eq__(board_aux)
-                                                        
+
 def test_add_antibiotic(board):
      board.add_antibiotic(1,1)
      assert board.get_cell(0, 0).is_empty()
      assert board.get_cell(0, 1).is_empty()
      assert board.get_cell(1, 0).is_empty()
-     assert board.get_cell(1, 1)._antibiotics == 1 
+     assert board.get_cell(1, 1)._antibiotics == 1
 
 def test_set_bacteriphages(board):
      bacteriophage = Bacteriophage(4)
@@ -126,7 +126,7 @@ def test_4x4_board_to_string():
                ' | | | \n'\
                ' | | | '
     assert expected == res
-    
+
 def test_4x4_board_from_string():
      board_str=' | | | \n'\
                ' | | | \n'\
@@ -149,3 +149,65 @@ def test_random_move():
     pos = board.get_random_move(1,1)
     assert board.get_random_move(-2,-2) == None
     assert pos == (0,0) or pos == (1,0) or pos == (2,0) or pos == (2,1) or pos == (2,2) or pos == (1,2) or pos == (0,2) or pos == (0,1)
+
+def test_update_board():
+    board =Board(3,3)
+    board.get_cell(2, 2).add_antibiotic()
+    board.set_position_spawn_bacterium((0,0))
+    board.set_position_spawn_other((2,1))
+    assert board.get_cell(0, 0).get_spawn_bacterium() == True
+    assert board.get_cell(2, 1).get_spawn_other() == True
+    assert board.get_cell(0, 1).is_empty()
+    assert board.get_cell(0, 2).is_empty()
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(1, 2).is_empty()
+    assert board.get_cell(2, 0).is_empty()
+    actualizado = board.move_entity()
+    actualizado.crossing_board()
+    res = actualizado.__str__()
+
+    expected1 = 'sb| | \n'\
+                ' | |1a\n'\
+                ' |so| '
+
+    expected2 = 'sb| | \n'\
+                ' |1a| \n'\
+                ' |so| '
+
+    assert  res == expected1 or res == expected2
+
+
+def test_update_board_2():
+    board =Board(3,3)
+    board.set_bacterium(0,1,BacteriumStrong(0))
+    board.set_position_spawn_bacterium((0,0))
+    board.set_position_spawn_other((2,1))
+    assert board.get_cell(0, 0).get_spawn_bacterium() == True
+    assert board.get_cell(2, 1).get_spawn_other() == True
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(0, 2).is_empty()
+    assert board.get_cell(1, 1).is_empty()
+    assert board.get_cell(1, 2).is_empty()
+    assert board.get_cell(2, 0).is_empty()
+    actualizado = board.move_entity()
+    actualizado.crossing_board()
+    res = actualizado.__str__()
+
+    expected1 = 'sb| |1f\n'\
+                ' | | \n'\
+                ' |so| '
+
+    expected2 = 'sb| | \n'\
+                ' |1f| \n'\
+                ' |so| '
+
+    expected3 = 'sb| | \n'\
+                ' | |1f\n'\
+                ' |so| '
+
+    expected4 = 'sb| | \n'\
+                '1f| | \n'\
+                ' |so| '
+    assert  res == expected1 or res == expected2 or res == expected3 or res == expected4
+
+
