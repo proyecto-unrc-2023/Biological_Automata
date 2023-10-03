@@ -3,16 +3,15 @@
 Característica: Sale una entidad de un spawn
 
   Esquema del escenario: Aparece un ente del spawn
-    Dado que el usuario esta en el modo de juego de <modo>
-    Y el usuario configura los parametros iniciales con ((<sx>,<sy>),<cant>,<frec>)
-    Y el spawn esta en la posicion (<x1>,<y1>)
-    Cuando el usuario da inicio al juego
+    Dado el usuario ingreso al modo de juego de <modo>
+    Cuando el usuario configura los parametros iniciales de <ente> con ((<x1>,<y1>),<cant>,<frec>)
+    Y el usuario da inicio al juego, con un <ente> en (<x2>,<y2>)
     Entonces en la posicion (<x2>,<y2>) aparece 1 <entidad>
     
     Ejemplos:
-      |modo         | x1 | y1 | x2 | y2 | sx | sy | cant | frec |entidad     |
-      |antibioticos | 1  | 1  | 2  | 2  | 1  | 1  |  2   |  3   |bacteria    |
-      |antibioticos | 1  | 1  | 2  | 2  | 1  | 1  |  2   |  3   |antibiotico |
-      |bacteriofagos| 1  | 1  | 2  | 2  | 1  | 1  |  2   |  3   |bacteria    |
-      |bacteriofagos| 1  | 1  | 2  | 2  | 1  | 1  |  2   |  3   |bacteriofago|
+      |modo         | x1 | y1 | x2 | y2 | cant | frec |entidad     | ente |
+      |antibioticos | 1  | 1  | 2  | 2  |  2   |  3   |bacteria    |  b   |
+      |antibioticos | 1  | 1  | 2  | 2  |  2   |  3   |antibiotico |  a   |
+      |bacteriofagos| 1  | 1  | 2  | 2  |  2   |  3   |bacteria    |  b   |
+      |bacteriofagos| 1  | 1  | 2  | 2  |  2   |  3   |bacteriofago|  v   |
 
