@@ -49,6 +49,30 @@ class GameController:
     def _frecuency(self):
         return self.__frecuency
 
+    @property
+    def _cant_bacteria(self):
+        return self.__cant_bacteria
+
+    @property
+    def _cant_antibiotic(self):
+        return self.__cant_antibiotic
+
+    @property
+    def _cant_bacteriophage(self):
+        return self.__cant_bacteriophage
+
+    def set_frecuency(self, new_frec):
+        self.__frecuency = new_frec
+
+    def set_cant_bacteria(self, new_cant):
+        self.__cant_bacteria = new_cant
+
+    def set_cant_antibiotic(self, new_cant):
+        self.__cant_antibiotic = new_cant
+
+    def set_cant_bacteriophage(self, new_cant):
+        self.__cant_bacteriophage = new_cant
+
     def set_spawn_bacterium(self, position):
         self.__board.set_position_spawn_bacterium(position)
 
