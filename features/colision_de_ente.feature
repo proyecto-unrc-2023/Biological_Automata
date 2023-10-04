@@ -5,34 +5,34 @@ Característica: Colisión de entidades
 # Bacterias y antibioticos
 #9
   Esquema del escenario: Los antibioticos desaparecen al tener contacto con cualquier tipo de bacteria
-    Dado que hay 1 antibiotico en la celda (<ax>,<ay>)
-    Y que hay 1 bacteria <tipo> en la celda (<bx>,<by>)
-    Cuando se mueve 1 antibiotico de (<ax>,<ay>) a (<ex>,<ey>)
-    Y se mueve 1 bacteria <tipo> de (<ax>,<ay>) a (<ex>,<ey>)
-    Entonces el tablero no tiene antibioticos en (<ex>,<ey>)
+    Dado que hay <num> antibiotico en la celda (<ax>,<ay>)
+    Y que hay <num> <tipo> en la celda (<bx>,<by>)
+    Cuando se mueve <num> antibiotico de (<ax>,<ay>) a (<ex>,<ey>)
+    Y se mueve <num> <tipo> de (<bx>,<by>) a (<ex>,<ey>)
+    Entonces el tablero no deberia tener antibioticos en (<ex>,<ey>)
 
     Ejemplos:
-    | ax | ay | bx | by |tipo  | ex | ey |
-    | 2  | 2  | 2  | 4  |debil | 2  | 3  |
-    | 1  | 3  | 2  | 5  |normal| 1  | 4  |
-    | 4  | 1  | 5  | 3  |fuerte| 4  | 2  |
+    | ax | ay | bx | by |tipo           | ex | ey |num|
+    | 2  | 2  | 2  | 4  |bacteria debil | 2  | 3  | 1 |
+    | 1  | 3  | 2  | 5  |bacteria normal| 1  | 4  | 1 |
+    | 4  | 1  | 5  | 3  |bacteria fuerte| 4  | 2  | 1 |
 
-#10
-  Esquema del escenario: Una bacteria que no sea fuerte muere al encontrarse con un antibiótico
-    Dado que hay 1 antibiotico en la celda (<ax>,<ay>)
-    Y que hay 1 bacteria <tipo> en la celda (<bx>,<by>)
-    Cuando se mueve 1 antibiotico de (<ax>,<ay>) a (<cx>,<cy>)
-    Y se mueve 1 bacteria <tipo> de (<bx>,<by>) a (<cx>,<cy>)
-    Entonces el tablero no tiene antibioticos en (<cx>,<cy>)
-    Y el tablero no tiene bacterias en (<cx>,<cy>)
+# #10
+#   Esquema del escenario: Una bacteria que no sea fuerte muere al encontrarse con un antibiótico
+#     Dado que hay 1 antibiotico en la celda (<ax>,<ay>)
+#     Y que hay 1 bacteria <tipo> en la celda (<bx>,<by>)
+#     Cuando se mueve 1 antibiotico de (<ax>,<ay>) a (<cx>,<cy>)
+#     Y se mueve 1 bacteria <tipo> de (<bx>,<by>) a (<cx>,<cy>)
+#     Entonces el tablero no tiene antibioticos en (<cx>,<cy>)
+#     Y el tablero no tiene bacterias en (<cx>,<cy>)
 
-    Ejemplos:
-    | ax | ay | bx | by |tipo  | cx | cy |
-    | 3  | 2  | 3  | 4  |debil | 3  | 3  |
-    | 1  | 3  | 2  | 4  |normal| 1  | 3  |
+#     Ejemplos:
+#     | ax | ay | bx | by |tipo  | cx | cy |
+#     | 3  | 2  | 3  | 4  |debil | 3  | 3  |
+#     | 1  | 3  | 2  | 4  |normal| 1  | 3  |
 
   
-# #11
+# # #11
 
 #   Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
 #     Dado que hay 1 antibiotico en la celda <apos>
@@ -100,12 +100,12 @@ Característica: Colisión de entidades
 
 
 # #14
-# #   Esquema del escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes
-# #     Dado que hay una antibiotico en la celda (3,3)
-# #     Y hay una bacteria normal en la celda (3,2)
-# #     Y hay una bacteria debil en la celda (3,2)
-# #     Cuando el antibiotico se mueva a la celda (3,2)
-# #     Entonces la celda (3,2) queda vacia
+#   Esquema del escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes
+#     Dado que hay una antibiotico en la celda (3,3)
+#     Y hay una bacteria normal en la celda (3,2)
+#     Y hay una bacteria debil en la celda (3,2)
+#     Cuando el antibiotico se mueva a la celda (3,2)
+#     Entonces la celda (3,2) queda vacia
 
 
 
