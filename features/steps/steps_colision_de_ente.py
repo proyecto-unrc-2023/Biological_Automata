@@ -41,12 +41,14 @@ def movimiento_ente(context,n,x1,y1,x2,y2,ente):
         tablero = context.game._board
         context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,var)
 
+@when('el tablero fue actualizado')
+def actualizar_tablero(context):
+    context.game._board.crossing_board()
 
     # for i in range(n):
 
 @then('el tablero no deberia tener {ente} en ({x:d},{y:d})')
 def eliminacion_ente(context,ente,x,y):
-    context.game._board.crossing_board()
     if ente == "antibioticos":
         assert context.game._board.get_cell(x,y)._antibiotics == 0
     elif ente == "bacterias":

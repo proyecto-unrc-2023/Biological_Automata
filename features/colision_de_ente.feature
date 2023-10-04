@@ -9,6 +9,7 @@ Característica: Colisión de entidades
     Y que hay <num> <tipo> en la celda (<bx>,<by>)
     Cuando se mueve <num> antibiotico de (<ax>,<ay>) a (<ex>,<ey>)
     Y se mueve <num> <tipo> de (<bx>,<by>) a (<ex>,<ey>)
+    Y el tablero fue actualizado
     Entonces el tablero no deberia tener antibioticos en (<ex>,<ey>)
     Y el tablero no deberia tener bacterias en (<ex>,<ey>)
     Ejemplos:
@@ -22,6 +23,7 @@ Característica: Colisión de entidades
      Y que hay 1 bacteria fuerte en la celda (<bpos_x>,<bpos_y>)
      Cuando se mueve 1 antibiotico de (<apos_x>,<apos_y>) a (<crash_x>,<crash_y>)
      Y se mueve 1 bacteria fuerte de (<bpos_x>,<bpos_y>) a (<crash_x>,<crash_y>)
+     Y el tablero fue actualizado
      Entonces el tablero no deberia tener antibioticos en (<crash_x>,<crash_y>)
      Y el tablero tiene 1 bacteria debil en (<crash_x>,<crash_y>)
      Ejemplos:
@@ -50,6 +52,7 @@ Característica: Colisión de entidades
      Y se mueve 1 bacteria normal de (<bpos_x>,<bpos_y>) a (<crash_x>,<crash_y>)
      Y se mueve 1 bacteria debil de (<bpos2_x>,<bpos2_y>) a (<crash_x>,<crash_y>)
      Y se mueve 1 bacteria fuerte de (<bpos3_x>,<bpos3_y>) a (<crash_x>,<crash_y>)
+     Y el tablero fue actualizado
      Entonces el tablero no deberia tener antibioticos en (<crash_x>,<crash_y>)
      Y el tablero no deberia tener bacterias en (<crash_x>,<crash_y>)
      Ejemplos:
