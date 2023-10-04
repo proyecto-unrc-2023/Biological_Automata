@@ -50,9 +50,11 @@ def eliminacion_ente(context,ente,x,y):
         assert context.game._board.get_cell(x,y)._antibiotics == 0
     elif ente == "bacterias":
         assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
+    elif ente == "bacteriofago":
+        assert context.game._board.get_cell(x,y)._bacteriofago.__len__() == 0
 
 
-
+#Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
 @then('el tablero tiene {num} {ente} en ({crash_x:d},{crash_y:d})')
 def checkeo_de_bacteria_debil(context,num,ente,crash_x,crash_y):
     assert isinstance(context.game._board.get_cell(crash_x,crash_y)._bacteria[0], BacteriumWeak)
