@@ -35,52 +35,28 @@ Característica: Colisión de entidades
 
 
 # #12
-#   Esquema del escenario: El numero de antibioticos es menor o igual al numero de bacterias en una celda
-#     Dado que hay 1 antibiotico en la celda <apos>
-#     Y que hay 1 bacteria normal en la celda <bpos>
-#     Y que hay 1 bacteria debil en la celda <bpos>
-#     Y que hay 1 bacteria fuerte en la celda <bpos>
-#     Cuando se mueve 1 antibiotico de <apos> a <crash>
-#     Y se mueve 1 bacteria normal de <bpos> a <crash>
-#     Y se mueve 1 bacteria debil de <bpos> a <crash>
-#     Y se mueve 1 bacteria fuerte de <bpos> a <crash>
-#     Entonces el tablero tiene 1 bacteria debil en <crash>
-#     Y el tablero no tiene antiobioticos en <crash>
-
-#     Ejemplos:
-#     |apos   |bpos   |crash  |
-#     |(3,2)  |(3,4)  |(3,3)  |
-#     |(1,1)  |(2,3)  |(1,1)  |
-#     |(2,2)  |(2,4)  |(2,3)  |
-#     |(0,4)  |(1,4)  |(1,3)  |
-#     |(4,3)  |(5,4)  |(4,4)  |
-
-# #13
-#   Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
-#     Dado que hay 1 antibiotico en la celda <apos>
-#     Y que hay 1 antibiotico en la celda <apos2>
-#     Y que hay 1 antibiotico en la celda <apos3>
-#     Y que hay 1 antibiotico en la celda <apos4>
-#     Y que hay 1 bacteria normal en la celda <bpos>
-#     Y que hay 1 bacteria debil en la celda <bpos2>
-#     Y que hay 1 bacteria fuerte en la celda <bpos3>
-#     Cuando se mueve 1 antibiotico de <apos> a <crash>
-#     Y se mueve 1 antibiotico de <apos2> a <crash>
-#     Y se mueve 1 antibiotico de <apos3> a <crash>
-#     Y se mueve 1 antibiotico de <apos4> a <crash>
-#     Y se mueve 1 bacteria normal de <bpos> a <crash>
-#     Y se mueve 1 bacteria debil de <bpos2> a <crash>
-#     Y se mueve 1 bacteria fuerte de <bpos3> a <crash>
-#     Entonces el tablero no tiene antiobioticos en <crash>
-#     Y el tablero no tiene bacterias en <crash>
-
-#     Ejemplos:
-#     |apos  |apos2 |apos3 |apos4 |bpos  |bpos2 |bpos3 |crash |
-#     |(3,1) |(3,3) |(4,2) |(2,2) |(2,3) |(2,3) |(2,1) |(3,2) |
-#     |(2,3) |(2,5) |(3,4) |(1,4) |(1,3) |(1,5) |(1,5) |(2,4) |
-#     |(4,2) |(4,4) |(5,3) |(3,3) |(3,2) |(5,4) |(3,2) |(4,3) |
-
-
+   Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
+     Dado que hay 1 antibiotico en la celda (<apos_x>,<apos_y>)
+     Y que hay 1 antibiotico en la celda (<apos2_x>,<apos2_y>)
+     Y que hay 1 antibiotico en la celda (<apos3_x>,<apos3_y>)
+     Y que hay 1 antibiotico en la celda (<apos4_x>,<apos4_y>)
+     Y que hay 1 bacteria normal en la celda (<bpos_x>,<bpos_y>)
+     Y que hay 1 bacteria debil en la celda (<bpos2_x>,<bpos2_y>)
+     Y que hay 1 bacteria fuerte en la celda (<bpos3_x>,<bpos3_y>)
+     Cuando se mueve 1 antibiotico de (<apos_x>,<apos_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 antibiotico de (<apos2_x>,<apos2_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 antibiotico de (<apos3_x>,<apos3_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 antibiotico de (<apos4_x>,<apos4_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 bacteria normal de (<bpos_x>,<bpos_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 bacteria debil de (<bpos2_x>,<bpos2_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 bacteria fuerte de (<bpos3_x>,<bpos3_y>) a (<crash_x>,<crash_y>)
+     Entonces el tablero no deberia tener antibioticos en (<crash_x>,<crash_y>)
+     Y el tablero no deberia tener bacterias en (<crash_x>,<crash_y>)
+     Ejemplos:
+     |apos_x|apos_y|apos2_x|apos2_y|apos3_x|apos3_y|apos4_x|apos4_y|bpos_x|bpos_y|bpos2_x|bpos2_y |bpos3_x|bpos3_y |crash_x|crash_y|
+     |3     |1     |3      |3      |4      |2      |2      |2      |2     |3     |2      |3       |2      |1       |3      |2      |
+     |2     |3     |2      |5      |3      |4      |1      |4      |1     |3     |1      |5       |1      |5       |2      |4      |
+     |4     |2     |4      |4      |5      |3      |3      |3      |3     |2     |5      |4       |3      |2       |4      |3      |
 
 # #14
 #   Esquema del escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes

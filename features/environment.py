@@ -26,6 +26,6 @@ def initial(context):
     context.game = GameController()
     context.game.set_mode(Game_Mode.ANTIBIOTIC)
     context.game.config(6,6)
-    
+
 def before_scenario(context, scenario):
     use_fixture(initial, context)
