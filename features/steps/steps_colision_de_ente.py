@@ -48,13 +48,11 @@ def movimiento_ente(context,n,x1,y1,x2,y2,ente):
 def eliminacion_ente(context,ente,x,y):
     if ente == "antibioticos":
         assert context.game._board.get_cell(x,y)._antibiotics == 0
-    elif ente == "bacteria normal":
+    elif ente == "bacterias":
         assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria debil":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria fuerte":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria infectada":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteriofago":
-        assert context.game._board.get_cell(x,y)._bacteriophages.__len__() == 0
+
+
+
+@then('el tablero tiene {num} {ente} en ({crash_x:d},{crash_y:d})')
+def checkeo_de_bacteria_debil(context,num,ente,crash_x,crash_y):
+    assert isinstance(context.game._board.get_cell(crash_x,crash_y)._bacteria[0], BacteriumWeak)

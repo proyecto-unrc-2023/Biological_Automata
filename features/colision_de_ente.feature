@@ -10,46 +10,29 @@ Característica: Colisión de entidades
     Cuando se mueve <num> antibiotico de (<ax>,<ay>) a (<ex>,<ey>)
     Y se mueve <num> <tipo> de (<bx>,<by>) a (<ex>,<ey>)
     Entonces el tablero no deberia tener antibioticos en (<ex>,<ey>)
-
+    Y el tablero no deberia tener bacterias en (<ex>,<ey>)
     Ejemplos:
     | ax | ay | bx | by |tipo           | ex | ey |num|
     | 2  | 2  | 2  | 4  |bacteria debil | 2  | 3  | 1 |
     | 1  | 3  | 2  | 5  |bacteria normal| 1  | 4  | 1 |
-    | 4  | 1  | 5  | 3  |bacteria fuerte| 4  | 2  | 1 |
 
-# #10
-#   Esquema del escenario: Una bacteria que no sea fuerte muere al encontrarse con un antibiótico
-#     Dado que hay 1 antibiotico en la celda (<ax>,<ay>)
-#     Y que hay 1 bacteria <tipo> en la celda (<bx>,<by>)
-#     Cuando se mueve 1 antibiotico de (<ax>,<ay>) a (<cx>,<cy>)
-#     Y se mueve 1 bacteria <tipo> de (<bx>,<by>) a (<cx>,<cy>)
-#     Entonces el tablero no tiene antibioticos en (<cx>,<cy>)
-#     Y el tablero no tiene bacterias en (<cx>,<cy>)
+# # #10
+   Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
+     Dado que hay 1 antibiotico en la celda (<apos_x>,<apos_y>)
+     Y que hay 1 bacteria fuerte en la celda (<bpos_x>,<bpos_y>)
+     Cuando se mueve 1 antibiotico de (<apos_x>,<apos_y>) a (<crash_x>,<crash_y>)
+     Y se mueve 1 bacteria fuerte de (<bpos_x>,<bpos_y>) a (<crash_x>,<crash_y>)
+     Entonces el tablero no deberia tener antibioticos en (<crash_x>,<crash_y>)
+     Y el tablero tiene 1 bacteria debil en (<crash_x>,<crash_y>)
+     Ejemplos:
+     |apos_x|apos_y|bpos_x|bpos_y|crash_x|crash_y|
+     |3     |2     |3     |4     |3      |3      |
+     |1     |0     |2     |2     |1      |1      |
+     |3     |3     |3     |5     |3      |4      |
+     |4     |5     |5     |5     |5      |4      |
+     |0     |2     |1     |3     |0      |3      |
+     |3     |1     |4     |2     |3      |3      |
 
-#     Ejemplos:
-#     | ax | ay | bx | by |tipo  | cx | cy |
-#     | 3  | 2  | 3  | 4  |debil | 3  | 3  |
-#     | 1  | 3  | 2  | 4  |normal| 1  | 3  |
-
-  
-# # #11
-
-#   Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
-#     Dado que hay 1 antibiotico en la celda <apos>
-#     Y que hay 1 bacteria fuerte en la celda <bpos>
-#     Cuando se mueve 1 antibiotico de <apos> a <crash>
-#     Y se mueve 1 bacteria de <bpos> a <crash>
-#     Entonces el tablero no tiene antibioticos en <crash>
-#     Y el tablero tiene 1 bacteria debil en <crash>
-
-#     Ejemplos:
-#     |apos   |bpos   |crash  |
-#     |(3,2)  |(3,4)  |(3,3)  |
-#     |(1,0)  |(2,2)  |(1,1)  |
-#     |(3,3)  |(3,5)  |(3,4)  |
-#     |(4,5)  |(5,5)  |(5,4)  |
-#     |(0,2)  |(1,3)  |(0,3)  |
-#     |(3,1)  |(4,2)  |(3,2)  |   
 
 # #12
 #   Esquema del escenario: El numero de antibioticos es menor o igual al numero de bacterias en una celda
@@ -110,11 +93,11 @@ Característica: Colisión de entidades
 
 
 
-# # Bacterias y bacteriófagos    
+# # Bacterias y bacteriófagos
 # #22
-#   Esquema del escenario: Una bacteria se cruza con un bacteriófago                            
+#   Esquema del escenario: Una bacteria se cruza con un bacteriófago
 #     Dado que hay una bacteria <tipo> en la celda <bpos>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder> 
+#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
 #     Cuando la bacteria y el bacteriofago se mueven a la posición <crash>
 #     Entonces el tablero deberia contener una bacteria infectada de grado <grado>
 
@@ -131,7 +114,7 @@ Característica: Colisión de entidades
 # #23
 #   Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
 #     Dado que hay una bacteria infectada en la celda <bpos> con grado de infeccion <grado>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder> 
+#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
 #     Cuando la bacteria y el bacteriofago se mueven a la celda <crash>
 #     Entonces en el tablero queda un bacteria infectada con grado <gradoInc>
 #     Y un bacteriófago con poder de infección <poderDec>
@@ -143,7 +126,7 @@ Característica: Colisión de entidades
 #     |(2,3)  |(2,5)  |(2,4)  |2    |1        |2    |3       |
 
 # #24
-#   Esquema del escenario: Una bacteria es infectada por dos bacteriófagos                                    
+#   Esquema del escenario: Una bacteria es infectada por dos bacteriófagos
 #     Dado que hay una bacteria <tipo> en la celda <bpos>
 #     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
 #     Y un bacteriofago en la celda <bfpos2> con poder de infeccion <poder2>
@@ -159,7 +142,7 @@ Característica: Colisión de entidades
 
 
 # #25
-#   Esquema del escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago                
+#   Esquema del escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago
 #     Dado que hay una bacteria <tipo> en la celda <bpos>
 #     Y hay una bacteria <tipo> en la celda <bpos2>
 #     Y hay una bacteria <tipo> en la celda <bpos3>
