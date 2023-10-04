@@ -90,7 +90,7 @@ class GameController:
 
 
     def refresh_board(self):
-        actualizado = self._board.move_entity()
+        actualizado = self._board.move_all_entities()
         self.__board = actualizado
         self.__frecuency += 1
         if (self.__frecuency == 2):

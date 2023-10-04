@@ -25,11 +25,11 @@ class Board:
     def from_string(board_str):
         rows = board_str.split('\n')
         n_rows = len(rows)
-        if n_rows < 1:
+        if n_rows <= 1:
             raise ValueError(f'Invalid number of rows: {n_rows}')
         matrix = [row.split('|') for row in rows]
         n_cols = len(matrix[0])
-        if n_cols < 1:
+        if n_cols <= 1:
             raise ValueError(f'Invalid number of columns: {n_cols}')
         for row in range(n_rows):
             row_len = len(matrix[row])
@@ -155,13 +155,12 @@ class Board:
         return moves
 
 
-    def move_entity(self):
+    def move_all_entities(self):
         new_board = Board(self.__rows, self.__columns)
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
         for row in range(self.__rows):
             for colum in range(self.__columns):
-            #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
                 new_board = self.move_entities(row, colum, new_board)
         return new_board
 
@@ -172,9 +171,6 @@ class Board:
                 self.__board[row][colum].update_cell()
 
     def move_entities(self, x, y, new_board):
-        #board_actualizado = Board(self.__rows,self.__columns)
-        #board_actualizado.set_position_spawn_other(self.__position_spawn_other)
-        #board_actualizado.set_position_spawn_bacterium(self.__position_spawn_bacterium)
         new_x = None
         new_y = None
         for bacterium in self.__board[x][y]._bacteria:
@@ -197,4 +193,18 @@ class Board:
                 bacteriophage.add_move()
                 new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection-1)	
     
+        return new_board
+    
+    def move_entity(self, new_x,new_y, x,y, new_board, entity: Entity):
+        if entity.__str__() == 'b'or entity.__str__() == 'f'or entity.__str__() == 'd'or entity.__str__() ==  'i':
+                    new_board.get_cell(new_x,new_y)._bacterium = entity
+                    entity.add_move()
+                    new_board.get_cell(x,y)._bacteria.remove(entity)
+        elif entity.__str__() == 'v':
+            new_board.get_cell(new_x,new_y)._bacteriophages = entity
+            entity.add_move()
+            new_board.get_cell(x,y)._bacteriophages.remove(entity)
+        else:
+            new_board.get_cell(new_x,new_y).add_antibiotic()
+            new_board.get_cell(x,y)._antibiotics = new_board.get_cell(x,y)._antibiotics -1
         return new_board
