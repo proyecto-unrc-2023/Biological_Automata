@@ -45,37 +45,39 @@ class Cell:
 	@staticmethod
 	def from_string(cell_str):
 		cell = Cell()
-		for i in range (cell_str.__len__()-1):
+		for i in range (0,cell_str.__len__()-1,2):
 			num = cell_str[i]
+			if cell_str == 'sb':
+				cell.set_spawn_bacterium()
+				break
+			if cell_str == 'so':
+				cell.set_spawn_other()
+				break
 			if cell_str[i+1] == 'b':
 				for _ in  range(int(num)):
 					cell._bacterium = BacteriumNormal(0)
-				i += 1
 				continue
 			if cell_str[i+1] == 'f':
 				for _ in  range(int(num)):
 					cell._bacterium = BacteriumStrong(0)
-				i += 1
 				continue
 			elif cell_str[i+1] == 'i':
-				for _ in range(num):
+				for _ in range(int(num)):
 					cell._bacterium = BacteriumInfected(0)
-				i += 1
 				continue
 			elif cell_str[i+1] == 'd':
 				for _ in range(int(num)):
 					cell._bacterium = BacteriumWeak(0)
-				i += 1
 				continue
 			elif cell_str[i+1] == 'a':
-				cell._antibiotics = int(i)
-				i += 1
+				cell._antibiotics = int(num)
 				continue
 			elif cell_str[i+1] == 'v':
 				for _ in  range(int(num)):
 					cell._bacteriophages = Bacteriophage(4)
-				i += 1
 				continue
+			else:
+				raise ValueError(f'string invalido')
 		return cell
 
 	def get_spawn_other(self):
@@ -103,7 +105,7 @@ class Cell:
 				if self._bacteria[i].__str__() != other._bacteria[i].__str__():
 					return False
 			for i in range(self.cant_bacteriophages()):
-				if self._bacteriophages[i].__str__() != other._bacteriophages[i].__str__():
+				if self._bacteriophages[i].__str_aux__() != other._bacteriophages[i].__str_aux__():
 					return False
 			return True
 		return False
