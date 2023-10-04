@@ -14,7 +14,9 @@ def test_initial_cell(cell):
     assert cell.cant_bacteria() == 0
     assert cell.cant_bacteriophages() == 0
     assert cell.get_spawn_bacterium() == False
+    assert cell.is_spawn_bacterium() == False
     assert cell.get_spawn_other() == False
+    assert cell.is_spawn_other() == False
     assert cell.is_empty()
 
 def test_spawn_bacterium_cell(cell):
@@ -57,6 +59,18 @@ def test_not_eq_cell(cell):
     cell.set_spawn_bacterium()
     assert not (cell.__eq__(cell_aux))
 
+def test_not_eq_cell_bacterium(cell):
+    cell_aux = Cell()
+    cell_aux.add_bacterium(1,'b')
+    cell.add_bacterium(1,'f')
+    assert not (cell.__eq__(cell_aux))
+
+def test_not_eq_cell_bacteriophage(cell):
+    cell_aux = Cell()
+    cell.add_bacteriophage(4)
+    cell_aux.add_bacteriophage(3)
+    assert not(cell.__eq__(cell_aux))
+
 def test_add_bacterium(cell):
     cell.add_bacterium(0,'b')
     assert cell.cant_bacteria() == 1
@@ -81,13 +95,6 @@ def test_add_bacteriophage(cell):
     assert cell.__str__() == '1v'
     assert cell._bacteriophages[0].infection == 4
 
-#def test_add_bacteriophage_class(cell):
-#    bacterio = Bacteriophage(4)
-#    cell._bacteriophages = bacterio
-#    assert cell.cant_bacteriophages() == 1
-#    assert cell._bacteriophages.__str__() == 'v'
-#    assert cell._bacteriophages._infection == 4
-
 
 def test_add_entes(cell):
     cell._bacterium = BacteriumNormal(0)
@@ -95,24 +102,27 @@ def test_add_entes(cell):
     cell_aux = Cell()
     cell_aux._bacterium = BacteriumNormal(0)
     cell_aux._antibiotics = 5
-
     assert cell.__eq__(cell_aux)
 
-def test_add_diferent_bacteriophages(cell):
-    cell.add_bacteriophage(4)
-    cell_aux = Cell()
-    cell_aux.add_bacteriophage(2)
-    assert cell.__eq__(cell_aux)
+def test_add_move(cell):
+      cell._bacterium = BacteriumNormal(0)
+      cell.add_bacteriophage(4)
+      cell.add_move()
+      assert cell._bacterium[0].moves == 1
+      assert cell._bacteriophages[0].infection == 3
 
 def test_to_string_1(cell):
     cell.add_bacterium(0,'b')
     cell.add_bacterium(0,'f')
+    cell.add_bacterium(0,'i')
+    cell.add_bacterium(0,'d')
     assert cell.cant_ente('b') == 1
     assert cell.cant_ente('f') == 1
+    cell.add_antibiotic()
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
     # string = cell.__str__()
-    assert cell.__str__() == '1b1f2v'
+    assert cell.__str__() == '1a1b1f1d1i2v'
 
 def test_to_string_2(cell):
     cell.add_bacterium(0,'b')
@@ -126,11 +136,29 @@ def test_to_string_2(cell):
     assert cell.__str__() == '2b1f2v'
 
 def test_from_string():
-    cell = Cell.from_string('1b1f2v')
+    cell = Cell.from_string('1a1b1f1d1i2v')
+    assert cell.cant_ente('a') == 1
     assert cell.cant_ente('b') == 1
     assert cell.cant_ente('f') == 1
+    assert cell.cant_ente('d') == 1
+    assert cell.cant_ente('i') == 1
     assert cell.cant_ente('v') == 2
-    assert cell.__str__() == '1b1f2v'
+    assert cell.__str__() == '1a1b1f1d1i2v'
+
+def test_from_string_empty():
+    cell = Cell.from_string(' ')
+    assert cell.__str__() == ' '
+
+def test_from_string_spwn_bacterium():
+    cell = Cell.from_string('sb')
+    assert cell.__str__() == 'sb'
+
+def test_from_string_spwn_other():
+    cell = Cell.from_string('so')
+    assert cell.__str__() == 'so'
+def test_from_string_error():
+    with pytest.raises(ValueError):
+        cell = Cell.from_string('sO1b')
 
 def test_overpoblation_strongest(cell):
     cell.add_bacterium(0,'b')
