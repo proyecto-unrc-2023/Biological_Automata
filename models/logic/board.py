@@ -196,15 +196,16 @@ class Board:
         return new_board
     
     def move_entity(self, new_x,new_y, x,y, new_board, entity: Entity):
-        if entity.__str__() == 'b'or entity.__str__() == 'f'or entity.__str__() == 'd'or entity.__str__() ==  'i':
+        if isinstance(entity, Bacterium):
                     new_board.get_cell(new_x,new_y)._bacterium = entity
                     entity.add_move()
                     new_board.get_cell(x,y)._bacteria.remove(entity)
-        elif entity.__str__() == 'v':
+        elif isinstance(entity, Bacteriophage):
             new_board.get_cell(new_x,new_y)._bacteriophages = entity
             entity.add_move()
             new_board.get_cell(x,y)._bacteriophages.remove(entity)
         else:
             new_board.get_cell(new_x,new_y).add_antibiotic()
             new_board.get_cell(x,y)._antibiotics = new_board.get_cell(x,y)._antibiotics -1
+            
         return new_board
