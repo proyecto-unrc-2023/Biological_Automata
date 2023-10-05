@@ -37,17 +37,11 @@ Característica: Colisión de entidades
 
 # #12
    Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
-     Dado que hay 1 antibiotico en la celda <ant_pos>
-     Y que hay 1 antibiotico en la celda <ant_pos2>
-     Y que hay 1 antibiotico en la celda <ant_pos3>
-     Y que hay 1 antibiotico en la celda <ant_pos4>
+     Dado que hay 4 antibiotico en la celda <ant_pos>
      Y que hay 1 bacteria normal en la celda <bact_pos>
      Y que hay 1 bacteria debil en la celda <bact_pos2>
      Y que hay 1 bacteria fuerte en la celda <bact_pos3>
-     Cuando se mueve 1 antibiotico de <ant_pos> a <crash>
-     Y se mueve 1 antibiotico de <ant_pos2> a <crash>
-     Y se mueve 1 antibiotico de <ant_pos3> a <crash>
-     Y se mueve 1 antibiotico de <ant_pos4> a <crash>
+     Cuando se mueve 4 antibiotico de <ant_pos> a <crash>
      Y se mueve 1 bacteria normal de <bact_pos> a <crash>
      Y se mueve 1 bacteria debil de <bact_pos2> a <crash>
      Y se mueve 1 bacteria fuerte de <bact_pos3> a <crash>
@@ -55,10 +49,36 @@ Característica: Colisión de entidades
      Entonces el tablero no deberia tener antibioticos en <crash>
      Y el tablero no deberia tener bacterias en <crash>
      Ejemplos:
-     |ant_pos|ant_pos2|ant_pos3|ant_pos4|bact_pos|bact_pos2|bact_pos3|crash|
-     |(3,1)  |(3,3)   |(4,2)   |(2,2)   |(2,3)   |(2,3)    |(2,1)    |(3,2)|
-     |(2,3)  |(2,5)   |(3,4)   |(1,4)   |(1,3)   |(1,5)    |(1,5)    |(2,4)|
-     |(4,2)  |(4,4)   |(5,3)   |(3,3)   |(3,2)   |(5,4)    |(3,2)    |(4,3)|
+     |ant_pos|bact_pos|bact_pos2|bact_pos3|crash|
+     |(3,1)  |(2,3)   |(2,3)    |(2,1)    |(3,2)|
+     |(2,3)  |(1,3)   |(1,5)    |(1,5)    |(2,4)|
+     |(4,2)  |(3,2)   |(5,4)    |(3,2)    |(4,3)|
+
+
+     # #12
+  #  Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
+  #    Dado que hay 1 antibiotico en la celda <ant_pos>
+  #    Y que hay 1 antibiotico en la celda <ant_pos2>
+  #    Y que hay 1 antibiotico en la celda <ant_pos3>
+  #    Y que hay 1 antibiotico en la celda <ant_pos4>
+  #    Y que hay 1 bacteria normal en la celda <bact_pos>
+  #    Y que hay 1 bacteria debil en la celda <bact_pos2>
+  #    Y que hay 1 bacteria fuerte en la celda <bact_pos3>
+  #    Cuando se mueve 1 antibiotico de <ant_pos> a <crash>
+  #    Y se mueve 1 antibiotico de <ant_pos2> a <crash>
+  #    Y se mueve 1 antibiotico de <ant_pos3> a <crash>
+  #    Y se mueve 1 antibiotico de <ant_pos4> a <crash>
+  #    Y se mueve 1 bacteria normal de <bact_pos> a <crash>
+  #    Y se mueve 1 bacteria debil de <bact_pos2> a <crash>
+  #    Y se mueve 1 bacteria fuerte de <bact_pos3> a <crash>
+  #    Y el tablero fue actualizado
+  #    Entonces el tablero no deberia tener antibioticos en <crash>
+  #    Y el tablero no deberia tener bacterias en <crash>
+  #    Ejemplos:
+  #    |ant_pos|ant_pos2|ant_pos3|ant_pos4|bact_pos|bact_pos2|bact_pos3|crash|
+  #    |(3,1)  |(3,3)   |(4,2)   |(2,2)   |(2,3)   |(2,3)    |(2,1)    |(3,2)|
+  #    |(2,3)  |(2,5)   |(3,4)   |(1,4)   |(1,3)   |(1,5)    |(1,5)    |(2,4)|
+  #    |(4,2)  |(4,4)   |(5,3)   |(3,3)   |(3,2)   |(5,4)    |(3,2)    |(4,3)|
 
 # #14
 #   Esquema del escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes
@@ -122,7 +142,7 @@ Característica: Colisión de entidades
 
 # #25
 #   Esquema del escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago
-#     Dado que hay una bacteria <tipo> en la celda <bpos>
+#     Dado que hay 1 <tipo> en la celda <bpos>
 #     Y hay una bacteria <tipo> en la celda <bpos2>
 #     Y hay una bacteria <tipo> en la celda <bpos3>
 #     Y hay una bacteria <tipo> en la celda <bpos4>
@@ -131,8 +151,8 @@ Característica: Colisión de entidades
 #     Entonces el tablero deberia contener una bacteria infectada de grado <grado>
 
 #     Ejemplos:
-#     |bfpos  |bpos  |bpos2  |bpos3 |bpos4  |crash  |poder|grado|tipo  |
-#     |(3,2)  |(2,2) |(4,3)  |(2,4) |(3,4)  |(3,3)  |3    |2    |normal|
-#     |(1,3)  |(0,3) |(2,4)  |(0,5) |(1,5)  |(1,4)  |2    |1    |fuerte|
-#     |(4,0)  |(3,0) |(5,1)  |(3,2) |(4,2)  |(4,1)  |4    |3    |normal|
+#     |bfpos  |bpos  |bpos2  |bpos3 |bpos4  |crash  |poder|grado|tipo           |
+#     |(3,2)  |(2,2) |(4,3)  |(2,4) |(3,4)  |(3,3)  |3    |2    |bacteria normal|
+#     |(1,3)  |(0,3) |(2,4)  |(0,5) |(1,5)  |(1,4)  |2    |1    |bacteria fuerte|
+#     |(4,0)  |(3,0) |(5,1)  |(3,2) |(4,2)  |(4,1)  |4    |3    |bacteria normal|
 
