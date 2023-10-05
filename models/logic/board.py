@@ -196,17 +196,16 @@ class Board:
     
         return new_board
     
-    def move_entity(self, new_x,new_y, x,y, new_board, entity: Entity):
-        if isinstance(entity, Bacterium):
-                    new_board.get_cell(new_x,new_y)._bacterium = entity
+    def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
+        if isinstance(entity,Bacterium):
+                    board.get_cell(new_x,new_y)._bacterium = entity
                     entity.add_move()
-                    new_board.get_cell(x,y)._bacteria.remove(entity)
-        elif isinstance(entity, Bacteriophage):
-            new_board.get_cell(new_x,new_y)._bacteriophages = entity
+                    board.get_cell(x,y)._bacteria.remove(entity)
+        elif isinstance(entity,Bacteriophage):
+            board.get_cell(new_x,new_y)._bacteriophages = entity
             entity.add_move()
-            new_board.get_cell(x,y)._bacteriophages.remove(entity)
+            board.get_cell(x,y)._bacteriophages.remove(entity)
         else:
-            new_board.get_cell(new_x,new_y).add_antibiotic()
-            new_board.get_cell(x,y)._antibiotics = new_board.get_cell(x,y)._antibiotics -1
-            
-        return new_board
+            board.get_cell(new_x,new_y).add_antibiotic()
+            board.get_cell(x,y)._antibiotics = board.get_cell(x,y)._antibiotics -1
+        return board
