@@ -151,7 +151,7 @@ class Cell:
 
 	def cant_bacteriophages(self):
 		return self.__bacteriophages.__len__()
-
+	
 	def is_empty(self):
 		if self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other):
 			return True
@@ -195,6 +195,8 @@ class Cell:
 
 	#actualizo por la recuperación de bacterias
 		self.update_for_recovery()
+
+		self.burst_bacteriophage()
 
 
 	def high_dose_antibiotic(self):
@@ -257,3 +259,13 @@ class Cell:
 			bacterium.add_move()
 		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()
+	
+	
+	def burst_bacteriophage(self):
+		for bacterium in self.__bacteria:
+			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
+						self.__bacteria.remove(bacterium)
+						bacteriophage = Bacteriophage(4)
+						for _ in range(4):
+							self.__bacteriophages.append(bacteriophage)
+				

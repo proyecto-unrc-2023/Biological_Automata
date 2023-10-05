@@ -124,7 +124,8 @@ class Board:
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
         self.__board[row][colum]._bacteriophages = bacteriophage
-
+        
+    
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
             for row in range(self.__rows):
