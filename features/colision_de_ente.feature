@@ -69,22 +69,25 @@ Característica: Colisión de entidades
 #     Entonces la celda (3,2) queda vacia
 
 
-# # Bacterias y bacteriófagos
-# #22
-#   Esquema del escenario: Una bacteria se cruza con un bacteriófago
-#     Dado que hay una bacteria <tipo> en la celda <bpos>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
-#     Cuando la bacteria y el bacteriofago se mueven a la posición <crash>
-#     Entonces el tablero deberia contener una bacteria infectada de grado <grado>
+# Bacterias y bacteriófagos
+#22
+   Esquema del escenario: Una bacteria se cruza con un bacteriofago
+     Dado que hay 1 <tipo> en la celda <bpos>
+     Y hay 1 bacteriofago en la celda <bfpos> con poder de infeccion <poder>
+     Cuando se mueve 1 <tipo> de <bpos> a <crash>
+     Y se mueve 1 bacteriofago de <bfpos> a <crash>
+     Y el tablero fue actualizado
+     Entonces  deberia haber 1 bacteria infectada de <grado> en <crash>
+     Y el tablero no deberia tener bacteriofagos en <crash>
 
-#     Ejemplos:
-#     |bfpos  |bpos   |crash  |poder|grado|tipo  |
-#     |(3,2)  |(3,4)  |(3,3)  |4    |3    |normal|
-#     |(1,2)  |(2,4)  |(1,3)  |3    |2    |normal|
-#     |(0,0)  |(0,2)  |(0,1)  |2    |1    |normal|
-#     |(4,3)  |(5,3)  |(5,2)  |4    |3    |fuerte|
-#     |(2,4)  |(3,5)  |(2,5)  |3    |2    |fuerte|
-#     |(3,1)  |(5,1)  |(3,1)  |2    |1    |fuerte|
+     Ejemplos:
+     |bfpos  |bpos   |crash  |poder|grado|tipo  |
+     |(3,2)  |(3,4)  |(3,3)  |4    |3    |bacteria normal|
+     |(1,2)  |(2,4)  |(1,3)  |3    |2    |bacteria normal|
+     |(0,0)  |(0,2)  |(0,1)  |2    |1    |bacteria normal|
+     |(4,3)  |(5,3)  |(5,2)  |4    |3    |bacteria fuerte|
+     |(2,4)  |(3,5)  |(2,5)  |3    |2    |bacteria fuerte|
+     |(3,1)  |(5,1)  |(3,1)  |2    |1    |bacteria fuerte|
 
 
 # #23
