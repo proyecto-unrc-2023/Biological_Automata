@@ -34,26 +34,33 @@ def modo_de_juego(context,modo):
 def completar_parametros(context,ac,a,b,c,d):
     if ac == "b":
         context.game.set_spawn_bacterium((a,b))
-        context.game.set_cant_bacteria(c)
+        context.game.set_cant_bacterium(c)
+        context.game.set_frecuency_bacterium(d)
     else:
         context.game.set_spawn_other((a,b))
         if ac == "a":
             context.game.set_cant_antibiotic(c)
+            context.game.set_frecuency_antibiotic(d)
         else:
             context.game.set_cant_bacteriophage(c)
-    context.game.set_frecuency(d)
+            context.game.set_frecuency_bacteriophage(d)
+
+
 
 @then('el tablero resultante tendra {c:d},{d:d}, para {ac} ({a:d},{b:d})')
 def tablero_parametrizado(context,ac,a,b,c,d):
     if ac == "b":
         assert context.game._board.get_position_spawn_bacterium().__eq__((a,b))
-        assert context.game._cant_bacteria == c
+        assert context.game._cant_bacterium == c
+        assert context.game._frecuency_bacterium
     else:
         assert context.game._board.get_position_spawn_other().__eq__((a,b))
         if ac == "a":
             assert context.game._cant_antibiotic == c
+            assert context.game._frecuency_antibiotic
         else:
             assert context.game._cant_bacteriophage == c
-    assert context.game._frecuency == d
+            assert context.game._frecuency_bacteriophage
+    
 
 
