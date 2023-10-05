@@ -5,61 +5,60 @@ Característica: Colisión de entidades
 # Bacterias y antibioticos
 #9
   Esquema del escenario: Los antibioticos desaparecen al tener contacto con cualquier tipo de bacteria
-    Dado que hay <num> antibiotico en la celda (<ax>,<ay>)
-    Y que hay <num> <tipo> en la celda (<bx>,<by>)
-    Cuando se mueve <num> antibiotico de (<ax>,<ay>) a (<ex>,<ey>)
-    Y se mueve <num> <tipo> de (<bx>,<by>) a (<ex>,<ey>)
+    Dado que hay 1 antibiotico en la celda <pos_b>
+    Y que hay 1 <tipo> en la celda <pos2_b>
+    Cuando se mueve 1 antibiotico de <pos_b> a <crash>
+    Y se mueve 1 <tipo> de <pos2_b> a <crash>
     Y el tablero fue actualizado
-    Entonces el tablero no deberia tener antibioticos en (<ex>,<ey>)
-    Y el tablero no deberia tener bacterias en (<ex>,<ey>)
+    Entonces el tablero no deberia tener antibioticos en <crash>
+    Y el tablero no deberia tener bacterias en <crash>
     Ejemplos:
-    | ax | ay | bx | by |tipo           | ex | ey |num|
-    | 2  | 2  | 2  | 4  |bacteria debil | 2  | 3  | 1 |
-    | 1  | 3  | 2  | 5  |bacteria normal| 1  | 4  | 1 |
+    |pos_b|pos2_b|tipo           |crash|
+    |(2,2)|(2,4) |bacteria debil |(2,3)|
+    |(1,3)|(2,5) |bacteria normal|(1,4)|
 
-# # #10
+ # #10
    Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
-     Dado que hay 1 antibiotico en la celda (<apos_x>,<apos_y>)
-     Y que hay 1 bacteria fuerte en la celda (<bpos_x>,<bpos_y>)
-     Cuando se mueve 1 antibiotico de (<apos_x>,<apos_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 bacteria fuerte de (<bpos_x>,<bpos_y>) a (<crash_x>,<crash_y>)
+     Dado que hay 1 antibiotico en la celda <ant_pos>
+     Y que hay 1 bacteria fuerte en la celda <bact_pos>
+     Cuando se mueve 1 antibiotico de <ant_pos> a <crash>
+     Y se mueve 1 bacteria fuerte de <bact_pos> a <crash>
      Y el tablero fue actualizado
-     Entonces el tablero no deberia tener antibioticos en (<crash_x>,<crash_y>)
-     Y el tablero tiene 1 bacteria debil en (<crash_x>,<crash_y>)
+     Entonces el tablero no deberia tener antibioticos en <crash>
+     Y el tablero deberia tener 1 bacteria debil en <crash>
      Ejemplos:
-     |apos_x|apos_y|bpos_x|bpos_y|crash_x|crash_y|
-     |3     |2     |3     |4     |3      |3      |
-     |1     |0     |2     |2     |1      |1      |
-     |3     |3     |3     |5     |3      |4      |
-     |4     |5     |5     |5     |5      |4      |
-     |0     |2     |1     |3     |0      |3      |
-     |3     |1     |4     |2     |3      |3      |
-
+      |ant_pos|bact_pos|crash|
+      |(3,2)  |(3,4)   |(3,3)|
+      |(1,0)  |(2,2)   |(1,1)|
+      |(3,3)  |(3,5)   |(3,4)|
+      |(4,5)  |(5,5)   |(5,4)|
+      |(0,2)  |(1,3)   |(0,3)|
+      |(3,1)  |(4,2)   |(3,2)|
 
 # #12
    Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
-     Dado que hay 1 antibiotico en la celda (<apos_x>,<apos_y>)
-     Y que hay 1 antibiotico en la celda (<apos2_x>,<apos2_y>)
-     Y que hay 1 antibiotico en la celda (<apos3_x>,<apos3_y>)
-     Y que hay 1 antibiotico en la celda (<apos4_x>,<apos4_y>)
-     Y que hay 1 bacteria normal en la celda (<bpos_x>,<bpos_y>)
-     Y que hay 1 bacteria debil en la celda (<bpos2_x>,<bpos2_y>)
-     Y que hay 1 bacteria fuerte en la celda (<bpos3_x>,<bpos3_y>)
-     Cuando se mueve 1 antibiotico de (<apos_x>,<apos_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 antibiotico de (<apos2_x>,<apos2_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 antibiotico de (<apos3_x>,<apos3_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 antibiotico de (<apos4_x>,<apos4_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 bacteria normal de (<bpos_x>,<bpos_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 bacteria debil de (<bpos2_x>,<bpos2_y>) a (<crash_x>,<crash_y>)
-     Y se mueve 1 bacteria fuerte de (<bpos3_x>,<bpos3_y>) a (<crash_x>,<crash_y>)
+     Dado que hay 1 antibiotico en la celda <ant_pos>
+     Y que hay 1 antibiotico en la celda <ant_pos2>
+     Y que hay 1 antibiotico en la celda <ant_pos3>
+     Y que hay 1 antibiotico en la celda <ant_pos4>
+     Y que hay 1 bacteria normal en la celda <bact_pos>
+     Y que hay 1 bacteria debil en la celda <bact_pos2>
+     Y que hay 1 bacteria fuerte en la celda <bact_pos3>
+     Cuando se mueve 1 antibiotico de <ant_pos> a <crash>
+     Y se mueve 1 antibiotico de <ant_pos2> a <crash>
+     Y se mueve 1 antibiotico de <ant_pos3> a <crash>
+     Y se mueve 1 antibiotico de <ant_pos4> a <crash>
+     Y se mueve 1 bacteria normal de <bact_pos> a <crash>
+     Y se mueve 1 bacteria debil de <bact_pos2> a <crash>
+     Y se mueve 1 bacteria fuerte de <bact_pos3> a <crash>
      Y el tablero fue actualizado
-     Entonces el tablero no deberia tener antibioticos en (<crash_x>,<crash_y>)
-     Y el tablero no deberia tener bacterias en (<crash_x>,<crash_y>)
+     Entonces el tablero no deberia tener antibioticos en <crash>
+     Y el tablero no deberia tener bacterias en <crash>
      Ejemplos:
-     |apos_x|apos_y|apos2_x|apos2_y|apos3_x|apos3_y|apos4_x|apos4_y|bpos_x|bpos_y|bpos2_x|bpos2_y |bpos3_x|bpos3_y |crash_x|crash_y|
-     |3     |1     |3      |3      |4      |2      |2      |2      |2     |3     |2      |3       |2      |1       |3      |2      |
-     |2     |3     |2      |5      |3      |4      |1      |4      |1     |3     |1      |5       |1      |5       |2      |4      |
-     |4     |2     |4      |4      |5      |3      |3      |3      |3     |2     |5      |4       |3      |2       |4      |3      |
+     |ant_pos|ant_pos2|ant_pos3|ant_pos4|bact_pos|bact_pos2|bact_pos3|crash|
+     |(3,1)  |(3,3)   |(4,2)   |(2,2)   |(2,3)   |(2,3)    |(2,1)    |(3,2)|
+     |(2,3)  |(2,5)   |(3,4)   |(1,4)   |(1,3)   |(1,5)    |(1,5)    |(2,4)|
+     |(4,2)  |(4,4)   |(5,3)   |(3,3)   |(3,2)   |(5,4)    |(3,2)    |(4,3)|
 
 # #14
 #   Esquema del escenario: Cruce de antibioticos con bacterias en una celda y no hay bacterias fuertes
@@ -70,24 +69,25 @@ Característica: Colisión de entidades
 #     Entonces la celda (3,2) queda vacia
 
 
+# Bacterias y bacteriófagos
+#22
+   Esquema del escenario: Una bacteria se cruza con un bacteriofago
+     Dado que hay 1 <tipo> en la celda <bpos>
+     Y hay 1 bacteriofago en la celda <bfpos> con poder de infeccion <poder>
+     Cuando se mueve 1 <tipo> de <bpos> a <crash>
+     Y se mueve 1 bacteriofago de <bfpos> a <crash>
+     Y el tablero fue actualizado
+     Entonces  deberia haber 1 bacteria infectada de <grado> en <crash>
+     Y el tablero no deberia tener bacteriofagos en <crash>
 
-
-# # Bacterias y bacteriófagos
-# #22
-#   Esquema del escenario: Una bacteria se cruza con un bacteriófago
-#     Dado que hay una bacteria <tipo> en la celda <bpos>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
-#     Cuando la bacteria y el bacteriofago se mueven a la posición <crash>
-#     Entonces el tablero deberia contener una bacteria infectada de grado <grado>
-
-#     Ejemplos:
-#     |bfpos  |bpos   |crash  |poder|grado|tipo  |
-#     |(3,2)  |(3,4)  |(3,3)  |4    |3    |normal|
-#     |(1,2)  |(2,4)  |(1,3)  |3    |2    |normal|
-#     |(0,0)  |(0,2)  |(0,1)  |2    |1    |normal|
-#     |(4,3)  |(5,3)  |(5,2)  |4    |3    |fuerte|
-#     |(2,4)  |(3,5)  |(2,5)  |3    |2    |fuerte|
-#     |(3,1)  |(5,1)  |(3,1)  |2    |1    |fuerte|
+     Ejemplos:
+     |bfpos  |bpos   |crash  |poder|grado|tipo  |
+     |(3,2)  |(3,4)  |(3,3)  |4    |3    |bacteria normal|
+     |(1,2)  |(2,4)  |(1,3)  |3    |2    |bacteria normal|
+     |(0,0)  |(0,2)  |(0,1)  |2    |1    |bacteria normal|
+     |(4,3)  |(5,3)  |(5,2)  |4    |3    |bacteria fuerte|
+     |(2,4)  |(3,5)  |(2,5)  |3    |2    |bacteria fuerte|
+     |(3,1)  |(5,1)  |(3,1)  |2    |1    |bacteria fuerte|
 
 
 # #23
