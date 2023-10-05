@@ -5,7 +5,7 @@ Característica: Se inicia el juego
   Esquema del escenario: Se crea el tablero inicial
     Dado el usuario ingreso al modo de juego de <modo>
     Cuando se da inicio al juego
-    Entonces se deberia crear un tablero de 6 x 6
+    Entonces se deberia crear un tablero de 30 x 50
     Y el modo de juego deberia ser <modo>
 
     Ejemplos:

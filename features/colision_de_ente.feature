@@ -4,18 +4,16 @@ Característica: Colisión de entidades
 
 # Bacterias y antibioticos
 #9
-  Esquema del escenario: Los antibioticos desaparecen al tener contacto con cualquier tipo de bacteria
-    Dado que hay 1 antibiotico en la celda <pos_b>
-    Y que hay 1 <tipo> en la celda <pos2_b>
-    Cuando se mueve 1 antibiotico de <pos_b> a <crash>
-    Y se mueve 1 <tipo> de <pos2_b> a <crash>
-    Y el tablero fue actualizado
+  Esquema del escenario: Cuando un antibitico y una bacteria (debil o normal) colisionan, ambos desaparecen
+    Dado que hay 1 antibiotico en la celda <crash>
+    Y que hay 1 <tipo> en la celda <crash>
+    Cuando se produce el confrontamiento
     Entonces el tablero no deberia tener antibioticos en <crash>
-    Y el tablero no deberia tener bacterias en <crash>
+    Y el tablero no deberia tener <tipo> en <crash>
     Ejemplos:
-    |pos_b|pos2_b|tipo           |crash|
-    |(2,2)|(2,4) |bacteria debil |(2,3)|
-    |(1,3)|(2,5) |bacteria normal|(1,4)|
+    |tipo           |crash|
+    |bacteria debil |(2,3)|
+    |bacteria normal|(1,4)|
 
  # #10
    Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
