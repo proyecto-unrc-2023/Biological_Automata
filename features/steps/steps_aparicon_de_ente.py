@@ -2,25 +2,34 @@ from behave import *
 from models.logic.Bacterium import Bacterium
 from models.logic.Bacteriophage import Bacteriophage
 
-
-
-# aparicion de ente cerca de un spawn
-@when("el usuario da inicio al juego, con un {e} en ({x:d},{y:d})")
-def empieza_el_juego(context,e,x,y):
-    if e == "b":
-        context.game._board.get_cell(x,y).add_bacterium(1,"b")
-    elif e == "a":
-        context.game._board.get_cell(x,y).add_antibiotic()
+# se configuran los parametrso iniciales
+@given('el usuario configura los parametros iniciales de {ac} con (({a:d},{b:d}),{c:d},{d:d})')
+def completar_parametros(context,ac,a,b,c,d):
+    if ac == "b":
+        context.game.set_spawn_bacterium((a,b))
+        context.game.set_cant_bacterium(c)
+        context.game.set_frecuency_bacterium(d)
     else:
-        context.game._board.get_cell(x,y).add_bacteriophage(4)
+        context.game.set_spawn_other((a,b))
+        if ac == "a":
+            context.game.set_cant_antibiotic(c)
+            context.game.set_frecuency_antibiotic(d)
+        else:
+            context.game.set_cant_bacteriophage(c)
+            context.game.set_frecuency_bacteriophage(d)
 
-@then("en la posicion ({x:d},{y:d}) aparece 1 {e}")
-def se_produce_ente(context,x,y,e):
-    if e == "bacteria":
-        assert isinstance(context.game._board.get_cell(x,y)._bacteria[0],Bacterium)
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 1
-    elif e == "antibiotico":
-        assert context.game._board.get_cell(x,y)._antibiotics == 1
-    else:
-        assert isinstance(context.game._board.get_cell(x,y)._bacteriophages[0],Bacteriophage)
-        assert context.game._board.get_cell(x,y)._bacteriophages.__len__() == 1
+# se pasan cierta cantidad de turnos de juego
+@when('ha pasado {turnos:d} turno para la generacion de entidades')
+def pasar_turnos(context, turnos):
+    for _ in range(turnos):
+        context.game.generate_entities()
+
+@then("deberian quedar {cant:d} {ente} por salir del spawn")
+def chequeo_salida_spawn(context, ente, cant):
+    if ente == "b":
+        assert context.game._cant_bacterium == cant
+    elif ente == "a":
+        assert context.game._cant_antibiotic == cant
+    else: 
+        assert context.game._cant_bacteriophage == cant
+
