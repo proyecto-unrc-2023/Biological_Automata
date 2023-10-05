@@ -262,10 +262,14 @@ class Cell:
 	
 	
 	def burst_bacteriophage(self):
+		bacteria_to_remove = []
 		for bacterium in self.__bacteria:
 			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
-						self.__bacteria.remove(bacterium)
+						bacteria_to_remove.append(bacterium)
 						bacteriophage = Bacteriophage(4)
 						for _ in range(4):
 							self.__bacteriophages.append(bacteriophage)
+
+		for bacterium in bacteria_to_remove:
+			self._bacterium.remove(bacterium)
 				

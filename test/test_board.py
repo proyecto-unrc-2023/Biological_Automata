@@ -289,7 +289,7 @@ def test_update_board_2_con_cruzamiento():
                 ' |1a| \n'\
                 ' |so| '
 
-    expected3 = 'sb| |  \n'\
+    expected3 = 'sb| | \n'\
                 ' | | \n'\
                 ' |so| '
     
