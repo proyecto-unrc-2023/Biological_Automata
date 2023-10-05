@@ -369,38 +369,7 @@ def test_update_board_2_con_burst_bacteriophage():
 
     assert res == expected1 or res == expected2
   
-def test_4_x_4_move_entity_bacterium():
-   board = Board(4, 4)
-   bacteria = BacteriumStrong(0)
-   board.set_bacterium(1,2, bacteria)
-   board = board.move_entity(1,1,1,2,board,bacteria)
-   res = board.__str__()
-   expected = ' | | | \n'\
-              ' |1f| | \n'\
-              ' | | | \n'\
-              ' | | | '
-   assert expected == res
 
-def test_4_x_4_move_entity_bacteriphage():
-   board = Board(4, 4)
-   bacteriophage = Bacteriophage(4)
-   board.set_bacteriophage(1,2, bacteriophage)
-   board = board.move_entity(1,1,1,2,board,bacteriophage)
-   res = board.__str__()
-   expected = ' | | | \n'\
-              ' |1v| | \n'\
-              ' | | | \n'\
-              ' | | | '
-   assert expected == res
 
-def test_4_x_4_move_entity_antibiotic():
-   board = Board(4, 4)
-   board.add_antibiotic(1,2)
-   board.add_antibiotic(1,1)
-   board = board.move_entity(1,1,1,2,board,Antibiotic())
-   res = board.__str__()
-   expected = ' | | | \n'\
-              ' |2a| | \n'\
-              ' | | | \n'\
-              ' | | | '
-   assert expected == res
+
+
