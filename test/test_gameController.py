@@ -81,8 +81,9 @@ def test_refresh_board(game):
   game.set_mode(Game_Mode.ANTIBIOTIC)
   game.set_spawn_other((0,0))
   game.set_spawn_bacterium((2,2))
-  assert game._frecuency == 0
+  cant_bacterium_prev = game._cant_bacterium
+  cant_antibiotic_prev = game._cant_antibiotic
   game.refresh_board()
-  assert game._frecuency == 1
-  game.refresh_board()
-  assert game._frecuency == 0
+  assert game.get_mode() == Game_Mode.ANTIBIOTIC
+  assert game._cant_bacterium == cant_bacterium_prev - 1
+  assert game._cant_antibiotic == cant_antibiotic_prev - 1
