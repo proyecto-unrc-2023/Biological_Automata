@@ -309,3 +309,15 @@ def test_add_move_to_bacteriums(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
+
+def test_burst_bacteriophage(cell):
+    cell.add_bacterium(4,'i') 
+    cell.burst_bacteriophage()
+    assert cell.__str__() == '4v'
+
+def test_3_burst_bacteriophage(cell):
+    cell.add_bacterium(4,'i')
+    cell.add_bacterium(4,'i')
+    cell.add_bacterium(4,'i')   
+    cell.burst_bacteriophage()
+    assert cell.__str__() == '12v'

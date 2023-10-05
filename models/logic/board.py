@@ -124,7 +124,8 @@ class Board:
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
         self.__board[row][colum]._bacteriophages = bacteriophage
-
+        
+    
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
             for row in range(self.__rows):
@@ -195,16 +196,16 @@ class Board:
     
         return new_board
     
-    def move_entity(self, new_x,new_y, x,y, new_board, entity: Entity):
-        if entity.__str__() == 'b'or entity.__str__() == 'f'or entity.__str__() == 'd'or entity.__str__() ==  'i':
-                    new_board.get_cell(new_x,new_y)._bacterium = entity
+    def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
+        if isinstance(entity,Bacterium):
+                    board.get_cell(new_x,new_y)._bacterium = entity
                     entity.add_move()
-                    new_board.get_cell(x,y)._bacteria.remove(entity)
-        elif entity.__str__() == 'v':
-            new_board.get_cell(new_x,new_y)._bacteriophages = entity
+                    board.get_cell(x,y)._bacteria.remove(entity)
+        elif isinstance(entity,Bacteriophage):
+            board.get_cell(new_x,new_y)._bacteriophages = entity
             entity.add_move()
-            new_board.get_cell(x,y)._bacteriophages.remove(entity)
+            board.get_cell(x,y)._bacteriophages.remove(entity)
         else:
-            new_board.get_cell(new_x,new_y).add_antibiotic()
-            new_board.get_cell(x,y)._antibiotics = new_board.get_cell(x,y)._antibiotics -1
-        return new_board
+            board.get_cell(new_x,new_y).add_antibiotic()
+            board.get_cell(x,y)._antibiotics = board.get_cell(x,y)._antibiotics -1
+        return board

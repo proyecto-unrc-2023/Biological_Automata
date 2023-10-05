@@ -5,6 +5,9 @@ class Antibiotic(Entity):
     def __init__(self):
       pass
 
+    def add_move(self):
+      pass
+    
     #Eliminacion
     def __del__(self):
       del self
