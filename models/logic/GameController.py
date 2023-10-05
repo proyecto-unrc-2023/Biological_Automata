@@ -118,14 +118,15 @@ class GameController:
                     self.__board.set_bacteriophage(move[0], move[1], ente)
                     self.__cant_bacteriophage -= 1
 
+
     def generate_entities(self):
         if(self.__cant_bacterium > 0 and self.__movements % self.__frecuency_bacterium == 0):
             self.generate_bacterium()
 
-        if(self.get_mode.__eq__(Game_Mode.ANTIBIOTIC) and self.__cant_antibiotic > 0 and self.__movements % self.__frecuency_antibiotic == 0):
+        if(self.__game_mode == Game_Mode.ANTIBIOTIC and self.__cant_antibiotic > 0 and self.__movements % self.__frecuency_antibiotic == 0):
             self.generate_other()
 
-        if(self.get_mode.__eq__(Game_Mode.BACTERIOPHAGE) and self.__cant_bacteriophage > 0 and self.__movements % self.__frecuency_bacteriophage == 0):
+        if(self.__game_mode == Game_Mode.BACTERIOPHAGE and self.__cant_bacteriophage > 0 and self.__movements % self.__frecuency_bacteriophage == 0):
             self.generate_other()
 
         self.__movements += 1
