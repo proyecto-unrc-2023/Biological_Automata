@@ -20,10 +20,10 @@ class GameController:
         self.__recovery_moves = 0
         self.__overpopulation_cant = 4
         self.__exploit_moves = 0
-        self.__cant_bacteria = 0
-        self.__cant_bacteriophage = 0
+        self.__cant_bacterium = 0
         self.__cant_antibiotic = 0
-        self.__frecuency_bacteria = 2
+        self.__cant_bacteriophage = 0
+        self.__frecuency_bacterium = 2
         self.__frecuency_antibiotic = 2
         self.__frecuency_bacteriophage = 2
         self.__movements = 0
@@ -40,7 +40,7 @@ class GameController:
         self.__reproduction_moves = 3
         self.__recovery_moves = 6
         self.__exploit_moves = 4
-        self.__cant_bacteria = 10
+        self.__cant_bacterium = 10
         self.__cant_bacteriophage = 20
         self.__cant_antibiotic = 20
 
@@ -49,12 +49,20 @@ class GameController:
         return self.__board
 
     @property
-    def _frecuency(self):
-        return self.__frecuency
+    def _frecuency_bacterium(self):
+        return self.__frecuency_bacterium
 
     @property
-    def _cant_bacteria(self):
-        return self.__cant_bacteria
+    def _frecuency_antibiotic(self):
+        return self.__frecuency_antibiotic
+
+    @property
+    def _frecuency_bacteriophage(self):
+        return self.__frecuency_bacteriophage
+
+    @property
+    def _cant_bacterium(self):
+        return self.__cant_bacterium
 
     @property
     def _cant_antibiotic(self):
@@ -64,11 +72,17 @@ class GameController:
     def _cant_bacteriophage(self):
         return self.__cant_bacteriophage
 
-    def set_frecuency(self, new_frec):
-        self.__frecuency = new_frec
+    def set_frecuency_bacterium(self, new_frec):
+        self.__frecuency_bacterium = new_frec
 
-    def set_cant_bacteria(self, new_cant):
-        self.__cant_bacteria = new_cant
+    def set_frecuency_antibiotic(self, new_frec):
+        self.__frecuency_antibiotic = new_frec
+
+    def set_frecuency_bacteriophage(self, new_frec):
+        self.__frecuency_bacteriophage = new_frec
+
+    def set_cant_bacterium(self, new_cant):
+        self.__cant_bacterium = new_cant
 
     def set_cant_antibiotic(self, new_cant):
         self.__cant_antibiotic = new_cant
@@ -89,7 +103,7 @@ class GameController:
             bacterium = BacteriumNormal(0)
             if move != None:
                 self._board.set_bacterium(move[0], move[1], bacterium)
-                self.__cant_bacteria -= 1
+                self.__cant_bacterium -= 1
 
     def generate_other(self):
         spawn = self.__board.get_position_spawn_other()
@@ -104,9 +118,8 @@ class GameController:
                     self.__board.set_bacteriophage(move[0], move[1], ente)
                     self.__cant_bacteriophage -= 1
 
-
     def generate_entities(self):
-        if(self.__cant_bacteria > 0 and self.__movements % self.__frecuency_bacteria == 0):
+        if(self.__cant_bacterium > 0 and self.__movements % self.__frecuency_bacterium == 0):
             self.generate_bacterium()
 
         if(self.get_mode.__eq__(Game_Mode.ANTIBIOTIC) and self.__cant_antibiotic > 0 and self.__movements % self.__frecuency_antibiotic == 0):
