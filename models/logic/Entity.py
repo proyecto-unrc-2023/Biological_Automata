@@ -15,3 +15,7 @@ class Entity(ABC):
   @abstractmethod
   def __str__(self):
     pass
+
+  @abstractmethod
+  def add_move(self):
+    pass
