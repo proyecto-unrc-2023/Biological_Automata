@@ -135,7 +135,8 @@ class GameController:
     def refresh_board(self):
         actualizado = self._board.move_all_entities()
         self.__board = actualizado
-       
+
         self.generate_entities()
         actualizado.crossing_board()
+
 
