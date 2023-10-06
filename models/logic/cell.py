@@ -182,6 +182,16 @@ class Cell:
 	#aplico regla de sobrepoblación
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
+
+	#self.update_for_explocion
+	#actualizo por la reproduccion de bacterias
+		self.update_for_reproduction()
+
+	#actualizo por la recuperación de bacterias
+		self.update_for_recovery()
+
+		self.burst_bacteriophage()
+
 	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
 			if self._antibiotics > self.cant_bacteria():
@@ -190,16 +200,27 @@ class Cell:
 				self.low_dose_antibiotic()
 
 		if self.cant_bacteriophages()> 0 and self.cant_bacteria() > 0:
+			b = False
 			poder = 0
 			for bacteriophage in self._bacteriophages:
 				poder += bacteriophage.infection
-			if poder > 4:
+
+			if poder >= 4:
 				poder = 4
+
 			infected = []
 			for bacterium in self._bacteria:
-				infected.append(BacteriumInfected(poder))
-			self.__bacteriophages = []
+				if (not isinstance(bacterium, BacteriumInfected)):
+					infected.append(BacteriumInfected(poder))
+					b = True
+				else:
+					infected.append(bacterium)
+
+			if (b == True):
+				self.__bacteriophages = []
+
 			self.__bacteria = infected
+
 	#self.update_for_explocion
 	#actualizo por la reproduccion de bacterias
 		self.update_for_reproduction()
