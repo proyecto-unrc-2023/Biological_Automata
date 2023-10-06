@@ -18,11 +18,17 @@ def completar_parametros(context,ac,a,b,c,d):
             context.game.set_cant_bacteriophage(c)
             context.game.set_frecuency_bacteriophage(d)
 
-# se pasan cierta cantidad de turnos de juego
+# se pasan cierta cantidad de turnos para la generación de entidades
 @when('ha pasado {turnos:d} turno para la generacion de entidades')
-def pasar_turnos(context, turnos):
+def pasar_turnos_entidades(context, turnos):
     for _ in range(turnos):
         context.game.generate_entities()
+
+# se pasan cierta cantidad de turnos de juego
+@when('ha pasado {turnos:d} turno de juego')
+def pasar_turnos(context, turnos):
+    for _ in range(turnos):
+        context.game.refresh_board()
 
 @then("deberian quedar {cant:d} {ente} por salir del spawn")
 def chequeo_salida_spawn(context, ente, cant):
