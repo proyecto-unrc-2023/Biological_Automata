@@ -1,12 +1,12 @@
 from behave import *
-from models.logic.GameController import Game_Mode
+from models.logic.GameController import Game_Mode, GameController, Game_State
 
 
 
 # se crea un tablero para el juego
 @given("el usuario ingreso al modo de juego de {x}")
 def ingreso_al_modo_deseado(context,x):
-    # context.game = GameController()
+    context.game.game_state = Game_State.CONFIG_GAME
     if x == "bacteriofagos":
         context.game.set_mode(Game_Mode.BACTERIOPHAGE)
     else:
@@ -15,8 +15,10 @@ def ingreso_al_modo_deseado(context,x):
 @when("se da inicio al juego")
 def creo_tablero(context):
     pass
+
 @then("se deberia crear un tablero de {x:d} x {y:d}")
-def tablero_de_6x6(context,x,y):
+def tablero_de_30x50(context,x,y):
+    context.game.config(x,y)
     assert context.game._board._rows == x
     assert context.game._board._columns == y
 
@@ -26,7 +28,7 @@ def modo_de_juego(context,modo):
         assert context.game.get_mode().__eq__(Game_Mode.BACTERIOPHAGE)
     else:
         assert context.game.get_mode().__eq__(Game_Mode.ANTIBIOTIC)
-        
+
 
 
 # se configuran los parametrso iniciales
@@ -44,6 +46,7 @@ def completar_parametros(context,ac,a,b,c,d):
         else:
             context.game.set_cant_bacteriophage(c)
             context.game.set_frecuency_bacteriophage(d)
+    context.game.game_state = Game_State.START_GAME
 
 
 
@@ -52,15 +55,15 @@ def tablero_parametrizado(context,ac,a,b,c,d):
     if ac == "b":
         assert context.game._board.get_position_spawn_bacterium().__eq__((a,b))
         assert context.game._cant_bacterium == c
-        assert context.game._frecuency_bacterium
+        assert context.game._frecuency_bacterium == d
     else:
         assert context.game._board.get_position_spawn_other().__eq__((a,b))
         if ac == "a":
             assert context.game._cant_antibiotic == c
-            assert context.game._frecuency_antibiotic
+            assert context.game._frecuency_antibiotic == d
         else:
             assert context.game._cant_bacteriophage == c
-            assert context.game._frecuency_bacteriophage
-    
+            assert context.game._frecuency_bacteriophage == d
+    assert context.game.game_state == Game_State.START_GAME
 
 

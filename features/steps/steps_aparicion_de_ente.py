@@ -1,6 +1,6 @@
 from behave import *
-from models.logic.Bacterium import Bacterium
-from models.logic.Bacteriophage import Bacteriophage
+# from models.logic.Bacterium import Bacterium
+# from models.logic.Bacteriophage import Bacteriophage
 
 # se configuran los parametrso iniciales
 @given('el usuario configura los parametros iniciales de {ac} con (({a:d},{b:d}),{c:d},{d:d})')
