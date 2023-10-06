@@ -19,7 +19,7 @@ Característica: Colisión de entidades
    Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
      Dado que hay 1 antibiotico en la celda <pos>
      Y que hay 1 bacteria fuerte en la celda <pos>
-     Cuando el tablero fue actualizado
+     Cuando se produce el confrontamiento
      Entonces el tablero no deberia tener antibioticos en <pos>
      Y el tablero deberia tener 1 bacteria debil en <pos>
      Ejemplos:
@@ -37,7 +37,7 @@ Característica: Colisión de entidades
      Y que hay 1 bacteria normal en la celda <pos>
      Y que hay 1 bacteria debil en la celda <pos>
      Y que hay 1 bacteria fuerte en la celda <pos>
-     Cuando el tablero fue actualizado
+     Cuando se produce el confrontamiento
      Entonces el tablero no deberia tener antibioticos en <pos>
      Y el tablero no deberia tener bacterias en <pos>
      Ejemplos:
@@ -56,7 +56,7 @@ Característica: Colisión de entidades
      Cuando se mueve 1 <tipo> de <bpos> a <crash>
      Y se mueve 1 bacteriofago de <bfpos> a <crash>
      Y el tablero fue actualizado
-     Entonces  deberia haber 1 bacteria infectada de <grado> en <crash>
+     Entonces deberia haber 1 bacteria infectada de <grado> en <crash>
      Y el tablero no deberia tener bacteriofagos en <crash>
 
      Ejemplos:
@@ -69,49 +69,42 @@ Característica: Colisión de entidades
      |(3,1)  |(5,1)  |(3,1)  |2    |1    |bacteria fuerte|
 
 
-# #23
-#   Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
-#     Dado que hay una bacteria infectada en la celda <bpos> con grado de infeccion <grado>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
-#     Cuando la bacteria y el bacteriofago se mueven a la celda <crash>
-#     Entonces en el tablero queda un bacteria infectada con grado <gradoInc>
-#     Y un bacteriófago con poder de infección <poderDec>
-
-#     Ejemplos:
-#     |bfpos  |bpos   |crash  |poder|poderDec|grado|gradoInc|
-#     |(3,2)  |(3,4)  |(3,3)  |4    |3        |1    |2       |
-#     |(1,0)  |(2,2)  |(1,1)  |3    |2        |2    |3       |
-#     |(2,3)  |(2,5)  |(2,4)  |2    |1        |2    |3       |
-
+ #23
+   Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
+     Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado>
+     Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
+     Cuando se produce el confrontamiento
+     Entonces deberia haber 1 bacteria infectada de <grado> en <pos>
+     Y deberia haber 1 bacteriofago con poder de infección <poder> en <pos>
+     Ejemplos:
+     |pos  |poder|grado|
+     |(3,3)|4    |1    |
+     |(1,1)|3    |2    |
+     |(2,4)|2    |2    |
 # #24
-#   Esquema del escenario: Una bacteria es infectada por dos bacteriófagos
-#     Dado que hay una bacteria <tipo> en la celda <bpos>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
-#     Y un bacteriofago en la celda <bfpos2> con poder de infeccion <poder2>
-#     Cuando la bacteria y los bacteriofagos se mueven a la posición <crash>
-#     Entonces el tablero deberia contener una bacteria infectada de grado <grado>
+   Esquema del escenario: Una bacteria es infectada por dos bacteriófagos
+     Dado que hay 1 <tipo> en la celda <pos>
+     Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
+     Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder2>
+     Cuando se produce el confrontamiento
+     Entonces deberia haber 1 bacteria infectada de <grado> en <pos>
+     Ejemplos:
+     |pos    |poder|poder2|grado|tipo           |
+     |(3,3)  |3    |2     |4    |bacteria normal|
+     |(3,4)  |4    |1     |4    |bacteria fuerte|
+     |(1,4)  |2    |2     |4    |bacteria normal|
+     |(3,4)  |1    |2     |3    |bacteria fuerte|
 
-#     Ejemplos:
-#     |bfpos  |bfpos2 |bpos   |crash  |poder|poder2|grado|tipo  |
-#     |(3,2)  |(4,3)  |(3,4)  |(3,3)  |3    |2     |3    |normal|
-#     |(1,5)  |(2,4)  |(2,5)  |(1,4)  |4    |1     |3    |fuerte|
-#     |(1,3)  |(2,5)  |(2,4)  |(1,4)  |2    |2     |2    |normal|
-#     |(3,3)  |(3,5)  |(4,4)  |(3,4)  |1    |2     |1    |fuerte|
 
-
-# #25
+ #25
 #   Esquema del escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago
-#     Dado que hay 1 <tipo> en la celda <bpos>
-#     Y hay una bacteria <tipo> en la celda <bpos2>
-#     Y hay una bacteria <tipo> en la celda <bpos3>
-#     Y hay una bacteria <tipo> en la celda <bpos4>
-#     Y un bacteriofago en la celda <bfpos> con poder de infeccion <poder>
-#     Cuando las bacteria y el bacteriofago se mueven a la posición <crash>
-#     Entonces el tablero deberia contener una bacteria infectada de grado <grado>
-
+#     Dado que hay 4 <tipo> en la celda <pos>
+#     Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
+#     Cuando se produce el confrontamiento
+#     Entonces deberia haber 1 bacteria infectada de <grado> en <pos>
 #     Ejemplos:
-#     |bfpos  |bpos  |bpos2  |bpos3 |bpos4  |crash  |poder|grado|tipo           |
-#     |(3,2)  |(2,2) |(4,3)  |(2,4) |(3,4)  |(3,3)  |3    |2    |bacteria normal|
-#     |(1,3)  |(0,3) |(2,4)  |(0,5) |(1,5)  |(1,4)  |2    |1    |bacteria fuerte|
-#     |(4,0)  |(3,0) |(5,1)  |(3,2) |(4,2)  |(4,1)  |4    |3    |bacteria normal|
+#      |pos  |poder|grado|tipo           |
+#      |(3,3)|3    |2    |bacteria normal|
+#      |(1,4)|2    |1    |bacteria fuerte|
+#      |(4,1)|4    |3    |bacteria normal|
 

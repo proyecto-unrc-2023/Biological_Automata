@@ -42,6 +42,9 @@ def movimiento_ente(context,n,x1,y1,x2,y2,ente):
 def actualizar_tablero(context):
     context.game._board.crossing_board()
 
+@when('se produce el confrontamiento')
+def crossing_table(context):
+    context.game._board.crossing_board()
 
 @then('el tablero no deberia tener {ente} en ({x:d},{y:d})')
 def eliminacion_ente(context,ente,x,y):
@@ -67,6 +70,18 @@ def ubicacion_bacteriophage(context, num, x, y, poder):
 #Esquema del escenario: Una bacteria se cruza con un bacteriofago
 @then('deberia haber {num:d} bacteria infectada de {grado:d} en ({crash_x:d},{crash_y:d})')
 def checkeo_de_bacteria_infectad(context,num, grado,crash_x,crash_y):
-    context.game._board.crossing_board()
     assert isinstance(context.game._board.get_cell(crash_x,crash_y)._bacteria[0], BacteriumInfected)
     assert context.game._board.get_cell(crash_x,crash_y)._bacteria[0].moves == grado
+
+#Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
+@given('que hay {num:d} bacteria infectada en la celda ({x:d},{y:d}) con grado de infeccion {grado:d}')
+def agreago_bacteria_infectada(context, num, x, y, grado):
+    for _ in range(0,num):
+        context.game._board.set_bacterium(x,y, BacteriumInfected(grado))
+        assert isinstance(context.game._board.get_cell(x,y)._bacteria[0], BacteriumInfected)
+
+
+@then('deberia haber 1 bacteriofago con poder de infección {poder:d} en ({x:d},{y:d})')
+def checkeo_bacteriofago(context, poder,x,y):
+    assert isinstance(context.game._board.get_cell(x,y)._bacteriophages[0], Bacteriophage)
+    assert context.game._board.get_cell(x,y)._bacteriophages[0].infection == poder
