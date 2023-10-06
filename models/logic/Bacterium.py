@@ -111,7 +111,8 @@ class BacteriumInfected(Bacterium):
 
     def __str__(self):
       return 'i'
-
+    
+    
 
 class BacteriumWeak(Bacterium):
 

@@ -7,16 +7,16 @@ from behave import *
 def completar_parametros(context,ac,a,b,c,d):
     if ac == "b":
         context.game.set_spawn_bacterium((a,b))
-        context.game.set_cant_bacterium(c)
-        context.game.set_frecuency_bacterium(d)
+        context.game._cant_bacterium = c
+        context.game._frecuency_bacterium = d
     else:
         context.game.set_spawn_other((a,b))
         if ac == "a":
-            context.game.set_cant_antibiotic(c)
-            context.game.set_frecuency_antibiotic(d)
+            context.game._cant_other = c
+            context.game._frecuency_other = d 
         else:
-            context.game.set_cant_bacteriophage(c)
-            context.game.set_frecuency_bacteriophage(d)
+            context.game._cant_other = c
+            context.game._frecuency_other = d
 
 # se pasan cierta cantidad de turnos para la generación de entidades
 @when('ha pasado {turnos:d} turno para la generacion de entidades')
@@ -35,7 +35,7 @@ def chequeo_salida_spawn(context, ente, cant):
     if ente == "b":
         assert context.game._cant_bacterium == cant
     elif ente == "a":
-        assert context.game._cant_antibiotic == cant
+        assert context.game._cant_other == cant
     else: 
-        assert context.game._cant_bacteriophage == cant
+        assert context.game._cant_other == cant
 
