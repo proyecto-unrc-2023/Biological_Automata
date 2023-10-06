@@ -38,10 +38,6 @@ def movimiento_ente(context,n,x1,y1,x2,y2,ente):
             tablero = context.game._board
             context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,var)
 
-@when('el tablero fue actualizado')
-def actualizar_tablero(context):
-    context.game._board.crossing_board()
-
 @when('se produce el confrontamiento')
 def crossing_table(context):
     context.game._board.crossing_board()
