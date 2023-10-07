@@ -8,4 +8,9 @@ def create_app(config_name='development'):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     config[config_name].init_app(app)
     CORS(app)
+    register_modules(app)
     return app
+
+def register_modules(app):
+    from .games import games_bp
+    app.register_blueprint(games_bp, url_prefix='/games')

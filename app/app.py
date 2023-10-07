@@ -1,15 +1,16 @@
 from flask import Flask, Blueprint, render_template, jsonify
-import time
+from app import create_app
+import os
 
-from models.Schemas.schemas import BacteriumSchema, BacteriophageSchema, CellSchema, BoardSchema
+from Schemas.schemas import *
 from models.logic.cell import Cell
 from models.logic.board import Board
 from models.logic.Bacterium import *
 from models.logic.Bacteriophage import Bacteriophage
+from models.logic.GameController import GameController
 
-
+#app = create_app(os.getenv('FLASK_CONFIG') or 'default')  ##esto no anda
 game_bp = Blueprint('game_bp', __name__)
-
 app = Flask(__name__)
 
 
@@ -50,11 +51,7 @@ def get_bacteriophage():
 def get_cell():
 
     cell_instance = Cell()
-    cell_instance.add_antibiotic()
-    cell_instance.add_bacterium(0,'b')
-    cell_instance.add_bacteriophage(4)
-
-
+    cell_instance.set_spawn_bacterium()
     cell_schema = CellSchema()
     result = cell_schema.dump(cell_instance)
 
@@ -78,15 +75,19 @@ def get_board():
     # Devolver la instancia serializada en formato JSON
     return jsonify(result), 200
 
+@app.route('/juego', methods=['GET'])
+def get_game():
+    game = GameController()
+    game.config(2,2)
+    game_schema = GameSchema()
+    result = game_schema.dump(game)
 
+    # Devolver la instancia serializada en formato JSON
+    return jsonify(result), 200
 
-
-@app.route('/api/time')
-def get_current_time():
-    return {'time': time.time()}
 
 if __name__ == '__main__':
-    app.run(debug=True)
+  app.run(debug=True)
 
 
 #request es un objeto proporcionado por FLASK que contiene informacion de la solicitud HTTP.
