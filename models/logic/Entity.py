@@ -2,9 +2,9 @@
 from abc import ABC, abstractmethod
 
 class Entity(ABC):
-
-  #Eliminacion
-  def delete(self):
+  
+  @abstractmethod
+  def add_move(self):
     pass
 
   @staticmethod
@@ -14,8 +14,4 @@ class Entity(ABC):
 
   @abstractmethod
   def __str__(self):
-    pass
-
-  @abstractmethod
-  def add_move(self):
     pass

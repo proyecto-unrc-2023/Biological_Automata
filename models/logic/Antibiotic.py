@@ -8,10 +8,6 @@ class Antibiotic(Entity):
     def add_move(self):
       pass
     
-    #Eliminacion
-    def __del__(self):
-      del self
-
     @staticmethod
     def from_string(cell_str):
       if (cell_str == 'a'):
