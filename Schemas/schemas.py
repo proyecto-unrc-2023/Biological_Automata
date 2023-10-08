@@ -20,8 +20,6 @@ class BoardSchema(Schema):
     _board = fields.List(fields.List(fields.Nested(CellSchema)))
 
 
-
-
 class GameSchema(Schema):
     _board = fields.Nested(BoardSchema)
 
