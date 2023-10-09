@@ -1,5 +1,5 @@
 import pytest
-from models.logic.GameController import GameController, Game_Mode
+from models.logic.GameController import *
 from models.logic.Bacterium import *
 
 @pytest.fixture
@@ -7,36 +7,187 @@ def game():
     return GameController()
 
 def test_initial_game(game):
-  assert game._board._columns == 0
-  assert game._board._rows == 0
-  assert game.get_mode() == Game_Mode.NOT_STARTER
-
-def test_modify_mode(game):
-  game.set_mode(Game_Mode.ANTIBIOTIC)
-  assert game.get_mode() == Game_Mode.ANTIBIOTIC
+  assert game._game_state == Game_State.NOT_STARTER
+  assert game._game_mode == None
+  assert game._board == Board(30,50)
+  assert game._cant_bacterium == 10
+  assert game._cant_other == 20
+  assert game._frecuency_bacterium == 2
+  assert game._frecuency_other == 2
+  assert game._movements == 0
 
 def test_config_(game):
   game.config(6,6)
-  assert game._board._columns == 6
-  assert game._board._rows == 6
-  assert game.get_mode() == Game_Mode.CONFIG_GAME
+  assert game._game_state == Game_State.CONFIG_GAME
+  assert game._board == Board(6, 6)
+  assert game._frecuency_bacterium == 2
+  assert game._frecuency_other == 2
+  assert game._cant_bacterium == 10
+  assert game._cant_other == 20
+
+def test_game_mode(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.ANTIBIOTIC
+  assert game._game_mode == Game_Mode.ANTIBIOTIC
+  assert game._game_state == Game_State.START_GAME
+
+def test_game_mode_without_configuration(game):
+  game.set_spawn_bacterium((1,1))
+  game._game_mode = Game_Mode.BACTERIOPHAGE
+  assert game._game_mode == None
+  assert game._game_state != Game_State.CONFIG_GAME
+
+def test_game_mode_without_spawn(game):
+  game.config(6,6)
+  game._game_mode = Game_Mode.BACTERIOPHAGE
+  assert game._game_mode == None
+  assert game._game_state == Game_State.CONFIG_GAME
+
+def test_generate_bacterium_Mode_Antibiotic(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.ANTIBIOTIC          # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  game.generate_bacterium()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+
+def test_generate_bacterium_Mode_Bacteriophage(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.BACTERIOPHAGE       # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  game.generate_bacterium()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+
+def test_generate_bacterium_without_spawn(game):
+  game.config(6,6)
+  game._game_mode = Game_Mode.ANTIBIOTIC          # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  game.generate_bacterium()
+  assert game._cant_bacterium == cant_bacterium_temp
+
+def test_generate_other_Mode_Antibiotic(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  cant_antibiotic_temp = game._cant_other
+  game.generate_other()
+  assert game._cant_other == cant_antibiotic_temp - 1
+
+def test_generate_other_Mode_Bacteriophage(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.BACTERIOPHAGE       # Para iniciar el juego
+  cant_bacteriophage_temp = game._cant_other
+  game.generate_other()
+  assert game._cant_other == cant_bacteriophage_temp - 1
+
+def test_generate_other_without_spwan_other(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  cant_bacteriophage_temp = game._cant_other
+  game.generate_other()
+  assert game._cant_other == cant_bacteriophage_temp
+
+def test_generate_entities_Mode_Antibiotic(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  cant_antibiotic_temp = game._cant_other
+  game.generate_entities()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+  assert game._cant_other == cant_antibiotic_temp - 1
+
+def test_generate_entities_Mode_Bacteriophage(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.BACTERIOPHAGE       # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  cant_bacteriophage_temp = game._cant_other
+  game.generate_entities()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+  assert game._cant_other == cant_bacteriophage_temp - 1
+
+def test_generate_entities_without_spwan_other(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  cant_antibiotic_temp = game._cant_other
+  game.generate_entities()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+  assert game._cant_other == cant_antibiotic_temp
+
+def test_refresh_board(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  cant_antibiotic_temp = game._cant_other
+  cant_movements_temp = game._movements
+  game.refresh_board()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+  assert game._cant_other == cant_antibiotic_temp - 1
+  assert game._movements == cant_movements_temp + 1
+
+def test_refresh_board_twice(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  cant_bacterium_temp = game._cant_bacterium
+  cant_antibiotic_temp = game._cant_other
+  cant_movements_temp = game._movements
+  game.refresh_board()
+  game.refresh_board()
+  assert game._cant_bacterium == cant_bacterium_temp - 1
+  assert game._cant_other == cant_antibiotic_temp - 1
+  assert game._movements == cant_movements_temp + 2
+
+def test_stop_True(game):
+  game.stop(True)
+  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
+  game.config(6,6)
+  game.stop(True)
+  assert game._game_state != Game_State.FINISH_GAME   # Game_State.CONFIG_GAME
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego, Game_State.START_GAME
+  game.stop(True)
+  assert game._game_state == Game_State.FINISH_GAME
+
+def test_stop_False(game):
+  game.config(6,6)
+  game.set_spawn_bacterium((0,0))
+  game.set_spawn_other((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  game.stop(False)
+  assert game._game_state != Game_State.FINISH_GAME
 
 def test_set_spawn_bacterium(game):
   game.config(6,6)
-  game.set_mode(Game_Mode.ANTIBIOTIC)
-  assert game.get_mode() == Game_Mode.ANTIBIOTIC
-  pos = (2,2)
-  game.set_spawn_bacterium(pos)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  assert game._game_mode == Game_Mode.ANTIBIOTIC
+  game.set_spawn_bacterium((2,2))
   position = game._board.get_position_spawn_bacterium()
   if position != None:
     assert position[0] == 2
     assert position[1] == 2
 
-
 def test_set_spawn_other(game):
   game.config(6,6)
-  pos = (2,2)
-  game.set_spawn_other(pos)
+  game.set_spawn_bacterium((0,0))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
+  game.set_spawn_other((2,2))
   position = game._board.get_position_spawn_other()
   if position != None:
     assert position[0] == 2
@@ -46,44 +197,38 @@ def test_spawn_bacterium(game):
   game.config(6,6)
   pos = (2,2)
   game.set_spawn_bacterium(pos)
-  game.set_mode(Game_Mode.ANTIBIOTIC)
-  game.generate_entities()
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
-  bacteria_found = any(len(game._board.get_cell(x, y)._bacteria) > 0 for x, y in moves_n)
+  bacteria_found = any(len(game._board.get_cell(x, y)._bacteria) > 0 for (x, y) in moves_n)
+  assert not bacteria_found
+  game.generate_entities()
+  bacteria_found = any(len(game._board.get_cell(x, y)._bacteria) > 0 for (x, y) in moves_n)
   assert bacteria_found
 
 def test_spawn_other_antibiotic(game):
   game.config(6,6)
-  pos = (2,2)
-  game.set_mode(Game_Mode.ANTIBIOTIC)
-  assert game.get_mode() == Game_Mode.ANTIBIOTIC
+  pos = (5,5)
   game.set_spawn_other(pos)
-  game.set_spawn_bacterium((5,5))
-  game.generate_entities()
+  game.set_spawn_bacterium((2,2))
+  game._game_mode = Game_Mode.ANTIBIOTIC       # Para iniciar el juego
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
-  bacteria_found = any(game._board.get_cell(x, y)._antibiotics > 0 for x, y in moves_n)
-  assert bacteria_found
+  antibiotic_found = any(game._board.get_cell(x, y)._antibiotics > 0 for (x, y) in moves_n)
+  assert not antibiotic_found
+  game.generate_entities()
+  antibiotic_found = any(game._board.get_cell(x, y)._antibiotics > 0 for (x, y) in moves_n)
+  assert antibiotic_found
+
 
 
 def test_spawn_bacteriophage(game):
   game.config(6,6)
-  pos = (2,2)
-  game.set_mode(Game_Mode.BACTERIOPHAGE)
+  pos = (5,5)
   game.set_spawn_other(pos)
-  game.generate_entities()
-  moves_n = game._board.get_possible_moves(pos[0],pos[1])
-  bacteria_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for x, y in moves_n)
-  assert bacteria_found
-
-
-def test_refresh_board(game):
-  game.config(6,6)
-  game.set_mode(Game_Mode.ANTIBIOTIC)
-  game.set_spawn_other((0,0))
   game.set_spawn_bacterium((2,2))
-  cant_bacterium_prev = game._cant_bacterium
-  cant_antibiotic_prev = game._cant_antibiotic
-  game.refresh_board()
-  assert game.get_mode() == Game_Mode.ANTIBIOTIC
-  assert game._cant_bacterium == cant_bacterium_prev - 1
-  assert game._cant_antibiotic == cant_antibiotic_prev - 1
+  game._game_mode = Game_Mode.BACTERIOPHAGE       # Para iniciar el juego
+  moves_n = game._board.get_possible_moves(pos[0],pos[1])
+  bacteriophage_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for (x, y) in moves_n)
+  assert not bacteriophage_found
+  game.generate_entities()
+  bacteriophage_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for (x, y) in moves_n)
+  assert bacteriophage_found
