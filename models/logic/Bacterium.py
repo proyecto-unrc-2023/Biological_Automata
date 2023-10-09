@@ -43,6 +43,9 @@ class Bacterium(Entity):
       else:
         raise ValueError(f'Invalid Bacterium string: {cell_str}')
 
+    @property
+    def type(self):
+      return self.__str__()
 
 class BacteriumNormal(Bacterium):
 
@@ -89,6 +92,7 @@ class BacteriumStrong(Bacterium):
 
     def __str__(self):
       return 'f'
+
 
 
 class BacteriumInfected(Bacterium):

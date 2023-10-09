@@ -34,7 +34,7 @@ class Bacteriophage(Entity):
 
     def __str__(self):
       return 'v'
-    
+
     def __str_aux__(self):
       return self.__str__()+self.infection.__str__()
 
@@ -44,6 +44,6 @@ class Bacteriophage(Entity):
           return Bacteriophage(4)
       else:
         raise ValueError(f'Invalid Bacteriofago string: {cell_str}')
-    
-  
+
+
 

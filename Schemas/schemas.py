@@ -4,15 +4,15 @@ class BacteriophageSchema(Schema):
     infection = fields.Int()
 
 class BacteriumSchema(Schema):
-    moves = fields.Int()
+    type = fields.Str()
 
 class CellSchema(Schema):
-    _bacteria = fields.Nested(BacteriumSchema, many=True)
+    bacterias = fields.List(fields.Str())
     _antibiotics = fields.Int()
-    _bacteriophages = fields.Nested(BacteriophageSchema, many=True)
-    _spawn_bacterium = fields.Bool()
-    _spawn_other = fields.Bool()
-
+    #_bacteriophages = fields.Nested(BacteriophageSchema, many=True)
+    _cant_bacteriophage = fields.Int()
+    #_spawn_bacterium = fields.Bool()
+    #_spawn_other = fields.Bool()
 
 class BoardSchema(Schema):
     _rows = fields.Int()
@@ -22,4 +22,5 @@ class BoardSchema(Schema):
 
 class GameSchema(Schema):
     _board = fields.Nested(BoardSchema)
-
+    spawn_bacterium = fields.Tuple((fields.Integer, fields.Integer), required=True)
+    spawn_other = fields.Tuple((fields.Integer, fields.Integer), required=True)

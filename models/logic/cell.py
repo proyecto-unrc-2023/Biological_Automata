@@ -263,6 +263,19 @@ class Cell:
 		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()
 
+	###FUNCION PARA LOS SCHEMAS###
+	@property
+	def _cant_bacteriophage(self):
+		return len(self._bacteriophages)
+
+	@property
+	def bacterias(self):
+		array = []
+		for bacterium in self._bacteria:
+			array.append(bacterium.__str__())
+
+		return array
+
 
 	def burst_bacteriophage(self):
 		bacteria_to_remove = []
@@ -275,3 +288,4 @@ class Cell:
 
 		for bacterium in bacteria_to_remove:
 			self._bacterium.remove(bacterium)
+
