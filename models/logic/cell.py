@@ -14,6 +14,13 @@ class Cell:
 	def __str__(self):
 		if self.is_empty():
 			return ' '
+
+		if self.__spawn_bacterium:
+			return 'sb'
+
+		if self.__spawn_other:
+			return 'so'
+
 		res = ''
 		cant =self.cant_ente('a')
 		if cant != 0:
@@ -38,37 +45,39 @@ class Cell:
 	@staticmethod
 	def from_string(cell_str):
 		cell = Cell()
-		for i in range (cell_str.__len__()-1):
+		for i in range (0,cell_str.__len__()-1,2):
 			num = cell_str[i]
+			if cell_str == 'sb':
+				cell.set_spawn_bacterium()
+				break
+			if cell_str == 'so':
+				cell.set_spawn_other()
+				break
 			if cell_str[i+1] == 'b':
 				for _ in  range(int(num)):
 					cell._bacterium = BacteriumNormal(0)
-				i += 1
 				continue
 			if cell_str[i+1] == 'f':
 				for _ in  range(int(num)):
 					cell._bacterium = BacteriumStrong(0)
-				i += 1
 				continue
 			elif cell_str[i+1] == 'i':
-				for _ in range(num):
+				for _ in range(int(num)):
 					cell._bacterium = BacteriumInfected(0)
-				i += 1
 				continue
 			elif cell_str[i+1] == 'd':
 				for _ in range(int(num)):
 					cell._bacterium = BacteriumWeak(0)
-				i += 1
 				continue
 			elif cell_str[i+1] == 'a':
-				cell._antibiotics = int(i)
-				i += 1
+				cell._antibiotics = int(num)
 				continue
 			elif cell_str[i+1] == 'v':
 				for _ in  range(int(num)):
-					cell._bacteriophage = Bacteriophage(4)
-				i += 1
+					cell._bacteriophages = Bacteriophage(4)
 				continue
+			else:
+				raise ValueError(f'string invalido')
 		return cell
 
 	def get_spawn_other(self):
@@ -96,7 +105,7 @@ class Cell:
 				if self._bacteria[i].__str__() != other._bacteria[i].__str__():
 					return False
 			for i in range(self.cant_bacteriophages()):
-				if self._bacteriophages[i].__str__() != other._bacteriophages[i].__str__():
+				if self._bacteriophages[i].__str_aux__() != other._bacteriophages[i].__str_aux__():
 					return False
 			return True
 		return False
@@ -133,15 +142,16 @@ class Cell:
 		return self.__bacteriophages
 
 	@_bacteriophages.setter
-	def _bacteriophage(self, bacteriophage:Bacteriophage):
+	def _bacteriophages(self, bacteriophage:Bacteriophage):
 		self.__bacteriophages.append(bacteriophage)
 
 	def add_bacteriophage(self, levelInfection:int):
-		self.__bacteriophages.append(Bacteriophage(levelInfection))
+		bacteriophage = Bacteriophage(levelInfection)
+		self.__bacteriophages.append(bacteriophage)
 
 	def cant_bacteriophages(self):
 		return self.__bacteriophages.__len__()
-
+	
 	def is_empty(self):
 		if self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other):
 			return True
@@ -185,6 +195,8 @@ class Cell:
 
 	#actualizo por la recuperación de bacterias
 		self.update_for_recovery()
+
+		self.burst_bacteriophage()
 
 
 	def high_dose_antibiotic(self):
@@ -245,5 +257,19 @@ class Cell:
 	def add_move(self):
 		for bacterium in self._bacteria:
 			bacterium.add_move()
-		for bacteriophage in self._bacteriophage:
+		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()
+	
+	
+	def burst_bacteriophage(self):
+		bacteria_to_remove = []
+		for bacterium in self.__bacteria:
+			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
+						bacteria_to_remove.append(bacterium)
+						bacteriophage = Bacteriophage(4)
+						for _ in range(4):
+							self.__bacteriophages.append(bacteriophage)
+
+		for bacterium in bacteria_to_remove:
+			self._bacterium.remove(bacterium)
+				

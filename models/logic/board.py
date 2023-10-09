@@ -25,11 +25,11 @@ class Board:
     def from_string(board_str):
         rows = board_str.split('\n')
         n_rows = len(rows)
-        if n_rows < 1:
+        if n_rows <= 1:
             raise ValueError(f'Invalid number of rows: {n_rows}')
         matrix = [row.split('|') for row in rows]
         n_cols = len(matrix[0])
-        if n_cols < 1:
+        if n_cols <= 1:
             raise ValueError(f'Invalid number of columns: {n_cols}')
         for row in range(n_rows):
             row_len = len(matrix[row])
@@ -123,8 +123,9 @@ class Board:
         self.__board[row][colum].add_antibiotic()
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
-        self.__board[row][colum]._bacteriophage = bacteriophage
-
+        self.__board[row][colum]._bacteriophages = bacteriophage
+        
+    
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
             for row in range(self.__rows):
@@ -154,17 +155,21 @@ class Board:
                             moves.append((x, y))
         return moves
 
-    def update_board(self):
-        new_board = Board(self._rows,self._columns)
-        new_board.set_position_spawn_other(self.get_position_spawn_other())
-        new_board.set_position_spawn_bacterium(self.get_position_spawn_bacterium())
-        for row in range(self._rows):
-            for colum in range(self._columns):
+
+    def move_all_entities(self):
+        new_board = Board(self.__rows, self.__columns)
+        new_board.set_position_spawn_other(self.__position_spawn_other)
+        new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
+        for row in range(self.__rows):
+            for colum in range(self.__columns):
+                new_board = self.move_entities(row, colum, new_board)
+        return new_board
+
+    def crossing_board(self):
+        for row in range(self.__rows):
+            for colum in range(self.__columns):
             #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
                 self.__board[row][colum].update_cell()
-                #metodo que pasa todo lo que queda en una celda, a las celdas vecinas en un tablero nuevo
-                new_board = self.move_entities(row, colum, new_board)
-        self.board = new_board
 
     def move_entities(self, x, y, new_board):
         new_x = None
@@ -173,20 +178,34 @@ class Board:
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
-                new_board[new_x][new_y]._bacterium = bacterium
+                new_board.get_cell(new_x,new_y)._bacterium = bacterium
                 bacterium.add_move()
 
-        for i in range(self.__board[x][y]._antibiotics):
+        for _ in range(self.__board[x][y]._antibiotics):
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
-                new_board[new_x][new_y].add_antibiotic()
+                new_board.get_cell(new_x,new_y).add_antibiotic()
 
         for bacteriophage in self.__board[x][y]._bacteriophages:
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
-                new_board[new_x][new_y]._bacteriophage = bacteriophage
-
+                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection-1)	
+    
         return new_board
+    
+    def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
+        if isinstance(entity,Bacterium):
+                    board.get_cell(new_x,new_y)._bacterium = entity
+                    entity.add_move()
+                    board.get_cell(x,y)._bacteria.remove(entity)
+        elif isinstance(entity,Bacteriophage):
+            board.get_cell(new_x,new_y)._bacteriophages = entity
+            entity.add_move()
+            board.get_cell(x,y)._bacteriophages.remove(entity)
+        else:
+            board.get_cell(new_x,new_y).add_antibiotic()
+            board.get_cell(x,y)._antibiotics = board.get_cell(x,y)._antibiotics -1
+        return board
