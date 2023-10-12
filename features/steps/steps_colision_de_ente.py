@@ -31,9 +31,9 @@ def eliminacion_ente(context,ente,x,y):
     if ente == "antibioticos":
         assert context.game._board.get_cell(x,y)._antibiotics == 0
     elif ente == "bacterias":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
+        assert context.game._board.get_cell(x,y).cant_bacteria() == 0
     elif ente == "bacteriofagos":
-        assert context.game._board.get_cell(x,y)._bacteriophages.__len__() == 0
+        assert context.game._board.get_cell(x,y).cant_bacteriophages() == 0
 
 #El numero de antibioticos es menor o igual al numero de bacterias en una celda
 #Una bacteria fuerte se debilita al tener contacto con un antibiotico
