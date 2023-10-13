@@ -1,5 +1,5 @@
 import pytest
-from models.logic.Bacterium import Bacterium, BacteriumStrong
+from models.logic.Bacterium import BacteriumStrong
 
 
 def test_strong_reproducible():
