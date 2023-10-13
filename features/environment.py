@@ -24,7 +24,6 @@ def before_feature(context, feature):
 @fixture
 def initial(context):
     context.game = GameController()
-    context.game.config(30,50)
     context.game._game_mode = Game_Mode.ANTIBIOTIC
 
 def before_scenario(context, scenario):
