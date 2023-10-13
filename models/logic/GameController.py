@@ -167,3 +167,20 @@ class GameController:
     def set_spawn_other(self, position):
         if(self._game_state == Game_State.CONFIG_GAME):
             self.__board.set_position_spawn_other(position)
+
+    def count_in_adjacents(self, x, y, ente):
+        vecinos = self._board.get_possible_moves(x,y)
+        contador = 0
+
+        for celda in vecinos:
+            a = celda[0]
+            b = celda[1]
+
+            if ente == "b":
+                contador += self._board.get_cell(a,b).cant_bacteria()
+            if ente == "a":
+                contador += self._board.get_cell(a,b)._antibiotics
+            if ente == "v":
+                contador += self._board.get_cell(a,b).cant_bacteriophages()
+
+        return contador
