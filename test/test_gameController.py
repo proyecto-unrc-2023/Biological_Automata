@@ -212,7 +212,7 @@ def test_spawn_other_antibiotic(game):
 
 def test_spawn_bacteriophage(game):
   pos = (2,2)
-  game._game_mode = Game_Mode.BACTERIOPHAGE       # Para iniciar el juego
+  game._game_mode = Game_Mode.BACTERIOPHAGE
   game.start_game()
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
   bacteriophage_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for (x, y) in moves_n)
@@ -220,3 +220,21 @@ def test_spawn_bacteriophage(game):
   game.generate_entities()
   bacteriophage_found = any(len(game._board.get_cell(x, y)._bacteriophages) > 0 for (x, y) in moves_n)
   assert bacteriophage_found
+
+
+def test_count_in_adjacents(game):
+  game._game_mode = Game_Mode.ANTIBIOTIC
+  game.start_game()
+  game.refresh_board()
+  count = game.count_in_adjacents(0,0, 'b')
+  assert count == 1
+  count = game.count_in_adjacents(2,2, 'a')
+  assert count == 1
+
+
+def test_count_in_adjacents_mode_bacteriophages(game):
+  game._game_mode = Game_Mode.BACTERIOPHAGE
+  game.start_game()
+  game.refresh_board()
+  count = game.count_in_adjacents(2,2, 'v')
+  assert count == 1
