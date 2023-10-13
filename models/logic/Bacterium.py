@@ -92,7 +92,7 @@ class BacteriumStrong(Bacterium):
 class BacteriumInfected(Bacterium):
 
     def lithic_State(self):
-      if (self.moves == 4):
+      if (self.moves >= 4):
           return True
       return False
 
