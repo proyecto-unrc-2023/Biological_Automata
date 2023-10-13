@@ -34,7 +34,7 @@ class GameController:
         # self.__exploit_moves = 4              # todavia no usado
 
 
-    def config(self, frec_bact, frec_other, cant_bact, cant_other):
+    def config(self, cant_bact, frec_bact, cant_other, frec_other):
         if (self._game_state == Game_State.NOT_STARTER):
             self._game_state = Game_State.CONFIG_GAME
             self._frecuency_bacterium = frec_bact
