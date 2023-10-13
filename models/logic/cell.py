@@ -273,7 +273,6 @@ class Cell:
 		array = []
 		for bacterium in self._bacteria:
 			array.append(bacterium.__str__())
-
 		return array
 
 
