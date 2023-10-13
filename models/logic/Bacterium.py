@@ -47,19 +47,18 @@ class Bacterium(Entity):
 class BacteriumNormal(Bacterium):
 
     def reproducir(self):
-      if (self.isReproducible()):
-        mutation_probability = 0.01
-
-        #genero un numero aleatorio entre 0 y 1
-        random_number = random.random()
-
-        self.moves = 0
-        if random_number > mutation_probability:
-          return BacteriumNormal(0)
-        else:
-          return BacteriumStrong(0)
-
-      raise ValueError("El número de movimientos no es 3") #ver que error tirar
+      if (not self.isReproducible()):
+        raise ValueError("El número de movimientos no es 3")
+      
+      mutation_probability = 0.01
+      
+      #genero un numero aleatorio entre 0 y 1
+      random_number = random.random()
+      self.moves = 0
+      if random_number > mutation_probability:
+        return BacteriumNormal(0)
+      else:
+        return BacteriumStrong(0)
 
     def isReproducible(self):
       if (self.moves == 3):
@@ -75,9 +74,9 @@ class BacteriumNormal(Bacterium):
 class BacteriumStrong(Bacterium):
 
     def reproducir(self):
-      if (self.isReproducible()):
-        return BacteriumStrong(0)
-      raise ValueError("El numero de movimientos es inferior a 3") #ver que error tirar
+      if (not self.isReproducible()):
+        raise ValueError("El numero de movimientos es inferior a 3")
+      return BacteriumStrong(0)
 
     def isReproducible(self):
       if (self.moves == 3):
@@ -90,17 +89,13 @@ class BacteriumStrong(Bacterium):
     def __str__(self):
       return 'f'
 
-
 class BacteriumInfected(Bacterium):
 
-    #Esta en condiciones de explotar?
     def lithic_State(self):
       if (self.moves >= 4):
           return True
       return False
 
-
-    ##NOSE SI ESTO ESTA BIEN
     def exploid (self):
       if (self.lithic_State()):
         del self
@@ -111,8 +106,6 @@ class BacteriumInfected(Bacterium):
 
     def __str__(self):
       return 'i'
-    
-    
 
 class BacteriumWeak(Bacterium):
 

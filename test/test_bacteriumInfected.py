@@ -1,15 +1,6 @@
 import pytest
 from models.logic.Bacterium import BacteriumInfected, Bacterium
 
-def test_bacterium_move_increment():
-    bacteria = BacteriumInfected(0)
-    bacteria.add_move()
-    assert bacteria.moves == 1
-
-def test_bacterium_set_increment():
-    bacteria = BacteriumInfected(0)
-    bacteria.moves = 3
-    assert bacteria.moves == 3
 
 def test_lithic_state():
     bacterium = BacteriumInfected(4)

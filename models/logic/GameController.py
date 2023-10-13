@@ -34,14 +34,13 @@ class GameController:
         # self.__exploit_moves = 4              # todavia no usado
 
 
-    def config(self, b_rows, b_columns):
+    def config(self, cant_bact, frec_bact, cant_other, frec_other):
         if (self._game_state == Game_State.NOT_STARTER):
             self._game_state = Game_State.CONFIG_GAME
-            self.__board = Board(b_rows, b_columns)
-            self._frecuency_bacterium = 2
-            self._frecuency_other = 2
-            self._cant_bacterium = 10
-            self._cant_other = 20
+            self._frecuency_bacterium = frec_bact
+            self._frecuency_other = frec_other
+            self._cant_bacterium = cant_bact
+            self._cant_other = cant_other
             # self.__reproduction_moves = 3
             # self.__recovery_moves = 6
             # self.__exploit_moves = 4
@@ -89,8 +88,9 @@ class GameController:
             actualizado.crossing_board()
             self.__movements += 1
 
-    def stop(self, b:bool):
-        if (self.__game_state == Game_State.START_GAME and b == True):
+
+    def stop(self):
+        if (self.__game_state == Game_State.START_GAME):
             self.__game_state = Game_State.FINISH_GAME
 
 
@@ -102,9 +102,14 @@ class GameController:
 
     @_game_mode.setter
     def _game_mode(self, mode: Game_Mode):
-        spawn = self.__board.get_position_spawn_bacterium()
-        if (self.__game_state == Game_State.CONFIG_GAME and (spawn != None)):
+        spawn_bacterium = self.__board.get_position_spawn_bacterium()
+        spawn_other = self.__board.get_position_spawn_other()
+        if (self.__game_state == Game_State.CONFIG_GAME and spawn_bacterium != None and spawn_other != None):
             self.__game_mode = mode
+            
+
+    def start_game(self):
+        if (self.__game_state == Game_State.CONFIG_GAME and self.__game_mode != None):
             self.__game_state = Game_State.START_GAME
 
     @property
@@ -156,7 +161,9 @@ class GameController:
         return self.__movements
 
     def set_spawn_bacterium(self, position):
-        self.__board.set_position_spawn_bacterium(position)
+        if(self._game_state == Game_State.CONFIG_GAME):
+            self.__board.set_position_spawn_bacterium(position)
 
     def set_spawn_other(self, position):
-        self.__board.set_position_spawn_other(position)
+        if(self._game_state == Game_State.CONFIG_GAME):
+            self.__board.set_position_spawn_other(position)
