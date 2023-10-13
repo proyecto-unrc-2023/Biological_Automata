@@ -22,16 +22,4 @@ def chequeo_salida_spawn(context, ente, cant):
 
 @then("deberia haber {cant:d} {ente} en las celdas adyacentes a ({x:d},{y:d})")
 def conteo_en_celdas_adyacentes(context, ente, cant, x, y):
-    vecinos = context.game._board.get_possible_moves(x,y)
-    contador = 0
-    for celda in vecinos:
-        a = celda[0]
-        b = celda[1]
-        if ente == "b":
-            contador += context.game._board.get_cell(a,b).cant_bacteria()
-        if ente == "a":
-            contador += context.game._board.get_cell(a,b)._antibiotics
-        if ente == "v":
-            contador += context.game._board.get_cell(a,b).cant_bacteriophages()
-
-    assert contador == cant
+    assert context.game.count_in_adjacents(x, y, ente) == cant
