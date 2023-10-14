@@ -12,9 +12,9 @@ Característica: Comportamiento de las entidades
       |(1,2)|bacteria normal|
       |(5,3)|bacteria normal|
       |(5,3)|bacteria normal|
-#      |(1,2)|bacteria fuerte|
-#      |(5,0)|bacteria fuerte|
-#      |(2,1)|bacteria fuerte|
+      |(1,2)|bacteria fuerte|
+      |(5,0)|bacteria fuerte|
+      |(2,1)|bacteria fuerte|
 
 
 
@@ -96,26 +96,25 @@ Característica: Comportamiento de las entidades
       |(1,0) |bacteria debil|
       |(3,3) |bacteria debil|
 
-#ME FALTO HACER
-##  Comportamiento de las bacterias en modo bacteriofago
-#18
-#  Esquema del escenario: Varia la cualidad de infección de en los entes
-#    Dado  hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
-#    Cuando se mueve a la celda (<end_x>,<end_y>)
-#    Entonces el tablero deberia contener <entidad> en (<end_x>,<end_y>)
-#    Y deberia tener un <cualidad> de infeccion de <grado-p>
-#
-#    Ejemplos:
-#      |pos   |end   |grado-c|poder  |entidad                |cualidad|
-#      |(5,0) |(5,1) |1      |2      |una bacteria infectada|grado  |
-#      |(1,2) |(2,3) |2      |3      |una bacteria infectada|grado  |
-#      |(5,0) |(5,1) |4      |3      |un bacteriofago       |poder  |
-#      |(1,2) |(2,3) |3      |2      |un bacteriofago       |poder  |
-#      |(2,3) |(2,4) |2      |1      |un bacteriofago       |poder  |
-#
-#
-#
-#19
+#  Comportamiento de las bacterias en modo bacteriofago
+# 18
+ Esquema del escenario: Varia la cualidad de infección en bacterias infectadas y bacteriofagos
+   Dado  hay 1 <entidad> en la celda <pos> con poder de infeccion <grado-c>
+   Cuando <entidad> se mueve de <pos> a la celda <end>
+   Entonces el tablero deberia contener <entidad> en <end> con <cualidad> de <poder>
+  #  Y deberia tener un <cualidad> de infeccion de <poder>]
+
+   Ejemplos:
+     |pos   |end   |grado-c|poder  |entidad               |cualidad|
+     |(5,0) |(5,1) |1      |2      |una bacteria infectada|grado   |
+     |(1,2) |(2,3) |2      |3      |una bacteria infectada|grado   |
+     |(5,0) |(5,1) |4      |3      |un bacteriofago       |poder   |
+     |(1,2) |(2,3) |3      |2      |un bacteriofago       |poder   |
+     |(2,3) |(2,4) |2      |1      |un bacteriofago       |poder   |
+
+
+
+# 19
   Esquema del escenario: Una bacteria infectada explota generando bacteriofagos
     Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado>
     Cuando se produce la confrontacion

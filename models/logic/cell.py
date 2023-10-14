@@ -183,14 +183,14 @@ class Cell:
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
 
-	#self.update_for_explocion
-	#actualizo por la reproduccion de bacterias
-		self.update_for_reproduction()
+	# #self.update_for_explocion
+	# #actualizo por la reproduccion de bacterias
+	# 	self.update_for_reproduction()
 
-	#actualizo por la recuperación de bacterias
-		self.update_for_recovery()
+	# #actualizo por la recuperación de bacterias
+	# 	self.update_for_recovery()
 
-		self.burst_bacteriophage()
+	# 	self.burst_bacteriophage()
 
 	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
@@ -268,7 +268,7 @@ class Cell:
 		for bacterium in self._bacteria:
 			#chequeo las bacterias que están en condiciones de reproducirse
 			if bacterium.isReproducible():
-				self._bacterium.append(bacterium.reproducir())
+				self._bacterium = bacterium.reproducir()
 
 	def update_for_recovery(self):
 		bacteria_to_add = []
