@@ -31,9 +31,9 @@ def eliminacion_ente(context,ente,x,y):
     if ente == "antibioticos":
         assert context.game._board.get_cell(x,y)._antibiotics == 0
     elif ente == "bacterias":
-        assert context.game._board.get_cell(x,y).cant_bacteria() == 0
+        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
     elif ente == "bacteriofagos":
-        assert context.game._board.get_cell(x,y).cant_bacteriophages() == 0
+        assert context.game._board.get_cell(x,y)._bacteriophages.__len__() == 0
 
 #El numero de antibioticos es menor o igual al numero de bacterias en una celda
 #Una bacteria fuerte se debilita al tener contacto con un antibiotico
@@ -61,10 +61,11 @@ def agreago_bacteria_infectada(context, num, x, y, grado):
         assert isinstance(context.game._board.get_cell(x,y)._bacteria[0], BacteriumInfected)
 
 
-@then('deberia haber 1 bacteriofago con poder de infección {poder:d} en ({x:d},{y:d})')
-def checkeo_bacteriofago(context, poder,x,y):
-    assert isinstance(context.game._board.get_cell(x,y)._bacteriophages[0], Bacteriophage)
-    assert context.game._board.get_cell(x,y)._bacteriophages[0].infection == poder
+@then('deberia haber {num:d} bacteriofago con poder de infección {poder:d} en ({x:d},{y:d})')
+def checkeo_bacteriofago(context,num, poder,x,y):
+    for i in range(0,num):
+        assert isinstance(context.game._board.get_cell(x,y)._bacteriophages[i], Bacteriophage)
+        assert context.game._board.get_cell(x,y)._bacteriophages[i].infection == poder
 
 
 @then('deberia haber {num:d} bacteriofago con poder de infeccion {poder:d} en ({x:d},{y:d})')
