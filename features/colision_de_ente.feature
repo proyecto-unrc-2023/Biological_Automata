@@ -79,7 +79,7 @@ Característica: Colisión de entidades
      |(2,4)|2    |2    |
 
 #24
-  Esquema del escenario: Una bacteria es infectada por dos bacteriófagos
+  Esquema del escenario: Una bacteria es infectada por dos bacteriófagos y sobrevive al encuentro
      Dado que hay 1 <tipo> en la celda <pos>
      Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
      Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder2>
@@ -110,7 +110,7 @@ Característica: Colisión de entidades
 
 
 #25
-  Esquema del escenario: Sobrepoblación de bacterias se cruzan al mismo tiempo con un bacteriofago
+  Esquema del escenario: Sobrepoblación de bacterias se cruzan con un bacteriofago
     Dado que hay 4 <tipo> en la celda <pos>
     Y hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
     Cuando se produce la confrontacion
