@@ -35,17 +35,17 @@ def entindad_infected(context,type,x,y,level):
 def varia_poder(context,x,y,x1,y1,type):
     if type == "una bacteria infectada":
         aux = context.game._board.get_cell(x1,y1)._bacteria[0]
-        context.game._board.move_entity(x,y,x1,y1,aux)
+        context.game._board.move_entity(x,y,x1,y1,context.game._board,aux)
     elif type == "un bacteriofago":
         aux = context.game._board.get_cell(x1,y1)._bacteriophages[0]
-        context.game._board.move_entity(x,y,x1,y1,aux)
+        context.game._board.move_entity(x,y,x1,y1,context.game._board,aux)
     
        
 @then('el tablero deberia contener {type} en ({x:d},{y:d}) con {cualidad} de {level:d}')
-def ente_in_pos(context,x,y,type,level):
+def ente_in_pos(context,x,y,type,level,cualidad):
     if type == "una bacteria infectada" :
         assert isinstance(context.game._board.get_cell(x,y)._bacteria[0],BacteriumInfected)
         assert context.game._board.get_cell(x,y)._bacteria[0].moves == level
     elif type == "un bacteriofago":
         assert isinstance(context.game._board.get_cell(x,y)._bacteriophages[0],Bacteriophage)
-        assert context.game._board.get_cell(x,y)._bacteriophages[0]._infection == level
+        assert context.game._board.get_cell(x,y)._bacteriophages[0].infection == level
