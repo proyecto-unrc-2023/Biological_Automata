@@ -1,15 +1,15 @@
 # language: es
 
-Característica: Movimientos de una entidad                                                                          
+Característica: Movimientos de una entidad
 #1
-  Esquema del escenario: Un ente se mueve de posicion a un casillero contiguo              
+  Esquema del escenario: Un ente se mueve de posicion a un casillero contiguo
     Dado que hay 1 <ente> en la celda <x>
     Y tiene 8 posibilidades de movimiento <a>, <b>, <c>, <d>, <e>, <f>, <g> y <h>
-    Cuando se mueve 1 <ente> de la celda <x> a <d> 
-    Entonces el tablero tiene 1 <ente> en <d> 
+    Cuando se mueve 1 <ente> de la celda <x> a <d>
+    Entonces el tablero tiene 1 <ente> en <d>
     Y el tablero no tiene <ente>s en <x>
 
-    Ejemplos:      
+    Ejemplos:
       |ente         |a    |b    |c    |d    |e    |f    |g    |h    |x    |
       |bacterias    |(1,2)|(1,3)|(1,4)|(2,2)|(2,4)|(3,2)|(3,3)|(3,4)|(2,3)|
       |antibioticos |(1,2)|(1,3)|(1,4)|(2,2)|(2,4)|(3,2)|(3,3)|(3,4)|(2,3)|
@@ -39,7 +39,7 @@ Característica: Movimientos de una entidad
     Entonces el tablero tiene 1 <ente> en <d>
     Y el tablero no tiene <ente>s en <a>
 
-    Ejemplos:      
+    Ejemplos:
       |ente         |a      |b      |c      |d      |
       |bacterias    |(1,5)  |(2,4)  |(1,4)  |(2,5)  |
       |bacterias    |(5,5)  |(5,4)  |(4,4)  |(4,5)  |

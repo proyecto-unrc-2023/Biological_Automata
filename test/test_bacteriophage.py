@@ -26,8 +26,7 @@ def test_bacteriophage_degradacion():
     assert virus.degradacion() == None
 
 def test_bacteriophage_from_string():
-    virus_str = str(Bacteriophage(0))
-    virus = Bacteriophage.from_string(virus_str)
+    virus = Bacteriophage.from_string('v')
     assert isinstance(virus, Bacteriophage)
 
 def test_bacteriophage_str():
