@@ -148,7 +148,7 @@ class Cell:
 
 	def cant_bacteriophages(self):
 		return self.__bacteriophages.__len__()
-	
+
 	def is_empty(self):
 		if self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other):
 			return True
@@ -180,6 +180,15 @@ class Cell:
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
 
+	# #self.update_for_explocion
+	# #actualizo por la reproduccion de bacterias
+	# 	self.update_for_reproduction()
+
+	# #actualizo por la recuperación de bacterias
+	# 	self.update_for_recovery()
+
+	# 	self.burst_bacteriophage()
+
 	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
 			if self._antibiotics > self.cant_bacteria():
@@ -187,6 +196,29 @@ class Cell:
 			else:
 				self.low_dose_antibiotic()
 
+		if self.cant_bacteriophages()> 0 and self.cant_bacteria() > 0:
+			b = False
+			poder = 0
+			for bacteriophage in self._bacteriophages:
+				poder += bacteriophage.infection
+
+			if poder >= 4:
+				poder = 4
+
+			infected = []
+			for bacterium in self._bacteria:
+				if (not isinstance(bacterium, BacteriumInfected)):
+					infected.append(BacteriumInfected(poder))
+					b = True
+				else:
+					infected.append(bacterium)
+
+			if (b == True):
+				self.__bacteriophages = []
+
+			self.__bacteria = infected
+
+	#self.update_for_explocion
 	#actualizo por la reproduccion de bacterias
 		self.update_for_reproduction()
 
@@ -233,7 +265,7 @@ class Cell:
 		for bacterium in self._bacteria:
 			#chequeo las bacterias que están en condiciones de reproducirse
 			if bacterium.isReproducible():
-				self._bacterium.append(bacterium.reproducir())
+				self._bacterium = bacterium.reproducir()
 
 	def update_for_recovery(self):
 		bacteria_to_add = []
@@ -256,8 +288,8 @@ class Cell:
 			bacterium.add_move()
 		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()
-	
-	
+
+
 	def burst_bacteriophage(self):
 		bacteria_to_remove = []
 		for bacterium in self.__bacteria:
@@ -269,4 +301,3 @@ class Cell:
 
 		for bacterium in bacteria_to_remove:
 			self._bacterium.remove(bacterium)
-				
