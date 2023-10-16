@@ -1,5 +1,4 @@
 from models.logic.Bacterium import *
-from models.logic.Antibiotic import Antibiotic
 from models.logic.Bacteriophage import Bacteriophage
 
 class Cell:
@@ -84,19 +83,17 @@ class Cell:
 		return self.__spawn_other
 
 	def set_spawn_other(self):
-		if self.is_empty():
-			self.__spawn_other = True
-		else:
+		if not self.is_empty():
 			raise ValueError (f'celda ocupada')
+		self.__spawn_other = True
 
 	def get_spawn_bacterium(self):
 		return self.__spawn_bacterium
 
 	def set_spawn_bacterium(self):
-		if self.is_empty():
-			self.__spawn_bacterium = True
-		else:
+		if not self.is_empty():
 			raise ValueError(f'celda ocupada')
+		self.__spawn_bacterium = True
 
 
 	def __eq__(self, other):

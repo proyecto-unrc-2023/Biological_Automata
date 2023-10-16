@@ -28,8 +28,6 @@ def test_spawn_bacterium_cell(cell):
     assert cell.get_spawn_other() == False
 
 def test_spawn_other_cell(cell):
-    cell_aux = Cell()
-    cell_aux.set_spawn_other()
     cell.set_spawn_other()
     assert cell._antibiotics == 0
     assert cell.cant_bacteria ()== 0
@@ -39,14 +37,16 @@ def test_spawn_other_cell(cell):
 
 def test_spawn_bacterium_cell_not_empty(cell):
     cell.set_spawn_other()
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as e:
         cell.set_spawn_bacterium()
+    assert str(e.value) == 'celda ocupada'
 
 def test_spawn_other_cell_not_empty(cell):
     cell.set_spawn_bacterium()
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as e:
         cell.set_spawn_other()
-
+    assert str(e.value) == 'celda ocupada'
+    
 def test_eq_cell(cell):
     cell_aux = Cell()
     cell_aux.set_spawn_other()
@@ -96,7 +96,7 @@ def test_add_bacteriophage(cell):
     assert cell._bacteriophages[0].infection == 4
 
 
-def test_add_entes(cell):
+def test_add_entes_and_eq_cells(cell):
     cell._bacterium = BacteriumNormal(0)
     cell._antibiotics = 5
     cell_aux = Cell()
@@ -108,7 +108,7 @@ def test_add_move(cell):
       cell._bacterium = BacteriumNormal(0)
       cell.add_bacteriophage(4)
       cell.add_move()
-      assert cell._bacterium[0].moves == 1
+      assert cell._bacteria[0].moves == 1
       assert cell._bacteriophages[0].infection == 3
 
 def test_to_string_1(cell):
@@ -121,7 +121,6 @@ def test_to_string_1(cell):
     cell.add_antibiotic()
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
-    # string = cell.__str__()
     assert cell.__str__() == '1a1b1f1d1i2v'
 
 def test_to_string_2(cell):
@@ -132,7 +131,6 @@ def test_to_string_2(cell):
     assert cell.cant_ente('f') == 1
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
-    # string = cell.__str__()
     assert cell.__str__() == '2b1f2v'
 
 def test_from_string():
@@ -156,9 +154,11 @@ def test_from_string_spwn_bacterium():
 def test_from_string_spwn_other():
     cell = Cell.from_string('so')
     assert cell.__str__() == 'so'
+
 def test_from_string_error():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as e:
         cell = Cell.from_string('sO1b')
+    assert str(e.value) == 'string invalido'
 
 def test_overpoblation_strongest(cell):
     cell.add_bacterium(0,'b')
@@ -168,7 +168,7 @@ def test_overpoblation_strongest(cell):
     cell.overpopulation()
     assert cell.__str__() == '1f'
 
-def test_overpoblation_sin_strongest(cell):
+def test_overpoblation_without_strongest(cell):
     cell.add_bacterium(0,'b')
     cell.add_bacterium(0,'d')
     cell.add_bacterium(0,'d')
