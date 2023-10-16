@@ -43,15 +43,18 @@ class Bacterium(Entity):
       else:
         raise ValueError(f'Invalid Bacterium string: {cell_str}')
 
+    @property
+    def type(self):
+      return self.__str__()
 
 class BacteriumNormal(Bacterium):
 
     def reproducir(self):
       if (not self.isReproducible()):
         raise ValueError("El número de movimientos no es 3")
-      
+
       mutation_probability = 0.01
-      
+
       #genero un numero aleatorio entre 0 y 1
       random_number = random.random()
       self.moves = 0
@@ -106,8 +109,8 @@ class BacteriumInfected(Bacterium):
 
     def __str__(self):
       return 'i'
-    
-    
+
+
 
 class BacteriumWeak(Bacterium):
 

@@ -20,9 +20,9 @@ class GameController:
         #al iniciar se dejan valores por defecto que el usuario puede modificar si quiere
         self.__game_state = Game_State.NOT_STARTER
         self.__game_mode = None
-        self.__board = Board(30,50)             # por defecto
+        self.__board = Board(20,30)             # por defecto
         self.__cant_bacterium = 10              # cantidad de bacterias que expulsara
-        self.__cant_other = 20                  # cantidad de bacterias que de antibiotico o bacterifago segun el modo                  
+        self.__cant_other = 20                  # cantidad de bacterias que de antibiotico o bacterifago segun el modo
         self.__frecuency_bacterium = 2          # frecuencia con el que expulsara bacterias el spawn bacterium
         self.__frecuency_other = 2              # frecuencia con el que expulsara antibiotico o bacterifago el spawn other
         self.__movements = 0                    # un movimiento es una actualizacion del board, y se usara junto con la frecuencia
@@ -36,7 +36,7 @@ class GameController:
 
     def config(self, cant_bact, frec_bact, cant_other, frec_other):
         if self._game_state != Game_State.NOT_STARTER:
-            raise ValueError("El juego no está en el estado START_GAME")
+            raise ValueError("El juego no está en el estado NOT_STARTER")
 
         self._game_state = Game_State.CONFIG_GAME
         self._frecuency_bacterium = frec_bact
@@ -60,20 +60,18 @@ class GameController:
                 self._cant_bacterium -= 1
 
     def generate_other(self):
-        if self._game_state != Game_State.START_GAME:
-            raise ValueError("El juego no está en el estado START_GAME")
-
-        spawn = self.__board.get_position_spawn_other()
-        if spawn != None:
-            move = self.__board.get_random_move(spawn[0], spawn[1])
-            if move != None:
-                if self.__game_mode == Game_Mode.ANTIBIOTIC:
-                    self._board.set_antibiotics(move[0],move[1], 1)
-                    self._cant_other -= 1
-                else:
-                    ente = Bacteriophage(4)
-                    self._board.set_bacteriophage(move[0], move[1], ente)
-                    self._cant_other -= 1
+        if self._game_state == Game_State.START_GAME:
+            spawn = self.__board.get_position_spawn_other()
+            if spawn != None:
+                move = self.__board.get_random_move(spawn[0], spawn[1])
+                if move != None:
+                    if self.__game_mode == Game_Mode.ANTIBIOTIC:
+                        self._board.set_antibiotics(move[0],move[1], 1)
+                        self._cant_other -= 1
+                    else:
+                        ente = Bacteriophage(4)
+                        self._board.set_bacteriophage(move[0], move[1], ente)
+                        self._cant_other -= 1
 
     def generate_entities(self):
         if self._game_state != Game_State.START_GAME:
@@ -91,7 +89,7 @@ class GameController:
     def refresh_board(self):
         if self._game_state != Game_State.START_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
-        
+
         actualizado = self._board.move_all_entities()
         self.__board = actualizado
         self.generate_entities()
@@ -102,8 +100,8 @@ class GameController:
     def stop(self):
         if self.__game_state != Game_State.START_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
-        
-        self.__game_state = Game_State.FINISH_GAME
+
+        self.__game_state = Game_State.NOT_STARTER
 
 
 ############ SETTERS Y GETTERS ###############
@@ -118,13 +116,13 @@ class GameController:
         spawn_other = self.__board.get_position_spawn_other()
         if not (self.__game_state == Game_State.CONFIG_GAME and spawn_bacterium != None and spawn_other != None):
             raise ValueError("El juego no está en el estado CONFIG_GAME o no se configuró uno de los spawn")
-        
+
         self.__game_mode = mode
 
     def start_game(self):
         if not (self.__game_state == Game_State.CONFIG_GAME and self.__game_mode != None):
             raise ValueError("El juego no está en el estado CONFIG_GAME o no se configuró el modo de juego")
-        
+
         self.__game_state = Game_State.START_GAME
 
     @property
@@ -178,7 +176,7 @@ class GameController:
     def set_spawn_bacterium(self, position):
         if  self._game_state != Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado CONFIG_GAME")
-        
+
         self.__board.set_position_spawn_bacterium(position)
 
     def set_spawn_other(self, position):
@@ -186,6 +184,14 @@ class GameController:
             raise ValueError("El juego no está en el estado CONFIG_GAME")
 
         self.__board.set_position_spawn_other(position)
+
+    @property
+    def spawn_bacterium(self):
+        return self.__board.get_position_spawn_bacterium()
+
+    @property
+    def spawn_other(self):
+        return self.__board.get_position_spawn_other()
 
     def count_in_adjacents(self, x, y, ente):
         vecinos = self._board.get_possible_moves(x,y)

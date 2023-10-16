@@ -83,17 +83,21 @@ class Cell:
 		return self.__spawn_other
 
 	def set_spawn_other(self):
-		if not self.is_empty():
+		if self.is_empty():
+			self.__spawn_other = True
+			self.__spawn_bacterium = False
+		else:
 			raise ValueError (f'celda ocupada')
-		self.__spawn_other = True
 
 	def get_spawn_bacterium(self):
 		return self.__spawn_bacterium
 
 	def set_spawn_bacterium(self):
-		if not self.is_empty():
+		if self.is_empty():
+			self.__spawn_bacterium = True
+			self.__spawn_other = False
+		else:
 			raise ValueError(f'celda ocupada')
-		self.__spawn_bacterium = True
 
 
 	def __eq__(self, other):
@@ -301,3 +305,14 @@ class Cell:
 
 		for bacterium in bacteria_to_remove:
 			self._bacterium.remove(bacterium)
+
+	@property
+	def _cant_bacteriophage(self):
+		return len(self._bacteriophages)
+
+	@property
+	def bacterias(self):
+		array = []
+		for bacterium in self._bacteria:
+			array.append(bacterium.__str__())
+		return array
