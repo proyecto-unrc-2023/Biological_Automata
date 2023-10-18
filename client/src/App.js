@@ -15,7 +15,7 @@ function App() {
         .catch((error) => {
           console.error('Error no se agarró el JSON', error);
         });
-    }, [gameData, startGame]);
+    }, [startGame]);
 
     if (gameData === null) {
       return <div>NO CARGO</div>;

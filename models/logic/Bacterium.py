@@ -92,7 +92,7 @@ class BacteriumStrong(Bacterium):
     def __str__(self):
       return 'f'
 
-    
+
 class BacteriumInfected(Bacterium):
 
     def lithic_State(self):

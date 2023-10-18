@@ -29,6 +29,7 @@ game_data = GameController()
 
 class Games_Resource(Resource):
     def get(self):
+        #game_data.refresh_board()
         game_schema = GameSchema()
         result = game_schema.dump(game_data)
         return jsonify({"games": result})
@@ -65,6 +66,6 @@ class Refresh_Game(Resource):
         game_data.refresh_board()
         game_schema = GameSchema()
         result = game_schema.dump(game_data)
-        return game_data._board.__str__()
+        return jsonify({"games": result})
 
 api.add_resource(Refresh_Game, '/refresh')
