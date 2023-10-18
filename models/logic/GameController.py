@@ -12,7 +12,6 @@ class Game_State(Enum):
     NOT_STARTER = 1     #Todavia no empezo el juego
     CONFIG_GAME = 2     #CONFIGURA LOS PARAMETROS
     START_GAME = 3      #Inicio de juego
-    FINISH_GAME = 4
 
 class GameController:
 
@@ -102,7 +101,8 @@ class GameController:
             raise ValueError("El juego no está en el estado START_GAME")
 
         self.__game_state = Game_State.NOT_STARTER
-
+        self.__game_mode = None
+        self.__board = Board(20,30)
 
 ############ SETTERS Y GETTERS ###############
 

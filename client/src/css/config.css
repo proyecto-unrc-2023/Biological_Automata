@@ -1,0 +1,83 @@
+/* Estilo para la cuadrícula principal */
+html {
+  background-color: rgb(255, 0, 0);
+  /* background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; */
+}
+.grid {
+  display: flex;
+  flex-direction: column; /*filas en vertical */
+  align-items: center; /* Centra filas horizontalmente */
+  justify-content: center; /* Centra verticalmente */
+}
+
+/* Estilo para cada fila de la cuadrícula */
+.grid-row {
+  display: flex;
+  justify-content: center; /* Centra las celdas horizontalmente en la fila */
+  /*margin-bottom: 10px; Espacio entre las filas */
+
+}
+
+
+/*CELDAS */
+.cell {
+  width: 30px;
+  height: 30px;
+  /*margin-right: 10px;  Espacio entre las celdas */
+  /* Otros estilos de celda según tus preferencias */
+  background-color: #00000000;
+  border: 1px solid #000000;
+  background-image: url('../../public/textura.png');
+  background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
+  background-position: center center; /* Centra la imagen vertical y horizontalmente */
+  background-repeat: no-repeat;
+
+}
+
+.spawnBacterium{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/BacteriumStrong.gif');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.spawnOther{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/pill.gif');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+
+.bacterium{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/BacteriumNormal.gif');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+
+.antibiotic{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/pill.gif');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

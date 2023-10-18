@@ -37,15 +37,18 @@ api.add_resource(Games_Resource, '/game')
 
 
 class Config_Game(Resource):
-    def post(self, xSpawnB, ySpawnB, xSpawnO, ySpawnO, cant_bact, cant_other, frec_bact, frec_other):
+    def post(self, xSpawnB, ySpawnB, xSpawnO, ySpawnO, cant_bact, cant_other, frec_bact, frec_other, gameMode):
         game_data.config(cant_bact,frec_bact,cant_other,frec_other)
         game_data.set_spawn_bacterium((xSpawnB,ySpawnB))
         game_data.set_spawn_other((xSpawnO,ySpawnO))
-        game_data._game_mode = Game_Mode.ANTIBIOTIC
+        if (gameMode == 1):
+            game_data._game_mode = Game_Mode.ANTIBIOTIC
+        else:
+            game_data._game_mode = Game_Mode.BACTERIOPHAGE
         game_data.start_game()
         return {"message": "Configuración guardada correctamente"}
 
-api.add_resource(Config_Game, '/config/<int:xSpawnB>/<int:ySpawnB>/<int:xSpawnO>/<int:ySpawnO>/<int:cant_bact>/<int:cant_other>/<int:frec_bact>/<int:frec_other>')
+api.add_resource(Config_Game, '/config/<int:xSpawnB>/<int:ySpawnB>/<int:xSpawnO>/<int:ySpawnO>/<int:cant_bact>/<int:cant_other>/<int:frec_bact>/<int:frec_other>/<int:gameMode>')
 
 
 class Stop_Game(Resource):

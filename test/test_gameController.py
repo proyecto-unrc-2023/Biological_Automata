@@ -63,7 +63,7 @@ def test_game_mode_without_spawn_bacterium():
   game.config(10, 2, 20, 2)
   game.set_spawn_other((5,5))
   with pytest.raises(ValueError) as e:
-    game._game_mode = Game_Mode.ANTIBIOTIC          
+    game._game_mode = Game_Mode.ANTIBIOTIC
   assert str(e.value) == "El juego no está en el estado CONFIG_GAME o no se configuró uno de los spawn"
   assert game._game_mode == None
   assert game._game_state == Game_State.CONFIG_GAME
@@ -86,7 +86,7 @@ def test_generate_bacterium_Mode_Antibiotic(game):
   assert game._cant_bacterium == cant_bacterium_temp - 1
 
 def test_generate_bacterium_Mode_Bacteriophage(game):
-  game._game_mode = Game_Mode.BACTERIOPHAGE       
+  game._game_mode = Game_Mode.BACTERIOPHAGE
   cant_bacterium_temp = game._cant_bacterium
   game.start_game()
   game.generate_bacterium()
@@ -98,14 +98,14 @@ def test_generate_bacterium_not_START_GAME(game):
   assert str(e.value) == "El juego no está en el estado START_GAME"
 
 def test_generate_other_Mode_Antibiotic(game):
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   cant_antibiotic_temp = game._cant_other
   game.start_game()
   game.generate_other()
   assert game._cant_other == cant_antibiotic_temp - 1
 
 def test_generate_other_Mode_Bacteriophage(game):
-  game._game_mode = Game_Mode.BACTERIOPHAGE       
+  game._game_mode = Game_Mode.BACTERIOPHAGE
   cant_bacteriophage_temp = game._cant_other
   game.start_game()
   game.generate_other()
@@ -117,7 +117,7 @@ def test_generate_other_not_START_GAME(game):
   assert str(e.value) == "El juego no está en el estado START_GAME"
 
 def test_generate_entities_Mode_Antibiotic(game):
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   cant_bacterium_temp = game._cant_bacterium
   cant_antibiotic_temp = game._cant_other
   game.start_game()
@@ -126,7 +126,7 @@ def test_generate_entities_Mode_Antibiotic(game):
   assert game._cant_other == cant_antibiotic_temp - 1
 
 def test_generate_entities_Mode_Bacteriophage(game):
-  game._game_mode = Game_Mode.BACTERIOPHAGE       
+  game._game_mode = Game_Mode.BACTERIOPHAGE
   cant_bacterium_temp = game._cant_bacterium
   cant_bacteriophage_temp = game._cant_other
   game.start_game()
@@ -140,7 +140,7 @@ def test_generate_entities_not_START_GAME(game):
   assert str(e.value) == "El juego no está en el estado START_GAME"
 
 def test_refresh_board(game):
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   cant_bacterium_temp = game._cant_bacterium
   cant_antibiotic_temp = game._cant_other
   cant_movements_temp = game._movements
@@ -151,7 +151,7 @@ def test_refresh_board(game):
   assert game._movements == cant_movements_temp + 1
 
 def test_refresh_board_twice(game):
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   cant_bacterium_temp = game._cant_bacterium
   cant_antibiotic_temp = game._cant_other
   cant_movements_temp = game._movements
@@ -172,20 +172,20 @@ def test_stop_NOT_STARTER():
   with pytest.raises(ValueError) as e:
     game.stop()
   assert str(e.value) == "El juego no está en el estado START_GAME"
-  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
+  assert game._game_state != Game_State.NOT_STARTER   # Game_State.NOT_STARTER
 
 def test_stop_CONFIG_GAME(game):
   game._game_mode = Game_Mode.ANTIBIOTIC
   with pytest.raises(ValueError) as e:
     game.stop()
   assert str(e.value) == "El juego no está en el estado START_GAME"
-  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
+  assert game._game_state != Game_State.NOT_STARTER   # Game_State.NOT_STARTER
   game.start_game()
   game.stop()
-  assert game._game_state == Game_State.FINISH_GAME
+  assert game._game_state == Game_State.NOT_STARTER
 
 def test_set_spawn_bacterium(game):
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   assert game._game_mode == Game_Mode.ANTIBIOTIC
   position = game._board.get_position_spawn_bacterium()
   if position != None:
@@ -200,7 +200,7 @@ def test_set_spawn_bacterium_not_CONFIG_GAME():
   assert str(e.value) == "El juego no está en el estado CONFIG_GAME"
 
 def test_set_spawn_other(game):
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   position = game._board.get_position_spawn_other()
   if position != None:
     assert position[0] == 3
@@ -215,7 +215,7 @@ def test_set_spawn_other_not_CONFIG_GAME(game):
 
 def test_spawn_bacterium(game):
   pos = (0,0)
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   game.start_game()
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
   bacteria_found = any(len(game._board.get_cell(x, y)._bacteria) > 0 for (x, y) in moves_n)
@@ -226,7 +226,7 @@ def test_spawn_bacterium(game):
 
 def test_spawn_other_antibiotic(game):
   pos = (3,3)
-  game._game_mode = Game_Mode.ANTIBIOTIC       
+  game._game_mode = Game_Mode.ANTIBIOTIC
   game.start_game()
   moves_n = game._board.get_possible_moves(pos[0],pos[1])
   antibiotic_found = any(game._board.get_cell(x, y)._antibiotics > 0 for (x, y) in moves_n)

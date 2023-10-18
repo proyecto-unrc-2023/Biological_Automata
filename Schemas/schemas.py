@@ -1,11 +1,5 @@
 from marshmallow import Schema, fields
 
-class BacteriophageSchema(Schema):
-    infection = fields.Int()
-
-class BacteriumSchema(Schema):
-    type = fields.Str()
-
 class CellSchema(Schema):
     bacterias = fields.List(fields.Str())
     _antibiotics = fields.Int()
@@ -24,3 +18,5 @@ class GameSchema(Schema):
     _board = fields.Nested(BoardSchema)
     spawn_bacterium = fields.Tuple((fields.Integer, fields.Integer), required=True)
     spawn_other = fields.Tuple((fields.Integer, fields.Integer), required=True)
+    _game_state = fields.Str()
+    _game_mode = fields.Str()
