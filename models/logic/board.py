@@ -6,10 +6,12 @@ from models.logic.Bacterium import *
 
 from models.logic.Bacteriophage import Bacteriophage
 
+from models.logic.Antibiotic import *
 
 class Board:
 
     def __init__(self, rows, columns):
+        self.__position = []
         self.__rows = rows
         self.__columns = columns
         self.__position_spawn_other = None
@@ -88,13 +90,19 @@ class Board:
     def get_position_spawn_other(self):
         return self.__position_spawn_other
 
+    def get_eficientr(self):
+        return self.__position
+    
+    def set_eficiente(self):
+        pass
+
+
     def set_position_spawn_other(self, position):
         try:
             self.__board[position[0]][position[1]].set_spawn_other()
         except ValueError:
             raise ValueError(f'no se puede poner un spawn')
         self.__position_spawn_other = position
-
 
     def get_position_spawn_bacterium(self):
         return self.__position_spawn_bacterium
@@ -115,16 +123,29 @@ class Board:
 
     def set_bacterium(self, row, colum, bacterium:Bacterium):
         self.__board[row][colum]._bacterium = bacterium
+        bacterium.set_pos(row, colum)
+        self.__position.append(bacterium)
 
-    def set_antibiotics(self, row, colum, cant: int):
+
+    def set_antibiotics(self, row, colum, cant: int): 
         self.__board[row][colum]._antibiotics = cant
+        anti = Antibiotic()
+        anti.set_pos(row, colum)
+        self.__position.append(anti)
+
+        
 
     def add_antibiotic(self, row, colum):
         self.__board[row][colum].add_antibiotic()
+        anti = Antibiotic()
+        anti.set_pos(row, colum)     
+        self.__position.append(anti)
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
         self.__board[row][colum]._bacteriophages = bacteriophage
-
+        bacteriophage.set_pos(row,colum)
+        self.__position.append(bacteriophage)
+        
 
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
@@ -160,16 +181,18 @@ class Board:
         new_board = Board(self.__rows, self.__columns)
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
-        for row in range(self.__rows):
-            for colum in range(self.__columns):
-                new_board = self.move_entities(row, colum, new_board)
+        for i in range(len(self.__position)):
+                pos = self.__position[i].get_pos()
+                new_board = self.move_entities(pos[0],pos[1], new_board)
         return new_board
 
     def crossing_board(self):
-        for row in range(self.__rows):
-            for colum in range(self.__columns):
-            #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
-                self.__board[row][colum].update_cell()
+      for i in range(len(self.__position)):
+                pos =self.__position[i].get_pos() 
+                self.__board[pos[0]][pos[1]].update_cell()
+
+      self.__position.clear()    
+     
 
     # def move_entities(self, x, y):
     #     new_board = Board(self.__rows, self.__columns)

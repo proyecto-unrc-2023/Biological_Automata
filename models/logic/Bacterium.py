@@ -6,7 +6,14 @@ class Bacterium(Entity):
 
     #Constructor
     def __init__(self, moves:int):
+      self.__pos =(None,None)
       self.__moves = max(0, moves)
+
+    def get_pos(self):
+      return self.__pos
+
+    def set_pos(self, row, colum):
+      self.__pos = (row,colum)
 
     #Suma de movimiento de bacteria
     def add_move(self):

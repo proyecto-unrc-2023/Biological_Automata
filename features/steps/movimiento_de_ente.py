@@ -15,8 +15,8 @@ def posibilidades_de_movimiento(context, n):
 
 @when("un {ente} se mueve desde la celda ({x:d},{y:d}) a una celda aleatoria")
 def entity_se_mueve(context,x,y,ente):
-    board = Board(30,50)
-    context.new_board = context.game._board.move_entities(x, y, board)
+    board = context.game._board
+    context.new_board = context.game._board.move_all_entities(x, y, board)
 
 @then("la celda ({x:d},{y:d}) del {ente} es contigua a la celda destino")
 def celdas_contiguas(context,x,y,ente):

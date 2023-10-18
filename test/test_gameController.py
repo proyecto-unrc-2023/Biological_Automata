@@ -1,4 +1,5 @@
 import pytest
+import time
 from models.logic.GameController import *
 from models.logic.Bacterium import *
 
@@ -145,10 +146,17 @@ def test_refresh_board(game):
   cant_antibiotic_temp = game._cant_other
   cant_movements_temp = game._movements
   game.start_game()
+  
+  #incio = time.time()
   game.refresh_board()
+  #fin = time.time()
+  #assert print(fin-incio)
+
   assert game._cant_bacterium == cant_bacterium_temp - 1
   assert game._cant_other == cant_antibiotic_temp - 1
   assert game._movements == cant_movements_temp + 1
+
+  
 
 def test_refresh_board_twice(game):
   game._game_mode = Game_Mode.ANTIBIOTIC       
