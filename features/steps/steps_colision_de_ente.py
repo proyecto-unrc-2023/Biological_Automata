@@ -11,6 +11,9 @@ def ubicacion_ente(context,n,x,y,ente):
     if ente == "antibiotico":
         for _ in range(0,n):
             context.game._board.add_antibiotic(x,y)
+    elif ente == "bacteriofago":
+        for _ in range(0,n):
+            context.game._board.set_bacteriophage(x,y, Bacteriophage(2))
     elif ente == "bacteria normal":
         for _ in range(0,n):
             context.game._board.set_bacterium(x,y, BacteriumNormal(1))
@@ -20,6 +23,10 @@ def ubicacion_ente(context,n,x,y,ente):
     elif ente == "bacteria fuerte":
         for _ in range(0,n):
             context.game._board.set_bacterium(x,y, BacteriumStrong(1))
+    elif ente == "bacteria infectada":
+        for _ in range(0,n):
+            context.game._board.set_bacterium(x,y, BacteriumInfected(1))
+            
 
 
 @when('se produce la confrontacion')

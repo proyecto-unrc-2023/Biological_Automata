@@ -171,6 +171,8 @@ class Board:
             #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
                 self.__board[row][colum].update_cell()
 
+    # def move_entities(self, x, y):
+    #     new_board = Board(self.__rows, self.__columns)
     def move_entities(self, x, y, new_board):
         new_x = None
         new_y = None
@@ -210,3 +212,18 @@ class Board:
             board.get_cell(new_x,new_y).add_antibiotic()
             board.get_cell(x,y)._antibiotics = board.get_cell(x,y)._antibiotics -1
         return board
+
+    def where_are_entities(self):
+        occupied_cells = []
+        for row in range(self.__rows):
+            for colum in range(self.__columns):
+                if not self.__board[row][colum].is_empty():
+                    occupied_cells.append((row,colum))
+        return occupied_cells
+
+    def how_many_entities(self, type):
+        occupied_cells = self.where_are_entities()
+        cant_entities = 0
+        for cell in occupied_cells:
+            cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
+        return cant_entities

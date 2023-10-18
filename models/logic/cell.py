@@ -154,6 +154,9 @@ class Cell:
 			return True
 		return False
 
+	def cant_total(self):
+		return self.cant_bacteriophages() + self.cant_bacteria() + self._antibiotics
+
 	def cant_ente(self,type):
 		if type =='a':
 			return self._antibiotics
