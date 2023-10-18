@@ -66,7 +66,7 @@ class GameController:
                 move = self.__board.get_random_move(spawn[0], spawn[1])
                 if move != None:
                     if self.__game_mode == Game_Mode.ANTIBIOTIC:
-                        self._board.set_antibiotics(move[0],move[1], 1)
+                        self._board.add_antibiotic(move[0],move[1])
                         self._cant_other -= 1
                     else:
                         ente = Bacteriophage(4)

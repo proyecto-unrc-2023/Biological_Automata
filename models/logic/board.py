@@ -196,7 +196,7 @@ class Board:
 
         return new_board
 
-
+      
     def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
         if isinstance(entity,Bacterium):
                     entity.add_move()

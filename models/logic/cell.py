@@ -172,11 +172,12 @@ class Cell:
 	#new
 	def is_spawn(self):
 		return self.get_spawn_bacterium() or self.get_spawn_other()
-
-	def is_spawn_bacterium(self):
+	@property
+	def _spawn_bacterium(self):
 		return self.get_spawn_bacterium()
 
-	def is_spawn_other(self):
+	@property
+	def _spawn_other(self):
 		return self.get_spawn_other()
 
 	def update_cell(self):
@@ -293,7 +294,6 @@ class Cell:
 		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()
 
-
 	def burst_bacteriophage(self):
 		bacteria_to_remove = []
 		for bacterium in self.__bacteria:
@@ -306,6 +306,7 @@ class Cell:
 		for bacterium in bacteria_to_remove:
 			self._bacterium.remove(bacterium)
 
+      ##Funciones para Schemas
 	@property
 	def _cant_bacteriophage(self):
 		return len(self._bacteriophages)
