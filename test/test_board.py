@@ -370,6 +370,11 @@ def test_update_board_2_con_burst_bacteriophage():
     assert res == expected1 or res == expected2
   
 
-
-
+def test_move_entities_cant_move(board):
+     bac = BacteriumNormal(4)
+     board.set_position_spawn_bacterium((0,0))
+     board.set_position_spawn_other((1,0))
+     board.set_bacterium(0,1,bac)
+     board = board.move_all_entities()
+     assert board.get_cell(1,1)._bacteria[0].moves == 5
 

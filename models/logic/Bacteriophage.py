@@ -40,10 +40,9 @@ class Bacteriophage(Entity):
 
     @staticmethod
     def from_string(cell_str):
-      if cell_str == 'v':
-          return Bacteriophage(4)
-      else:
+      if cell_str != 'v':
         raise ValueError(f'Invalid Bacteriofago string: {cell_str}')
+      return Bacteriophage(4)
 
 
 

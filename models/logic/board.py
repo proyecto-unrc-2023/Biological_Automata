@@ -178,8 +178,8 @@ class Board:
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
-                new_board.get_cell(new_x,new_y)._bacterium = bacterium
                 bacterium.add_move()
+                new_board.get_cell(new_x,new_y)._bacterium = bacterium
 
         for _ in range(self.__board[x][y]._antibiotics):
             resultMoves = self.get_random_move(x, y)
@@ -196,14 +196,15 @@ class Board:
 
         return new_board
 
+      
     def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
         if isinstance(entity,Bacterium):
-                    board.get_cell(new_x,new_y)._bacterium = entity
                     entity.add_move()
+                    board.get_cell(new_x,new_y)._bacterium = entity
                     board.get_cell(x,y)._bacteria.remove(entity)
         elif isinstance(entity,Bacteriophage):
-            board.get_cell(new_x,new_y)._bacteriophages = entity
             entity.add_move()
+            board.get_cell(new_x,new_y)._bacteriophages = entity
             board.get_cell(x,y)._bacteriophages.remove(entity)
         else:
             board.get_cell(new_x,new_y).add_antibiotic()

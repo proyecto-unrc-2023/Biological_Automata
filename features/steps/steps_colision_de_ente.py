@@ -1,3 +1,4 @@
+
 from behave import *
 from models.logic.Bacterium import *
 from models.logic.Antibiotic import Antibiotic
@@ -19,42 +20,58 @@ def ubicacion_ente(context,n,x,y,ente):
     elif ente == "bacteria fuerte":
         for _ in range(0,n):
             context.game._board.set_bacterium(x,y, BacteriumStrong(1))
-    elif ente == "bacteria infectada":
-        for _ in range(0,n):
-            context.game._board.set_bacterium(x,y, BacteriumInfected(x))
-    elif ente == "bacteriofago":
-        for _ in range(0,n):
-            context.game._board.set_bacteriophage(x,y, Bacteriophage(4))
 
-@when('se mueve {n:d} {ente} de ({x1:d},{y1:d}) a ({x2:d},{y2:d})')
-def movimiento_ente(context,n,x1,y1,x2,y2,ente):
-    if ente == "antibiotico":
-        tablero = context.game._board
-        context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,Antibiotic())
-    elif ente == "bacteriofago":
-        var = context.game._board.get_cell(x1,y1)._bacteriophage[0]
-        tablero = context.game._board
-        context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,var)
-    else:
-        print(context.game._board.__str__())
-        var = context.game._board.get_cell(x1,y1)._bacteria[0]
-        tablero = context.game._board
-        context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,var)
+
+@when('se produce la confrontacion')
+def crossing_table(context):
     context.game._board.crossing_board()
-
-    # for i in range(n):
 
 @then('el tablero no deberia tener {ente} en ({x:d},{y:d})')
 def eliminacion_ente(context,ente,x,y):
     if ente == "antibioticos":
         assert context.game._board.get_cell(x,y)._antibiotics == 0
-    elif ente == "bacteria normal":
+    elif ente == "bacterias":
         assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria debil":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria fuerte":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria infectada":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteriofago":
+    elif ente == "bacteriofagos":
         assert context.game._board.get_cell(x,y)._bacteriophages.__len__() == 0
+
+#El numero de antibioticos es menor o igual al numero de bacterias en una celda
+#Una bacteria fuerte se debilita al tener contacto con un antibiotico
+@then('el tablero deberia tener {num} {ente} en ({crash_x:d},{crash_y:d})')
+def checkeo_de_bacteria_debil(context,num,ente,crash_x,crash_y):
+    assert isinstance(context.game._board.get_cell(crash_x,crash_y)._bacteria[0], BacteriumWeak)
+
+
+#Una bacteria se cruza con un bacteriofago
+@given('hay {num:d} bacteriofago en la celda ({crash_x:d},{crash_y:d}) con poder de infeccion {poder:d}')
+def ubicacion_bacteriophage(context, num, crash_x, crash_y, poder):
+    for _ in range(0,num):
+        context.game._board.set_bacteriophage(crash_x,crash_y, Bacteriophage(poder))
+    
+@then('deberia haber {num:d} bacteria infectada de {grado:d} en ({crash_x:d},{crash_y:d})')
+def checkeo_de_bacteria_infectad(context,num , grado,crash_x,crash_y):
+    assert isinstance(context.game._board.get_cell(crash_x,crash_y)._bacteria[0],BacteriumInfected)
+    assert context.game._board.get_cell(crash_x,crash_y)._bacteria[0].moves == grado
+
+#Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
+@given('que hay {num:d} bacteria infectada en la celda ({x:d},{y:d}) con grado de infeccion {grado:d}')
+def agreago_bacteria_infectada(context, num, x, y, grado):
+    for _ in range(0,num):
+        context.game._board.set_bacterium(x,y, BacteriumInfected(grado))
+        assert isinstance(context.game._board.get_cell(x,y)._bacteria[0], BacteriumInfected)
+
+
+@then('deberia haber {num:d} bacteriofago con poder de infección {poder:d} en ({x:d},{y:d})')
+def checkeo_bacteriofago(context,num, poder,x,y):
+    for i in range(0,num):
+        assert isinstance(context.game._board.get_cell(x,y)._bacteriophages[i], Bacteriophage)
+        assert context.game._board.get_cell(x,y)._bacteriophages[i].infection == poder
+
+
+@then('deberia haber {num:d} bacteriofago con poder de infeccion {poder:d} en ({x:d},{y:d})')
+def burst_bacteriofago(context,num,poder,x,y):
+    context.game._board.get_cell(x,y).burst_bacteriophage()
+    assert context.game._board.get_cell(x,y)._bacteriophages[0].infection == poder
+    assert context.game._board.get_cell(x,y)._bacteriophages[1].infection == poder
+    assert context.game._board.get_cell(x,y)._bacteriophages[2].infection == poder
+    
