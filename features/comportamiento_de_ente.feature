@@ -1,12 +1,12 @@
 # language: es
 
 Característica: Comportamiento de las entidades
-#10
+
   Esquema del escenario: Una bacteria normal o fuerte se reproduce
     Dado que hay 1 bacteria <tipo> con 3 movimientos en <pos>
     Cuando se produce la confrontacion
     Entonces el tablero deberia tener 2 bacterias en <pos>
-    #deberia haber 2 bacterias en la celda <pos>
+
     Ejemplos:
 
       |pos  |tipo  |
@@ -17,8 +17,6 @@ Característica: Comportamiento de las entidades
       |(5,0)|fuerte|
       |(2,1)|fuerte|
 
-##12
-##13
  Esquema del escenario: Una bacteria debil no se reproduce
     Dado que hay 1 bacteria debil con 5 movimientos en <pos>
     Cuando se produce la confrontacion
@@ -31,7 +29,6 @@ Característica: Comportamiento de las entidades
       |(0,3)|
       |(3,1)|
 
-#15
   Esquema del escenario: Bacterias debiles se recuperan
     Dado que hay 1 bacteria debil con 6 movimientos en <pos>
     Cuando se produce la confrontacion
@@ -46,12 +43,6 @@ Característica: Comportamiento de las entidades
       |(1,0) |
       |(3,3) |
 
-#  Comportamiento de las bacterias en modo bacteriofago
-# 18
-
-
-
-# 19
   Esquema del escenario: Una bacteria infectada explota generando bacteriofagos
     Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion 4
     Cuando se produce la confrontacion
@@ -62,8 +53,6 @@ Característica: Comportamiento de las entidades
       |(2,0)  |(2,1) |
       |(3,3)  |(3,4) |
 
-#  Comportamiento de bacteriofagos
-#20
 Esquema del escenario: Un bacteriofago desaparece tras cierto tiempo
     Dado que hay 1 bacteriofago en la celda <pos> con poder de infeccion 0
     Cuando se produce la confrontacion

@@ -76,7 +76,7 @@ class Cell:
 					cell._bacteriophages = Bacteriophage(4)
 				continue
 			else:
-				raise ValueError(f'string invalido')
+				raise ValueError('string invalido')
 		return cell
 
 	def get_spawn_other(self):
@@ -84,7 +84,7 @@ class Cell:
 
 	def set_spawn_other(self):
 		if not self.is_empty():
-			raise ValueError (f'celda ocupada')
+			raise ValueError ('celda ocupada')
 		self.__spawn_other = True
 
 	def get_spawn_bacterium(self):
@@ -92,7 +92,7 @@ class Cell:
 
 	def set_spawn_bacterium(self):
 		if not self.is_empty():
-			raise ValueError(f'celda ocupada')
+			raise ValueError('celda ocupada')
 		self.__spawn_bacterium = True
 
 
@@ -124,6 +124,211 @@ class Cell:
 	def cant_bacteria(self):
 		return self.__bacteria.__len__()
 
+
+	
+	@property
+	def _antibiotics(self):
+		return self.__antibiotics
+
+	@_antibiotics.setter
+	def _antibiotics(self, cant:int):
+		self.__antibiotics = cant
+
+	def add_antibiotic(self):
+		self.__antibiotics += 1
+
+	@property
+	def _bacteriophages(self):
+		return self.__bacteriophages
+
+	@_bacteriophages.setter
+	def _bacteriophages(self, bacteriophage:Bacteriophage):
+		self.__bacteriophages.append(bacteriophage)
+
+	def add_bacteriophage(self, levelInfection:int):
+		bacteriophage = Bacteriophage(levelInfection)
+		self.__bacteriophages.append(bacteriophage)
+
+	def cant_bacteriophages(self):
+		return self.__bacteriophages.__len__()
+
+	def is_empty(self):
+		return self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other)
+
+	def is_spawn(self):
+		return self.get_spawn_bacterium() or self.get_spawn_other()
+
+	def is_spawn_bacterium(self):
+		return self.get_spawn_bacterium()
+
+	def is_spawn_other(self):
+		return self.get_spawn_other()
+
+	def update_cell(self):
+		#aplico regla de sobrepoblación
+		if self.cant_bacteria() >= 4:
+			self.overpopulation()
+
+		#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
+		if self._antibiotics > 0 and self.cant_bacteria() > 0:
+			if self._antibiotics > self.cant_bacteria():
+				self.high_dose_antibiotic()
+			else:
+				self.low_dose_antibiotic()
+
+		#si existen bacteriofagos y bacterias en la misma celda, aplico las reglas de cruzamiento
+		if self.cant_bacteriophages() > 0 and self.cant_bacteria() > 0:
+			self.infection_to_bacteria()
+			
+		#actualizo por la reproduccion de bacterias
+		self.update_for_reproduction()
+
+		#actualizo por la recuperación de bacterias
+		self.update_for_recovery()
+
+		#actualizo por bacteriofagos que se quedaron sin movimientos
+		self.update_for_death_bacteriophages()
+
+		#actualizo por la explosion de bacteriofagos
+		self.burst_bacteriophage()
+
+	#metodo auxiliar para update_cell()
+	def high_dose_antibiotic(self):
+		#esa celda se queda sin bacterias y sin antibioticos
+		self.__bacteria = []
+		self.__antibiotics = 0
+
+	#metodo auxiliar para update_cell()
+	def low_dose_antibiotic(self):
+		# total_antibiotics = self._antibiotics
+		new_bacteria = []
+		for bacterium in self._bacteria:
+			if bacterium.__str__() == 'f':
+				#ver si los movimientos se acumulan
+				new_bacteria.append(BacteriumWeak(0))
+		self.__bacteria = new_bacteria
+		self.__antibiotics = 0
+
+	#metodo auxiliar para update_cell()
+	def overpopulation(self):
+		strongest = None
+		#ciclo para quedarme con la bacteria más fuerte de la celda
+		for bacterium in self._bacteria:
+			if bacterium.__str__() == 'f':
+				strongest = bacterium
+				break
+			else:
+				if bacterium.__str__() == 'b':
+					strongest = bacterium
+		#si no encontre ninguno fuerte ni normal, es porque tengo todos debiles
+		#asigno cualquiera, en este caso el primero
+		if strongest == None:
+			strongest = self._bacteria[0]
+		self.__bacteria.clear()
+		self.__bacteria.append(strongest)
+
+	#metodo auxiliar para update_cell()	
+	def infection_to_bacteria(self):
+		one_not_infected = False
+		power = 0
+
+		for bacteriophage in self._bacteriophages:
+			power += bacteriophage.infection
+
+		power = min(power, 4)
+		
+		infected = []
+		for bacterium in self._bacteria:
+			if not isinstance(bacterium, BacteriumInfected):
+				infected.append(BacteriumInfected(power))
+				one_not_infected = True
+			else:
+				infected.append(bacterium)
+
+		if one_not_infected:
+			self.__bacteriophages = []
+
+		self.__bacteria = infected
+
+	#metodo auxiliar para update_cell()
+	def update_for_reproduction(self):
+		for bacterium in self._bacteria:
+			#chequeo las bacterias que están en condiciones de reproducirse
+			if bacterium.isReproducible():
+				self._bacterium = bacterium.reproducir()
+
+	#metodo auxiliar para update_cell()
+	def update_for_recovery(self):
+		bacteria_to_add = []
+		bacteria_to_remove = []
+		for bacterium in self._bacteria:
+			#chequeo las bacterias debiles que están en condiciones de recuperarse
+			if bacterium.isRecoverable():
+				bacteria_to_add.append(bacterium.recover())
+				bacteria_to_remove.append(bacterium)
+
+		for bacterium in bacteria_to_add:
+			self._bacterium.append(bacterium)
+
+		for bacterium in bacteria_to_remove:
+			self._bacterium.remove(bacterium)
+
+	#metodo auxiliar para update_cell()
+	def burst_bacteriophage(self):
+		bacteria_to_remove = []
+		for bacterium in self.__bacteria:
+			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
+						bacteria_to_remove.append(bacterium)
+						for _ in range(4):
+							bacteriophage = Bacteriophage(4)
+							self.__bacteriophages.append(bacteriophage)
+
+		for bacterium in bacteria_to_remove:
+			self._bacterium.remove(bacterium)
+
+	#metodo auxiliar para update_cell()
+	def update_for_death_bacteriophages(self):
+		bacteriophage_to_remove = []
+
+		for bacteriophage in self._bacteriophages:
+			if bacteriophage.moment_death():
+				bacteriophage_to_remove.append(bacteriophage)
+
+		for bacteriophage in bacteriophage_to_remove:
+			self._bacteriophages.remove(bacteriophage)
+
+	def add_move(self):
+		for bacterium in self._bacteria:
+			bacterium.add_move()
+		for bacteriophage in self._bacteriophages:
+			bacteriophage.add_move()
+
+
+	#METODOS PARA IMPLEMENTAR STEPS EN BEHAVE 
+
+	def get_infected(self):
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumInfected):
+				return bacterium
+			
+	def get_bacteriophage(self):
+		return self.__bacteriophages[0]
+	
+	def get_normal(self):
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumNormal):
+				return bacterium
+			
+	def get_strong(self):
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumStrong):
+				return bacterium
+			
+	def get_weak(self):
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumWeak):
+				return bacterium
+	
 	def cant_type_bacterium(self, ente):
 		counter_normal = 0
 		counter_weak = 0
@@ -183,38 +388,7 @@ class Cell:
 			return counter_weak
 		if type == "fuerte":
 			return counter_strong
-	
-	@property
-	def _antibiotics(self):
-		return self.__antibiotics
-
-	@_antibiotics.setter
-	def _antibiotics(self, cant:int):
-		self.__antibiotics = cant
-
-	def add_antibiotic(self):
-		self.__antibiotics += 1
-
-	@property
-	def _bacteriophages(self):
-		return self.__bacteriophages
-
-	@_bacteriophages.setter
-	def _bacteriophages(self, bacteriophage:Bacteriophage):
-		self.__bacteriophages.append(bacteriophage)
-
-	def add_bacteriophage(self, levelInfection:int):
-		bacteriophage = Bacteriophage(levelInfection)
-		self.__bacteriophages.append(bacteriophage)
-
-	def cant_bacteriophages(self):
-		return self.__bacteriophages.__len__()
-
-	def is_empty(self):
-		if self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other):
-			return True
-		return False
-
+		
 	def cant_total(self):
 		return self.cant_bacteriophages() + self.cant_bacteria() + self._antibiotics
 
@@ -228,178 +402,3 @@ class Cell:
 			if type == bacterium.__str__():
 				cant += 1
 		return cant
-
-	#new
-	def is_spawn(self):
-		return self.get_spawn_bacterium() or self.get_spawn_other()
-
-	def is_spawn_bacterium(self):
-		return self.get_spawn_bacterium()
-
-	def is_spawn_other(self):
-		return self.get_spawn_other()
-
-	def update_cell(self):
-		#aplico regla de sobrepoblación
-		if self.cant_bacteria() >= 4:
-			self.overpopulation()
-
-		#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
-		if self._antibiotics > 0 and self.cant_bacteria() > 0:
-			if self._antibiotics > self.cant_bacteria():
-				self.high_dose_antibiotic()
-			else:
-				self.low_dose_antibiotic()
-
-		#si existen bacteriofagos y bacterias en la misma celda, aplico las reglas de cruzamiento
-		if self.cant_bacteriophages() > 0 and self.cant_bacteria() > 0:
-			self.infection_to_bacteria()
-			
-
-
-		#actualizo por la reproduccion de bacterias
-		self.update_for_reproduction()
-
-		#actualizo por la recuperación de bacterias
-		self.update_for_recovery()
-
-		#actualizo por bacteriofagos que se quedaron sin movimientos
-		self.update_for_death_bacteriophages()
-
-		#actualizo por la explosion de bacteriofagos
-		self.burst_bacteriophage()
-
-
-	def high_dose_antibiotic(self):
-		#esa celda se queda sin bacterias y sin antibioticos
-		self.__bacteria = []
-		self.__antibiotics = 0
-
-	def low_dose_antibiotic(self):
-		# total_antibiotics = self._antibiotics
-		new_bacteria = []
-		for bacterium in self._bacteria:
-			if bacterium.__str__() == 'f':
-				#ver si los movimientos se acumulan
-				new_bacteria.append(BacteriumWeak(0))
-		self.__bacteria = new_bacteria
-		self.__antibiotics = 0
-
-	def overpopulation(self):
-		strongest = None
-		#ciclo para quedarme con la bacteria más fuerte de la celda
-		for bacterium in self._bacteria:
-			if bacterium.__str__() == 'f':
-				strongest = bacterium
-				break
-			else:
-				if bacterium.__str__() == 'b':
-					strongest = bacterium
-		#si no encontre ninguno fuerte ni normal, es porque tengo todos debiles
-		#asigno cualquiera, en este caso el primero
-		if strongest == None:
-			strongest = self._bacteria[0]
-		self.__bacteria.clear()
-		self.__bacteria.append(strongest)
-		# self._bacterium = strongest
-	
-	def infection_to_bacteria(self):
-		one_not_infected = False
-		power = 0
-
-		for bacteriophage in self._bacteriophages:
-			power += bacteriophage.infection
-
-		power = min(power, 4)
-		
-		infected = []
-		for bacterium in self._bacteria:
-			if not isinstance(bacterium, BacteriumInfected):
-				infected.append(BacteriumInfected(power))
-				one_not_infected = True
-			else:
-				infected.append(bacterium)
-
-		if one_not_infected:
-			self.__bacteriophages = []
-
-		self.__bacteria = infected
-
-	def update_for_reproduction(self):
-		for bacterium in self._bacteria:
-			#chequeo las bacterias que están en condiciones de reproducirse
-			if bacterium.isReproducible():
-				self._bacterium = bacterium.reproducir()
-
-	def update_for_recovery(self):
-		bacteria_to_add = []
-		bacteria_to_remove = []
-		for bacterium in self._bacteria:
-			#chequeo las bacterias debiles que están en condiciones de recuperarse
-			if bacterium.isRecoverable():
-				bacteria_to_add.append(bacterium.recover())
-				bacteria_to_remove.append(bacterium)
-
-		for bacterium in bacteria_to_add:
-			self._bacterium.append(bacterium)
-
-		for bacterium in bacteria_to_remove:
-			self._bacterium.remove(bacterium)
-
-
-	def add_move(self):
-		for bacterium in self._bacteria:
-			bacterium.add_move()
-		for bacteriophage in self._bacteriophages:
-			bacteriophage.add_move()
-
-
-	def burst_bacteriophage(self):
-		bacteria_to_remove = []
-		for bacterium in self.__bacteria:
-			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
-						bacteria_to_remove.append(bacterium)
-						bacteriophage = Bacteriophage(4)
-						for _ in range(4):
-							self.__bacteriophages.append(bacteriophage)
-
-		for bacterium in bacteria_to_remove:
-			self._bacterium.remove(bacterium)
-
-	def update_for_death_bacteriophages(self):
-		bacteriophage_to_remove = []
-
-		for bacteriophage in self._bacteriophages:
-			if bacteriophage.moment_death():
-				bacteriophage_to_remove.append(bacteriophage)
-
-		for bacteriophage in bacteriophage_to_remove:
-			self._bacteriophages.remove(bacteriophage)
-
-	def get_infected(self):
-
-		for bacterium in self._bacterium:
-			if isinstance(bacterium, BacteriumInfected):
-				return bacterium
-			
-	def get_bacteriophage(self):
-
-		return self.__bacteriophages[0]
-	
-	def get_normal(self):
-
-		for bacterium in self._bacterium:
-			if isinstance(bacterium, BacteriumNormal):
-				return bacterium
-			
-	def get_strong(self):
-
-		for bacterium in self._bacterium:
-			if isinstance(bacterium, BacteriumStrong):
-				return bacterium
-			
-	def get_weak(self):
-
-		for bacterium in self._bacterium:
-			if isinstance(bacterium, BacteriumWeak):
-				return bacterium

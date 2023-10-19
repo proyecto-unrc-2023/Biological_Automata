@@ -2,12 +2,11 @@
 
 Característica: Movimientos de una entidad
 
-#1
   Esquema del escenario: Un ente tiene una cantidad de movimientos permitidos determinados por su posicion
     Dado que hay 1 <ente> en la celda <x>
     Cuando se obtienen los posibles movimientos desde la celda <x>
     Entonces deberia tener <n> posibles de movimiento
-    # En un tablero de tamaño 30x50
+
     Ejemplos:
       |ente              |x      |n    |
       |antibiotico       |(0,0)  |3    |
@@ -20,7 +19,6 @@ Característica: Movimientos de una entidad
       |bacteriofago      |(15,49)|5    |
       |bacteria normal   |(10,20)|8    |
 
-#2
   Esquema del escenario: Un ente se mueve de posicion a una celda contigua
     Dado que hay 1 <nombre> en la celda <x>
     Cuando un <ente> se mueve desde la celda <x> a una celda aleatoria
@@ -53,8 +51,6 @@ Característica: Movimientos de una entidad
    Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado>
    Cuando se mueve 1 bacteria infectada de la celda <pos> a <end>
    Entonces deberia haber 1 bacteria infectada de grado <grado_act> en <end>
-
-  #  Y deberia tener un <cualidad> de infeccion de <poder>]
 
    Ejemplos:
      |pos   |end   |grado  |grado_act|

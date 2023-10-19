@@ -10,7 +10,7 @@ class Game_Mode(Enum):
     #Modo de juego BACTERIUM (Si no setea spawn de "other")
 
 class Game_State(Enum):
-    NOT_STARTER = 1     #Todavia no empezo el juego
+    NOT_STARTED = 1     #Todavia no empezo el juego
     CONFIG_GAME = 2     #CONFIGURA LOS PARAMETROS
     START_GAME = 3      #Inicio de juego
     FINISH_GAME = 4
@@ -19,7 +19,7 @@ class GameController:
 
     def __init__(self):
         #al iniciar se dejan valores por defecto que el usuario puede modificar si quiere
-        self.__game_state = Game_State.NOT_STARTER
+        self.__game_state = Game_State.NOT_STARTED
         self.__game_mode = None
         self.__board = Board(30,50)             # por defecto
         self.__cant_bacterium = 10              # cantidad de bacterias que expulsara
@@ -36,8 +36,14 @@ class GameController:
 
 
     def config(self, cant_bact, frec_bact, cant_other, frec_other):
-        if self._game_state != Game_State.NOT_STARTER:
+        if self._game_state != Game_State.NOT_STARTED:
             raise ValueError("El juego no está en el estado START_GAME")
+        
+        if cant_bact < 0 or cant_other < 0:
+            raise ValueError("La cantidad de los entes no pueden ser negativas!")
+
+        if frec_bact <= 0 or frec_other <= 0:
+            raise ValueError("Los valores de las frecuencias deben ser positivos!")
 
         self._game_state = Game_State.CONFIG_GAME
         self._frecuency_bacterium = frec_bact
@@ -187,6 +193,8 @@ class GameController:
             raise ValueError("El juego no está en el estado CONFIG_GAME")
 
         self.__board.set_position_spawn_other(position)
+
+    #METODOS PARA IMPLEMENTAR STEPS DE BEHAVE
 
     def count_in_adjacents(self, x, y, ente):
         vecinos = self._board.get_possible_moves(x,y)
