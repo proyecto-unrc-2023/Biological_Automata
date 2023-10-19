@@ -247,18 +247,30 @@ class GameController:
     def count_bacteriophages(self, x, y, power):
         return self._board.get_cell(x,y).count_bacteriophages(power)
 
+    def count_bacteria_with_moves(self, x, y, type, moves):
+        return self._board.get_cell(x,y).count_bacteria_with_moves(type,moves)
+
     def add_bacterium(self, x, y, moves, type):
-        if type == "bacteria normal":
+        if type == "normal":
             self._board.get_cell(x,y).add_bacterium(moves, 'b')
-        if type == "bacteria debil":
+        if type == "debil":
             self._board.get_cell(x,y).add_bacterium(moves, 'd')
-        if type == "bacteria fuerte":
+        if type == "fuerte":
             self._board.get_cell(x,y).add_bacterium(moves, 'f')
 
     def move_entity(self, x1, y1, x2, y2, ente):
+        #asignacion para que no chille python, pero no hace nada en realidad
+        entity_to_move = ente
+        
+        if ente == "bacteria normal":
+            entity_to_move = self._board.get_cell(x1,y1).get_normal()
+        if ente == "bacteria fuerte":
+            entity_to_move = self._board.get_cell(x1,y1).get_strong()  
+        if ente == "bacteria debil":
+            entity_to_move = self._board.get_cell(x1,y1).get_weak() 
         if ente == "bacteria infectada":
-            bacterium_to_move = self._board.get_cell(x1,y1).get_infected()
-            self._board.move_entity(x2, y2, x1, y1, self._board, bacterium_to_move)
+            entity_to_move = self._board.get_cell(x1,y1).get_infected()
         if ente == "bacteriofago":
-            bacteriophage_to_move = self._board.get_cell(x1,y1).get_bacteriophage()
-            self._board.move_entity(x2, y2, x1, y1, self._board, bacteriophage_to_move)
+            entity_to_move = self._board.get_cell(x1,y1).get_bacteriophage()
+
+        self._board.move_entity(x2, y2, x1, y1, self._board, entity_to_move)

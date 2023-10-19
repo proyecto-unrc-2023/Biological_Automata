@@ -164,6 +164,26 @@ class Cell:
 
 		return counter		
 	
+	def count_bacteria_with_moves(self, type, moves):
+		counter_normal = 0
+		counter_weak = 0
+		counter_strong = 0
+
+		for bacteria in self._bacteria:
+			if isinstance(bacteria, BacteriumNormal) and bacteria.moves == moves:
+				counter_normal += 1
+			elif isinstance(bacteria, BacteriumWeak) and bacteria.moves == moves:
+				counter_weak += 1
+			elif isinstance(bacteria, BacteriumStrong) and bacteria.moves == moves:
+				counter_strong += 1
+		
+		if type == "normal":
+			return counter_normal
+		if type == "debil":
+			return counter_weak
+		if type == "fuerte":
+			return counter_strong
+	
 	@property
 	def _antibiotics(self):
 		return self.__antibiotics
@@ -365,3 +385,21 @@ class Cell:
 	def get_bacteriophage(self):
 
 		return self.__bacteriophages[0]
+	
+	def get_normal(self):
+
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumNormal):
+				return bacterium
+			
+	def get_strong(self):
+
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumStrong):
+				return bacterium
+			
+	def get_weak(self):
+
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumWeak):
+				return bacterium
