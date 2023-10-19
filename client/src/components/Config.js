@@ -3,6 +3,8 @@ import spb from '../images/spb.png'
 import spa from '../images/spa.png'
 import ant from '../images/pill.gif'
 import vir from '../images/bacteriophague.png'
+import '../css/config.css';
+
 
 function Config ({handleStartGame}) {
   const rows =20;
@@ -159,25 +161,29 @@ function Config ({handleStartGame}) {
     <>
     <div class='sss'>
 
-      <button onClick={toggleSpawnBacterium}>
+      <button onClick={toggleSpawnBacterium} id='spb'>
         <img src={spb}></img>
       </button>
 
 
-      <button onClick={toggleSpawnOther}>
+      <button onClick={toggleSpawnOther} id='spa'>
         <img src={spa}></img>
       </button>
-    <div>
-    <p>Game mode</p>
-      <button onClick={toggleModeAntibiotic} id='modA'>
-        <img src={ant}></img>
-      </button>
+    
+      <div>
 
-      <button onClick={toggleModeBacteriophague} id='modV'>
-        <img src={vir}></img>
-        {/* Elegir Modo Bacteriophage {gameMode === 2 ? "Activado" : "Desactivado"} */}
-      </button>
-    </div>
+        <p>Game mode</p>
+            <div id="mode">
+              <button onClick={toggleModeAntibiotic} id='modA'>
+                <img src={ant}></img>
+              </button>
+
+              <button onClick={toggleModeBacteriophague} id='modV'>
+                <img src={vir}></img>
+                {/* Elegir Modo Bacteriophage {gameMode === 2 ? "Activado" : "Desactivado"} */}
+              </button>
+            </div>
+      </div>
     </div>
     <div className="grid">
 
@@ -185,9 +191,7 @@ function Config ({handleStartGame}) {
 
     </div>
     
-    <div>
-
-      <div>
+    <div id='params'>
         <label>
           Cantidad de Bacterias:
           <input
@@ -196,8 +200,6 @@ function Config ({handleStartGame}) {
             onChange={(e) => setCantBact(parseInt(e.target.value))}
             />
         </label>
-      </div>
-      <div>
         <label>
           Frecuencia de Bacterias:
           <input
@@ -206,8 +208,6 @@ function Config ({handleStartGame}) {
             onChange={(e) => setFrecBact(parseInt(e.target.value))}
           />
         </label>
-      </div>
-      <div>
         <label>
           Cantidad de Other:
           <input
@@ -216,8 +216,6 @@ function Config ({handleStartGame}) {
             onChange={(e) => setCantOther(parseInt(e.target.value))}
             />
         </label>
-      </div>
-      <div>
         <label>
           Frecuencia de Other:
           <input
@@ -226,9 +224,8 @@ function Config ({handleStartGame}) {
             onChange={(e) => setFrecOther(parseInt(e.target.value))}
             />
         </label>
-      </div>
-      <button onClick={handleSaveConfig}>Guardar Configuracion</button>
-      </div>
+      <button onClick={handleSaveConfig}>Save change</button>
+    </div>
     </>
   );
 }

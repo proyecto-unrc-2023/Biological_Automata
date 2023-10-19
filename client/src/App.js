@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import './css/config.css';
+import './css/App.css';
 import Create_board from './components/board';
 import Config from './components/Config';
 

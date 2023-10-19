@@ -102,13 +102,21 @@ function Create_board({handleStartGame }) {
   };
 
   return (
+    <>
+    <div>
+
+    </div>
     <div className="grid">
       {board}
       <button onClick={() => {
-      handleStartGame(false); handleStop_Game();}}>
+        handleStartGame(false); handleStop_Game();}}>
         STOP
       </button>
     </div>
+    <div>
+
+    </div>
+  </>
   );
 }
 
