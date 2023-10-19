@@ -190,6 +190,12 @@ class Board:
         for row in range(self.__rows):
             for colum in range(self.__columns):
                 self.__board[row][colum].update_cell()
+
+        #for i in range(len(self.__position)):
+        #  pos =self.__position[i].get_pos() 
+        #  self.__board[pos[0]][pos[1]].update_cell()
+
+        #self.__position.clear()    
      
     def move_entities(self, x, y, new_board):
         new_x = None
