@@ -64,7 +64,7 @@ class BacteriumNormal(Bacterium):
         return BacteriumStrong(0)
 
     def isReproducible(self):
-      if (self.moves == 3):
+      if (self.moves == 20):
         return True
       return False
 

@@ -72,6 +72,17 @@ html {
   background-repeat: no-repeat;
 }
 
+.bacteriumStrong{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/BacteriumStrong.gif');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 
 .antibiotic{
   width: 30px;
@@ -192,4 +203,14 @@ p{
 
 #params button{
   width: 70px;
+}
+.bacteriophague{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/bacteriophague.png');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }

@@ -19,7 +19,7 @@ class GameController:
         #al iniciar se dejan valores por defecto que el usuario puede modificar si quiere
         self.__game_state = Game_State.NOT_STARTER
         self.__game_mode = None
-        self.__board = Board(20,30)             # por defecto
+        self.__board = Board(15,20)             # por defecto
         self.__cant_bacterium = 10              # cantidad de bacterias que expulsara
         self.__cant_other = 20                  # cantidad de bacterias que de antibiotico o bacterifago segun el modo
         self.__frecuency_bacterium = 2          # frecuencia con el que expulsara bacterias el spawn bacterium
@@ -102,7 +102,7 @@ class GameController:
 
         self.__game_state = Game_State.NOT_STARTER
         self.__game_mode = None
-        self.__board = Board(20,30)
+        self.__board = Board(15,20)
 
 ############ SETTERS Y GETTERS ###############
 

@@ -4,22 +4,7 @@ import Create_board from './components/board';
 import Config from './components/Config';
 
 function App() {
-    const [gameData, setGameData] = useState(null);
     const [startGame, setStartGame] = useState(false)
-    useEffect(() => {
-      fetch('http://localhost:5000/game/game')
-        .then((response) => response.json())
-        .then((data) => {
-          setGameData(data);
-        })
-        .catch((error) => {
-          console.error('Error no se agarró el JSON', error);
-        });
-    }, [startGame]);
-
-    if (gameData === null) {
-      return <div>NO CARGO</div>;
-    }
 
     const handleStartGame = (bool) => {
       setStartGame(bool);
@@ -29,7 +14,7 @@ function App() {
       <>
       <div className="App">
         {startGame ? (
-          <Create_board gameData={gameData} handleStartGame={handleStartGame} />
+          <Create_board handleStartGame={handleStartGame} />
         ) : (
           <Config handleStartGame={handleStartGame} />
         )}

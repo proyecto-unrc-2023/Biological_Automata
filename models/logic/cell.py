@@ -83,21 +83,17 @@ class Cell:
 		return self.__spawn_other
 
 	def set_spawn_other(self):
-		if self.is_empty():
-			self.__spawn_other = True
-			self.__spawn_bacterium = False
-		else:
+		if not self.is_empty():
 			raise ValueError (f'celda ocupada')
+		self.__spawn_other = True
 
 	def get_spawn_bacterium(self):
 		return self.__spawn_bacterium
 
 	def set_spawn_bacterium(self):
-		if self.is_empty():
-			self.__spawn_bacterium = True
-			self.__spawn_other = False
-		else:
+		if not self.is_empty():
 			raise ValueError(f'celda ocupada')
+		self.__spawn_bacterium = True
 
 
 	def __eq__(self, other):
@@ -126,6 +122,46 @@ class Cell:
 
 	def cant_bacteria(self):
 		return self.__bacteria.__len__()
+
+	def cant_type_bacterium(self, ente):
+		counter_normal = 0
+		counter_weak = 0
+		counter_strong = 0
+
+		for bacteria in self._bacteria:
+			if isinstance(bacteria, BacteriumNormal):
+				counter_normal += 1
+			elif isinstance(bacteria, BacteriumWeak):
+				counter_weak += 1
+			elif isinstance(bacteria, BacteriumStrong):
+				counter_strong += 1
+
+		if ente == "bacteria normal":
+			return counter_normal
+		if ente == "bacteria debil":
+			return counter_weak
+		if ente == "bacteria fuerte":
+			return counter_strong
+
+	def count_infected(self, grade):
+		counter = 0
+
+		for bacteria in self._bacteria:
+			if isinstance(bacteria, BacteriumInfected):
+				if bacteria.moves == grade:
+
+					counter += 1
+
+		return counter
+
+	def count_bacteriophages(self, power):
+		counter = 0
+
+		for bacteriophage in self._bacteriophages:
+			if bacteriophage.infection == power:
+				counter += 1
+
+		return counter
 
 	@property
 	def _antibiotics(self):
@@ -158,6 +194,9 @@ class Cell:
 			return True
 		return False
 
+	def cant_total(self):
+		return self.cant_bacteriophages() + self.cant_bacteria() + self._antibiotics
+
 	def cant_ente(self,type):
 		if type =='a':
 			return self._antibiotics
@@ -172,27 +211,17 @@ class Cell:
 	#new
 	def is_spawn(self):
 		return self.get_spawn_bacterium() or self.get_spawn_other()
-	@property
-	def _spawn_bacterium(self):
+
+	def is_spawn_bacterium(self):
 		return self.get_spawn_bacterium()
 
-	@property
-	def _spawn_other(self):
+	def is_spawn_other(self):
 		return self.get_spawn_other()
 
 	def update_cell(self):
 	#aplico regla de sobrepoblación
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
-
-	# #self.update_for_explocion
-	# #actualizo por la reproduccion de bacterias
-	# 	self.update_for_reproduction()
-
-	# #actualizo por la recuperación de bacterias
-	# 	self.update_for_recovery()
-
-	# 	self.burst_bacteriophage()
 
 	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
@@ -229,6 +258,9 @@ class Cell:
 
 	#actualizo por la recuperación de bacterias
 		self.update_for_recovery()
+
+	#actualizo por bacteriofagos que se quedaron sin movimientos
+		self.update_for_death_bacteriophages()
 
 		self.burst_bacteriophage()
 
@@ -294,6 +326,7 @@ class Cell:
 		for bacteriophage in self._bacteriophages:
 			bacteriophage.add_move()
 
+
 	def burst_bacteriophage(self):
 		bacteria_to_remove = []
 		for bacterium in self.__bacteria:
@@ -306,7 +339,32 @@ class Cell:
 		for bacterium in bacteria_to_remove:
 			self._bacterium.remove(bacterium)
 
-      ##Funciones para Schemas
+	def update_for_death_bacteriophages(self):
+		bacteriophage_to_remove = []
+
+		for bacteriophage in self._bacteriophages:
+			if bacteriophage.moment_death():
+				bacteriophage_to_remove.append(bacteriophage)
+
+		for bacteriophage in bacteriophage_to_remove:
+			self._bacteriophages.remove(bacteriophage)
+
+
+		#bacteria_to_add = []
+		#bacteria_to_remove = []
+		#for bacterium in self._bacteria:
+		#	#chequeo las bacterias debiles que están en condiciones de recuperarse
+		#	if bacterium.isRecoverable():
+		#		bacteria_to_add.append(bacterium.recover())
+		#		bacteria_to_remove.append(bacterium)
+#
+		#for bacterium in bacteria_to_add:
+		#	self._bacterium.append(bacterium)
+#
+		#for bacterium in bacteria_to_remove:
+		#	self._bacterium.remove(bacterium)
+
+  ##Funciones para Schemas
 	@property
 	def _cant_bacteriophage(self):
 		return len(self._bacteriophages)

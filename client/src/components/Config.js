@@ -7,8 +7,8 @@ import '../css/config.css';
 
 
 function Config ({handleStartGame}) {
-  const rows =20;
-  const columns = 30;
+  const rows =15;
+  const columns = 20;
   const [board, setBoard] = useState([]);
   const [bacteriumMode, setBacteriumMode] = useState(false);
   const [otherMode, setOtherMode] = useState(false);
@@ -122,11 +122,11 @@ function Config ({handleStartGame}) {
     }
     setGameMode(1);
   };
-  
+
   //GameMode Bacteriopague
   const toggleModeBacteriophague = () => {
     document.getElementById('modV').classList.toggle('modVa');
-    try {      
+    try {
       document.getElementsById('modAa').classList.toggle().removeClass('modAa');
     } catch (error) {
       // pass
@@ -156,7 +156,7 @@ function Config ({handleStartGame}) {
     }
   };
 
-  return (
+return (
 
     <>
     <div class='sss'>
@@ -169,7 +169,7 @@ function Config ({handleStartGame}) {
       <button onClick={toggleSpawnOther} id='spa'>
         <img src={spa}></img>
       </button>
-    
+
       <div>
 
         <p>Game mode</p>
@@ -190,7 +190,7 @@ function Config ({handleStartGame}) {
       {board}
 
     </div>
-    
+
     <div id='params'>
         <label>
           Cantidad de Bacterias:
@@ -228,7 +228,7 @@ function Config ({handleStartGame}) {
     </div>
     </>
   );
-}
 
+}
 export default Config;
 

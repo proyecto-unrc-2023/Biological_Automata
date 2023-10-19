@@ -9,7 +9,7 @@ function Create_board({handleStartGame }) {
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
 
-  useEffect(() => {
+  const effect = () => {
     fetch('http://localhost:5000/game/refresh')
       .then((response) => response.json())
       .then((data) => {
@@ -21,7 +21,7 @@ function Create_board({handleStartGame }) {
 
 
       if (gameData === null) {
-        return;
+        return "Cargando";
       }
 
       const { _rows, _columns } = gameData.games._board;
@@ -33,10 +33,14 @@ function Create_board({handleStartGame }) {
       setSpawn_o(spawn_other);
 
       // Llamamos a la función para generar el grid con los datos del JSON
-      generateBoard(rows, columns);
+      // generateBoard(rows, columns);
       setBoardData(gameData.games._board._board); // Asignar la estructura de datos a gameData
 
+  }
 
+  useEffect(() => {
+      generateBoard(rows, columns);
+      setTimeout(effect, 2000);
 
   }, [gameData]);
 
@@ -66,12 +70,16 @@ function Create_board({handleStartGame }) {
           if (Array.isArray(bacterias) && bacterias.length !== 0) {
             row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacterium"></td>);
           } else {
-            if (spawn_b && spawn_b[0] === i && spawn_b[1] === j) {
-              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnBacterium"></td>);
-            } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j) {
-              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnOther"></td>);
+            if (cantBacteriophage !== 0){
+              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacteriophague"></td>);
             } else {
-              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="cell"></td>);
+              if (spawn_b && spawn_b[0] === i && spawn_b[1] === j) {
+                row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnBacterium"></td>);
+              } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j) {
+                row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnOther"></td>);
+              } else {
+                row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="cell"></td>);
+              }
             }
           }
         }
@@ -82,7 +90,7 @@ function Create_board({handleStartGame }) {
   };
 
   if (gameData === null) {
-    return <div>NO CARGO</div>;
+    return <div>Cargando...</div>;
   }
 
   // Frenar el Juego Con el Boton STOP
