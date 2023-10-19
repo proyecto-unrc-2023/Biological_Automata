@@ -196,11 +196,11 @@ class GameController:
             a = celda[0]
             b = celda[1]
 
-            if ente == "b":
+            if ente == "bacteria" or ente == "bacterias":
                 contador += self._board.get_cell(a,b).cant_bacteria()
-            if ente == "a":
+            if ente == "antibiotico" or ente == "antibioticos":
                 contador += self._board.get_cell(a,b)._antibiotics
-            if ente == "v":
+            if ente == "bacteriofago" or ente == "bacteriofagos":
                 contador += self._board.get_cell(a,b).cant_bacteriophages()
 
         return contador

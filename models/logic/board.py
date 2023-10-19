@@ -187,15 +187,10 @@ class Board:
         return new_board
 
     def crossing_board(self):
-      for i in range(len(self.__position)):
-                pos =self.__position[i].get_pos() 
-                self.__board[pos[0]][pos[1]].update_cell()
-
-      self.__position.clear()    
+        for row in range(self.__rows):
+            for colum in range(self.__columns):
+                self.__board[row][colum].update_cell()
      
-
-    # def move_entities(self, x, y):
-    #     new_board = Board(self.__rows, self.__columns)
     def move_entities(self, x, y, new_board):
         new_x = None
         new_y = None
