@@ -39,7 +39,7 @@ html {
 .spawnBacterium{
   width: 30px;
   height: 30px;
-  background-image: url('../../public/BacteriumStrong.gif');
+  background-image: url('../images/spb.png');
   background-size: cover;
   border: 1px solid #000000;
   background-size: contain;
@@ -50,7 +50,7 @@ html {
 .spawnOther{
   width: 30px;
   height: 30px;
-  background-image: url('../../public/pill.gif');
+  background-image: url('../images/spa.png');
   background-size: cover;
   border: 1px solid #000000;
   background-size: contain;
@@ -80,4 +80,55 @@ html {
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+
+.App{
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+}
+
+img{
+  width: 70px;
+  height: 70px;
+}
+
+img:hover{
+  cursor: pointer;
+  background-color: rgba(156, 6, 6, 0.473);
+  filter: brightness(1.75);
+}
+
+/* .spb{
+  position: relative;
+  top: 30%;
+  left: 20%;
+}
+
+.spo{
+  position: relative;
+  top: 38%;
+  left: 10%;
+} */
+
+.sss{
+  display: grid;
+  row-gap: 50px;
+  width: 50px;
+  position: relative;
+  left: 30%;
+}
+
+.sss button{
+  background-color: transparent;
+  border: none;
+}
+
+.modAa{
+  filter: brightness(1.5);
+}
+
+.modVa{
+  filter: brightness(1.5);
+  
 }

@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import spb from '../images/spb.png'
+import spa from '../images/spa.png'
+import ant from '../images/pill.gif'
+import vir from '../images/bacteriophague.png'
 
 function Config ({handleStartGame}) {
   const rows =20;
@@ -108,11 +112,23 @@ function Config ({handleStartGame}) {
 
   //GameMode Antibiotics
   const toggleModeAntibiotic = () => {
+    document.getElementById('modA').classList.toggle('modAa');
+    try {
+      document.getElementsById('modV').classList.toggle().removeClass('modVa');
+    } catch (error) {
+      // pass
+    }
     setGameMode(1);
   };
-
+  
   //GameMode Bacteriopague
   const toggleModeBacteriophague = () => {
+    document.getElementById('modV').classList.toggle('modVa');
+    try {      
+      document.getElementsById('modAa').classList.toggle().removeClass('modAa');
+    } catch (error) {
+      // pass
+    }
     setGameMode(2);
   };
 
@@ -139,24 +155,37 @@ function Config ({handleStartGame}) {
   };
 
   return (
-    <div className="grid">
+
+    <>
+    <div class='sss'>
+
       <button onClick={toggleSpawnBacterium}>
-        Elegir Spawn bacterium {bacteriumMode ? "Activado" : "Desactivado"}
+        <img src={spb}></img>
       </button>
+
 
       <button onClick={toggleSpawnOther}>
-        Elegir Spawn Other {otherMode ? "Activado" : "Desactivado"}
+        <img src={spa}></img>
+      </button>
+    <div>
+    <p>Game mode</p>
+      <button onClick={toggleModeAntibiotic} id='modA'>
+        <img src={ant}></img>
       </button>
 
-      <button onClick={toggleModeAntibiotic}>
-        Elegir Modo Antibiotic {gameMode === 1 ? "Activado" : "Desactivado"}
+      <button onClick={toggleModeBacteriophague} id='modV'>
+        <img src={vir}></img>
+        {/* Elegir Modo Bacteriophage {gameMode === 2 ? "Activado" : "Desactivado"} */}
       </button>
-
-      <button onClick={toggleModeBacteriophague}>
-        Elegir Modo Bacteriophage {gameMode === 2 ? "Activado" : "Desactivado"}
-      </button>
+    </div>
+    </div>
+    <div className="grid">
 
       {board}
+
+    </div>
+    
+    <div>
 
       <div>
         <label>
@@ -165,7 +194,7 @@ function Config ({handleStartGame}) {
             type="number"
             value={cantBact}
             onChange={(e) => setCantBact(parseInt(e.target.value))}
-          />
+            />
         </label>
       </div>
       <div>
@@ -185,7 +214,7 @@ function Config ({handleStartGame}) {
             type="number"
             value={cantOther}
             onChange={(e) => setCantOther(parseInt(e.target.value))}
-          />
+            />
         </label>
       </div>
       <div>
@@ -195,11 +224,12 @@ function Config ({handleStartGame}) {
             type="number"
             value={frecOther}
             onChange={(e) => setFrecOther(parseInt(e.target.value))}
-          />
+            />
         </label>
       </div>
       <button onClick={handleSaveConfig}>Guardar Configuracion</button>
-    </div>
+      </div>
+    </>
   );
 }
 
