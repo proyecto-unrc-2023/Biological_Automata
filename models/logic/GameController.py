@@ -1,6 +1,7 @@
 from enum import Enum
 from models.logic.board import Board
-from models.logic.Bacterium import BacteriumNormal
+from models.logic.cell import Cell
+from models.logic.Bacterium import *
 from models.logic.Bacteriophage import Bacteriophage
 
 class Game_Mode(Enum):
@@ -203,3 +204,61 @@ class GameController:
                 contador += self._board.get_cell(a,b).cant_bacteriophages()
 
         return contador
+    
+    def add_entities(self, x, y, n, ente):
+        if ente == "antibiotico":
+            for _ in range(0,n):
+                self._board.add_antibiotic(x,y)
+        if ente == "bacteriofago":
+            for _ in range(0,n):
+                self._board.set_bacteriophage(x,y, Bacteriophage(2))
+        if ente == "bacteria normal":
+            for _ in range(0,n):
+                self._board.set_bacterium(x,y, BacteriumNormal(1))
+        if ente == "bacteria debil":
+            for _ in range(0,n):
+                self._board.set_bacterium(x,y, BacteriumWeak(1))
+        if ente == "bacteria fuerte":
+            for _ in range(0,n):
+                self._board.set_bacterium(x,y, BacteriumStrong(1))
+        if ente == "bacteria infectada":
+            for _ in range(0,n):
+                self._board.set_bacterium(x,y, BacteriumInfected(1))
+
+    def count_entities(self, x, y, ente):
+        if ente == "antibioticos":
+            return self._board.get_cell(x,y)._antibiotics
+        if ente == "bacterias":
+            return self._board.get_cell(x,y).cant_bacteria()
+        if ente == "bacteria normal" or ente =="bacteria debil" or ente == "bacteria fuerte":
+            return self._board.get_cell(x,y).cant_type_bacterium(ente)
+        if ente == "bacteriofago" or ente == "bacteriofagos":
+            return self._board.get_cell(x,y).cant_bacteriophages()
+        
+    def add_bacteriophage(self, x, y, power):
+        self._board.set_bacteriophage(x,y, Bacteriophage(power))
+
+    def count_infected(self, x, y, grade):
+        return self._board.get_cell(x,y).count_infected(grade)
+    
+    def add_infected(self, x, y, grade):
+        self._board.set_bacterium(x,y, BacteriumInfected(grade))
+
+    def count_bacteriophages(self, x, y, power):
+        return self._board.get_cell(x,y).count_bacteriophages(power)
+
+    def add_bacterium(self, x, y, moves, type):
+        if type == "bacteria normal":
+            self._board.get_cell(x,y).add_bacterium(moves, 'b')
+        if type == "bacteria debil":
+            self._board.get_cell(x,y).add_bacterium(moves, 'd')
+        if type == "bacteria fuerte":
+            self._board.get_cell(x,y).add_bacterium(moves, 'f')
+
+    def move_entity(self, x1, y1, x2, y2, ente):
+        if ente == "bacteria infectada":
+            bacterium_to_move = self._board.get_cell(x1,y1).get_infected()
+            self._board.move_entity(x2, y2, x1, y1, self._board, bacterium_to_move)
+        if ente == "bacteriofago":
+            bacteriophage_to_move = self._board.get_cell(x1,y1).get_bacteriophage()
+            self._board.move_entity(x2, y2, x1, y1, self._board, bacteriophage_to_move)

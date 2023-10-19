@@ -61,9 +61,7 @@ class BacteriumNormal(Bacterium):
         return BacteriumStrong(0)
 
     def isReproducible(self):
-      if (self.moves == 3):
-        return True
-      return False
+      return self.moves >= 3
 
     def isRecoverable(self):
        return False
@@ -79,9 +77,7 @@ class BacteriumStrong(Bacterium):
       return BacteriumStrong(0)
 
     def isReproducible(self):
-      if (self.moves == 3):
-        return True
-      return False
+      return self.moves >= 3
 
     def isRecoverable(self):
        return False
@@ -92,9 +88,8 @@ class BacteriumStrong(Bacterium):
 class BacteriumInfected(Bacterium):
 
     def lithic_State(self):
-      if (self.moves >= 4):
-          return True
-      return False
+      return self.moves >= 4
+
 
     def exploid (self):
       if (self.lithic_State()):
@@ -115,9 +110,7 @@ class BacteriumWeak(Bacterium):
       return False
 
     def isRecoverable(self):
-      if (self.moves == 6):
-        return True
-      return False
+      return self.moves >= 6
 
     def recover(self):
        return BacteriumStrong(0)

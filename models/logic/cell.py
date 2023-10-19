@@ -123,6 +123,46 @@ class Cell:
 	def cant_bacteria(self):
 		return self.__bacteria.__len__()
 
+	def cant_type_bacterium(self, ente):
+		counter_normal = 0
+		counter_weak = 0
+		counter_strong = 0
+
+		for bacteria in self._bacteria:
+			if isinstance(bacteria, BacteriumNormal):
+				counter_normal += 1
+			elif isinstance(bacteria, BacteriumWeak):
+				counter_weak += 1
+			elif isinstance(bacteria, BacteriumStrong):
+				counter_strong += 1
+		
+		if ente == "bacteria normal":
+			return counter_normal
+		if ente == "bacteria debil":
+			return counter_weak
+		if ente == "bacteria fuerte":
+			return counter_strong
+	
+	def count_infected(self, grade):
+		counter = 0
+
+		for bacteria in self._bacteria:
+			if isinstance(bacteria, BacteriumInfected):
+				if bacteria.moves == grade:
+
+					counter += 1
+
+		return counter
+	
+	def count_bacteriophages(self, power):
+		counter = 0
+
+		for bacteriophage in self._bacteriophages:
+			if bacteriophage.infection == power:
+				counter += 1
+
+		return counter		
+	
 	@property
 	def _antibiotics(self):
 		return self.__antibiotics
@@ -179,55 +219,33 @@ class Cell:
 		return self.get_spawn_other()
 
 	def update_cell(self):
-	#aplico regla de sobrepoblación
+		#aplico regla de sobrepoblación
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
 
-	# #self.update_for_explocion
-	# #actualizo por la reproduccion de bacterias
-	# 	self.update_for_reproduction()
-
-	# #actualizo por la recuperación de bacterias
-	# 	self.update_for_recovery()
-
-	# 	self.burst_bacteriophage()
-
-	#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
+		#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
 			if self._antibiotics > self.cant_bacteria():
 				self.high_dose_antibiotic()
 			else:
 				self.low_dose_antibiotic()
 
-		if self.cant_bacteriophages()> 0 and self.cant_bacteria() > 0:
-			b = False
-			poder = 0
-			for bacteriophage in self._bacteriophages:
-				poder += bacteriophage.infection
+		#si existen bacteriofagos y bacterias en la misma celda, aplico las reglas de cruzamiento
+		if self.cant_bacteriophages() > 0 and self.cant_bacteria() > 0:
+			self.infection_to_bacteria()
+			
 
-			if poder >= 4:
-				poder = 4
 
-			infected = []
-			for bacterium in self._bacteria:
-				if (not isinstance(bacterium, BacteriumInfected)):
-					infected.append(BacteriumInfected(poder))
-					b = True
-				else:
-					infected.append(bacterium)
-
-			if (b == True):
-				self.__bacteriophages = []
-
-			self.__bacteria = infected
-
-	#self.update_for_explocion
-	#actualizo por la reproduccion de bacterias
+		#actualizo por la reproduccion de bacterias
 		self.update_for_reproduction()
 
-	#actualizo por la recuperación de bacterias
+		#actualizo por la recuperación de bacterias
 		self.update_for_recovery()
 
+		#actualizo por bacteriofagos que se quedaron sin movimientos
+		self.update_for_death_bacteriophages()
+
+		#actualizo por la explosion de bacteriofagos
 		self.burst_bacteriophage()
 
 
@@ -263,6 +281,28 @@ class Cell:
 		self.__bacteria.clear()
 		self.__bacteria.append(strongest)
 		# self._bacterium = strongest
+	
+	def infection_to_bacteria(self):
+		one_not_infected = False
+		power = 0
+
+		for bacteriophage in self._bacteriophages:
+			power += bacteriophage.infection
+
+		power = min(power, 4)
+		
+		infected = []
+		for bacterium in self._bacteria:
+			if not isinstance(bacterium, BacteriumInfected):
+				infected.append(BacteriumInfected(power))
+				one_not_infected = True
+			else:
+				infected.append(bacterium)
+
+		if one_not_infected:
+			self.__bacteriophages = []
+
+		self.__bacteria = infected
 
 	def update_for_reproduction(self):
 		for bacterium in self._bacteria:
@@ -304,3 +344,23 @@ class Cell:
 
 		for bacterium in bacteria_to_remove:
 			self._bacterium.remove(bacterium)
+
+	def update_for_death_bacteriophages(self):
+		bacteriophage_to_remove = []
+
+		for bacteriophage in self._bacteriophages:
+			if bacteriophage.moment_death():
+				bacteriophage_to_remove.append(bacteriophage)
+
+		for bacteriophage in bacteriophage_to_remove:
+			self._bacteriophages.remove(bacteriophage)
+
+	def get_infected(self):
+
+		for bacterium in self._bacterium:
+			if isinstance(bacterium, BacteriumInfected):
+				return bacterium
+			
+	def get_bacteriophage(self):
+
+		return self.__bacteriophages[0]

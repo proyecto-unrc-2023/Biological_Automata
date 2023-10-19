@@ -27,7 +27,7 @@ class Bacteriophage(Entity):
       return False
 
     #Muerte del virus despues de un determinado tiempo
-    def degradacion (self):
+    def degradation (self):
       if (self.moment_death()):
         del self
 
