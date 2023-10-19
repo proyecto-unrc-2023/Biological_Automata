@@ -15,3 +15,11 @@ class Entity(ABC):
   @abstractmethod
   def __str__(self):
     pass
+
+  @abstractmethod
+  def get_pos(self):
+    pass
+  
+  @abstractmethod
+  def set_pos(self, row, colum):
+    pass

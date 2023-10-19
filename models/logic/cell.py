@@ -114,6 +114,7 @@ class Cell:
 	@_bacteria.setter
 	def _bacterium(self, bacterium: Bacterium):
 		self.__bacteria.append(bacterium)
+		
 
 	def add_bacterium(self, moves:int, state):
 		bacterium = Bacterium.from_string(state)
