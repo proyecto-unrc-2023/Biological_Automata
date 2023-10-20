@@ -8,8 +8,11 @@ function Create_board({handleStartGame }) {
   const [spawn_o, setSpawn_o] = useState(null);
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
+  const [stop, setStop] = useState(false);
 
-  const effect = () => {
+
+  //funcion para refrescar la data del game
+  const fetchRefreshData = () => {
     fetch('http://localhost:5000/game/refresh')
       .then((response) => response.json())
       .then((data) => {
@@ -18,74 +21,86 @@ function Create_board({handleStartGame }) {
       .catch((error) => {
         console.error('Error no se agarró el JSON', error);
       });
+  };
 
 
-      if (gameData === null) {
-        return "Cargando";
-      }
+  const refreshGame = () => {
+    fetchRefreshData();
 
-      const { _rows, _columns } = gameData.games._board;
-      const { spawn_bacterium, spawn_other } = gameData.games;
+    if (gameData === null) {
+      return "Cargando...";
+    }
 
-      setRows(_rows);
-      setColumns(_columns);
-      setSpawn_b(spawn_bacterium);
-      setSpawn_o(spawn_other);
+    const { _rows, _columns } = gameData.games._board;
+    const { spawn_bacterium, spawn_other } = gameData.games;
 
-      // Llamamos a la función para generar el grid con los datos del JSON
-      // generateBoard(rows, columns);
-      setBoardData(gameData.games._board._board); // Asignar la estructura de datos a gameData
+    setRows(_rows);
+    setColumns(_columns);
+    setSpawn_b(spawn_bacterium);
+    setSpawn_o(spawn_other);
+    setBoardData(gameData.games._board._board);
+    generateBoard(_rows, _columns);
+  };
 
-  }
 
   useEffect(() => {
-      generateBoard(rows, columns);
-      setTimeout(effect, 2000);
+    const refreshInterval = setInterval(refreshGame, 2000);
 
-  }, [gameData]);
+    return () => {
+      clearInterval(refreshInterval);
+    };
+  }, [gameData, stop]);
 
 
-
-
-  if (boardData != null){
-    const primeraCelda = boardData[0][0];
-    const antibiotics = primeraCelda._antibiotics;
-    const cantBacteriophage = primeraCelda._cant_bacteriophage;
-    const bacterias = primeraCelda.bacterias;
-  }
-
-  // Función para generar el board
   const generateBoard = (_rows, _columns) => {
+    if (!boardData) {
+      return; //esto hace que no salga un error cuando no se hizo el refresh XD
+    }
+
     const newBoard = [];
     for (let i = 0; i < _rows; i++) {
       const row = [];
+
       for (let j = 0; j < _columns; j++) {
         const cell = boardData[i][j];
         const antibiotics = cell._antibiotics;
         const cantBacteriophage = cell._cant_bacteriophage;
         const bacterias = cell.bacterias;
+
+        let cellClass = "cell"; // Clase predeterminada
+
         if (antibiotics !== 0) {
-          row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="antibiotic"></td>);
-        } else {
-          if (Array.isArray(bacterias) && bacterias.length !== 0) {
-            row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacterium"></td>);
+          cellClass = "antibiotic";
+        } else if (Array.isArray(bacterias) && bacterias.length > 0) {
+          if (bacterias.includes("f")) {
+            cellClass = "bacteriumStrong";
+          } else if (bacterias.includes("b")) {
+            cellClass = "bacterium";
+          } else if (bacterias.includes("d")) {
+            cellClass = "bacteriumWeak";
           } else {
-            if (cantBacteriophage !== 0){
-              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacteriophague"></td>);
-            } else {
-              if (spawn_b && spawn_b[0] === i && spawn_b[1] === j) {
-                row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnBacterium"></td>);
-              } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j) {
-                row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnOther"></td>);
-              } else {
-                row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="cell"></td>);
-              }
-            }
+            cellClass = "bacteriumInfected";
           }
+        } else if (cantBacteriophage !== 0) {
+          cellClass = "bacteriophage";
+        } else if (spawn_b && spawn_b[0] === i && spawn_b[1] === j) {
+          cellClass = "spawnBacterium";
+        } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j) {
+          cellClass = "spawnOther";
         }
+
+        row.push(
+          <td key={`${i}-${j}`} id={`${i}-${j}`} className={cellClass}></td>
+        );
       }
-      newBoard.push(<div key={i} className="grid-row">{row}</div>);
+
+      newBoard.push(
+        <div key={i} className="grid-row">
+          {row}
+        </div>
+      );
     }
+
     setBoard(newBoard);
   };
 
@@ -112,12 +127,11 @@ function Create_board({handleStartGame }) {
   return (
     <>
     <div>
-
     </div>
     <div className="grid">
       {board}
       <button onClick={() => {
-        handleStartGame(false); handleStop_Game();}}>
+        handleStartGame(false); setStop(true); handleStop_Game();}}>
         STOP
       </button>
     </div>

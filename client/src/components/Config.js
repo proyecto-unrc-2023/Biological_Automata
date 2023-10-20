@@ -228,7 +228,6 @@ return (
     </div>
     </>
   );
-
 }
 export default Config;
 
