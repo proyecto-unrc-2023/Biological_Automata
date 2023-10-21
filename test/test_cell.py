@@ -82,7 +82,7 @@ def test_add_bacterium_class(cell):
     assert cell._bacteria[0].__str__() == 'b'
 
 def test_add_antibiotics(cell):
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
     assert cell._antibiotics == 1
 
 def test_antibiotics(cell):
@@ -118,7 +118,7 @@ def test_to_string_1(cell):
     cell.add_bacterium(0,'d')
     assert cell.cant_ente('b') == 1
     assert cell.cant_ente('f') == 1
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
     cell.add_bacteriophage(4)
     cell.add_bacteriophage(4)
     assert cell.__str__() == '1a1b1f1d1i2v'
@@ -188,7 +188,7 @@ def test_low_dose_antibiotic(cell):
     cell.add_bacterium(0, 'b')
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'd')
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
     cell.low_dose_antibiotic()
     assert cell.__str__() == '1d'
 
@@ -196,10 +196,10 @@ def test_high_dose_antibiotic(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'b')
-    cell.add_antibiotic()
-    cell.add_antibiotic()
-    cell.add_antibiotic()
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
     cell.high_dose_antibiotic()
     assert cell.__str__() == ' '
 
@@ -207,24 +207,24 @@ def test_update_cell_with_3_strongs_and_1_antibiotic(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
     cell.update_cell()
     assert cell.__str__() == '3d'
 
 def test_update_cell_with_2_strongs_and_3_antibiotic(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
-    cell.add_antibiotic()
-    cell.add_antibiotic()
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
     cell.update_cell()
     assert cell.__str__() == ' '
 
 def test_update_cell_with_1_strongs_1_weak_and_2_antibiotic(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'd')
-    cell.add_antibiotic()
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
     cell.update_cell()
     assert cell.__str__() == '1d'
 
@@ -246,8 +246,8 @@ def test_update_cell_with_1_strongs_4_normal_1_weak_and_2_antibiotic(cell):
     cell.add_bacterium(0, 'b')
     cell.add_bacterium(0, 'b')
     cell.add_bacterium(0, 'd')
-    cell.add_antibiotic()
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
     cell.update_cell()
     assert cell.__str__() == ' '
 
@@ -300,8 +300,8 @@ def test_update_cell_with_4_bacterium_strong_amd_2_antibiotics(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
-    cell.add_antibiotic()
-    cell.add_antibiotic()
+    cell.add_antibiotic(Antibiotic())
+    cell.add_antibiotic(Antibiotic())
     cell.update_cell()
     assert cell.__str__() == ' '
 

@@ -13,7 +13,7 @@ def game():
 
 def test_initial_game(game):
   game = GameController()
-  assert game._game_state == Game_State.NOT_STARTED
+  assert game._game_state == Game_State.NOT_STARTER
   assert game._game_mode == None
   assert game._board == Board(30,50)
   assert game._cant_bacterium == 10
@@ -32,7 +32,7 @@ def test_config_():
   assert game._cant_bacterium == 10
   assert game._cant_other == 20
 
-def test_config_state_is_not_NOT_STARTED(game):
+def test_config_state_is_not_NOT_STARTER(game):
   game._game_mode = Game_Mode.BACTERIOPHAGE
   game.start_game()
   with pytest.raises(ValueError) as e:
@@ -175,19 +175,19 @@ def test_refresh_board_not_START_GAME(game):
     game.refresh_board()
   assert str(e.value) == "El juego no está en el estado START_GAME"
 
-def test_stop_NOT_STARTED():
+def test_stop_NOT_STARTER():
   game = GameController()
   with pytest.raises(ValueError) as e:
     game.stop()
   assert str(e.value) == "El juego no está en el estado START_GAME"
-  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTED
+  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
 
 def test_stop_CONFIG_GAME(game):
   game._game_mode = Game_Mode.ANTIBIOTIC
   with pytest.raises(ValueError) as e:
     game.stop()
   assert str(e.value) == "El juego no está en el estado START_GAME"
-  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTED
+  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
   game.start_game()
   game.stop()
   assert game._game_state == Game_State.FINISH_GAME
@@ -258,14 +258,14 @@ def test_count_in_adjacents_mode_antibiotic(game):
   game._game_mode = Game_Mode.ANTIBIOTIC
   game.start_game()
   game.refresh_board()
-  count = game.count_in_adjacents(0,0, 'bacteria')
+  count = game.count_in_adjacents(0,0, 'b')
   assert count == 1
-  count = game.count_in_adjacents(3,3, 'antibiotico')
+  count = game.count_in_adjacents(3,3, 'a')
   assert count == 1
 
 def test_count_in_adjacents_mode_bacteriophages(game):
   game._game_mode = Game_Mode.BACTERIOPHAGE
   game.start_game()
   game.refresh_board()
-  count = game.count_in_adjacents(3,3, 'bacteriofago')
+  count = game.count_in_adjacents(3,3, 'v')
   assert count == 1

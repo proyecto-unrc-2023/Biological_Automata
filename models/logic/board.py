@@ -128,18 +128,18 @@ class Board:
 
 
     def set_antibiotics(self, row, colum, cant: int): 
-        self.__board[row][colum]._antibiotics = cant
-        anti = Antibiotic()
-        anti.set_pos(row, colum)
-        self.__position.append(anti)
+        for i in range(cant):
+            antibiotic = Antibiotic()
+            antibiotic.set_pos(row, colum)
+            self.__board[row][colum].add_antibiotic(antibiotic)
+            self.__position.append(antibiotic)
 
         
 
-    def add_antibiotic(self, row, colum):
-        self.__board[row][colum].add_antibiotic()
-        anti = Antibiotic()
-        anti.set_pos(row, colum)     
-        self.__position.append(anti)
+    def add_antibiotic(self, row, colum, antibiotic: Antibiotic):
+        antibiotic.set_pos(row, colum)  
+        self.__board[row][colum].add_antibiotic(antibiotic)     
+        self.__position.append(antibiotic)
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
         self.__board[row][colum]._bacteriophages = bacteriophage
@@ -183,20 +183,22 @@ class Board:
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
         for i in range(len(self.__position)):
                 pos = self.__position[i].get_pos()
-                new_board = self.move_entities(pos[0],pos[1], new_board)
+                if pos != None:
+                    new_board = self.move_entities(pos[0],pos[1], new_board)
+       
         return new_board
 
     def crossing_board(self):
-        for row in range(self.__rows):
-            for colum in range(self.__columns):
-                self.__board[row][colum].update_cell()
+        for row in range(self._rows):
+            for column in range(self._columns):
+               self.__board[row][column].update_cell()
+               self.__position.extend(self.__board[row][column]._bacteria)
+               self.__position.extend(self.__board[row][column]._bacteriophages)
+               self.__position.extend(self.__board[row][column].get_antibiotics())
+   
 
-        #for i in range(len(self.__position)):
-        #  pos =self.__position[i].get_pos() 
-        #  self.__board[pos[0]][pos[1]].update_cell()
-
-        #self.__position.clear()    
-     
+    # def move_entities(self, x, y):
+    #     new_board = Board(self.__rows, self.__columns)
     def move_entities(self, x, y, new_board):
         new_x = None
         new_y = None
@@ -207,22 +209,21 @@ class Board:
                 bacterium.add_move()
                 new_board.get_cell(new_x,new_y)._bacterium = bacterium
 
-        for _ in range(self.__board[x][y]._antibiotics):
+        for antibiotic in self.__board[x][y].get_antibiotics():
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
-                new_board.get_cell(new_x,new_y).add_antibiotic()
+                new_board.get_cell(new_x,new_y).add_antibiotic(antibiotic)
 
         for bacteriophage in self.__board[x][y]._bacteriophages:
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
-                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection)
+                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection-1)
 
         return new_board
 
-    #METODOS PARA IMPLEMENTAR STEPS EN BEHAVE
 
     def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
         if isinstance(entity,Bacterium):
@@ -234,8 +235,9 @@ class Board:
             board.get_cell(new_x,new_y)._bacteriophages = entity
             board.get_cell(x,y)._bacteriophages.remove(entity)
         else:
-            board.get_cell(new_x,new_y).add_antibiotic()
-            board.get_cell(x,y)._antibiotics = board.get_cell(x,y)._antibiotics -1
+            board.get_cell(new_x,new_y).add_antibiotic(entity)
+            board.get_cell(x,y).get_antibiotics().remove(entity)
+    
         return board
 
     def where_are_entities(self):
