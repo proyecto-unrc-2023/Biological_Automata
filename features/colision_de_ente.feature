@@ -5,14 +5,14 @@ Característica: Colisión de entidades
 # Bacterias y antibioticos
   Esquema del escenario: Cuando un antibitico y una bacteria (debil o normal) colisionan, ambos desaparecen
     Dado que hay 1 antibiotico en la celda <crash>
-    Y que hay 1 <tipo> en la celda <crash>
+    Y que hay 1 bacteria <tipo> en la celda <crash>
     Cuando se produce la confrontacion
     Entonces el tablero no deberia tener antibioticos en <crash>
-    Y el tablero no deberia tener <tipo> en <crash>
+    Y el tablero no deberia tener bacteria <tipo> en <crash>
     Ejemplos:
-    |tipo           |crash|
-    |bacteria debil |(2,3)|
-    |bacteria normal|(1,4)|
+    |tipo  |crash|
+    |debil |(2,3)|
+    |normal|(1,4)|
 
    Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
      Dado que hay 1 antibiotico en la celda <pos>
@@ -47,18 +47,18 @@ Característica: Colisión de entidades
 
 # Bacterias y bacteriófagos
   Esquema del escenario: Una bacteria se cruza con un bacteriofago
-    Dado que hay 1 <tipo> en la celda <crash>
+    Dado que hay 1 bacteria <tipo> en la celda <crash>
     Y que hay 1 bacteriofago en la celda <crash> con poder de infeccion <poder>
     Cuando se produce la confrontacion
     Entonces  deberia haber 1 bacteria infectada de grado <grado> en <crash>
     Y el tablero no deberia tener bacteriofagos en <crash>
 
     Ejemplos:
-    |crash  |poder|grado|tipo           |
-    |(3,3)  |3    |3    |bacteria normal|
-    |(1,3)  |2    |2    |bacteria normal|
-    |(0,1)  |1    |1    |bacteria normal|
-    |(5,2)  |3    |3    |bacteria fuerte|
+    |crash  |poder|grado|tipo  |
+    |(3,3)  |3    |3    |normal|
+    |(1,3)  |2    |2    |normal|
+    |(0,1)  |1    |1    |normal|
+    |(5,2)  |3    |3    |fuerte|
 
    Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
      Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado>

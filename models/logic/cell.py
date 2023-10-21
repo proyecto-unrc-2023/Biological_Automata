@@ -402,6 +402,8 @@ class Cell:
 			return self._antibiotics
 		if type == 'v':
 			return self.cant_bacteriophages()
+		if type == 'bacterias':
+			return self.cant_bacteria()
 		cant = 0
 		for bacterium in self.__bacteria:
 			if type == bacterium.__str__():

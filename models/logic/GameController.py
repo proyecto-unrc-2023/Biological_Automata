@@ -283,3 +283,11 @@ class GameController:
             entity_to_move = self._board.get_cell(x1,y1).get_bacteriophage()
 
         self._board.move_entity(x2, y2, x1, y1, self._board, entity_to_move)
+
+    def count_total(self, ente):
+        if ente == "bacterias":
+            return self._board.how_many_entities('bacterias')
+        if ente == "antibioticos":
+            return self._board.how_many_entities('a')
+        if ente == "antibioticos":
+            return self._board.how_many_entities('v')
