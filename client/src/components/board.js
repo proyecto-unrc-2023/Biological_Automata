@@ -40,7 +40,7 @@ function Create_board({handleStartGame }) {
 
   useEffect(() => {
       generateBoard(rows, columns);
-      setTimeout(effect, 2000);
+      setTimeout(effect, 100);
 
   }, [gameData]);
 
@@ -71,7 +71,7 @@ function Create_board({handleStartGame }) {
             row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacterium"></td>);
           } else {
             if (cantBacteriophage !== 0){
-              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacteriophague"></td>);
+              row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="bacteriophage"></td>);
             } else {
               if (spawn_b && spawn_b[0] === i && spawn_b[1] === j) {
                 row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="spawnBacterium"></td>);

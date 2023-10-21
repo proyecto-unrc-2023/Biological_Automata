@@ -92,6 +92,11 @@ function Config ({handleStartGame}) {
     return cell.className === 'spawnBacterium' || cell.className === 'spawnOther';
   };
 
+
+  const [spBact, setspBact] = useState(0);
+  const [spOth, setspOth] = useState(0);
+  const [modeOne, setmodeOne] = useState(false);
+  const [modeTwo, setmodeTwo] = useState(false);
   //Elegir Spawn Bacteria
   const toggleSpawnBacterium = () => {
     if (bacteriumMode) {
@@ -99,9 +104,15 @@ function Config ({handleStartGame}) {
     } else {
       setOtherMode(false);
       setBacteriumMode(!bacteriumMode);
+      setspBact(1);
+      document.getElementById('spawnbac').classList.toggle('spawnbacAct');
+      if (spOth === 1) {
+        document.getElementById('spawnoth').classList.toggle('spawnothAct');
+        setspOth(0);
+      }
     }
   };
-
+  
   //Elegir Spawn Other
   const toggleSpawnOther = () => {
     if (otherMode) {
@@ -109,29 +120,35 @@ function Config ({handleStartGame}) {
     } else {
       setBacteriumMode(false);
       setOtherMode(!otherMode);
+      setspOth(1);
+      document.getElementById('spawnoth').classList.toggle('spawnothAct');
+      if (spBact === 1) {
+        document.getElementById('spawnbac').classList.toggle('spawnbacAct');
+        setspBact(0);
+      }
     };
   };
 
   //GameMode Antibiotics
   const toggleModeAntibiotic = () => {
-    document.getElementById('modA').classList.toggle('modAa');
-    try {
-      document.getElementsById('modV').classList.toggle().removeClass('modVa');
-    } catch (error) {
-      // pass
-    }
     setGameMode(1);
+    document.getElementById('modA').classList.toggle('modAa');
+    setmodeOne(!modeOne);
+    if (modeTwo) {
+      document.getElementById('modV').classList.toggle('modVa');
+      setmodeTwo(!modeTwo);
+    }
   };
-
+  
   //GameMode Bacteriopague
   const toggleModeBacteriophague = () => {
-    document.getElementById('modV').classList.toggle('modVa');
-    try {
-      document.getElementsById('modAa').classList.toggle().removeClass('modAa');
-    } catch (error) {
-      // pass
-    }
     setGameMode(2);
+    document.getElementById('modV').classList.toggle('modVa');
+    setmodeTwo(!modeTwo);
+    if (modeOne) {
+      document.getElementById('modA').classList.toggle('modAa');
+      setmodeOne(!modeOne);
+    }    
   };
 
   const handleSaveConfig = () => {
@@ -161,12 +178,14 @@ return (
     <>
     <div class='sss'>
 
-      <button onClick={toggleSpawnBacterium} id='spb'>
+      <p id='spawn'>Spawn</p>
+
+      <button onClick={toggleSpawnBacterium} id='spawnbac'>
         <img src={spb}></img>
       </button>
 
 
-      <button onClick={toggleSpawnOther} id='spa'>
+      <button onClick={toggleSpawnOther} id='spawnoth'>
         <img src={spa}></img>
       </button>
 

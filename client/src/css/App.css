@@ -1,11 +1,11 @@
 /* Estilo para la cuadrícula principal */
 html {
-  /* background-color: rgba(255, 0, 0, 0.466); */
-  background-image: url('https://th.bing.com/th/id/R.6bf07eed463643130ac6ea7c7ab29ecc?rik=sEMONoOkprc0PQ&pid=ImgRaw&r=0');
+  background-image: url('../../public/flush.jpg');
   background-attachment: fixed;
-  background-size: contain;
+  /* background-repeat: no-repeat; */
+  background-size: cover;
   position: relative;
-  top: 10%;
+  top: 12%;
 }
 .grid {
   display: flex;
@@ -87,4 +87,21 @@ html {
 .App{
   display: grid;
   grid-template-columns: 100%;
+}
+
+
+.grid button{
+  background-color: rgba(197, 1, 1, 0.71);
+  position: relative;
+  top: 20px;
+  height: 50px;
+  width: 70px;
+  border-radius: 5px;
+  filter: contrast(1.35);
+  color: aliceblue;
+}
+
+.grid button:hover{
+  cursor: pointer;
+  filter: brightness(1.25);
 }
