@@ -194,11 +194,15 @@ class Board:
         return new_board
 
     def crossing_board(self):
+        self.__position.clear()
         for row in range(self._rows):
             for column in range(self._columns):
                self.__board[row][column].update_cell(row,column)
+            #    if not self.__board[row][column]._bacteria in self.__position:
                self.__position.extend(self.__board[row][column]._bacteria)
+            #    if not self.__board[row][column]._bacteriophages in self.__position:
                self.__position.extend(self.__board[row][column]._bacteriophages)
+            #    if not self.__board[row][column]._bacteria in self.__position:
                self.__position.extend(self.__board[row][column].get_antibiotics())
    
 
@@ -212,6 +216,7 @@ class Board:
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacterium.add_move()
+                bacterium.set_pos(new_x, new_y)
                 new_board.get_cell(new_x,new_y)._bacterium = bacterium
 
         for antibiotic in self.__board[x][y].get_antibiotics():
@@ -225,6 +230,7 @@ class Board:
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
+                bacteriophage.set_pos(new_x, new_y)
                 new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection)
 
         return new_board
@@ -249,7 +255,7 @@ class Board:
         occupied_cells = []
         for row in range(self.__rows):
             for colum in range(self.__columns):
-                if not self.__board[row][colum].is_empty():
+                if not self.__board[row][colum].is_empty() and not self.__board[row][colum].is_spawn():
                     occupied_cells.append((row,colum))
         return occupied_cells
 

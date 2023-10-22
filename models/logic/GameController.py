@@ -101,9 +101,12 @@ class GameController:
             raise ValueError("El juego no está en el estado START_GAME")
         
         actualizado = self._board.move_all_entities()
+        # print('m------  \n',actualizado.__str__())
         self.__board = actualizado
         self.generate_entities()
+        # print('a------  \n',actualizado.__str__())
         actualizado.crossing_board()
+        # print('b------  \n',actualizado.__str__())
         self.__movements += 1
 
 

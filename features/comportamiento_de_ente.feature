@@ -82,10 +82,10 @@ Característica: Comportamiento de las entidades
     Ejemplos:
 
     |  modo          | turnos | b_en_tablero |
-    |  antibiotico   |    2   |      2       |
-    |  bacteriofago  |    2   |      2       |
-    |  antibiotico   |    5   |      5       |
-    |  bacteriofago  |    5   |      5       |
+    |  antibiotico   |    2   |      1       |
+    |  bacteriofago  |    2   |      1       |
+    |  antibiotico   |    5   |      2       |
+    |  bacteriofago  |    5   |      2       |
     |  antibiotico   |    7   |      4       |
     |  bacteriofago  |    7   |      4       |    
 
