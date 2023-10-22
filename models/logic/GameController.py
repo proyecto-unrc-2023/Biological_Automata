@@ -261,11 +261,11 @@ class GameController:
 
     def add_bacterium(self, x, y, moves, type):
         if type == "normal":
-            self._board.get_cell(x,y).add_bacterium(moves, 'b')
+            self._board.add_bacterium_moves(x,y,BacteriumNormal(moves))
         if type == "debil":
-            self._board.get_cell(x,y).add_bacterium(moves, 'd')
+            self._board.add_bacterium_moves(x,y,BacteriumWeak(moves))
         if type == "fuerte":
-            self._board.get_cell(x,y).add_bacterium(moves, 'f')
+            self._board.add_bacterium_moves(x,y,BacteriumStrong(moves))
 
     def move_entity(self, x1, y1, x2, y2, ente):
         #asignacion para que no chille python, pero no hace nada en realidad

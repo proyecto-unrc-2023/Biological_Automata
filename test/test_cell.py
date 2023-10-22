@@ -208,7 +208,7 @@ def test_update_cell_with_3_strongs_and_1_antibiotic(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'f')
     cell.add_antibiotic(Antibiotic())
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '3d'
 
 def test_update_cell_with_2_strongs_and_3_antibiotic(cell):
@@ -217,7 +217,7 @@ def test_update_cell_with_2_strongs_and_3_antibiotic(cell):
     cell.add_antibiotic(Antibiotic())
     cell.add_antibiotic(Antibiotic())
     cell.add_antibiotic(Antibiotic())
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == ' '
 
 def test_update_cell_with_1_strongs_1_weak_and_2_antibiotic(cell):
@@ -225,7 +225,7 @@ def test_update_cell_with_1_strongs_1_weak_and_2_antibiotic(cell):
     cell.add_bacterium(0, 'd')
     cell.add_antibiotic(Antibiotic())
     cell.add_antibiotic(Antibiotic())
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '1d'
 
 def test_update_cell_with_2_strongs_4_normal_and_1_weak(cell):
@@ -236,7 +236,7 @@ def test_update_cell_with_2_strongs_4_normal_and_1_weak(cell):
     cell.add_bacterium(0, 'b')
     cell.add_bacterium(0, 'b')
     cell.add_bacterium(0, 'd')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '1f'
 
 def test_update_cell_with_1_strongs_4_normal_1_weak_and_2_antibiotic(cell):
@@ -248,34 +248,34 @@ def test_update_cell_with_1_strongs_4_normal_1_weak_and_2_antibiotic(cell):
     cell.add_bacterium(0, 'd')
     cell.add_antibiotic(Antibiotic())
     cell.add_antibiotic(Antibiotic())
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == ' '
 
 def test_update_cell_with_1_bacterium_ready_to_reproduce(cell):
     cell.add_bacterium(3, 'b')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.cant_bacteria() == 2
 
 def test_update_cell_with_1_bacterium_not_ready_to_reproduce(cell):
     cell.add_bacterium(2, 'b')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '1b'
 
 def test_update_cell_with_1_weak_ready_to_recover(cell):
     cell.add_bacterium(6, 'd')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '1f'
 
 def test_update_cell_with_1_weak_not_ready_to_recover(cell):
     cell.add_bacterium(3, 'd')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '1d'
 
 def test_update_cell_with_2_weak_ready_to_recover_and_1_weak_not_ready(cell):
     cell.add_bacterium(6, 'd')
     cell.add_bacterium(6, 'd')
     cell.add_bacterium(3, 'd')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '2f1d'
 
 def test_update_cell_with_4_weak_ready_to_recover_and_1_weak_not_ready(cell):
@@ -284,7 +284,7 @@ def test_update_cell_with_4_weak_ready_to_recover_and_1_weak_not_ready(cell):
     cell.add_bacterium(6, 'd')
     cell.add_bacterium(6, 'd')
     cell.add_bacterium(3, 'd')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == '1f'
 
 def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
@@ -292,7 +292,7 @@ def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
     cell.add_bacterium(3, 'b')
     cell.add_bacterium(3, 'b')
     cell.add_bacterium(3, 'b')
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.cant_bacteria() == 2
 
 def test_update_cell_with_4_bacterium_strong_amd_2_antibiotics(cell):
@@ -302,7 +302,7 @@ def test_update_cell_with_4_bacterium_strong_amd_2_antibiotics(cell):
     cell.add_bacterium(0, 'f')
     cell.add_antibiotic(Antibiotic())
     cell.add_antibiotic(Antibiotic())
-    cell.update_cell()
+    cell.update_cell(None,None)
     assert cell.__str__() == ' '
 
 def test_add_move_to_bacteriums(cell):
@@ -312,12 +312,12 @@ def test_add_move_to_bacteriums(cell):
 
 def test_burst_bacteriophage(cell):
     cell.add_bacterium(4,'i') 
-    cell.burst_bacteriophage()
+    cell.burst_bacteriophage(None,None)
     assert cell.__str__() == '4v'
 
 def test_3_burst_bacteriophage(cell):
     cell.add_bacterium(4,'i')
     cell.add_bacterium(4,'i')
     cell.add_bacterium(4,'i')   
-    cell.burst_bacteriophage()
+    cell.burst_bacteriophage(None,None)
     assert cell.__str__() == '12v'

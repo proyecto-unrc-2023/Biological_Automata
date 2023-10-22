@@ -169,8 +169,10 @@ class Cell:
 	def is_spawn_other(self):
 		return self.get_spawn_other()
 
-	def update_cell(self):
+	def update_cell(self,x,y):
 		#aplico regla de sobrepoblación
+		
+	
 		if self.cant_bacteria() >= 4:
 			self.overpopulation()
 
@@ -186,16 +188,16 @@ class Cell:
 			self.infection_to_bacteria()
 			
 		#actualizo por la reproduccion de bacterias
-		self.update_for_reproduction()
+		self.update_for_reproduction(x,y)
 
 		#actualizo por la recuperación de bacterias
-		self.update_for_recovery()
+		self.update_for_recovery(x,y)
 
 		#actualizo por bacteriofagos que se quedaron sin movimientos
 		self.update_for_death_bacteriophages()
 
 		#actualizo por la explosion de bacteriofagos
-		self.burst_bacteriophage()
+		self.burst_bacteriophage(x,y)
 
 	#metodo auxiliar para update_cell()
 	def high_dose_antibiotic(self):
@@ -256,20 +258,25 @@ class Cell:
 		self.__bacteria = infected
 
 	#metodo auxiliar para update_cell()
-	def update_for_reproduction(self):
+	def update_for_reproduction(self,x,y):
 		for bacterium in self._bacteria:
 			#chequeo las bacterias que están en condiciones de reproducirse
 			if bacterium.isReproducible():
-				self._bacterium = bacterium.reproducir()
+				bacteria_reproducida = bacterium.reproducir()
+				bacteria_reproducida.set_pos(x,y) 
+				self._bacterium = bacteria_reproducida
 
 	#metodo auxiliar para update_cell()
-	def update_for_recovery(self):
+	def update_for_recovery(self,x,y):
 		bacteria_to_add = []
 		bacteria_to_remove = []
 		for bacterium in self._bacteria:
 			#chequeo las bacterias debiles que están en condiciones de recuperarse
 			if bacterium.isRecoverable():
-				bacteria_to_add.append(bacterium.recover())
+				bacteria_recuperada = bacterium.recover()
+				bacteria_recuperada.set_pos(x,y)
+				bacteria_to_add.append(bacteria_recuperada)
+				
 				bacteria_to_remove.append(bacterium)
 
 		for bacterium in bacteria_to_add:
@@ -279,13 +286,14 @@ class Cell:
 			self._bacterium.remove(bacterium)
 
 	#metodo auxiliar para update_cell()
-	def burst_bacteriophage(self):
+	def burst_bacteriophage(self,x,y):
 		bacteria_to_remove = []
 		for bacterium in self.__bacteria:
 			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
 						bacteria_to_remove.append(bacterium)
 						for _ in range(4):
 							bacteriophage = Bacteriophage(4)
+							bacteriophage.set_pos(x,y)
 							self.__bacteriophages.append(bacteriophage)
 
 		for bacterium in bacteria_to_remove:

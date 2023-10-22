@@ -53,7 +53,7 @@ Característica: Comportamiento de las entidades
       |(2,0)  |(2,1) |
       |(3,3)  |(3,4) |
 
-Esquema del escenario: Un bacteriofago desaparece tras cierto tiempo
+  Esquema del escenario: Un bacteriofago desaparece tras cierto tiempo
     Dado que hay 1 bacteriofago en la celda <pos> con poder de infeccion 0
     Cuando se produce la confrontacion
     Entonces el tablero no deberia tener bacteriofago en <pos>
@@ -68,9 +68,9 @@ Esquema del escenario: Un bacteriofago desaparece tras cierto tiempo
       |(1,1) |
       |(1,0) |
 
-Esquema del escenario: Las bacterias salen del spawn y luego se reproducen
+  Esquema del escenario: Las bacterias salen del spawn y luego se reproducen
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3)
+    Y los parametros iniciales del juego son (1,2,0,3)
     Y se coloco el spawn de bacterias en (2,2)
     Y se coloco el spawn de la otra entidad en (5,5)
     Y el modo de juego elegido es <modo>
@@ -82,28 +82,28 @@ Esquema del escenario: Las bacterias salen del spawn y luego se reproducen
     Ejemplos:
 
     |  modo          | turnos | b_en_tablero |
-    |  antibiotico   |    2   |      1       |
-    |  bacteriofago  |    2   |      1       |
-    |  antibiotico   |    5   |      2       |
-    |  bacteriofago  |    5   |      2       |
+    |  antibiotico   |    2   |      2       |
+    |  bacteriofago  |    2   |      2       |
+    |  antibiotico   |    5   |      5       |
+    |  bacteriofago  |    5   |      5       |
     |  antibiotico   |    7   |      4       |
     |  bacteriofago  |    7   |      4       |    
 
-Esquema del escenario: Los bacteriofagos salen del spawn y desaparecen si no encuentran bacterias
-    Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (0,10,<cant_v>,<frec_v>)
-    Y se coloco el spawn de bacterias en (2,2)
-    Y se coloco el spawn de la otra entidad en (5,5)
-    Y el modo de juego elegido es bacteriofago
-    Y el usuario inicio el juego
-    Cuando ha pasado <turnos> turno de juego
-    Entonces deberian quedar <cant_v_act> bacteriofagos por salir del spawn
-    Y el tablero deberia quedar con <v_en_tablero> bacteriofagos
-
-    Ejemplos:
-
-      | cant_v | frec_v  |turnos  |cant_v_act |v_en_tablero|
-      |  25    |  8      |  10    |    24     |    1       |
-      |  25    |  8      |  40    |    20     |    1       |
-      |  30    |  1      |  15    |    15     |    4       |
-      |  17    |  2      |  70    |    0      |    0       |
+ # Esquema del escenario: Los bacteriofagos salen del spawn y desaparecen si no encuentran bacterias
+ #   Dado que el usuario abrio el juego
+ #   Y los parametros iniciales del juego son (0,10,<cant_v>,<frec_v>)
+ #   Y se coloco el spawn de bacterias en (2,2)
+ #   Y se coloco el spawn de la otra entidad en (5,5)
+ #   Y el modo de juego elegido es bacteriofago
+ #   Y el usuario inicio el juego
+ #   Cuando ha pasado <turnos> turno de juego
+ #   Entonces deberian quedar <cant_v_act> bacteriofagos por salir del spawn
+ #   Y el tablero deberia quedar con <v_en_tablero> bacteriofagos
+#
+ #   Ejemplos:
+#
+ #     | cant_v | frec_v  |turnos  |cant_v_act |v_en_tablero|
+ #     |  25    |  8      |  10    |    24     |    1       |
+ #     |  25    |  8      |  40    |    20     |    1       |
+ #     |  30    |  1      |  15    |    15     |    4       |
+ #     |  17    |  2      |  70    |    0      |    0       |

@@ -93,8 +93,8 @@ class Board:
     def get_eficientr(self):
         return self.__position
     
-    def set_eficiente(self):
-        pass
+    def set_eficiente(self,positions):
+        self.__position = positions
 
 
     def set_position_spawn_other(self, position):
@@ -125,7 +125,12 @@ class Board:
         self.__board[row][colum]._bacterium = bacterium
         bacterium.set_pos(row, colum)
         self.__position.append(bacterium)
-
+    
+    #para test
+    def add_bacterium_moves(self, row, colum,bacterium:Bacterium):
+        self.__board[row][colum].add_bacterium(bacterium.moves,bacterium.__str__())
+        bacterium.set_pos(row, colum)
+        self.__position.append(bacterium)
 
     def set_antibiotics(self, row, colum, cant: int): 
         for i in range(cant):
@@ -181,17 +186,17 @@ class Board:
         new_board = Board(self.__rows, self.__columns)
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
+        new_board.set_eficiente(self.__position)
         for i in range(len(self.__position)):
                 pos = self.__position[i].get_pos()
-                if pos != None:
-                    new_board = self.move_entities(pos[0],pos[1], new_board)
-       
+                if isinstance(pos[0],int) and isinstance(pos[1],int):
+                 new_board = self.move_entities(pos[0],pos[1], new_board)  
         return new_board
 
     def crossing_board(self):
         for row in range(self._rows):
             for column in range(self._columns):
-               self.__board[row][column].update_cell()
+               self.__board[row][column].update_cell(row,column)
                self.__position.extend(self.__board[row][column]._bacteria)
                self.__position.extend(self.__board[row][column]._bacteriophages)
                self.__position.extend(self.__board[row][column].get_antibiotics())
