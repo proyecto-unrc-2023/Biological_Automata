@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import Cell from './Cell';
 
 function Create_board({handleStartGame }) {
   const [board, setBoard] = useState([]);
-  const [spawn_b, setSpawn_b] = useState(null);
-  const [spawn_o, setSpawn_o] = useState(null);
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
+
+  const [stopGame, setStopGame] = useState(true);
+  const [speed, setSpeed] = useState(1);
 
   //funcion para refrescar la data del game
   const fetchRefreshData = () => {
@@ -28,22 +30,35 @@ function Create_board({handleStartGame }) {
     }
 
     const { _rows, _columns } = gameData.games._board;
-    const { spawn_bacterium, spawn_other } = gameData.games;
 
-    setSpawn_b(spawn_bacterium);
-    setSpawn_o(spawn_other);
     setBoardData(gameData.games._board._board);
     generateBoard(_rows, _columns);
   };
 
+    // Frenar el Juego Con el Boton STOP
+  const handleStop_Game = () => {
+    const url = `http://localhost:5000/game/stop`;
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .catch(error => {
+        console.error('Hubo un error al terminar el juego', error);
+      });
+  };
+
 
   useEffect(() => {
-    const refreshInterval = setInterval(refreshGame, 1000);
+    if(stopGame){
+      const refreshInterval = setInterval(refreshGame, 1000/speed);
 
-    return () => {
-      clearInterval(refreshInterval);
-    };
-  }, [gameData]);
+      return () => {
+        clearInterval(refreshInterval);
+      };
+    }
+  }, [gameData, stopGame, speed]);
 
 
   const generateBoard = (_rows, _columns) => {
@@ -56,70 +71,20 @@ function Create_board({handleStartGame }) {
       const row = [];
 
       for (let j = 0; j < _columns; j++) {
-        const cell = boardData[i][j];
-        const antibiotics = cell._antibiotics;
-        const cantBacteriophage = cell._cant_bacteriophage;
-        const bacterias = cell.bacterias;
-        const cantBact = gameData.games._cant_bacterium
-        const cantOther = gameData.games._cant_other
+        const cellData = boardData[i][j];
 
-        let cellClass = "cell"; // Clase predeterminada
-
-        if (antibiotics !== 0) {
-          cellClass = "antibiotic";
-        } else if (Array.isArray(bacterias) && bacterias.length > 0) {
-          if (bacterias.includes("f")) {
-            cellClass = "bacteriumStrong";
-          } else if (bacterias.includes("b")) {
-            cellClass = "bacterium";
-          } else if (bacterias.includes("d")) {
-            cellClass = "bacteriumWeak";
-          } else {
-            cellClass = "bacteriumInfected";
-          }
-        } else if (cantBacteriophage !== 0) {
-          cellClass = "bacteriophage";
-        } else if (spawn_b && spawn_b[0] === i && spawn_b[1] === j && cantBact == 0) {
-          cellClass = "spawnBacterium";
-        } else if (spawn_b && spawn_b[0] === i && spawn_b[1] === j && cantBact > 0) {
-          cellClass = "spawnBacteriumActive";
-        } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j && cantOther == 0) {
-          cellClass = "spawnOther";
-        } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j && cantOther > 0) {
-          cellClass = "spawnOtherActive";
-        }
-
-        row.push(
-          <td key={`${i}-${j}`} id={`${i}-${j}`} className={cellClass}></td>
-        );
+        row.push( <Cell i={i} j={j} cellData={cellData} gameData={gameData}/> );  //Componente que crea la celda
       }
 
-      newBoard.push(
-        <div key={i} className="grid-row">
-          {row}
-        </div>
-      );
+      newBoard.push(  <div key={i} className="grid-row"> {row} </div>   );
     }
 
     setBoard(newBoard);
   };
 
-  if (gameData === null) {
-    return <div>Cargando...</div>;
-  }
 
-  // Frenar el Juego Con el Boton STOP
-  const handleStop_Game = () => {
-      const url = `http://localhost:5000/game/stop`;
-      fetch(url)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-        })
-        .catch(error => {
-          console.error('Hubo un error al terminar el juego', error);
-        });
+  const togglePause = () => {
+    setStopGame(!stopGame)
   };
 
   return (
@@ -127,11 +92,28 @@ function Create_board({handleStartGame }) {
     <div>
     </div>
     <div className="grid">
+
+      <label>Velocidad: </label>
+      <input
+        type="range" //que aparezca como deslizar
+        min="0.5"
+        max="5"
+        step="0.1"
+        value={speed}
+        onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
+      />
+
       {board}
       <button onClick={() => {
         handleStartGame(false); handleStop_Game();}}>
         STOP
       </button>
+
+      <button onClick={() => {
+        togglePause();}}>
+        PAUSA
+      </button>
+
     </div>
     <div>
 
