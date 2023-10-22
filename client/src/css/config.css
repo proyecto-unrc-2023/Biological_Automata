@@ -50,10 +50,32 @@ html {
   background-repeat: no-repeat;
 }
 
+.spawnBacteriumActive{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/bacterium.gif');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 .spawnOther{
   width: 30px;
   height: 30px;
   background-image: url('../images/spa.png');
+  background-size: cover;
+  border: 1px solid #000000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.spawnOtherActive{
+  width: 30px;
+  height: 30px;
+  background-image: url('../../public/other.gif');
   background-size: cover;
   border: 1px solid #000000;
   background-size: contain;

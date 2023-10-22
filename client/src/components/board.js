@@ -44,7 +44,7 @@ function Create_board({handleStartGame }) {
 
 
   useEffect(() => {
-    const refreshInterval = setInterval(refreshGame, 2000);
+    const refreshInterval = setInterval(refreshGame, 200);
 
     return () => {
       clearInterval(refreshInterval);
@@ -66,6 +66,8 @@ function Create_board({handleStartGame }) {
         const antibiotics = cell._antibiotics;
         const cantBacteriophage = cell._cant_bacteriophage;
         const bacterias = cell.bacterias;
+        const cantBact = gameData.games._cant_bacterium
+        const cantOther = gameData.games._cant_other
 
         let cellClass = "cell"; // Clase predeterminada
 
@@ -83,10 +85,14 @@ function Create_board({handleStartGame }) {
           }
         } else if (cantBacteriophage !== 0) {
           cellClass = "bacteriophage";
-        } else if (spawn_b && spawn_b[0] === i && spawn_b[1] === j) {
+        } else if (spawn_b && spawn_b[0] === i && spawn_b[1] === j && cantBact == 0) {
           cellClass = "spawnBacterium";
-        } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j) {
+        } else if (spawn_b && spawn_b[0] === i && spawn_b[1] === j && cantBact > 0) {
+          cellClass = "spawnBacteriumActive";
+        } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j && cantOther == 0) {
           cellClass = "spawnOther";
+        } else if (spawn_o && spawn_o[0] === i && spawn_o[1] === j && cantOther > 0) {
+          cellClass = "spawnOtherActive";
         }
 
         row.push(
