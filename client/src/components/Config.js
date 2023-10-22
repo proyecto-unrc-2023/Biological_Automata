@@ -112,7 +112,7 @@ function Config ({handleStartGame}) {
       }
     }
   };
-  
+
   //Elegir Spawn Other
   const toggleSpawnOther = () => {
     if (otherMode) {
@@ -139,7 +139,7 @@ function Config ({handleStartGame}) {
       setmodeTwo(!modeTwo);
     }
   };
-  
+
   //GameMode Bacteriopague
   const toggleModeBacteriophague = () => {
     setGameMode(2);
@@ -148,30 +148,53 @@ function Config ({handleStartGame}) {
     if (modeOne) {
       document.getElementById('modA').classList.toggle('modAa');
       setmodeOne(!modeOne);
-    }    
+    }
   };
 
   const handleSaveConfig = () => {
-    if (spawnBacterium && spawnOther && gameMode !== null) {
-      const [xBacterium, yBacterium] = spawnBacterium.split('-').map(Number);
-      const [xOther, yOther] = spawnOther.split('-').map(Number);
-      const url = `http://localhost:5000/game/config/${xBacterium}/${yBacterium}/${xOther}/${yOther}/${cantBact}/${cantOther}/${frecBact}/${frecOther}/${gameMode}`;
-      fetch(url, {
+    if (
+      spawnBacterium && spawnOther && gameMode !== null &&
+      isValidNumbers(cantBact, cantOther, frecBact, frecOther))
+      {
+        const data = {
+          xBacterium: spawnBacterium.split('-').map(Number)[0],
+          yBacterium: spawnBacterium.split('-').map(Number)[1],
+          xOther: spawnOther.split('-').map(Number)[0],
+          yOther: spawnOther.split('-').map(Number)[1],
+          cantBact: cantBact,
+          cantOther: cantOther,
+          frecBact: frecBact,
+          frecOther: frecOther,
+          gameMode: gameMode,
+        };
+
+      fetch('http://localhost:5000/game/config', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          handleStartGame(true)
+          handleStartGame(true);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
         });
     } else {
       console.error('Error: No se ha proporcionado spawns o modo de juego');
     }
   };
+
+
+  const isValidNumbers = (...numbers) => {
+    return numbers.every(num => !isNaN(num) && num >= 0);
+  };
+
+
 
 return (
 

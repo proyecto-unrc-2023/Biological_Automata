@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 function Create_board({handleStartGame }) {
-  const [rows, setRows] = useState(0);
-  const [columns, setColumns] = useState(0);
   const [board, setBoard] = useState([]);
   const [spawn_b, setSpawn_b] = useState(null);
   const [spawn_o, setSpawn_o] = useState(null);
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
-  const [stop, setStop] = useState(false);
-
 
   //funcion para refrescar la data del game
   const fetchRefreshData = () => {
@@ -34,8 +30,6 @@ function Create_board({handleStartGame }) {
     const { _rows, _columns } = gameData.games._board;
     const { spawn_bacterium, spawn_other } = gameData.games;
 
-    setRows(_rows);
-    setColumns(_columns);
     setSpawn_b(spawn_bacterium);
     setSpawn_o(spawn_other);
     setBoardData(gameData.games._board._board);
@@ -44,12 +38,12 @@ function Create_board({handleStartGame }) {
 
 
   useEffect(() => {
-    const refreshInterval = setInterval(refreshGame, 200);
+    const refreshInterval = setInterval(refreshGame, 1000);
 
     return () => {
       clearInterval(refreshInterval);
     };
-  }, [gameData, stop]);
+  }, [gameData]);
 
 
   const generateBoard = (_rows, _columns) => {
@@ -117,9 +111,7 @@ function Create_board({handleStartGame }) {
   // Frenar el Juego Con el Boton STOP
   const handleStop_Game = () => {
       const url = `http://localhost:5000/game/stop`;
-      fetch(url, {
-        method: 'POST',
-      })
+      fetch(url)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -137,7 +129,7 @@ function Create_board({handleStartGame }) {
     <div className="grid">
       {board}
       <button onClick={() => {
-        handleStartGame(false); setStop(true); handleStop_Game();}}>
+        handleStartGame(false); handleStop_Game();}}>
         STOP
       </button>
     </div>

@@ -1,28 +1,30 @@
 from marshmallow import Schema, fields
+from Schemas.schemas import *
+from models.logic.GameController import *
 from app import db
 import json
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    level = db.Column(db.Integer)
-    board = db.Column(db.Text)
+    board = db.Column(db.Text, nullable=False)
 
-    def __init__(self, name, level='Low'):
-        self.name = name
-        self.level = level
+    def __init__(self, result):
         self.board = json.dumps(
-            "[ [[''], [''], [''], ['']], [[''], [''], [''], ['']]]"
+            result
         )
 
-    def __repr__(self):
-        return self.name
+    # def __init__(self, name):
+    #     self.name = name
+    #     game = GameController()
+    #     game_schema = GameSchema()
+    #     result = game_schema.dump(game)
+    #     self.board = json.dumps({
+    #         "board": result
+    #     })
 
     def json(self):
         return {
-            'name': self.name,
             'id': self.id,
-            'level': self.level,
             'board': self.board
         }
 
