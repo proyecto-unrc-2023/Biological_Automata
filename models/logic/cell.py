@@ -332,8 +332,8 @@ class Cell:
 		for bacterium in self.__bacteria:
 			if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
 						bacteria_to_remove.append(bacterium)
-						bacteriophage = Bacteriophage(4)
 						for _ in range(4):
+							bacteriophage = Bacteriophage(4)
 							self.__bacteriophages.append(bacteriophage)
 
 		for bacterium in bacteria_to_remove:

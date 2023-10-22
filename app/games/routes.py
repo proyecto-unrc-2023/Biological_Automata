@@ -2,7 +2,7 @@ from flask import jsonify, request
 from app.games import api
 from Schemas.schemas import *
 from models.logic.GameController import *
-
+from models.logic.Bacterium import *
 from flask_restful import Resource
 
 
@@ -29,7 +29,6 @@ game_data = GameController()
 
 class Games_Resource(Resource):
     def get(self):
-        #game_data.refresh_board()
         game_schema = GameSchema()
         result = game_schema.dump(game_data)
         return jsonify({"games": result})
@@ -46,6 +45,7 @@ class Config_Game(Resource):
             game_data._game_mode = Game_Mode.ANTIBIOTIC
         else:
             game_data._game_mode = Game_Mode.BACTERIOPHAGE
+
         game_data.start_game()
         return {"message": "Configuración guardada correctamente"}
 
@@ -69,3 +69,4 @@ class Refresh_Game(Resource):
         return jsonify({"games": result})
 
 api.add_resource(Refresh_Game, '/refresh')
+
