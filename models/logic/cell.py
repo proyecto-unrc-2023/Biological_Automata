@@ -116,7 +116,7 @@ class Cell:
 	@_bacteria.setter
 	def _bacterium(self, bacterium: Bacterium):
 		self.__bacteria.append(bacterium)
-		
+
 
 	def add_bacterium(self, moves:int, state):
 		bacterium = Bacterium.from_string(state)
@@ -126,51 +126,11 @@ class Cell:
 	def cant_bacteria(self):
 		return self.__bacteria.__len__()
 
-	def cant_type_bacterium(self, ente):
-		counter_normal = 0
-		counter_weak = 0
-		counter_strong = 0
-
-		for bacteria in self._bacteria:
-			if isinstance(bacteria, BacteriumNormal):
-				counter_normal += 1
-			elif isinstance(bacteria, BacteriumWeak):
-				counter_weak += 1
-			elif isinstance(bacteria, BacteriumStrong):
-				counter_strong += 1
-
-		if ente == "bacteria normal":
-			return counter_normal
-		if ente == "bacteria debil":
-			return counter_weak
-		if ente == "bacteria fuerte":
-			return counter_strong
-
-	def count_infected(self, grade):
-		counter = 0
-
-		for bacteria in self._bacteria:
-			if isinstance(bacteria, BacteriumInfected):
-				if bacteria.moves == grade:
-
-					counter += 1
-
-		return counter
-
-	def count_bacteriophages(self, power):
-		counter = 0
-
-		for bacteriophage in self._bacteriophages:
-			if bacteriophage.infection == power:
-				counter += 1
-
-		return counter
-
 	@property
 	def _antibiotics(self):
 		return self.__antibiotics.__len__()
 
-	
+
 	def get_antibiotics(self):
 		return self.__antibiotics
 
@@ -211,8 +171,8 @@ class Cell:
 
 	def update_cell(self,x,y):
 		#aplico regla de sobrepoblación
-		
-	
+
+
 		if self.cant_bacteria() >= 4:
 			self.overpopulation(x,y)
 
@@ -226,7 +186,7 @@ class Cell:
 		#si existen bacteriofagos y bacterias en la misma celda, aplico las reglas de cruzamiento
 		if self.cant_bacteriophages() > 0 and self.cant_bacteria() > 0:
 			self.infection_to_bacteria(x,y)
-			
+
 		#actualizo por la reproduccion de bacterias
 		self.update_for_reproduction(x,y)
 
@@ -273,12 +233,12 @@ class Cell:
 		#asigno cualquiera, en este caso el primero
 		if strongest == None:
 			strongest = self._bacteria[0]
-		
+
 		self.__bacteria.clear()
 		strongest.set_pos(x,y)
 		self.__bacteria.append(strongest)
 
-	#metodo auxiliar para update_cell()	
+	#metodo auxiliar para update_cell()
 	def infection_to_bacteria(self,x,y):
 		one_not_infected = False
 		power = 0
@@ -287,7 +247,7 @@ class Cell:
 			power += bacteriophage.infection
 
 		power = min(power, 4)
-		
+
 		infected = []
 		for bacterium in self._bacteria:
 			if not isinstance(bacterium, BacteriumInfected):
@@ -310,7 +270,7 @@ class Cell:
 			#chequeo las bacterias que están en condiciones de reproducirse
 			if bacterium.isReproducible():
 				bacteria_reproducida = bacterium.reproducir()
-				bacteria_reproducida.set_pos(x,y) 
+				bacteria_reproducida.set_pos(x,y)
 				self._bacterium = bacteria_reproducida
 
 	#metodo auxiliar para update_cell()
@@ -323,7 +283,7 @@ class Cell:
 				bacteria_recuperada = bacterium.recover()
 				bacteria_recuperada.set_pos(x,y)
 				bacteria_to_add.append(bacteria_recuperada)
-				
+
 				bacteria_to_remove.append(bacterium)
 
 		for bacterium in bacteria_to_add:
@@ -364,31 +324,31 @@ class Cell:
 			bacteriophage.add_move()
 
 
-	#METODOS PARA IMPLEMENTAR STEPS EN BEHAVE 
+	#METODOS PARA IMPLEMENTAR STEPS EN BEHAVE
 
 	def get_infected(self):
 		for bacterium in self._bacterium:
 			if isinstance(bacterium, BacteriumInfected):
 				return bacterium
-			
+
 	def get_bacteriophage(self):
 		return self.__bacteriophages[0]
-	
+
 	def get_normal(self):
 		for bacterium in self._bacterium:
 			if isinstance(bacterium, BacteriumNormal):
 				return bacterium
-			
+
 	def get_strong(self):
 		for bacterium in self._bacterium:
 			if isinstance(bacterium, BacteriumStrong):
 				return bacterium
-			
+
 	def get_weak(self):
 		for bacterium in self._bacterium:
 			if isinstance(bacterium, BacteriumWeak):
 				return bacterium
-	
+
 	def cant_type_bacterium(self, ente):
 		counter_normal = 0
 		counter_weak = 0
@@ -401,14 +361,14 @@ class Cell:
 				counter_weak += 1
 			elif isinstance(bacteria, BacteriumStrong):
 				counter_strong += 1
-		
+
 		if ente == "bacteria normal":
 			return counter_normal
 		if ente == "bacteria debil":
 			return counter_weak
 		if ente == "bacteria fuerte":
 			return counter_strong
-	
+
 	def count_infected(self, grade):
 		counter = 0
 
@@ -419,7 +379,7 @@ class Cell:
 					counter += 1
 
 		return counter
-	
+
 	def count_bacteriophages(self, power):
 		counter = 0
 
@@ -427,8 +387,8 @@ class Cell:
 			if bacteriophage.infection == power:
 				counter += 1
 
-		return counter		
-	
+		return counter
+
 	def count_bacteria_with_moves(self, type, moves):
 		counter_normal = 0
 		counter_weak = 0
@@ -441,14 +401,14 @@ class Cell:
 				counter_weak += 1
 			elif isinstance(bacteria, BacteriumStrong) and bacteria.moves == moves:
 				counter_strong += 1
-		
+
 		if type == "normal":
 			return counter_normal
 		if type == "debil":
 			return counter_weak
 		if type == "fuerte":
 			return counter_strong
-		
+
 	def cant_total(self):
 		return self.cant_bacteriophages() + self.cant_bacteria() + self._antibiotics
 
@@ -464,3 +424,16 @@ class Cell:
 			if type == bacterium.__str__():
 				cant += 1
 		return cant
+
+
+  ##Funciones para Schemas
+	@property
+	def _cant_bacteriophage(self):
+		return len(self._bacteriophages)
+
+	@property
+	def bacterias(self):
+		array = []
+		for bacterium in self._bacteria:
+			array.append(bacterium.__str__())
+		return array

@@ -84,7 +84,7 @@ class BacteriumStrong(Bacterium):
     def reproducir(self):
       if not self.isReproducible():
         raise ValueError("La bacteria no está en condiciones de reproducirse!")
-      
+
       self.moves = 0
       return BacteriumStrong(0)
 
@@ -120,13 +120,13 @@ class BacteriumWeak(Bacterium):
     def isReproducible(self):
       return False
 
-    def isRecoverable(self):      
+    def isRecoverable(self):
       return self.moves >= 6
 
     def recover(self):
       if not self.isRecoverable():
         raise ValueError("La bacteria no está en condiciones de recuperarse!")
-    
+
       return BacteriumStrong(0)
 
     def __str__(self):

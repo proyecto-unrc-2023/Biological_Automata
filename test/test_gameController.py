@@ -267,5 +267,5 @@ def test_count_in_adjacents_mode_bacteriophages(game):
   game._game_mode = Game_Mode.BACTERIOPHAGE
   game.start_game()
   game.refresh_board()
-  count = game.count_in_adjacents(3,3, 'v')
+  count = game.count_in_adjacents(3,3, 'bacteriofago')
   assert count == 1

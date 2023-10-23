@@ -92,7 +92,7 @@ class Board:
 
     def get_position(self):
         return self.__position
-    
+
     def set_position(self,positions):
         self.__position = positions
 
@@ -125,32 +125,32 @@ class Board:
         self.__board[row][colum]._bacterium = bacterium
         bacterium.set_pos(row, colum)
         self.__position.append(bacterium)
-    
+
     #para test
     def add_bacterium_moves(self, row, colum,bacterium:Bacterium):
         self.__board[row][colum].add_bacterium(bacterium.moves,bacterium.__str__())
         bacterium.set_pos(row, colum)
         self.__position.append(bacterium)
 
-    def set_antibiotics(self, row, colum, cant: int): 
+    def set_antibiotics(self, row, colum, cant: int):
         for i in range(cant):
             antibiotic = Antibiotic()
             antibiotic.set_pos(row, colum)
             self.__board[row][colum].add_antibiotic(antibiotic)
             self.__position.append(antibiotic)
 
-        
+
 
     def add_antibiotic(self, row, colum, antibiotic: Antibiotic):
-        antibiotic.set_pos(row, colum)  
-        self.__board[row][colum].add_antibiotic(antibiotic)     
+        antibiotic.set_pos(row, colum)
+        self.__board[row][colum].add_antibiotic(antibiotic)
         self.__position.append(antibiotic)
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
         self.__board[row][colum]._bacteriophages = bacteriophage
         bacteriophage.set_pos(row,colum)
         self.__position.append(bacteriophage)
-        
+
 
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
@@ -180,33 +180,33 @@ class Board:
                         if not self.__board[x][y].is_spawn():
                             moves.append((x, y))
         return moves
-            
+
     def position_ocupped(self,position):
         aux = []
         for i in range(len(position)):
             aux.append(position[i].get_pos())
 
-        return list(set(aux))      
+        return list(set(aux))
 
-    
+
     def move_all_entities(self):
         new_board = Board(self.__rows, self.__columns)
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
-        
+
         lista = self.position_ocupped(self.__position)
-        
+
         for j in range(len(lista)):
                 pos = lista[j]
                 if isinstance(pos[0],int) and isinstance(pos[1],int):
-                 new_board = self.move_entities(pos[0],pos[1], new_board)  
+                 new_board = self.move_entities(pos[0],pos[1], new_board)
         return new_board
 
     def crossing_board(self):
 
-        lista = self.position_ocupped(self.__position) 
+        lista = self.position_ocupped(self.__position)
         self.__position.clear()
-        
+
         for j in range(len(lista)):
                 pos = lista[j]
                 if isinstance(pos[0],int) and isinstance(pos[1],int):
@@ -253,7 +253,7 @@ class Board:
         else:
             board.add_antibiotic(new_x, new_y,entity)
             board.get_cell(x,y).get_antibiotics().remove(entity)
-    
+
         return board
 
     def where_are_entities(self):
