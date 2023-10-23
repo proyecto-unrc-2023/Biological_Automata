@@ -19,7 +19,7 @@ def test_bacteriumNormal_error_reproducible():
     bacterium = BacteriumNormal(2)
     with pytest.raises(ValueError) as e:
         bacterium.reproducir()
-    assert str(e.value) == "El número de movimientos no es 3"
+    assert str(e.value) == "La bacteria no está en condiciones de reproducirse!"
 
 def test_bacteriumNormal_isReproducible():
     bacterium = BacteriumNormal(3)

@@ -6,7 +6,14 @@ class Bacterium(Entity):
 
     #Constructor
     def __init__(self, moves:int):
+      self.__pos =(None,None)
       self.__moves = max(0, moves)
+
+    def get_pos(self):
+      return self.__pos
+
+    def set_pos(self, row, colum):
+      self.__pos = (row,colum)
 
     #Suma de movimiento de bacteria
     def add_move(self):
@@ -47,8 +54,8 @@ class Bacterium(Entity):
 class BacteriumNormal(Bacterium):
 
     def reproducir(self):
-      if (not self.isReproducible()):
-        raise ValueError("El número de movimientos no es 3")
+      if not self.isReproducible():
+        raise ValueError("La bacteria no está en condiciones de reproducirse!")
       
       mutation_probability = 0.01
       
@@ -61,9 +68,7 @@ class BacteriumNormal(Bacterium):
         return BacteriumStrong(0)
 
     def isReproducible(self):
-      if (self.moves == 3):
-        return True
-      return False
+      return self.moves >= 3
 
     def isRecoverable(self):
        return False
@@ -74,14 +79,14 @@ class BacteriumNormal(Bacterium):
 class BacteriumStrong(Bacterium):
 
     def reproducir(self):
-      if (not self.isReproducible()):
-        raise ValueError("El numero de movimientos es inferior a 3")
+      if not self.isReproducible():
+        raise ValueError("La bacteria no está en condiciones de reproducirse!")
+      
+      self.moves = 0
       return BacteriumStrong(0)
 
     def isReproducible(self):
-      if (self.moves == 3):
-        return True
-      return False
+      return self.moves >= 3
 
     def isRecoverable(self):
        return False
@@ -92,12 +97,11 @@ class BacteriumStrong(Bacterium):
 class BacteriumInfected(Bacterium):
 
     def lithic_State(self):
-      if (self.moves >= 4):
-          return True
-      return False
+      return self.moves >= 4
+
 
     def exploid (self):
-      if (self.lithic_State()):
+      if self.lithic_State():
         del self
 
     #Las bacterias infectadas no se pueden reproducir
@@ -107,20 +111,19 @@ class BacteriumInfected(Bacterium):
     def __str__(self):
       return 'i'
     
-    
-
 class BacteriumWeak(Bacterium):
 
     def isReproducible(self):
       return False
 
-    def isRecoverable(self):
-      if (self.moves == 6):
-        return True
-      return False
+    def isRecoverable(self):      
+      return self.moves >= 6
 
     def recover(self):
-       return BacteriumStrong(0)
+      if not self.isRecoverable():
+        raise ValueError("La bacteria no está en condiciones de recuperarse!")
+    
+      return BacteriumStrong(0)
 
     def __str__(self):
       return 'd'

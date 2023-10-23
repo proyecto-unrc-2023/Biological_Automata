@@ -1,4 +1,5 @@
 import pytest
+import time
 from models.logic.GameController import *
 from models.logic.Bacterium import *
 
@@ -145,10 +146,17 @@ def test_refresh_board(game):
   cant_antibiotic_temp = game._cant_other
   cant_movements_temp = game._movements
   game.start_game()
+  
+  #incio = time.time()
   game.refresh_board()
+  #fin = time.time()
+  #assert print(fin-incio)
+
   assert game._cant_bacterium == cant_bacterium_temp - 1
   assert game._cant_other == cant_antibiotic_temp - 1
   assert game._movements == cant_movements_temp + 1
+
+  
 
 def test_refresh_board_twice(game):
   game._game_mode = Game_Mode.ANTIBIOTIC       
@@ -172,14 +180,14 @@ def test_stop_NOT_STARTER():
   with pytest.raises(ValueError) as e:
     game.stop()
   assert str(e.value) == "El juego no está en el estado START_GAME"
-  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
+  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTED
 
 def test_stop_CONFIG_GAME(game):
   game._game_mode = Game_Mode.ANTIBIOTIC
   with pytest.raises(ValueError) as e:
     game.stop()
   assert str(e.value) == "El juego no está en el estado START_GAME"
-  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTER
+  assert game._game_state != Game_State.FINISH_GAME   # Game_State.NOT_STARTED
   game.start_game()
   game.stop()
   assert game._game_state == Game_State.FINISH_GAME
@@ -250,14 +258,15 @@ def test_count_in_adjacents_mode_antibiotic(game):
   game._game_mode = Game_Mode.ANTIBIOTIC
   game.start_game()
   game.refresh_board()
-  count = game.count_in_adjacents(0,0, 'b')
+  count = game.count_in_adjacents(0,0, 'bacteria')
   assert count == 1
-  count = game.count_in_adjacents(3,3, 'a')
+  count = game.count_in_adjacents(3,3, 'antibiotico')
   assert count == 1
 
 def test_count_in_adjacents_mode_bacteriophages(game):
   game._game_mode = Game_Mode.BACTERIOPHAGE
   game.start_game()
   game.refresh_board()
-  count = game.count_in_adjacents(3,3, 'v')
+  count = game.count_in_adjacents(3,3, 'bacteriofago')
   assert count == 1
+

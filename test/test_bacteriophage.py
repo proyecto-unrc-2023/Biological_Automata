@@ -21,9 +21,9 @@ def test_bacteriophage_moment_death_else():
     virus = Bacteriophage(1)
     assert not virus.moment_death()
 
-def test_bacteriophage_degradacion():
+def test_bacteriophage_degradation():
     virus = Bacteriophage(0)
-    assert virus.degradacion() == None
+    assert virus.degradation() == None
 
 def test_bacteriophage_from_string():
     virus = Bacteriophage.from_string('v')

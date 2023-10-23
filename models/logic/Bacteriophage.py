@@ -4,7 +4,13 @@ class Bacteriophage(Entity):
 
     def __init__(self, levelInfection:int):
       self.__infection = levelInfection
+      self.__pos =(None,None)
+    
+    def get_pos(self):
+      return self.__pos
 
+    def set_pos(self, row, colum):
+      self.__pos = (row,colum)
     @property
     def infection(self):
       return self.__infection
@@ -27,7 +33,7 @@ class Bacteriophage(Entity):
       return False
 
     #Muerte del virus despues de un determinado tiempo
-    def degradacion (self):
+    def degradation (self):
       if (self.moment_death()):
         del self
 
