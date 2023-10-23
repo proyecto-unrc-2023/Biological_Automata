@@ -376,3 +376,41 @@ def test_move_entities_cant_move(board):
      board.set_bacterium(0,1,bac)
      board = board.move_all_entities()
      assert board.get_cell(1,1)._bacteria[0].moves == 5
+
+#def test_overpoblation():
+#     board = Board(4,4)
+#     board.set_position_spawn_bacterium((0,0))
+#     board.set_position_spawn_other((1,1))
+#     board.set_bacterium(0,1,BacteriumNormal(0))
+#     board.set_bacteriophage(0,1,Bacteriophage(3))
+#     print(board.__str__())
+#     board.crossing_board()
+#     print(board.__str__())
+#
+#     print(board.get_eficientr())
+#
+#     actualizado = board.move_all_entities()
+#     print(actualizado.get_eficientr())    
+#     print(actualizado.__str__())
+#
+#     actualizado.crossing_board()
+#     print(actualizado.__str__())
+#
+#     
+#
+#
+#     actualizado = board.move_all_entities()    
+#     assert print(actualizado.get_eficientr())
+#     
+#     #aux = []
+#     #for i in range(len(actualizado.get_eficientr())):
+#     #     aux.append(actualizado.get_eficientr()[i].get_pos())
+#    #
+#     #lista = list(set(aux))
+#     #print(lista)
+#     
+#     #print(actualizado.__str__())
+#     #actualizado.crossing_board()
+#     #print("\n" + actualizado.__str__())
+#     #assert print(actualizado.get_eficientr())
+#  

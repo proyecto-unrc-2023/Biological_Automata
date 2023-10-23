@@ -292,5 +292,5 @@ class GameController:
             return self._board.how_many_entities('bacterias')
         if ente == "antibioticos":
             return self._board.how_many_entities('a')
-        if ente == "antibioticos":
+        if ente == "bacteriofagos":
             return self._board.how_many_entities('v')

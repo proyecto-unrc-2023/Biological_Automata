@@ -17,10 +17,10 @@ Característica: Sale una entidad de un spawn
 
     Ejemplos:
       |modo        | x1 | y1 | x2 | y2 | cantb | frecb |cant_otro |frec_o|cantb_act |cant_o_act|
-      |antibiotico | 1  | 1  | 3  | 3  |  25   |  3    |   14     |  2   |    24    |    13    |
-      |antibiotico | 1  | 1  | 3  | 3  |  14   |  3    |   76     |  5   |    13    |    75    |
-      |bacteriofago| 1  | 1  | 3  | 3  |  90   |  1    |   120    |  4   |    89    |    119   |
-      |bacteriofago| 1  | 1  | 3  | 3  |  17   |  2    |   81     |  7   |    16    |    80    |
+      |antibiotico | 1  | 1  | 4  | 4  |  25   |  3    |   14     |  2   |    24    |    13    |
+      |antibiotico | 1  | 1  | 4  | 4  |  14   |  3    |   76     |  5   |    13    |    75    |
+      |bacteriofago| 1  | 1  | 4  | 4  |  90   |  1    |   120    |  4   |    89    |    119   |
+      |bacteriofago| 1  | 1  | 4  | 4  |  17   |  2    |   81     |  7   |    16    |    80    |
 
   Esquema del escenario: Aparecen entes de cada uno de los spawn después de varios turnos
     Dado que el usuario abrio el juego

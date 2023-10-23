@@ -174,18 +174,18 @@ class Cell:
 		
 	
 		if self.cant_bacteria() >= 4:
-			self.overpopulation()
+			self.overpopulation(x,y)
 
 		#si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
 		if self._antibiotics > 0 and self.cant_bacteria() > 0:
 			if self._antibiotics > self.cant_bacteria():
 				self.high_dose_antibiotic()
 			else:
-				self.low_dose_antibiotic()
+				self.low_dose_antibiotic(x,y)
 
 		#si existen bacteriofagos y bacterias en la misma celda, aplico las reglas de cruzamiento
 		if self.cant_bacteriophages() > 0 and self.cant_bacteria() > 0:
-			self.infection_to_bacteria()
+			self.infection_to_bacteria(x,y)
 			
 		#actualizo por la reproduccion de bacterias
 		self.update_for_reproduction(x,y)
@@ -206,18 +206,20 @@ class Cell:
 		self.__antibiotics = []
 
 	#metodo auxiliar para update_cell()
-	def low_dose_antibiotic(self):
+	def low_dose_antibiotic(self,x,y):
 		# total_antibiotics = self._antibiotics
 		new_bacteria = []
 		for bacterium in self._bacteria:
 			if bacterium.__str__() == 'f':
 				#ver si los movimientos se acumulan
-				new_bacteria.append(BacteriumWeak(0))
+				bact_debil = BacteriumWeak(0)
+				bact_debil.set_pos(x,y)
+				new_bacteria.append(bact_debil)
 		self.__bacteria = new_bacteria
 		self.__antibiotics = []
 
 	#metodo auxiliar para update_cell()
-	def overpopulation(self):
+	def overpopulation(self,x,y):
 		strongest = None
 		#ciclo para quedarme con la bacteria más fuerte de la celda
 		for bacterium in self._bacteria:
@@ -231,11 +233,13 @@ class Cell:
 		#asigno cualquiera, en este caso el primero
 		if strongest == None:
 			strongest = self._bacteria[0]
+		
 		self.__bacteria.clear()
+		strongest.set_pos(x,y)
 		self.__bacteria.append(strongest)
 
 	#metodo auxiliar para update_cell()	
-	def infection_to_bacteria(self):
+	def infection_to_bacteria(self,x,y):
 		one_not_infected = False
 		power = 0
 
@@ -247,9 +251,12 @@ class Cell:
 		infected = []
 		for bacterium in self._bacteria:
 			if not isinstance(bacterium, BacteriumInfected):
-				infected.append(BacteriumInfected(power))
+				bacterium = BacteriumInfected(power)
+				bacterium.set_pos(x,y)
+				infected.append(bacterium)
 				one_not_infected = True
 			else:
+				bacterium.set_pos(x,y)
 				infected.append(bacterium)
 
 		if one_not_infected:

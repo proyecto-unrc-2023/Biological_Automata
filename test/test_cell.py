@@ -165,7 +165,7 @@ def test_overpoblation_strongest(cell):
     cell.add_bacterium(0,'b')
     cell.add_bacterium(0,'d')
     cell.add_bacterium(0,'f')
-    cell.overpopulation()
+    cell.overpopulation(None,None)
     assert cell.__str__() == '1f'
 
 def test_overpoblation_without_strongest(cell):
@@ -173,7 +173,7 @@ def test_overpoblation_without_strongest(cell):
     cell.add_bacterium(0,'d')
     cell.add_bacterium(0,'d')
     cell.add_bacterium(0,'b')
-    cell.overpopulation()
+    cell.overpopulation(None,None)
     assert cell.__str__() == '1b'
 
 def test_overpoblation_debiles(cell):
@@ -181,7 +181,7 @@ def test_overpoblation_debiles(cell):
     cell.add_bacterium(0,'d')
     cell.add_bacterium(0,'d')
     cell.add_bacterium(0,'d')
-    cell.overpopulation()
+    cell.overpopulation(None,None)
     assert cell.__str__() == '1d'
 
 def test_low_dose_antibiotic(cell):
@@ -189,7 +189,7 @@ def test_low_dose_antibiotic(cell):
     cell.add_bacterium(0, 'f')
     cell.add_bacterium(0, 'd')
     cell.add_antibiotic(Antibiotic())
-    cell.low_dose_antibiotic()
+    cell.low_dose_antibiotic(None,None)
     assert cell.__str__() == '1d'
 
 def test_high_dose_antibiotic(cell):
