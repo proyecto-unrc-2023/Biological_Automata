@@ -15,7 +15,7 @@ def pasar_turnos(context, turnos):
 
 @then("deberian quedar {cant:d} {ente} por salir del spawn")
 def chequeo_salida_spawn(context, ente, cant):
-    if ente == "b":
+    if ente == "bacteria" or ente == "bacterias":
         assert context.game._cant_bacterium == cant
     else:
         assert context.game._cant_other == cant

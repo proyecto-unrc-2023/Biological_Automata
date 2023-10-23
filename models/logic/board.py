@@ -6,10 +6,12 @@ from models.logic.Bacterium import *
 
 from models.logic.Bacteriophage import Bacteriophage
 
+from models.logic.Antibiotic import *
 
 class Board:
 
     def __init__(self, rows, columns):
+        self.__position = []
         self.__rows = rows
         self.__columns = columns
         self.__position_spawn_other = None
@@ -88,13 +90,19 @@ class Board:
     def get_position_spawn_other(self):
         return self.__position_spawn_other
 
+    def get_position(self):
+        return self.__position
+    
+    def set_position(self,positions):
+        self.__position = positions
+
+
     def set_position_spawn_other(self, position):
         try:
             self.__board[position[0]][position[1]].set_spawn_other()
         except ValueError:
             raise ValueError(f'no se puede poner un spawn')
         self.__position_spawn_other = position
-
 
     def get_position_spawn_bacterium(self):
         return self.__position_spawn_bacterium
@@ -115,16 +123,34 @@ class Board:
 
     def set_bacterium(self, row, colum, bacterium:Bacterium):
         self.__board[row][colum]._bacterium = bacterium
+        bacterium.set_pos(row, colum)
+        self.__position.append(bacterium)
+    
+    #para test
+    def add_bacterium_moves(self, row, colum,bacterium:Bacterium):
+        self.__board[row][colum].add_bacterium(bacterium.moves,bacterium.__str__())
+        bacterium.set_pos(row, colum)
+        self.__position.append(bacterium)
 
-    def set_antibiotics(self, row, colum, cant: int):
-        self.__board[row][colum]._antibiotics = cant
+    def set_antibiotics(self, row, colum, cant: int): 
+        for i in range(cant):
+            antibiotic = Antibiotic()
+            antibiotic.set_pos(row, colum)
+            self.__board[row][colum].add_antibiotic(antibiotic)
+            self.__position.append(antibiotic)
 
-    def add_antibiotic(self, row, colum):
-        self.__board[row][colum].add_antibiotic()
+        
+
+    def add_antibiotic(self, row, colum, antibiotic: Antibiotic):
+        antibiotic.set_pos(row, colum)  
+        self.__board[row][colum].add_antibiotic(antibiotic)     
+        self.__position.append(antibiotic)
 
     def set_bacteriophage(self, row, colum, bacteriophage:Bacteriophage):
         self.__board[row][colum]._bacteriophages = bacteriophage
-
+        bacteriophage.set_pos(row,colum)
+        self.__position.append(bacteriophage)
+        
 
     def __eq__(self, other):
         if self.__rows == other.__rows and self.__columns == other.__columns and self.__position_spawn_bacterium == other.__position_spawn_bacterium and self.__position_spawn_other == other.__position_spawn_other:
@@ -154,22 +180,40 @@ class Board:
                         if not self.__board[x][y].is_spawn():
                             moves.append((x, y))
         return moves
+            
+    def position_ocupped(self,position):
+        aux = []
+        for i in range(len(position)):
+            aux.append(position[i].get_pos())
 
+        return list(set(aux))      
 
+    
     def move_all_entities(self):
         new_board = Board(self.__rows, self.__columns)
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
-        for row in range(self.__rows):
-            for colum in range(self.__columns):
-                new_board = self.move_entities(row, colum, new_board)
+        
+        lista = self.position_ocupped(self.__position)
+        
+        for j in range(len(lista)):
+                pos = lista[j]
+                if isinstance(pos[0],int) and isinstance(pos[1],int):
+                 new_board = self.move_entities(pos[0],pos[1], new_board)  
         return new_board
 
     def crossing_board(self):
-        for row in range(self.__rows):
-            for colum in range(self.__columns):
-            #si existen bacterias y antibioticos en la misma celda, aplico las reglas de cruzamiento
-                self.__board[row][colum].update_cell()
+
+        lista = self.position_ocupped(self.__position) 
+        self.__position.clear()
+        
+        for j in range(len(lista)):
+                pos = lista[j]
+                if isinstance(pos[0],int) and isinstance(pos[1],int):
+                    self.__board[pos[0]][pos[1]].update_cell(pos[0],pos[1])
+                    self.__position.extend(self.__board[pos[0]][pos[1]]._bacteria)
+                    self.__position.extend(self.__board[pos[0]][pos[1]]._bacteriophages)
+                    self.__position.extend(self.__board[pos[0]][pos[1]].get_antibiotics())
 
     def move_entities(self, x, y, new_board):
         new_x = None
@@ -179,20 +223,20 @@ class Board:
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacterium.add_move()
-                new_board.get_cell(new_x,new_y)._bacterium = bacterium
+                new_board.set_bacterium(new_x, new_y,bacterium)
 
-        for _ in range(self.__board[x][y]._antibiotics):
+        for antibiotic in self.__board[x][y].get_antibiotics():
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
-                new_board.get_cell(new_x,new_y).add_antibiotic()
+                new_board.add_antibiotic(new_x, new_y,antibiotic)
 
         for bacteriophage in self.__board[x][y]._bacteriophages:
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacteriophage.add_move()
-                new_board.get_cell(new_x,new_y).add_bacteriophage(bacteriophage.infection)
+                new_board.set_bacteriophage(new_x,new_y, bacteriophage)
 
         return new_board
 
@@ -200,13 +244,29 @@ class Board:
     def move_entity(self, new_x,new_y, x,y, board, entity: Entity):
         if isinstance(entity,Bacterium):
                     entity.add_move()
-                    board.get_cell(new_x,new_y)._bacterium = entity
+                    board.set_bacterium(new_x, new_y,entity)
                     board.get_cell(x,y)._bacteria.remove(entity)
         elif isinstance(entity,Bacteriophage):
             entity.add_move()
-            board.get_cell(new_x,new_y)._bacteriophages = entity
+            board.set_bacteriophage(new_x,new_y, entity)
             board.get_cell(x,y)._bacteriophages.remove(entity)
         else:
-            board.get_cell(new_x,new_y).add_antibiotic()
-            board.get_cell(x,y)._antibiotics = board.get_cell(x,y)._antibiotics -1
+            board.add_antibiotic(new_x, new_y,entity)
+            board.get_cell(x,y).get_antibiotics().remove(entity)
+    
         return board
+
+    def where_are_entities(self):
+        occupied_cells = []
+        for row in range(self.__rows):
+            for colum in range(self.__columns):
+                if not self.__board[row][colum].is_empty() and not self.__board[row][colum].is_spawn():
+                    occupied_cells.append((row,colum))
+        return occupied_cells
+
+    def how_many_entities(self, type):
+        occupied_cells = self.where_are_entities()
+        cant_entities = 0
+        for cell in occupied_cells:
+            cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
+        return cant_entities
