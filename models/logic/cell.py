@@ -97,15 +97,23 @@ class Cell:
 
 
 	def __eq__(self, other):
-		if self._antibiotics == other._antibiotics and self.cant_bacteria() == other.cant_bacteria() and self.cant_bacteriophages() == other.cant_bacteriophages() and self.__spawn_bacterium.__eq__(other.__spawn_bacterium) and self.__spawn_other.__eq__(other.__spawn_other):
-			for i in range(self.cant_bacteria()):
-				if self._bacteria[i].__str__() != other._bacteria[i].__str__():
-					return False
-			for i in range(self.cant_bacteriophages()):
-				if self._bacteriophages[i].__str_aux__() != other._bacteriophages[i].__str_aux__():
-					return False
-			return True
-		return False
+		if self.__antibiotics != other._antibiotics:
+			return False
+		if self.cant_bacteria() != other.cant_bacteria():
+			return False
+		if self.cant_bacteriophages() != other.cant_bacteriophages():
+			return False
+		if not self.__spawn_bacterium.__eq__(other.__spawn_bacterium):
+			return False
+		if not self.__spawn_other.__eq__(other.__spawn_other):
+			return False
+		for i in range(self.cant_bacteria()):
+			if self._bacteria[i].__str__() != other._bacteria[i].__str__():
+				return False
+		for i in range(self.cant_bacteriophages()):
+			if self.__bacteriophages[i].__str_aux__() != other._bacteriophages[i].__str_aux__():
+				return False
+		return True
 
 	@property
 	def _bacteria(self):
@@ -150,9 +158,15 @@ class Cell:
 		return self.__bacteriophages.__len__()
 	
 	def is_empty(self):
-		if self._antibiotics == 0 and self.cant_bacteria() == 0 and self.cant_bacteriophages() == 0 and not(self.__spawn_bacterium or self.__spawn_other):
-			return True
-		return False
+		if self._antibiotics != 0:
+			return False
+		if self.cant_bacteria() != 0:
+			return False
+		if self.cant_bacteriophages() != 0:
+			return False
+		if self.__spawn_bacterium or self.__spawn_other:
+			return False
+		return True
 
 	def cant_ente(self,type):
 		if type =='a':
