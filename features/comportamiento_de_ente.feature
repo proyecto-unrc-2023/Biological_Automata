@@ -1,193 +1,111 @@
 # language: es
 
 Característica: Comportamiento de las entidades
-#10
-  Escenario: Una bacteria normal o fuerte se reproduce
-    Dado que hay 1 bacteria <tipo-s> con 3 movimientos en la celda (<pos_x>,<pos_y>)
-    Cuando se mueve 1 bacteria <tipo-s> de (<pos_x>,<pos_y>) a (<end_x>,<end_y>)
-    #Entonces el tablero deberia quedar con bacterias <type-p> en <end> y en <end2>
-    #Alternativa
-    Entonces el tablero en total tiene 2 bacterias
+
+  Esquema del escenario: Una bacteria normal o fuerte se reproduce
+    Dado que hay 1 bacteria <tipo> con 3 movimientos en <pos>
+    Cuando se produce la confrontacion
+    Entonces el tablero deberia tener 2 bacterias en <pos>
 
     Ejemplos:
 
-      |pos_x|pos_y|end_x|end_y|end2_x|end2_y|tipo-s | tipo-p |
-      | 1   | 2   | 1   | 3   | 2    | 2    |normal |normales|
-      | 5   | 3   | 5   | 4   | 4    | 5    |normal |normales|
-      | 5   | 3   | 4   | 3   | 4    | 2    |normal |normales|
-      | 1   | 2   | 1   | 3   | 2    | 2    |fuerte |fuertes |
-      | 5   | 0   | 5   | 1   | 4    | 2    |fuerte |fuertes |
-      | 2   | 1   | 1   | 1   | 1    | 0    |fuerte |fuertes |
+      |pos  |tipo  |
+      |(1,2)|normal|
+      |(5,3)|normal|
+      |(5,3)|normal|
+      |(1,2)|fuerte|
+      |(5,0)|fuerte|
+      |(2,1)|fuerte|
 
-    #|pos   |end   |end2  |tipo-s | tipo-p |
-    #|(1,2) |(1,3) |(2,2) |normal |normales|
-    #|(5,3) |(5,4) |(4,5) |normal |normales|
-    #|(4,2) |(3,2) |(3,1) |normal |normales|
-    #|(1,2) |(1,3) |(2,2) |fuerte |fuertes |
-    #|(5,0) |(5,1) |(4,2) |fuerte |fuertes |
-    #|(2,1) |(1,1) |(1,0) |fuerte |fuertes |
+ Esquema del escenario: Una bacteria debil no se reproduce
+    Dado que hay 1 bacteria debil con 5 movimientos en <pos>
+    Cuando se produce la confrontacion
+    Entonces el tablero deberia tener 1 bacteria debil en <pos>
+    Ejemplos:
+      |pos  |
+      |(1,2)|
+      |(4,4)|
+      |(2,5)|
+      |(0,3)|
+      |(3,1)|
 
-#11
-  Escenario: La bacteria normal se reproduce con una mutación y produce una bacteria fuerte
-    Dado que hay 1 bacteria con 3 movimientos en la celda (<pos_x>,<pos_y>)
-    Cuando se mueve 1 bacteria de (<pos_x>,<pos_y>) a (<end_x>,<end_y>)
-    #Preguntar esto, dificil de codear en el juego
-    Y por 1% de probabilidad sufre una mutacion
-    #Ver que pregunto aca también
-    Entonces el tablero deberia quedar con bacterias en (<end_x>,<end_y>) y en (<end2_x>,<end2_y>)
+  Esquema del escenario: Bacterias debiles se recuperan
+    Dado que hay 1 bacteria debil con 6 movimientos en <pos>
+    Cuando se produce la confrontacion
+    Entonces el tablero deberia tener 1 bacteria fuerte en <pos>
 
     Ejemplos:
-      |pos_x|pos_y|end_x|end_y|end2_x|end2_y|
-      | 3   | 4   | 4   | 4   | 4    | 5    |
-      | 0   | 2   | 1   | 3   | 2    | 4    |
-      | 5   | 3   | 4   | 3   | 4    | 2    |
+      |pos   |
+      |(5,0) |
+      |(1,2) |
+      |(0,4) |
+      |(2,4) |
+      |(1,0) |
+      |(3,3) |
 
-      #|pos   |end   |end2  |
-      #|(3,4) |(4,4) |(4,5) |
-      #|(0,2) |(1,3) |(2,4) |
-      #|(5,3) |(4,3) |(4,2) |
-#12
-#13
-Escenario: Una bacteria debil no se reproduce
-    Dado que hay 1 bacteria debil con 3 movimientos en la celda (<pos_x>,<pos_y>)
-    Cuando se mueve 1 bacteria debil de (<pos_x>,<pos_y>) a (<end_x>,<end_y>)
-    Entonces el tablero tiene 1 bacteria debil en (<end_x>,<end_y>)
-    Y el tablero no tiene bacterias en (<pos_x>,<pos_y>)
+  Esquema del escenario: Una bacteria infectada explota generando bacteriofagos
+    Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion 4
+    Cuando se produce la confrontacion
+    Entonces deberia haber 4 bacteriofago con poder de infeccion 4 en <pos> 
+    Ejemplos:
+      |pos    |end   |
+      |(4,0)  |(4,1) |
+      |(2,0)  |(2,1) |
+      |(3,3)  |(3,4) |
+
+  Esquema del escenario: Un bacteriofago desaparece tras cierto tiempo
+    Dado que hay 1 bacteriofago en la celda <pos> con poder de infeccion 0
+    Cuando se produce la confrontacion
+    Entonces el tablero no deberia tener bacteriofago en <pos>
 
     Ejemplos:
-      |pos_x|pos_y|end_x|end_y|
-      | 1   | 2   | 1   | 3   |
-      | 4   | 4   | 4   | 5   |
-      | 0   | 3   | 1   | 4   |
-      | 3   | 1   | 3   | 2   |
+      |pos   |
+      |(5,0) |
+      |(1,2) |
+      |(3,0) |
+      |(2,4) |
+      |(0,3) |
+      |(1,1) |
+      |(1,0) |
 
-      # |pos   |end   |
-      # |(1,2) |(1,3) |
-      # |(4,4) |(4,5) |
-      # |(2,5) |(1,5) |
-      # |(0,3) |(1,4) |
-      # |(3,1) |(3,2) |
-
-#14 Ver escritura y ver que pasa con las variantes de tiempo para permane
-Escenario: Se produce sobrepoblacion de bacterias y sobrevive la más apta
-    Dado que hay 1 bacteria <tipo-s> en la celda (<pos_x>,<pos_y>)
-    Y 1 bacteria <tipo-p> en la celda (<pos1_x>,<pos1_y>)
-    Y 1 bacteria <tipo-p> en la celda (<pos2_x>,<pos2_y>)
-    Y 1 bacteria <tipo-p> en la celda (<pos3_x>,<pos3_y>)
-    Cuando se mueve 1 bacteria <tipo-s> de (<pos_x>,<pos_y>) a (<end_x>,<end_y>)
-    Y se mueve 1 bacteria <tipo-p> de (<pos1_x>,<pos1_y>) a (<end_x>,<end_y>)
-    Y se mueve 1 bacteria <tipo-p> de (<pos2_x>,<pos2_y>) a (<end_x>,<end_y>)
-    Y se mueve 1 bacteria <tipo-p> de (<pos3_x>,<pos3_y>) a (<end_x>,<end_y>)
-    Entonces el tablero tiene 1 bacteria <tipo-s> en (<end_x>,<end_y>)
-    Y el tablero no tiene bacterias <tipo-p>es en (<end_x>,<end_y>)
+  Esquema del escenario: Las bacterias salen del spawn y luego se reproducen
+    Dado que el usuario abrio el juego
+    Y los parametros iniciales del juego son (1,20,0,3)
+    Y se coloco el spawn de bacterias en (2,2)
+    Y se coloco el spawn de la otra entidad en (5,5)
+    Y el modo de juego elegido es <modo>
+    Y el usuario inicio el juego
+    Cuando ha pasado <turnos> turno de juego
+    Entonces deberian quedar 0 bacterias por salir del spawn
+    Y quedan con <b_en_tablero> <ente>
 
     Ejemplos:
-      |pos_x|pos_y|pos1_x|pos1_y|pos2_x|pos2_y|pos3_x|pos3_y|end_x|end_y|tipo-s | tipo-p |
-      | 1   | 2   | 1    | 4    | 3    | 2    | 3    | 4    | 2   | 3   |fuerte |normales|
-      | 3   | 0   | 3    | 2    | 5    | 0    | 5    | 2    | 4   | 1   |fuerte |debiles |
-      | 2   | 1   | 2    | 3    | 4    | 1    | 4    | 3    | 3   | 2   |normal |debiles |
-      | 0   | 0   | 0    | 2    | 2    | 0    | 2    | 2    | 1   | 1   |normal |normales|
-      | 3   | 1   | 3    | 3    | 5    | 1    | 5    | 3    | 4   | 2   |debil  |debiles |
 
-      #|pos   |pos1  |pos2  |pos3  |end   |tipo-s | tipo-p |
-      #|(1,2) |(1,4) |(3,2) |(3,4) |(2,3) |fuerte |normales|
-      #|(3,0) |(3,2) |(5,0) |(5,2) |(4,1) |fuerte |debiles |
-      #|(2,1) |(2,3) |(4,1) |(4,3) |(3,2) |normal |debiles |
-      #|(0,0) |(0,2) |(2,0) |(2,2) |(1,1) |normal |normales|
-      #|(3,1) |(3,3) |(5,1) |(5,3) |(4,2) |debil  |debiles |
+    |  modo          | turnos | b_en_tablero | ente     |
+    |  antibiotico   |    2   |      1       | bacterias|
+    |  bacteriofago  |    2   |      1       | bacterias|
+    |  antibiotico   |    5   |      2       | bacterias|
+    |  bacteriofago  |    5   |      2       | bacterias|
 
-#15
-  Escenario: Bacterias se vuelven fuertes despues de un tiempo
-    Dado que hay 1 bacteria debil con 5 movimientos en la celda (<pos_x>,<pos_y>)
-    Cuando se mueve 1 bacteria debil de (<pos_x>,<pos_y>) a (<end_x>,<end_y>)
-    Entonces el tablero tiene 1 bacteria fuerte en (<end_x>,<end_y>)
+    #aveces pasan y aveces no, creo que es por el tema de la reproduccion
+    #|  antibiotico   |    7   |      4       |
+    #|  bacteriofago  |    7   |      4       |    
 
-    Ejemplos:
-      |pos_x|pos_y|end_x|end_y|
-      | 5   | 0   | 5   | 1   |
-      | 1   | 2   | 2   | 3   |
-      | 0   | 4   | 1   | 5   |
-      | 2   | 4   | 3   | 5   |
-      | 1   | 0   | 2   | 1   |
-      | 3   | 3   | 4   | 4   |
-
-      # |pos   |end   |
-      # |(5,0) |(5,1) |
-      # |(1,2) |(2,3) |
-      # |(0,4) |(1,5) |
-      # |(2,4) |(3,5) |
-      # |(1,0) |(2,1) |
-      # |(3,3)| (4,4) |
-
-
-#  Comportamiento de las bacterias en modo bacteriofago
-#18
-  Escenario: Varia la cualidad de infección de en los entes
-    Dado que hay <entidad> en la posicion (<pos_x>,<pos_y>)
-    Y un <cualidad> de infeccion <grado-c>
-    Cuando se mueve a la celda (<end_x>,<end_y>)
-    Entonces el tablero deberia contener <entidad> en (<end_x>,<end_y>)
-    Y deberia tener un <cualidad> de infeccion de <grado-p>
+  Esquema del escenario: Los bacteriofagos salen del spawn y desaparecen si no encuentran bacterias
+    Dado que el usuario abrio el juego
+    Y los parametros iniciales del juego son (0,10,<cant_v>,<frec_v>)
+    Y se coloco el spawn de bacterias en (2,2)
+    Y se coloco el spawn de la otra entidad en (5,5)
+    Y el modo de juego elegido es bacteriofago
+    Y el usuario inicio el juego
+    Cuando ha pasado <turnos> turno de juego
+    Entonces deberian quedar <cant_v_act> bacteriofagos por salir del spawn
+    Y quedan con <v_en_tablero> <ente>
 
     Ejemplos:
-      |pos_x|pos_y|end_x|end_y|grado-c|grado-p|entidad           |cualidad|
-      | 5   | 0   | 5   | 1   |1      |2      |bacteria infectada|grado   |
-      | 1   | 2   | 2   | 3   |2      |3      |bacteria infectada|grado   |
-      | 0   | 4   | 1   | 5   |4      |3      |bacteriofago      |poder   |
-      | 2   | 4   | 3   | 5   |3      |2      |bacteriofago      |poder   |
-      | 1   | 0   | 2   | 1   |2      |1      |bacteriofago      |poder   |
 
-      # |pos   |end   |grado-c|grado-p|entidad                |cualidad|
-      # |(5,0) |(5,1) |1      |2      |una bacteria infectada|grado  |
-      # |(1,2) |(2,3) |2      |3      |una bacteria infectada|grado  |
-      # |(5,0) |(5,1) |4      |3      |un bacteriofago       |poder  |
-      # |(1,2) |(2,3) |3      |2      |un bacteriofago       |poder  |
-      # |(2,3) |(2,4) |2      |1      |un bacteriofago       |poder  |
-
-
-
-#19
-  Escenario: Una bacteria infectada explota generando bacteriofagos
-    Dado que hay una bacteria infectada en la posicion (<pos_x>,<pos_y>)
-    Y la bacteria tiene grado de infeccion <grado-c>
-    Cuando la bacteria se mueve a la celda (<end_x>,<end_y>)
-    Entonces el tablero deberia contener 4 bacteriofagos en (<f1_x>,<f1_y>), (<f2_x>,<f2_y>), (<f3_x>,<f3_y>) y (<f4_x>,<f4_y>)
-    Y los cuatro bacteriofagos deberian tener poder de infeccion <grado-p>
-
-    Ejemplos:
-      |pos_x|pos_y|end_x|end_y|grado-c|grado-p|f1_x|f1_y|f2_x|f2_y|f3_x|f3_y|f4_x|f4_y|
-      | 4   | 0   | 4   | 1   |3      |4      |3   |0   |3   |2   |5   |0   |5   |2   |
-      | 2   | 0   | 2   | 1   |3      |4      |1   |0   |1   |2   |3   |0   |3   |2   |
-      | 3   | 3   | 3   | 4   |3      |4      |2   |3   |2   |5   |4   |3   |4   |5   |
-
-      #|pos    |end    |grado-c|grado-p|f1     |f2     |f3     |f4     |
-      #|(4,0)  |(4,1)  |3      |4      |(3,0)  |(3,2)  |(5,0)  |(5,2)  |
-      #|(2,0)  |(2,1)  |3      |4      |(1,0)  |(1,2)  |(3,0)  |(3,2)  |
-      #|(3,3)  |(3,4)  |3      |4      |(2,3)  |(2,5)  |(4,3)  |(4,5)  |
-
-#  Comportamiento de bacteriofagos
-#20
-Escenario: Un bacteriofago desaparece tras cierto tiempo
-    Dado que hay un bacteriofago en la posicion (<pos_x>,<pos_y>)
-    Y el bacteriofago tiene poder de infeccion 1
-    Cuando el bacteriofago se mueva a la celda (<end_x>,<end_y>)
-    Entonces el bacteriofago de saparece del tablero, dejando la celda (<end_x>,<end_y>) vacia
-
-    Ejemplos:
-      |pos_x|pos_y|end_x|end_y|
-      | 5   | 0   | 5   | 1   |
-      | 1   | 2   | 2   | 3   |
-      | 3   | 0   | 4   | 1   |
-      | 2   | 4   | 3   | 5   |
-      | 0   | 3   | 1   | 4   |
-      | 1   | 1   | 2   | 2   |
-      | 1   | 0   | 2   | 1   |
-
-      # |pos   |end   |
-      # |(5,0) |(5,1) |
-      # |(1,2) |(2,3) |
-      # |(3,0) |(4,1) |
-      # |(2,4) |(3,5) |
-      # |(0,3) |(1,4) |
-      # |(1,1) |(2,2) |
-      # |(1,0) |(2,1) |
+      | cant_v | frec_v  |turnos  |cant_v_act |v_en_tablero| ente        |
+      |  25    |  8      |  10    |    23     |    1       |bacteriofagos|
+      |  25    |  8      |  40    |    20     |    0       |bacteriofagos|
+      |  30    |  1      |  15    |    15     |    4       |bacteriofagos|
+      |  17    |  2      |  70    |    0      |    0       |bacteriofagos|

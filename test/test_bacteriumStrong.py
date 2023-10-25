@@ -1,11 +1,10 @@
 import pytest
-from models.logic.Bacterium import Bacterium, BacteriumStrong
+from models.logic.Bacterium import BacteriumStrong
 
 
 def test_strong_reproducible():
     bacterium = BacteriumStrong(3)
     ente = bacterium.reproducir()
-    assert bacterium.moves == 3
     assert isinstance(ente, BacteriumStrong) == True
 
 def test_strong_reproducible_error():

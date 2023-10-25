@@ -3,15 +3,18 @@ from .Entity import Entity
 class Antibiotic(Entity):
 
     def __init__(self):
-      pass
+      self.__pos =(None,None)
+
+    
+    def get_pos(self):
+      return self.__pos
+
+    def set_pos(self, row, colum):
+      self.__pos = (row,colum)
 
     def add_move(self):
       pass
     
-    #Eliminacion
-    def __del__(self):
-      del self
-
     @staticmethod
     def from_string(cell_str):
       if (cell_str == 'a'):

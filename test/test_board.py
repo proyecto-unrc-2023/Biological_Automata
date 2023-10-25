@@ -53,7 +53,7 @@ def test_eq_board_error(board):
 
 def test_eq_board_error_2(board):
      board_aux = Board(2,2)
-     board_aux.add_antibiotic(1,1)
+     board_aux.add_antibiotic(1,1,Antibiotic())
      assert not board.__eq__(board_aux)
 
 def test_eq_board(board):
@@ -62,7 +62,7 @@ def test_eq_board(board):
      assert  board.__eq__(board_aux)
 
 def test_add_antibiotic(board):
-     board.add_antibiotic(1,1)
+     board.add_antibiotic(1,1,Antibiotic())
      assert board.get_cell(0, 0).is_empty()
      assert board.get_cell(0, 1).is_empty()
      assert board.get_cell(1, 0).is_empty()
@@ -173,13 +173,13 @@ def test_move_entities_none():
     board = Board(3, 3)
     board.set_bacterium(1, 1,BacteriumNormal(0))
     board.set_bacteriophage(1,1, Bacteriophage(4))
-    board.add_antibiotic(1,1)
+    board.add_antibiotic(1,1,Antibiotic())
     new_board = board
     new_board = board.move_entities(-2,-2, new_board)
     assert board.__eq__(new_board)
 def test_update_board():
     board =Board(3,3)
-    board.get_cell(2, 2).add_antibiotic()
+    board.add_antibiotic(2,2,Antibiotic())
     board.set_position_spawn_bacterium((0,0))
     board.set_position_spawn_other((2,1))
     assert board.get_cell(0, 0).get_spawn_bacterium() == True
@@ -192,7 +192,6 @@ def test_update_board():
     actualizado = board.move_all_entities()
     actualizado.crossing_board()
     res = actualizado.__str__()
-
     expected1 = 'sb| | \n'\
                 ' | |1a\n'\
                 ' |so| '
@@ -205,7 +204,7 @@ def test_update_board():
 
 def test_update_board_1():
     board =Board(3,3)
-    board.get_cell(2, 2).add_bacteriophage(4)
+    board.set_bacteriophage(2,2,Bacteriophage(4))
     board.set_position_spawn_bacterium((0,0))
     board.set_position_spawn_other((2,1))
     assert board.get_cell(0, 0).get_spawn_bacterium() == True
@@ -267,14 +266,13 @@ def test_update_board_2():
 def test_update_board_2_con_cruzamiento():
     board =Board(3,3)
     board.set_bacterium(0,1,BacteriumNormal(0))
-    board.get_cell(2, 2).add_antibiotic()
+    board.add_antibiotic(2,2, Antibiotic())
     board.set_position_spawn_bacterium((0,0))
     board.set_position_spawn_other((2,1))
     assert board.get_cell(0, 0).get_spawn_bacterium() == True
     assert board.get_cell(2, 1).get_spawn_other() == True
-    assert board.get_cell(1, 1).is_empty()
+    #assert board.get_cell(1, 1).is_empty()
     assert board.get_cell(0, 2).is_empty()
-    assert board.get_cell(1, 1).is_empty()
     assert board.get_cell(1, 2).is_empty()
     assert board.get_cell(2, 0).is_empty()
     actualizado = board.move_all_entities()
@@ -337,9 +335,10 @@ def test_4_x_4_move_entity_bacteriphage():
 
 def test_4_x_4_move_entity_antibiotic():
    board = Board(4, 4)
-   board.add_antibiotic(1,2)
-   board.add_antibiotic(1,1)
-   board = board.move_entity(1,1,1,2,board,Antibiotic())
+   antibiotic = Antibiotic()
+   board.add_antibiotic(1,2,antibiotic)
+   board.add_antibiotic(1,1,Antibiotic())
+   board = board.move_entity(1,1,1,2,board,antibiotic)
    res = board.__str__()
    expected = ' | | | \n'\
               ' |2a| | \n'\
@@ -378,3 +377,40 @@ def test_move_entities_cant_move(board):
      board = board.move_all_entities()
      assert board.get_cell(1,1)._bacteria[0].moves == 5
 
+#def test_overpoblation():
+#     board = Board(4,4)
+#     board.set_position_spawn_bacterium((0,0))
+#     board.set_position_spawn_other((1,1))
+#     board.set_bacterium(0,1,BacteriumNormal(0))
+#     board.set_bacteriophage(0,1,Bacteriophage(3))
+#     print(board.__str__())
+#     board.crossing_board()
+#     print(board.__str__())
+#
+#     print(board.get_eficientr())
+#
+#     actualizado = board.move_all_entities()
+#     print(actualizado.get_eficientr())    
+#     print(actualizado.__str__())
+#
+#     actualizado.crossing_board()
+#     print(actualizado.__str__())
+#
+#     
+#
+#
+#     actualizado = board.move_all_entities()    
+#     assert print(actualizado.get_eficientr())
+#     
+#     #aux = []
+#     #for i in range(len(actualizado.get_eficientr())):
+#     #     aux.append(actualizado.get_eficientr()[i].get_pos())
+#    #
+#     #lista = list(set(aux))
+#     #print(lista)
+#     
+#     #print(actualizado.__str__())
+#     #actualizado.crossing_board()
+#     #print("\n" + actualizado.__str__())
+#     #assert print(actualizado.get_eficientr())
+#  

@@ -7,54 +7,36 @@ from models.logic.Bacteriophage import Bacteriophage
 
 @given('que hay {n:d} {ente} en la celda ({x:d},{y:d})')
 def ubicacion_ente(context,n,x,y,ente):
-    if ente == "antibiotico":
-        for _ in range(0,n):
-            context.game._board.add_antibiotic(x,y)
-    elif ente == "bacteria normal":
-        for _ in range(0,n):
-            context.game._board.set_bacterium(x,y, BacteriumNormal(1))
-    elif ente == "bacteria debil":
-        for _ in range(0,n):
-            context.game._board.set_bacterium(x,y, BacteriumWeak(1))
-    elif ente == "bacteria fuerte":
-        for _ in range(0,n):
-            context.game._board.set_bacterium(x,y, BacteriumStrong(1))
-    elif ente == "bacteria infectada":
-        for _ in range(0,n):
-            context.game._board.set_bacterium(x,y, BacteriumInfected(x))
-    elif ente == "bacteriofago":
-        for _ in range(0,n):
-            context.game._board.set_bacteriophage(x,y, Bacteriophage(4))
+    context.game.add_entities(x,y,n,ente)
 
-@when('se mueve {n:d} {ente} de ({x1:d},{y1:d}) a ({x2:d},{y2:d})')
-def movimiento_ente(context,n,x1,y1,x2,y2,ente):
-    if ente == "antibiotico":
-        tablero = context.game._board
-        context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,Antibiotic())
-    elif ente == "bacteriofago":
-        var = context.game._board.get_cell(x1,y1)._bacteriophage[0]
-        tablero = context.game._board
-        context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,var)
-    else:
-        print(context.game._board.__str__())
-        var = context.game._board.get_cell(x1,y1)._bacteria[0]
-        tablero = context.game._board
-        context.game.__board = context.game._board.move_entity(x2,y2,x1,y1,tablero,var)
+@given('que hay {num:d} bacteriofago en la celda ({x:d},{y:d}) con poder de infeccion {poder:d}')
+def agregar_bacteriofago(context, num, x, y, poder):
+    for _ in range(num):
+        context.game.add_bacteriophage(x,y,poder)
+
+@given('que hay {num:d} bacteria infectada en la celda ({x:d},{y:d}) con grado de infeccion {grado:d}')
+def agregar_bacteria_infectada(context, num, x, y, grado):
+    for _ in range(num):
+        context.game.add_infected(x,y,grado)
+
+@when('se produce la confrontacion')
+def crossing_table(context):
     context.game._board.crossing_board()
 
-    # for i in range(n):
-
 @then('el tablero no deberia tener {ente} en ({x:d},{y:d})')
-def eliminacion_ente(context,ente,x,y):
-    if ente == "antibioticos":
-        assert context.game._board.get_cell(x,y)._antibiotics == 0
-    elif ente == "bacteria normal":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria debil":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria fuerte":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteria infectada":
-        assert context.game._board.get_cell(x,y)._bacteria.__len__() == 0
-    elif ente == "bacteriofago":
-        assert context.game._board.get_cell(x,y)._bacteriophages.__len__() == 0
+def chequear_eliminacion_ente(context,ente,x,y):
+    assert context.game.count_entities(x,y,ente) == 0
+    
+@then('el tablero deberia tener {num:d} {ente} en ({x:d},{y:d})')
+def chequear_cantidad_entes(context,num,ente,x,y):
+    assert context.game.count_entities(x,y,ente) == num
+
+@then('deberia haber {num:d} bacteria infectada de grado {grado:d} en ({x:d},{y:d})')
+def chequear_infectadas_en_celda(context,num, grado, x, y):
+    assert context.game.count_infected(x,y,grado) == num
+
+@then('deberia haber {num:d} bacteriofago con poder de infeccion {poder:d} en ({x:d},{y:d})')
+def chequear_bacteriofagos(context,num, poder,x,y):
+    assert context.game.count_bacteriophages(x, y, poder) == num
+
+
