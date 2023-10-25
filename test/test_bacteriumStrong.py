@@ -6,12 +6,13 @@ def test_strong_reproducible():
     bacterium = BacteriumStrong(3)
     ente = bacterium.reproducir()
     assert bacterium.moves == 3
-    assert isinstance(ente, BacteriumStrong) == True
+    assert isinstance(ente, BacteriumStrong)
+
 
 def test_strong_reproducible_error():
     bacterium = BacteriumStrong(2)
     with pytest.raises(ValueError):
-        res = bacterium.reproducir()
+        assert bacterium.reproducir()
 
 
 def test_strong_str():

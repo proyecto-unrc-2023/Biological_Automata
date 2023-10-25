@@ -1,7 +1,7 @@
-import pytest
-from models.logic.Bacterium import Bacterium, BacteriumNormal, BacteriumStrong
-from unittest.mock import patch
 import random
+import pytest
+from models.logic.Bacterium import BacteriumNormal, BacteriumStrong
+
 
 def test_bacterium_reproducir_normal():
     bacterium = BacteriumNormal(3)
@@ -9,11 +9,13 @@ def test_bacterium_reproducir_normal():
     new_bacterium = bacterium.reproducir()
     assert isinstance(new_bacterium, BacteriumNormal) and new_bacterium.moves == 0
 
+
 def test_bacterium_reproducir_strong():
     bacterium = BacteriumNormal(3)
     random.random = lambda: 0.005
     new_bacterium = bacterium.reproducir()
     assert isinstance(new_bacterium, BacteriumStrong) and new_bacterium.moves == 0
+
 
 def test_bacteriumNormal_error_reproducible():
     bacterium = BacteriumNormal(2)
@@ -21,19 +23,21 @@ def test_bacteriumNormal_error_reproducible():
         bacterium.reproducir()
     assert str(e.value) == "El número de movimientos no es 3"
 
+
 def test_bacteriumNormal_isReproducible():
     bacterium = BacteriumNormal(3)
-    bool = bacterium.isReproducible()
-    assert bool
+    assert bacterium.isReproducible()
+
 
 def test_bacteriumNormal_no_isReproducible():
     bacterium = BacteriumNormal(2)
-    bool = bacterium.isReproducible()
-    assert not bool
+    assert not bacterium.isReproducible()
+
 
 def test_bacteriumNormal_isRecoverable():
     bacterium = BacteriumNormal(0)
     assert not bacterium.isRecoverable()
+
 
 def test_normal_str():
     bacterium = BacteriumNormal(0)
