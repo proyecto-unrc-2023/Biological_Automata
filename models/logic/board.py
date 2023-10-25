@@ -1,12 +1,16 @@
 import random
 
 from models.logic.cell import Cell
+from models.logic.CellAntibiotic import CellAntibiotic
+from models.logic.CellBacteriophague import CellBacteriophague
 
 from models.logic.Bacterium import Bacterium
 
 from models.logic.Bacteriophage import Bacteriophage
 
 from models.logic.Antibiotic import Antibiotic
+
+from models.logic.GameController import Game_Mode
 
 
 class Board:
@@ -20,11 +24,14 @@ class Board:
         self.__board = []
 
 
-    def create_cell(self):
+    def create_cell(self, mode: Game_Mode):
         for _ in range(self.__rows):
             curr_row = []
             for _ in range(self.__columns):
-                curr_row.append(Cell())
+                if (mode == Game_Mode.ANTIBIOTIC):
+                    curr_row.append(CellAntibiotic())
+                else:
+                    curr_row.append(CellBacteriophague())
             self.__board.append(curr_row)
 
     @staticmethod

@@ -5,6 +5,7 @@ from models.logic.Bacterium import *
 
 class CellAntibiotic(Cell):
   def __init__(self):
+    super().__init__()
     self.__antibiotics = []
     self.__cant_antibiotic = 0
 
