@@ -1,5 +1,6 @@
 from models.logic.Bacterium import *
 
+
 class Cell:
   def __init__(self):
     self.__bacteria = []
