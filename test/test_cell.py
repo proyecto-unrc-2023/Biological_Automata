@@ -1,99 +1,131 @@
-# import pytest
+import pytest
 
-# from models.logic.cell import *
-# from models.logic.Bacterium import *
-# from models.logic.Antibiotic import Antibiotic
-# from models.logic.Bacteriophage import Bacteriophage
+from models.logic.cell import Cell
+from models.logic.CellAntibiotic import CellAntibiotic
+from models.logic.CellBacteriophage import CellBacteriophage
+from models.logic.Bacterium import BacteriumNormal, BacteriumStrong
+from models.logic.Bacterium import BacteriumWeak, BacteriumInfected
+from models.logic.Antibiotic import Antibiotic
+from models.logic.Bacteriophage import Bacteriophage
 
-# @pytest.fixture
-# def cell():
-#     return Cell()
 
-# def test_initial_cell(cell):
-#     assert cell._antibiotics == 0
-#     assert cell.cant_bacteria() == 0
-#     assert cell.cant_bacteriophages() == 0
-#     assert cell.get_spawn_bacterium() == False
-#     assert cell.is_spawn_bacterium() == False
-#     assert cell.get_spawn_other() == False
-#     assert cell.is_spawn_other() == False
-#     assert cell.is_empty()
+@pytest.fixture
+def cell():
+    return Cell()
 
-# def test_spawn_bacterium_cell(cell):
-#     cell.set_spawn_bacterium()
-#     assert cell._antibiotics == 0
-#     assert cell.cant_bacteria() == 0
-#     assert cell.cant_bacteriophages() == 0
-#     assert cell.get_spawn_bacterium() == True
-#     assert cell.get_spawn_other() == False
 
-# def test_spawn_other_cell(cell):
-#     cell.set_spawn_other()
-#     assert cell._antibiotics == 0
-#     assert cell.cant_bacteria ()== 0
-#     assert cell.cant_bacteriophages() == 0
-#     assert cell.get_spawn_bacterium() == False
-#     assert cell.get_spawn_other() == True
+@pytest.fixture
+def cellAntibiotic():
+    return CellAntibiotic()
 
-# def test_spawn_bacterium_cell_not_empty(cell):
-#     cell.set_spawn_other()
-#     with pytest.raises(ValueError) as e:
-#         cell.set_spawn_bacterium()
-#     assert str(e.value) == 'celda ocupada'
 
-# def test_spawn_other_cell_not_empty(cell):
-#     cell.set_spawn_bacterium()
-#     with pytest.raises(ValueError) as e:
-#         cell.set_spawn_other()
-#     assert str(e.value) == 'celda ocupada'
+@pytest.fixture
+def cellBacteriophage():
+    return CellBacteriophage()
 
-# def test_eq_cell(cell):
-#     cell_aux = Cell()
-#     cell_aux.set_spawn_other()
-#     cell.set_spawn_other()
-#     assert cell.__eq__(cell_aux)
 
-# def test_not_eq_cell(cell):
-#     cell_aux = Cell()
-#     cell_aux.set_spawn_other()
-#     cell.set_spawn_bacterium()
-#     assert not (cell.__eq__(cell_aux))
+# CELL TEST
 
-# def test_not_eq_cell_bacterium(cell):
-#     cell_aux = Cell()
-#     cell_aux.add_bacterium(1,'b')
-#     cell.add_bacterium(1,'f')
-#     assert not (cell.__eq__(cell_aux))
+def test_initial_cell(cell):
+    # assert cell._antibiotics == 0
+    assert cell.get_cant_bacteria() == 0
+    # assert cell.cant_bacteriophages() == 0
+    # assert not cell.get_spawn_bacterium()
+    # assert not cell.is_spawn_bacterium()
+    assert not cell.get_spawn()
+    # assert not cell.is_spawn_other()
+    assert cell.is_empty()
 
-# def test_not_eq_cell_bacteriophage(cell):
-#     cell_aux = Cell()
-#     cell.add_bacteriophage(4)
-#     cell_aux.add_bacteriophage(3)
-#     assert not(cell.__eq__(cell_aux))
 
-# def test_add_bacterium(cell):
-#     cell.add_bacterium(0,'b')
-#     assert cell.cant_bacteria() == 1
-#     assert cell._bacteria[0].__str__() == 'b'
+def test_spawn_cell(cell):
+    cell.set_spawn()
+    # assert cell._antibiotics == 0
+    assert cell.get_cant_bacteria() == 0
+    # assert cell.cant_bacteriophages() == 0
+    assert cell.get_spawn()
+    # assert cell.get_spawn_other() == False
 
-# def test_add_bacterium_class(cell):
-#     cell._bacterium = BacteriumNormal(0)
-#     assert cell.cant_bacteria() == 1
-#     assert cell._bacteria[0].__str__() == 'b'
 
-# def test_add_antibiotics(cell):
-#     cell.add_antibiotic(Antibiotic())
-#     assert cell._antibiotics == 1
+def test_spawn_cell_not_empty(cell):
+    cell.set_spawn()
+    with pytest.raises(ValueError) as e:
+        cell.set_spawn()
+    assert str(e.value) == 'celda ocupada'
 
-# def test_antibiotics(cell):
-#     cell._antibiotics = 10
-#     assert cell._antibiotics == 10
 
-# def test_add_bacteriophage(cell):
-#     cell.add_bacteriophage(4)
-#     assert cell.cant_bacteriophages() == 1
-#     assert cell.__str__() == '1v'
-#     assert cell._bacteriophages[0].infection == 4
+def test_eq_cell(cell):
+    cell_aux = Cell()
+    cell_aux.set_spawn()
+    cell.set_spawn()
+    assert cell.__eq__(cell_aux)
+
+
+def test_not_eq_cell(cell):
+    cell_aux = Cell()
+    cell_aux.set_spawn()
+    # cell.set_spawn_bacterium()
+    assert not cell.__eq__(cell_aux)
+
+
+def test_not_eq_cell_bacterium(cell):
+    cell_aux = Cell()
+    cell_aux.add_bacterium(BacteriumNormal(1))
+    cell.add_bacterium(BacteriumStrong(1))
+    assert not cell.__eq__(cell_aux)
+
+
+def test_add_bacterium(cell):
+    cell.add_bacterium(BacteriumNormal(0))
+    assert cell.get_cant_bacteria() == 1
+    assert cell.get_bacteria()[0].__str__() == 'b'
+
+
+def test_to_string_cell(cell):
+    cell.add_bacterium(BacteriumNormal(2))
+    cell.add_bacterium(BacteriumStrong(4))
+    cell.add_bacterium(BacteriumWeak(4))
+    cell.add_bacterium(BacteriumInfected(1))
+    assert str(cell) == '1b1f1d1i'
+
+
+# def test_from_string():
+#     cell = Cell.from_string('1a1b1f1d1i2v')
+#     assert cell.cant_ente('a') == 1
+#     assert cell.cant_ente('b') == 1
+#     assert cell.cant_ente('f') == 1
+#     assert cell.cant_ente('d') == 1
+#     assert cell.cant_ente('i') == 1
+#     assert cell.cant_ente('v') == 2
+#     assert cell.__str__() == '1a1b1f1d1i2v'
+
+
+# CELL OF BACTERIOPHAGES TEST
+
+def test_not_eq_cell_bacteriophage(cellBacteriophage):
+    cell_aux = CellBacteriophage()
+    cellBacteriophage.add_bacteriophage(Bacteriophage(4))
+    cell_aux.add_bacteriophage(Bacteriophage(3))
+    assert not cellBacteriophage.__eq__(cell_aux)
+
+
+def test_add_bacteriophage(cellBacteriophage):
+    cellBacteriophage.add_bacteriophage(Bacteriophage(4))
+    assert cellBacteriophage.get_cant_bacteriophage() == 1
+    assert cellBacteriophage.__str__() == '1v'
+    assert cellBacteriophage.get_bacteriophages()[0].get_infection() == 4
+
+
+# CELL OF ANTIBIOTIC TEST
+
+def test_add_antibiotics(cellAntibiotic):
+    cellAntibiotic.add_antibiotic(Antibiotic())
+    assert cellAntibiotic.get_cant_antibiotic() == 1
+
+
+def test_antibiotics(cellAntibiotic):
+    for _ in range(10):
+        cellAntibiotic.add_antibiotic(Antibiotic())
+    assert cellAntibiotic.get_cant_antibiotic() == 10
 
 
 # def test_add_entes_and_eq_cells(cell):
@@ -132,16 +164,6 @@
 #     cell.add_bacteriophage(4)
 #     cell.add_bacteriophage(4)
 #     assert cell.__str__() == '2b1f2v'
-
-# def test_from_string():
-#     cell = Cell.from_string('1a1b1f1d1i2v')
-#     assert cell.cant_ente('a') == 1
-#     assert cell.cant_ente('b') == 1
-#     assert cell.cant_ente('f') == 1
-#     assert cell.cant_ente('d') == 1
-#     assert cell.cant_ente('i') == 1
-#     assert cell.cant_ente('v') == 2
-#     assert cell.__str__() == '1a1b1f1d1i2v'
 
 # def test_from_string_empty():
 #     cell = Cell.from_string(' ')
