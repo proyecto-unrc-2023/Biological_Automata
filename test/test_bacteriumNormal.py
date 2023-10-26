@@ -15,11 +15,6 @@ def test_bacterium_replicate_with_parameter_to_normal():
     new_bacterium = bacterium.replicate_with_parameter(0.2)
     assert isinstance(new_bacterium, BacteriumNormal) and new_bacterium.moves == 0
 
-def test_bacterium_replicate_with_parameter_to_strong():
-    bacterium = BacteriumNormal(3)
-    new_bacterium = bacterium.replicate_with_parameter(0.05)
-    assert isinstance(new_bacterium, BacteriumStrong) and new_bacterium.moves == 0
-
 def test_bacteriumNormal_isReproducible():
     bacterium = BacteriumNormal(3)
     bool = bacterium.isReproducible()

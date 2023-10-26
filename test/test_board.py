@@ -19,8 +19,8 @@ def board2():
   return board
 
 def test_initial_board(board):
-    assert board.get_rows() == 2
-    assert board.get_columns() == 2
+    assert board._rows == 2
+    assert board._columns == 2
     assert board.get_position_spawn_bacterium() == None
     assert board.get_position_spawn_other() == None
     assert board.get_cell(0, 0).is_empty()

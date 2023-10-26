@@ -4,14 +4,14 @@ from models.logic.Bacteriophage import *
 
 def test_bacteriophage_set_infection():
     virus = Bacteriophage(0)
-    virus.infection = 4
-    assert virus.infection == 4
+    virus.set_infection(4)
+    assert virus.get_infection() == 4
 
 def test_bacteriophage_add_move():
     infection_level = 4
     virus = Bacteriophage(infection_level)
     virus.add_move()
-    assert virus.infection == infection_level - 1
+    assert virus.get_infection() == infection_level - 1
 
 def test_bacteriophage_moment_death_then():
     virus = Bacteriophage(0)
