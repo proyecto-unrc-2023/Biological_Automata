@@ -18,7 +18,9 @@ class Cell:
     return self.__spawn
 
   def set_spawn(self, value):
-    self.__spawn = value
+    if not self.is_empty():
+      raise ValueError('celda ocupada')
+    self.__spawn = True
 
   def get_cant_bacteria(self):
     return self.__cant_bacteria
@@ -63,7 +65,7 @@ class Cell:
 
 
   def __eq__(self, other):
-    if self.get_cant_bacteria() != other.cant_bacteria():
+    if self.get_cant_bacteria() != other.get_cant_bacteria():
       return False
     if not self.__spawn.__eq__(other.get_spawn()):
       return False

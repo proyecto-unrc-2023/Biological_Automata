@@ -2,7 +2,7 @@ import random
 
 from models.logic.cell import Cell
 from models.logic.CellAntibiotic import CellAntibiotic
-from models.logic.CellBacteriophague import CellBacteriophague
+from models.logic.CellBacteriophage import CellBacteriophage
 
 from models.logic.Bacterium import Bacterium
 
@@ -10,28 +10,30 @@ from models.logic.Bacteriophage import Bacteriophage
 
 from models.logic.Antibiotic import Antibiotic
 
-from models.logic.GameController import Game_Mode
 
 
 class Board:
 
-    def __init__(self, rows, columns, game: Game_Mode):
+    def __init__(self, rows, columns):
         self.__position = []
         self.__rows = rows
         self.__columns = columns
         self.__position_spawn_other = None
         self.__position_spawn_bacterium = None
         self.__board = []
-        self.__game_mode = game
+        self.__game_mode = None
 
-    def create_cell(self):
+    def set_gameMode(self, mode):
+        self.__game_mode = mode
+
+    def create_board(self):
         for _ in range(self.__rows):
             curr_row = []
             for _ in range(self.__columns):
-                if (self.__game_mode == Game_Mode.ANTIBIOTIC):
+                if (self.__game_mode == 1):
                     curr_row.append(CellAntibiotic())
                 else:
-                    curr_row.append(CellBacteriophague())
+                    curr_row.append(CellBacteriophage())
             self.__board.append(curr_row)
 
     #@staticmethod
@@ -135,12 +137,13 @@ class Board:
 
     def add_antibiotic(self, row, colum, antibiotic: Antibiotic):
         antibiotic.set_pos(row, colum)
-        self.__board[row][colum].add_antibiotic(antibiotic)
+        cell = self.__board[row][colum]
+        cell.add_antibiotic(antibiotic)
         self.__position.append(antibiotic)
 
-    def add_bacteriophague(self, row, colum, bacteriophage: Bacteriophage):
+    def add_bacteriophage(self, row, colum, bacteriophage: Bacteriophage):
         bacteriophage.set_pos(row, colum)
-        self.__board[row][colum].add_bacteriophague(bacteriophage)
+        self.__board[row][colum].add_bacteriophage(bacteriophage)
         self.__position.append(bacteriophage)
 
     ##CHEKEENLO ALGUN DIA
@@ -186,7 +189,9 @@ class Board:
         return list(set(aux))
 
     def move_all_entities(self):
-        new_board = Board(self.__rows, self.__columns, self.__game_mode)
+        new_board = Board(self.__rows, self.__columns)
+        new_board.set_gameMode(self.__game_mode)
+        new_board.create_board()
         new_board.set_position_spawn_other(self.__position_spawn_other)
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
 
@@ -208,33 +213,33 @@ class Board:
                 celda = self.__board[pos[0]][pos[1]]
                 celda.update_cell(pos[0], pos[1])
                 self.__position.extend(celda.get_bacteria())
-                if (self.__game_mode == Game_Mode.ANTIBIOTIC):
+                if (self.__game_mode == 1):
                     self.__position.extend(celda.get_antibiotics())
                 else:
-                    self.__position.extend(celda.get_bacteriophagues())
+                    self.__position.extend(celda.get_bacteriophages())
 
     def move_entities(self, x, y, new_board):
         new_x = None
         new_y = None
-        for bacterium in self.__board[x][y]._bacteria:
+        for bacterium in self.__board[x][y].get_bacteria():
             resultMoves = self.get_random_move(x, y)
             if resultMoves != None:
                 new_x, new_y = resultMoves
                 bacterium.add_move()
-                new_board.set_bacterium(new_x, new_y, bacterium)
-        if (self.__game_mode == Game_Mode.ANTIBIOTIC):
+                new_board.add_bacterium(new_x, new_y, bacterium)
+        if (self.__game_mode == 1):
             for antibiotic in self.__board[x][y].get_antibiotics():
                 resultMoves = self.get_random_move(x, y)
                 if resultMoves != None:
                     new_x, new_y = resultMoves
                     new_board.add_antibiotic(new_x, new_y, antibiotic)
         else:
-            for bacteriophage in self.__board[x][y].get_bacteriophagues():
+            for bacteriophage in self.__board[x][y].get_bacteriophages():
                 resultMoves = self.get_random_move(x, y)
                 if resultMoves != None:
                     new_x, new_y = resultMoves
                     bacteriophage.add_move()
-                    new_board.add_bacteriophague(new_x, new_y, bacteriophage)
+                    new_board.add_bacteriophage(new_x, new_y, bacteriophage)
 
         return new_board
 
@@ -246,7 +251,7 @@ class Board:
         elif isinstance(entity, Bacteriophage):
             entity.add_move()
             board.set_bacteriophage(new_x, new_y, entity)
-            board.get_cell(x, y).get_bacteriophagues().remove(entity)
+            board.get_cell(x, y).get_bacteriophages().remove(entity)
         else:
             board.add_antibiotic(new_x, new_y, entity)
             board.get_cell(x, y).get_antibiotics().remove(entity)

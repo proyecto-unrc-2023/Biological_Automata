@@ -3,36 +3,36 @@ from models.logic.Bacteriophage import Bacteriophage
 from models.logic.Bacterium import *
 
 
-class CellBacteriophague(Cell):
+class CellBacteriophage(Cell):
   def __init__(self):
     super().__init__()
     self.__bacteriophages = []
-    self.__cant_bacteriophague = 0
+    self.__cant_bacteriophage = 0
 
-  def get_bacteriophagues(self):
+  def get_bacteriophages(self):
     return self.__bacteriophages
 
 
-  def set_bacteriophagues(self, array):
+  def set_bacteriophages(self, array):
     self.__bacteriophages = array
 
 
-  def get_cant_bacteriophague(self):
-    return self.__cant_bacteriophague
+  def get_cant_bacteriophage(self):
+    return self.__cant_bacteriophage
 
 
-  def set_cant_bacteriophague(self, value):
-    self.__cant_bacteriophague = value
+  def set_cant_bacteriophage(self, value):
+    self.__cant_bacteriophage = value
 
 
-  def add_bacteriophague(self, entity: Bacteriophage):
+  def add_bacteriophage(self, entity: Bacteriophage):
     self.__bacteriophages.append(entity)
-    self.__cant_bacteriophague += 1
+    self.__cant_bacteriophage += 1
 
 
   def burst_bacteriumInfected(self,x,y):
     bacteria_to_remove = []
-    for bacterium in self.__bacteria:
+    for bacterium in self.get_bacteria():
       if isinstance(bacterium,BacteriumInfected) and bacterium.lithic_State():
         bacteria_to_remove.append(bacterium)
         for _ in range(4):
@@ -41,10 +41,10 @@ class CellBacteriophague(Cell):
           self.__bacteriophages.append(bacteriophage)
 
     for bacterium in bacteria_to_remove:
-      self.__bacteria.remove(bacterium)
+      self.get_bacteria().remove(bacterium)
 
-    self.set_cant_bacteriophague(len(self.__bacteriophages))
-    self.set_cant_bacteria(len(self.__bacteria))
+    self.set_cant_bacteriophage(len(self.__bacteriophages))
+    self.set_cant_bacteria(len(self.get_bacteria()))
 
 
   def infection_to_bacteria(self,x,y):
@@ -57,7 +57,7 @@ class CellBacteriophague(Cell):
     power = min(power, 4)
 
     infected = []
-    for bacterium in self.__bacteria:
+    for bacterium in self.get_bacteria():
       if not isinstance(bacterium, BacteriumInfected):
         bacterium = BacteriumInfected(power)
         bacterium.set_pos(x,y)
@@ -70,12 +70,12 @@ class CellBacteriophague(Cell):
     if one_not_infected:
       self.__bacteriophages = []
 
-    self.__bacteria = infected
-    self.set_cant_bacteriophague(len(infected))
-    self.__cant_bacteriophague = 0
+    self.set_bacteria(infected)
+    self.set_cant_bacteriophage(len(infected))
+    self.__cant_bacteriophage = 0
 
 
-  def death_bacteriophague(self):
+  def death_bacteriophage(self):
     bacteriophage_to_remove = []
 
     for bacteriophage in self.__bacteriophages:
@@ -84,24 +84,24 @@ class CellBacteriophague(Cell):
 
     for bacteriophage in bacteriophage_to_remove:
       self.__bacteriophages.remove(bacteriophage)
-      self.__cant_bacteriophague -= 1
+      self.__cant_bacteriophage -= 1
 
 
 
   def update_cell(self,x,y):
     #aplico regla de sobrepoblación
-    if self.__cant_bacteria >= 4:
+    if self.get_cant_bacteria() >= 4:
       self.overpopulation(x,y)
 
 		#si existen bacteriofagos y bacterias en la misma celda, aplico las reglas de cruzamiento
-    if self.__cant_bacteriophague > 0 and self.__cant_bacteria > 0:
+    if self.__cant_bacteriophage > 0 and self.get_cant_bacteria() > 0:
       self.infection_to_bacteria(x,y)
 
 		#actualizo por la reproduccion de bacterias
     self.update_for_reproduction(x,y)
 
 		#actualizo por bacteriofagos que se quedaron sin movimientos
-    self.death_bacteriophague()
+    self.death_bacteriophage()
 
 		#actualizo por la explosion de bacteriofagos
     self.burst_bacteriumInfected(x,y)
@@ -109,14 +109,14 @@ class CellBacteriophague(Cell):
 
 
   def is_empty(self):
-    return self.__cant_bacteriophague == 0 and super().is_empty()
+    return self.__cant_bacteriophage == 0 and super().is_empty()
 
 
   def __str__(self):
     if self.is_empty():
       return ' '
     res = ''
-    cant =  self.__cant_bacteriophague
+    cant =  self.__cant_bacteriophage
     if cant != 0:
       res = res + cant.__str__() + 'v'
     return super().__str__() + res

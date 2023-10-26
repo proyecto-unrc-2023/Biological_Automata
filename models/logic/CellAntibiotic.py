@@ -34,14 +34,14 @@ class CellAntibiotic(Cell):
   def low_dose(self,x,y):
 		# total_antibiotics = self._antibiotics
     new_bacteria = []
-    for bacterium in self.__bacteria:
+    for bacterium in self.get_bacteria():
       if isinstance(bacterium, BacteriumStrong):
 	    #ver si los movimientos se acumulan
         bact_weak = BacteriumWeak(0)
         bact_weak.set_pos(x,y)
         new_bacteria.append(bact_weak)
 
-    self.__bacteria = new_bacteria
+    self.set_bacteria(new_bacteria)
     self.set_cant_bacteria(len(new_bacteria))
     self.__antibiotics = []
     self.set_cant_antibiotic(0)
@@ -49,7 +49,7 @@ class CellAntibiotic(Cell):
 
   def high_dose(self):
     #esa celda se queda sin bacterias y sin antibioticos
-    self.__bacteria.clear()
+    self.set_bacteria([])
     self.set_cant_bacteria(0)
     self.__antibiotics.clear()
     self.set_cant_antibiotic(0)
@@ -58,7 +58,7 @@ class CellAntibiotic(Cell):
   def update_for_recovery(self,x,y):
     bacteria_to_add = []
     bacteria_to_remove = []
-    for bacterium in self.__bacteria:
+    for bacterium in self.get_bacteria():
 
       if bacterium.isRecoverable():
         recovered = bacterium.recover()
@@ -69,11 +69,11 @@ class CellAntibiotic(Cell):
 
 
     for bacterium in bacteria_to_add:
-      self.__bacteria.append(bacterium)
+      self.get_bacteria().append(bacterium)
     for bacterium in bacteria_to_remove:
-      self.__bacteria.remove(bacterium)
+      self.get_bacteria().remove(bacterium)
 
-    self.set_cant_bacteria(len(self.__bacteria))
+    self.set_cant_bacteria(len(self.get_bacteria()))
 
 
   def update_cell(self,x,y):
