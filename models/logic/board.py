@@ -115,7 +115,7 @@ class Board:
             raise ValueError('no se puede poner un spawn')
         self.__position_spawn_other = position
 
-    ##Devuelve la tupla
+    # Devuelve la tupla
     def get_position_spawn_bacterium(self):
         return self.__position_spawn_bacterium
 
