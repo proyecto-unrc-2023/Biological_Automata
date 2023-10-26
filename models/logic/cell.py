@@ -105,3 +105,12 @@ class Cell:
         for bacterium in self.__bacteria:
             if type == bacterium.__str__():
                 return bacterium
+
+
+    @property
+    def bacterias(self):
+        array = []
+        for bacterium in self.__bacteria:
+            array.append(bacterium.__str__())
+
+        return array

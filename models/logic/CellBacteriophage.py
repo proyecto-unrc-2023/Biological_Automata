@@ -109,3 +109,8 @@ class CellBacteriophage(Cell):
         if cant != 0:
             res = res + cant.__str__() + 'v'
         return super().__str__() + res
+
+##para schema
+    @property
+    def _other(self):
+        return self.get_cant_bacteriophage()

@@ -81,13 +81,16 @@ class Board:
     #            res += '\n'
     #    return res
 
-    def get_rows(self):
+    @property
+    def _rows(self):
         return self.__rows
 
-    def get_board(self):
+    @property
+    def _board(self):
         return self.__board
 
-    def get_columns(self):
+    @property
+    def _columns(self):
         return self.__columns
 
     def put_celda(self, row, column, cell):
@@ -107,7 +110,7 @@ class Board:
 
     def set_position_spawn_other(self, position):
         try:
-            self.__board[position[0]][position[1]].set_spawn(True)
+            self.__board[position[0]][position[1]].set_spawn()
         except ValueError:
             raise ValueError('no se puede poner un spawn')
         self.__position_spawn_other = position
@@ -118,7 +121,7 @@ class Board:
 
     def set_position_spawn_bacterium(self, position):
         try:
-            self.__board[position[0]][position[1]].set_spawn(True)
+            self.__board[position[0]][position[1]].set_spawn()
         except ValueError:
             raise ValueError('no se puede poner un spawn')
         self.__position_spawn_bacterium = position

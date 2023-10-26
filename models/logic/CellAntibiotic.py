@@ -96,3 +96,9 @@ class CellAntibiotic(Cell):
         return super().__str__() + res
 
     # falta eq
+
+
+##para schema
+    @property
+    def _other(self):
+        return self.get_cant_antibiotic()
