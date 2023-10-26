@@ -65,14 +65,12 @@ function Create_board({handleStartGame }) {
     if (!boardData) {
       return; //esto hace que no salga un error cuando no se hizo el refresh XD
     }
-
     const newBoard = [];
     for (let i = 0; i < _rows; i++) {
       const row = [];
 
       for (let j = 0; j < _columns; j++) {
         const cellData = boardData[i][j];
-
         row.push( <Cell i={i} j={j} cellData={cellData} gameData={gameData}/> );  //Componente que crea la celda
       }
 
