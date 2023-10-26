@@ -5,7 +5,7 @@ class Bacteriophage(Entity):
     def __init__(self, levelInfection:int):
       self.__infection = levelInfection
       self.__pos =(None,None)
-    
+
     def get_pos(self):
       return self.__pos
 
@@ -40,7 +40,7 @@ class Bacteriophage(Entity):
 
     def __str__(self):
       return 'v'
-    
+
     def __str_aux__(self):
       return self.__str__()+self.infection.__str__()
 
@@ -49,6 +49,6 @@ class Bacteriophage(Entity):
       if cell_str != 'v':
         raise ValueError(f'Invalid Bacteriofago string: {cell_str}')
       return Bacteriophage(4)
-    
-  
+
+
 
