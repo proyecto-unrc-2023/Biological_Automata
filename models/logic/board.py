@@ -50,7 +50,7 @@ class Board:
     #        row_len = len(matrix[row])
     #        if row_len != n_cols:
     #            raise ValueError(f'Invalid number of columns: {row_len}')
-#
+
     #    return Board._from_string_matrix(n_rows, n_cols, matrix)
 
     #@staticmethod
@@ -63,23 +63,30 @@ class Board:
     #                new_board.put_celda(row, col, Cell.from_string(curr_cell))
     #    return new_board
 
-    #@staticmethod
-    #def _row_to_string(row):
-    #    res = ''
-    #    columns = len(row)
-    #    for col in range(columns):
-    #        res += row[col].__str__()
-    #        if col < columns - 1:
-    #            res += '|'
-    #    return res
+    def _row_to_string(self, row, row_num):
+       spawn_bac = self.__position_spawn_bacterium
+       spawn_other = self.__position_spawn_other
+       res = ''
+       columns = len(row)
+       for col in range(columns):
+            if (spawn_other != None and row_num == spawn_other[0] and col == spawn_other[1] ):
+                res += 'so'
+            else:
+                if (spawn_bac != None and row_num == spawn_bac[0] and col == spawn_bac[1]):
+                    res += 'sb'
+                else:
+                    res += row[col].__str__()
+            if col < columns - 1:
+                res += '|'
+       return res
 
-    #def __str__(self):
-    #    res = ''
-    #    for row_num in range(self.__rows):
-    #        res += Board._row_to_string(self.__board[row_num])
-    #        if row_num < self.__rows - 1:
-    #            res += '\n'
-    #    return res
+    def __str__(self):
+       res = ''
+       for row_num in range(self.__rows):
+           res += self._row_to_string(self._board[row_num], row_num)
+           if row_num < self.__rows - 1:
+               res += '\n'
+       return res
 
     @property
     def _rows(self):
@@ -251,14 +258,19 @@ class Board:
             entity.add_move()
             board.add_bacterium(new_x, new_y, entity)
             board.get_cell(x, y).get_bacteria().remove(entity)
+            aux = board.get_cell(x, y).get_cant_bacteria()
+            board.get_cell(x, y).set_cant_bacteria(aux - 1)
         elif isinstance(entity, Bacteriophage):
             entity.add_move()
-            board.set_bacteriophage(new_x, new_y, entity)
+            board.add_bacteriophage(new_x, new_y, entity)
             board.get_cell(x, y).get_bacteriophages().remove(entity)
+            aux = board.get_cell(x, y).get_cant_bacteriophage()
+            board.get_cell(x, y).set_cant_bacteriophage(aux - 1)
         else:
             board.add_antibiotic(new_x, new_y, entity)
             board.get_cell(x, y).get_antibiotics().remove(entity)
-
+            aux = board.get_cell(x, y).get_cant_antibiotic()
+            board.get_cell(x, y).set_cant_antibiotic(aux - 1)
         return board
 
     ##CHEQUEAR ESTO

@@ -113,7 +113,7 @@ class CellBacteriophage(Cell):
     def __eq__(self, other):
         if not super().__eq__(other):
             return False
-        if self.get_cant_bacteriophage() != 0:
+        if self.get_cant_bacteriophage() != 0 or other.get_cant_bacteriophage() != 0:
             if not isinstance(other, CellBacteriophage):
                 return False
             if self.get_cant_bacteriophage() != other.get_cant_bacteriophage():
