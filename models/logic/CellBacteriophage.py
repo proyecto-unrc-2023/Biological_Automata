@@ -109,6 +109,19 @@ class CellBacteriophage(Cell):
         if cant != 0:
             res = res + cant.__str__() + 'v'
         return super().__str__() + res
+    
+    def __eq__(self, other):
+        if not super().__eq__(other):
+            return False
+        if self.get_cant_bacteriophage() != 0:
+            if not isinstance(other, CellBacteriophage):
+                return False
+            if self.get_cant_bacteriophage() != other.get_cant_bacteriophage():
+                return False
+            for i in range(self.get_cant_bacteriophage()):
+                if not (self.__bacteriophages[i].get_infection() == other.__bacteriophages[i].get_infection()):
+                    return False
+        return True
 
 ##para schema
     @property
