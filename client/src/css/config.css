@@ -26,8 +26,8 @@ html {
 
 /*CELDAS */
 .cell {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   /*margin-right: 10px;  Espacio entre las celdas */
   /* Otros estilos de celda según tus preferencias */
   background-color: #00000000;
@@ -40,8 +40,8 @@ html {
 }
 
 .spawnBacterium{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../images/spb.png');
   background-size: cover;
   border: 1px solid #000000;
@@ -51,8 +51,8 @@ html {
 }
 
 .spawnBacteriumActive{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/bacterium.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -62,8 +62,8 @@ html {
 }
 
 .spawnOther{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../images/spa.png');
   background-size: cover;
   border: 1px solid #000000;
@@ -73,8 +73,8 @@ html {
 }
 
 .spawnOtherActive{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/other.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -85,8 +85,8 @@ html {
 
 
 .bacterium{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/BacteriumNormal.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -96,8 +96,8 @@ html {
 }
 
 .bacteriumStrong{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/BacteriumStrong.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -107,8 +107,8 @@ html {
 }
 
 .bacteriumWeak{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/bacteriumWeak.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -119,8 +119,8 @@ html {
 
 
 .bacteriumInfected{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/bacteriumInfected.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -131,8 +131,8 @@ html {
 
 
 .antibiotic{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/pill.gif');
   background-size: cover;
   border: 1px solid #000000;
@@ -142,8 +142,8 @@ html {
 }
 
 .bacteriophage{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/bacteriophague.png');
   background-size: cover;
   border: 1px solid #000000;
@@ -253,8 +253,8 @@ p{
   width: 70px;
 }
 .bacteriophage{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-image: url('../../public/bacteriophague.png');
   background-size: cover;
   border: 1px solid #000000;

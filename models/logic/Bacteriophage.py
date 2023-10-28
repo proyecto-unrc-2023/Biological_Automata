@@ -5,7 +5,7 @@ class Bacteriophage(Entity):
     def __init__(self, levelInfection:int):
       self.__infection = levelInfection
       self.__pos =(None,None)
-    
+
     def get_pos(self):
       return self.__pos
 

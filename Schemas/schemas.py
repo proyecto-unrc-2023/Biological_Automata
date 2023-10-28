@@ -2,9 +2,10 @@ from marshmallow import Schema, fields
 
 class CellSchema(Schema):
     bacterias = fields.List(fields.Str())
-    _antibiotics = fields.Int()
+    _other = fields.Int()
+    #_antibiotics = fields.Int()
     #_bacteriophages = fields.Nested(BacteriophageSchema, many=True)
-    _cant_bacteriophage = fields.Int()
+    #_cant_bacteriophage = fields.Int()
     #_spawn_bacterium = fields.Bool()
     #_spawn_other = fields.Bool()
 

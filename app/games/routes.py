@@ -1,7 +1,8 @@
 from flask import jsonify, request
 from app.games import api
 from Schemas.schemas import *
-from models.logic.GameController import *
+from models.logic.GameController import Game_Mode, Game_State, GameController
+from models.logic.board import Board
 from models.logic.Bacterium import *
 from flask_restful import Resource
 from app.games.Game import Game
@@ -50,10 +51,13 @@ class Config_Game(Resource):
         frec_other = data.get('frecOther')
         game_mode = data.get('gameMode')
 
-        game_data.config(cant_bact, frec_bact, cant_other, frec_other)
+        if game_mode == 1:
+            game_data.config(cant_bact, frec_bact, cant_other, frec_other, Game_Mode.ANTIBIOTIC)
+        else:
+            game_data.config(cant_bact, frec_bact, cant_other, frec_other, Game_Mode.BACTERIOPHAGE)
+
         game_data.set_spawn_bacterium((x_spawn_b, y_spawn_b))
         game_data.set_spawn_other((x_spawn_o, y_spawn_o))
-        game_data._game_mode = Game_Mode.ANTIBIOTIC if game_mode == 1 else Game_Mode.BACTERIOPHAGE
 
         game_data.start_game()
         return {"message": "Configuración guardada correctamente"}
@@ -61,14 +65,12 @@ class Config_Game(Resource):
 api.add_resource(Config_Game, '/config')
 
 
-
-class Stop_Game(Resource):
+class Start_Game(Resource):
     def get(self):
-        game_data.stop()
-        return {"message": "El juego se detuvo"}
+        game_data.start_game()
+        return {"message": "Se ha iniciado el juego"}
 
-api.add_resource(Stop_Game, '/stop')
-
+api.add_resource(Start_Game, '/start')
 
 
 class Refresh_Game(Resource):
@@ -79,5 +81,14 @@ class Refresh_Game(Resource):
         return jsonify({"games": result})
 
 api.add_resource(Refresh_Game, '/refresh')
+
+
+class Stop_Game(Resource):
+    def get(self):
+        game_data.stop()
+        return {"message": "El juego se detuvo"}
+
+api.add_resource(Stop_Game, '/stop')
+
 
 

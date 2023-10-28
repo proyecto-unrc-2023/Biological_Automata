@@ -33,7 +33,7 @@ function App() {
       try {
         sonido.play();
       } catch (error) {
-        
+
       }
     }
   };
@@ -42,7 +42,7 @@ function App() {
 
     return (
       <>
-      
+
       <div className="App" onMouseMove={reproducir}>
         {startGame ? (
           <Create_board handleStartGame={handleStartGame} />

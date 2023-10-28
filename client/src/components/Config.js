@@ -7,7 +7,7 @@ import '../css/config.css';
 
 
 function Config ({handleStartGame}) {
-  const rows =15;
+  const rows = 15;
   const columns = 20;
   const [board, setBoard] = useState([]);
   const [bacteriumMode, setBacteriumMode] = useState(false);
