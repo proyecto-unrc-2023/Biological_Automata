@@ -109,7 +109,7 @@ class CellBacteriophage(Cell):
         if cant != 0:
             res = res + cant.__str__() + 'v'
         return super().__str__() + res
-    
+
     def __eq__(self, other):
         if not super().__eq__(other):
             return False
@@ -123,7 +123,7 @@ class CellBacteriophage(Cell):
                     return False
         return True
 
-##para schema
+# para schema
     @property
     def _other(self):
         return self.get_cant_bacteriophage()

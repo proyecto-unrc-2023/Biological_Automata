@@ -4,11 +4,13 @@ from models.logic.cell import Cell
 from models.logic.Bacterium import BacteriumNormal, BacteriumStrong
 from models.logic.Bacterium import BacteriumWeak, BacteriumInfected
 
+
 @pytest.fixture
 def cell():
     return Cell()
 
 # CELL TEST
+
 
 def test_initial_cell(cell):
     assert cell.get_cant_bacteria() == 0
@@ -52,7 +54,7 @@ def test_not_eq_cell_bacterium(cell):
 def test_add_bacterium(cell):
     cell.add_bacterium(BacteriumNormal(0))
     assert cell.get_cant_bacteria() == 1
-    assert cell.get_bacteria()[0].__str__() == 'b'
+    assert str(cell.get_bacteria()[0]) == 'b'
 
 
 def test_to_string_cell(cell):
@@ -72,6 +74,7 @@ def test_overpoblation_strongest(cell):
     cell.overpopulation(None, None)
     assert str(cell) == '1f'
 
+
 def test_cant_ente_bacterium(cell):
     cell.add_bacterium(BacteriumNormal(0))
     cell.add_bacterium(BacteriumNormal(0))
@@ -79,9 +82,9 @@ def test_cant_ente_bacterium(cell):
     cell.add_bacterium(BacteriumWeak(0))
     cell.add_bacterium(BacteriumStrong(0))
     assert cell.cant_ente('b') == 2
-    assert cell.cant_ente('f') == 1 
-    assert cell.cant_ente('i') == 1 
-    assert cell.cant_ente('d') == 1 
+    assert cell.cant_ente('f') == 1
+    assert cell.cant_ente('i') == 1
+    assert cell.cant_ente('d') == 1
 
 
 def test_overpoblation_without_strongest(cell):
@@ -120,7 +123,7 @@ def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
     cell.add_bacterium(BacteriumNormal(3))
     cell.add_bacterium(BacteriumNormal(3))
     cell.overpopulation(None, None)
-    cell.update_for_reproduction(None,None )
+    cell.update_for_reproduction(None, None)
     assert cell.get_cant_bacteria() == 2
 
 # def test_add_move_to_bacteriums(cell):
@@ -132,4 +135,3 @@ def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
 
 
 # CELL OF ANTIBIOTIC TEST
-

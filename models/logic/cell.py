@@ -45,12 +45,12 @@ class Cell:
         live = None
         # ciclo para quedarme con la bacteria más fuerte de la celda
         for bacterium in self.__bacteria:
-            if isinstance(bacterium, BacteriumStrong):
-                live = bacterium
-                break
-            else:
+            if not isinstance(bacterium, BacteriumStrong):
                 if isinstance(bacterium, BacteriumNormal):
                     live = bacterium
+            else:
+                live = bacterium
+                break
 
         if live is None:
             live = self.__bacteria[0]
@@ -66,7 +66,7 @@ class Cell:
         if not self.__spawn.__eq__(other.get_spawn()):
             return False
         for i in range(self.get_cant_bacteria()):
-            if self.__bacteria[i].__str__() != other.get_bacteria()[i].__str__():
+            if str(self.__bacteria[i]) != str(other.get_bacteria()[i]):
                 return False
         return True
 
@@ -76,20 +76,19 @@ class Cell:
     def __str__(self):
         if self.is_empty():
             return ' '
-            
         res = ''
         cant = self.cant_ente('b')
         if cant != 0:
-            res = res + cant.__str__() + 'b'
+            res = res + str(cant) + 'b'
         cant = self.cant_ente('f')
         if cant != 0:
-            res = res + cant.__str__() + 'f'
+            res = res + str(cant) + 'f'
         cant = self.cant_ente('d')
         if cant != 0:
-            res = res + cant.__str__() + 'd'
+            res = res + str(cant) + 'd'
         cant = self.cant_ente('i')
         if cant != 0:
-            res = res + cant.__str__() + 'i'
+            res = res + str(cant) + 'i'
         return res
 
 # Metodos de behave
@@ -97,11 +96,11 @@ class Cell:
     def cant_ente(self, type):
         cant = 0
         for bacterium in self.__bacteria:
-            if type == bacterium.__str__():
+            if type == str(bacterium):
                 cant += 1
         return cant
 
     def get_bacterium(self, type):
         for bacterium in self.__bacteria:
-            if type == bacterium.__str__():
+            if type == str(bacterium):
                 return bacterium

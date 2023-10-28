@@ -1,6 +1,5 @@
 import random
 
-from models.logic.cell import Cell
 from models.logic.CellAntibiotic import CellAntibiotic
 from models.logic.CellBacteriophage import CellBacteriophage
 
@@ -9,7 +8,6 @@ from models.logic.Bacterium import Bacterium
 from models.logic.Bacteriophage import Bacteriophage
 
 from models.logic.Antibiotic import Antibiotic
-
 
 
 class Board:
@@ -30,14 +28,14 @@ class Board:
         for _ in range(self.__rows):
             curr_row = []
             for _ in range(self.__columns):
-                if (self.__game_mode == 1):
+                if self.__game_mode == 1:
                     curr_row.append(CellAntibiotic())
                 else:
                     curr_row.append(CellBacteriophage())
             self.__board.append(curr_row)
 
-    #@staticmethod
-    #def from_string(board_str):
+    # @staticmethod
+    # def from_string(board_str):
     #    rows = board_str.split('\n')
     #    n_rows = len(rows)
     #    if n_rows <= 1:
@@ -53,8 +51,8 @@ class Board:
 
     #    return Board._from_string_matrix(n_rows, n_cols, matrix)
 
-    #@staticmethod
-    #def _from_string_matrix(rows, cols, matrix):
+    # @staticmethod
+    # def _from_string_matrix(rows, cols, matrix):
     #    new_board = Board(rows, cols)
     #    for row in range(rows):
     #        for col in range(cols):
@@ -64,29 +62,29 @@ class Board:
     #    return new_board
 
     def _row_to_string(self, row, row_num):
-       spawn_bac = self.__position_spawn_bacterium
-       spawn_other = self.__position_spawn_other
-       res = ''
-       columns = len(row)
-       for col in range(columns):
-            if (spawn_other != None and row_num == spawn_other[0] and col == spawn_other[1] ):
+        spawn_bac = self.__position_spawn_bacterium
+        spawn_other = self.__position_spawn_other
+        res = ''
+        columns = len(row)
+        for col in range(columns):
+            if (spawn_other is not None and row_num == spawn_other[0] and col == spawn_other[1]):
                 res += 'so'
             else:
-                if (spawn_bac != None and row_num == spawn_bac[0] and col == spawn_bac[1]):
+                if (spawn_bac is not None and row_num == spawn_bac[0] and col == spawn_bac[1]):
                     res += 'sb'
                 else:
-                    res += row[col].__str__()
+                    res += str(row[col])
             if col < columns - 1:
                 res += '|'
-       return res
+        return res
 
     def __str__(self):
-       res = ''
-       for row_num in range(self.__rows):
-           res += self._row_to_string(self._board[row_num], row_num)
-           if row_num < self.__rows - 1:
-               res += '\n'
-       return res
+        res = ''
+        for row_num in range(self.__rows):
+            res += self._row_to_string(self._board[row_num], row_num)
+            if row_num < self.__rows - 1:
+                res += '\n'
+        return res
 
     @property
     def _rows(self):
@@ -118,8 +116,8 @@ class Board:
     def set_position_spawn_other(self, position):
         try:
             self.__board[position[0]][position[1]].set_spawn()
-        except ValueError:
-            raise ValueError('no se puede poner un spawn')
+        except ValueError as e:
+            raise e
         self.__position_spawn_other = position
 
     # Devuelve la tupla
@@ -129,14 +127,14 @@ class Board:
     def set_position_spawn_bacterium(self, position):
         try:
             self.__board[position[0]][position[1]].set_spawn()
-        except ValueError:
-            raise ValueError('no se puede poner un spawn')
+        except ValueError as e:
+            raise e
         self.__position_spawn_bacterium = position
 
     def is_empty(self):
         for row in range(self.__rows):
             for colum in range(self.__columns):
-                if not (self.__board[row][colum].is_empty()):
+                if not self.__board[row][colum].is_empty():
                     return False
         return True
 
@@ -156,7 +154,7 @@ class Board:
         self.__board[row][colum].add_bacteriophage(bacteriophage)
         self.__position.append(bacteriophage)
 
-    ##CHEKEENLO ALGUN DIA
+    # CHEKEENLO ALGUN DIA
     def __eq__(self, other):
         if self.__rows != other.__rows:
             return False
@@ -175,11 +173,10 @@ class Board:
     # new
     def get_random_move(self, i, j):
         possible_moves = self.get_possible_moves(i, j)
-        if possible_moves:
-            random_move = random.choice(possible_moves)
-            return random_move
-        else:
+        if not possible_moves:
             return None
+        random_move = random.choice(possible_moves)
+        return random_move
 
     def get_possible_moves(self, i, j):
         moves = []
@@ -193,8 +190,8 @@ class Board:
 
     def position_ocupped(self, position):
         aux = []
-        for i in range(len(position)):
-            aux.append(position[i].get_pos())
+        for pos in position:
+            aux.append(pos.get_pos())
 
         return list(set(aux))
 
@@ -207,8 +204,7 @@ class Board:
 
         lista = self.position_ocupped(self.__position)
 
-        for j in range(len(lista)):
-            pos = lista[j]
+        for pos in lista:
             if isinstance(pos[0], int) and isinstance(pos[1], int):
                 new_board = self.move_entities(pos[0], pos[1], new_board)
         return new_board
@@ -217,13 +213,12 @@ class Board:
         lista = self.position_ocupped(self.__position)
         self.__position.clear()
 
-        for j in range(len(lista)):
-            pos = lista[j]
+        for pos in lista:
             if isinstance(pos[0], int) and isinstance(pos[1], int):
                 celda = self.__board[pos[0]][pos[1]]
                 celda.update_cell(pos[0], pos[1])
                 self.__position.extend(celda.get_bacteria())
-                if (self.__game_mode == 1):
+                if self.__game_mode == 1:
                     self.__position.extend(celda.get_antibiotics())
                 else:
                     self.__position.extend(celda.get_bacteriophages())
@@ -233,20 +228,20 @@ class Board:
         new_y = None
         for bacterium in self.__board[x][y].get_bacteria():
             resultMoves = self.get_random_move(x, y)
-            if resultMoves != None:
+            if resultMoves is not None:
                 new_x, new_y = resultMoves
                 bacterium.add_move()
                 new_board.add_bacterium(new_x, new_y, bacterium)
         if (self.__game_mode == 1):
             for antibiotic in self.__board[x][y].get_antibiotics():
                 resultMoves = self.get_random_move(x, y)
-                if resultMoves != None:
+                if resultMoves is not None:
                     new_x, new_y = resultMoves
                     new_board.add_antibiotic(new_x, new_y, antibiotic)
         else:
             for bacteriophage in self.__board[x][y].get_bacteriophages():
                 resultMoves = self.get_random_move(x, y)
-                if resultMoves != None:
+                if resultMoves is not None:
                     new_x, new_y = resultMoves
                     bacteriophage.add_move()
                     new_board.add_bacteriophage(new_x, new_y, bacteriophage)
@@ -273,7 +268,7 @@ class Board:
             board.get_cell(x, y).set_cant_antibiotic(aux - 1)
         return board
 
-    ##CHEQUEAR ESTO
+    # CHEQUEAR ESTO
     def where_are_entities(self):
         occupied_cells = []
         for row in range(self.__rows):
