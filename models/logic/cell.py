@@ -104,3 +104,11 @@ class Cell:
         for bacterium in self.__bacteria:
             if type == str(bacterium):
                 return bacterium
+
+##Funcion para los sce
+    @property
+    def bacterias(self):
+        array = []
+        for bacterium in self.__bacteria:
+            array.append(bacterium.__str__())
+        return array
