@@ -110,7 +110,12 @@ class CellBacteriophage(Cell):
             res = res + cant.__str__() + 'v'
         return super().__str__() + res
 
-    #METODOS PARA BEHAVE
+# para schema
+    @property
+    def _other(self):
+        return self.get_cant_bacteriophage()
+
+# METODOS PARA BEHAVE
 
     def count_infected(self, grade):
         counter = 0
@@ -134,3 +139,15 @@ class CellBacteriophage(Cell):
 
         for bacteriophage in self.get_bacteriophages():
             return bacteriophage
+    def __eq__(self, other):
+        if not super().__eq__(other):
+            return False
+        if self.get_cant_bacteriophage() != 0 or other.get_cant_bacteriophage() != 0:
+            if not isinstance(other, CellBacteriophage):
+                return False
+            if self.get_cant_bacteriophage() != other.get_cant_bacteriophage():
+                return False
+            for i in range(self.get_cant_bacteriophage()):
+                if not (self.__bacteriophages[i].get_infection() == other.__bacteriophages[i].get_infection()):
+                    return False
+        return True

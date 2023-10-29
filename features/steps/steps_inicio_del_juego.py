@@ -45,8 +45,8 @@ def iniciar_juego(context):
 
 @then("se deberia crear un tablero de {x:d}x{y:d}")
 def dimensiones_de_tablero(context,x,y):
-    assert context.game._board.get_rows() == x
-    assert context.game._board.get_columns() == y
+    assert context.game.get_rows() == x
+    assert context.game.get_columns() == y
 
 @then("la cantidad de bacterias de inicio es {c:d}")
 def chequear_bacterias_inicio(context,c):

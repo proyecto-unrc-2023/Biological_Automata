@@ -59,7 +59,7 @@ def test_game_mode_not_CONFIG_GAME(game_antibiotic):
   game = GameController()
   with pytest.raises(ValueError) as e:
     game.start_game()
-  assert str(e.value) == "El juego no está en el estado CONFIG_GAME o no se configuró el modo de juego"
+  assert str(e.value) == "El juego no está en el estado CONFIG_GAME"
 
 def test_game_mode_without_configuration():
   game = GameController()

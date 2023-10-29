@@ -204,6 +204,12 @@ class GameController:
 
     #METODOS PARA IMPLEMENTAR STEPS DE BEHAVE
 
+    def get_rows(self):
+        return self._board._rows
+    
+    def get_columns(self):
+        return self._board._columns
+    
     def count_in_adjacents(self, x, y, ente):
         vecinos = self._board.get_possible_moves(x,y)
         contador = 0

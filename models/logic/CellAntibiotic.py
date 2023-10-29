@@ -96,3 +96,12 @@ class CellAntibiotic(Cell):
         return super().__str__() + res
 
     # falta eq
+    def __eq__(self, other):
+        if not super().__eq__(other):
+            return False
+        if self.get_cant_antibiotic() != 0 or other.get_cant_antibiotic() != 0:
+            if not isinstance(other, CellAntibiotic):
+                return False
+            if self.get_cant_antibiotic() != other.get_cant_antibiotic():
+                return False
+        return True
