@@ -37,6 +37,6 @@ def chequear_infectadas_en_celda(context,num, grado, x, y):
 
 @then('deberia haber {num:d} bacteriofago con poder de infeccion {poder:d} en ({x:d},{y:d})')
 def chequear_bacteriofagos(context,num, poder,x,y):
-    assert context.game.count_bacteriophages(x, y, poder) == num
+    assert context.game.count_bacteriophages(x,y,poder) == num
 
 

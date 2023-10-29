@@ -46,7 +46,7 @@ class CellBacteriophage(Cell):
         power = 0
 
         for bacteriophage in self.__bacteriophages:
-            power += bacteriophage.infection
+            power += bacteriophage.get_infection()
 
         power = min(power, 4)
 
@@ -109,3 +109,28 @@ class CellBacteriophage(Cell):
         if cant != 0:
             res = res + cant.__str__() + 'v'
         return super().__str__() + res
+
+    #METODOS PARA BEHAVE
+
+    def count_infected(self, grade):
+        counter = 0
+
+        for bacterium in self.get_bacteria():
+            if isinstance(bacterium, BacteriumInfected) and bacterium.moves == grade:
+                counter += 1
+        
+        return counter
+
+    def count_bacteriophages(self, power):
+        counter = 0
+
+        for bacteriophage in self.get_bacteriophages():
+            if bacteriophage.get_infection() == power:
+                counter += 1
+        
+        return counter
+
+    def get_bacteriophage(self):
+
+        for bacteriophage in self.get_bacteriophages():
+            return bacteriophage

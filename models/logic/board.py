@@ -107,7 +107,7 @@ class Board:
 
     def set_position_spawn_other(self, position):
         try:
-            self.__board[position[0]][position[1]].set_spawn(True)
+            self.__board[position[0]][position[1]].set_spawn()
         except ValueError:
             raise ValueError('no se puede poner un spawn')
         self.__position_spawn_other = position
@@ -118,7 +118,7 @@ class Board:
 
     def set_position_spawn_bacterium(self, position):
         try:
-            self.__board[position[0]][position[1]].set_spawn(True)
+            self.__board[position[0]][position[1]].set_spawn()
         except ValueError:
             raise ValueError('no se puede poner un spawn')
         self.__position_spawn_bacterium = position
@@ -250,9 +250,9 @@ class Board:
             board.get_cell(x, y).get_bacteria().remove(entity)
         elif isinstance(entity, Bacteriophage):
             entity.add_move()
-            board.set_bacteriophage(new_x, new_y, entity)
+            board.add_bacteriophage(new_x, new_y, entity)
             board.get_cell(x, y).get_bacteriophages().remove(entity)
-        else:
+        elif isinstance(entity, Antibiotic):
             board.add_antibiotic(new_x, new_y, entity)
             board.get_cell(x, y).get_antibiotics().remove(entity)
 
@@ -271,5 +271,11 @@ class Board:
         occupied_cells = self.where_are_entities()
         cant_entities = 0
         for cell in occupied_cells:
-            cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
+            if type == 'v':
+                cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteriophage()
+            elif type == 'bacterias':
+                cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteria()
+            else:
+                cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
+
         return cant_entities

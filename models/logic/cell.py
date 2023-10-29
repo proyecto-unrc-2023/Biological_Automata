@@ -1,4 +1,4 @@
-from models.logic.Bacterium import Bacterium, BacteriumNormal, BacteriumStrong
+from models.logic.Bacterium import *
 
 
 class Cell:
@@ -105,3 +105,23 @@ class Cell:
         for bacterium in self.__bacteria:
             if type == bacterium.__str__():
                 return bacterium
+
+    def count_bacteria_with_moves(self, type, moves):
+        counter_normal = 0
+        counter_weak = 0
+        counter_strong = 0
+
+        for bacterium in self.__bacteria:
+            if isinstance(bacterium, BacteriumNormal):
+                counter_normal += 1
+            elif isinstance(bacterium, BacteriumWeak):
+                counter_weak += 1
+            elif isinstance(bacterium,BacteriumStrong):
+                counter_strong += 1
+            
+            if type == "normal":
+                return counter_normal
+            if type == "debil":
+                return counter_weak
+            if type == "fuerte":
+                return counter_strong

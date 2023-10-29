@@ -28,9 +28,7 @@ class Bacteriophage(Entity):
         del self
 
     def moment_death(self):
-        if (self.__infection == 0):
-            return True
-        return False
+        return self.__infection == 0
 
     # Muerte del virus despues de un determinado tiempo
     def degradation(self):
