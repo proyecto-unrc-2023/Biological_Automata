@@ -124,3 +124,12 @@ class Cell:
                 return counter_weak
             if type == "fuerte":
                 return counter_strong
+
+    #metodo para schemas
+    @property
+    def bacterias(self):
+        array = []
+        for bacterium in self.__bacteria:
+            array.append(bacterium.__str__())
+
+        return array

@@ -5,7 +5,7 @@ Característica: Se inicia el juego
   Esquema del escenario: Se configuran los parametros iniciales
     Dado que el usuario abrio el juego
     Cuando configura el juego con los siguientes parametros (<cant_bac>,<frec_bac>,<cant_o>,<frec_o>,<modo>)
-    Entonces se deberia crear un tablero de 30x50
+    Entonces se deberia crear un tablero de 15x20
     Y la cantidad de bacterias de inicio es <cant_bac>
     Y la frecuencia de bacterias es <frec_bac>
     Y la cantidad de la otra entidad de inicio es <cant_o>
@@ -35,17 +35,17 @@ Característica: Se inicia el juego
  
     |  pos_bac | pos_other | modo       | 
     |  (0,0)   |   (3,3)   |antibiotico |
-    |  (5,49)  |   (5,16)  |bacteriofago|
-    |  (0,17)  |   (24,14) |antibiotico |
-    |  (29,49) |   (11,43) |bacteriofago| 
-    |  (15,4)  |   (0,0)   |antibiotico |
-    |  (5,8)   |   (17,49) |bacteriofago|
-    |  (10,6)  |   (0,34)  |antibiotico |
-    |  (29,49) |   (0,0)   |bacteriofago|
-    |  (22,16) |   (13,33) |antibiotico |
-    |  (15,8)  |   (5,16)  |bacteriofago|
-    |  (10,6)  |   (24,24) |antibiotico |
-    |  (29,49) |   (10,10) |bacteriofago|
+    |  (5,19)  |   (5,16)  |bacteriofago|
+    |  (0,17)  |   (4,14)  |antibiotico |
+    |  (14,19) |   (11,18) |bacteriofago| 
+    |  (13,4)  |   (0,0)   |antibiotico |
+    |  (5,8)   |   (14,19) |bacteriofago|
+    |  (10,6)  |   (0,19)  |antibiotico |
+    |  (9,15)  |   (0,0)   |bacteriofago|
+    |  (3,16)  |   (13,16) |antibiotico |
+    |  (14,8)  |   (5,16)  |bacteriofago|
+    |  (10,6)  |   (13,18) |antibiotico |
+    |  (9,19)  |   (10,10) |bacteriofago|
 
   Esquema del escenario: Se da inicio al juego
     Dado que el usuario abrio el juego
