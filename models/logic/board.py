@@ -78,13 +78,13 @@ class Board:
                 res += '|'
         return res
 
-    # def __str__(self):
-    #    res = ''
-    #    for row_num in range(self.__rows):
-    #        res += Board._row_to_string(self.__board[row_num])
-    #        if row_num < self.__rows - 1:
-    #            res += '\n'
-    #    return res
+    def __str__(self):
+       res = ''
+       for row_num in range(self.__rows):
+           res += self._row_to_string(self.__board[row_num], row_num)
+           if row_num < self.__rows - 1:
+               res += '\n'
+       return res
     @property
     def _rows(self):
         return self.__rows
@@ -260,7 +260,7 @@ class Board:
             board.get_cell(x, y).get_bacteriophages().remove(entity)
             aux = board.get_cell(x, y).get_cant_bacteriophage()
             board.get_cell(x, y).set_cant_bacteriophage(aux - 1)
-        else:
+        elif isinstance(entity, Antibiotic):
             board.add_antibiotic(new_x, new_y, entity)
             board.get_cell(x, y).get_antibiotics().remove(entity)
             aux = board.get_cell(x, y).get_cant_antibiotic()
@@ -280,5 +280,11 @@ class Board:
         occupied_cells = self.where_are_entities()
         cant_entities = 0
         for cell in occupied_cells:
-            cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
+            if type == 'v':
+                cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteriophage()
+            elif type == 'bacterias':
+                cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteria()
+            else:
+                cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
+
         return cant_entities
