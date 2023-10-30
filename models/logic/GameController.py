@@ -24,21 +24,18 @@ class GameController:
         self.__game_mode = None
         self.__board = Board(30,50)             # por defecto
         self.__cant_bacterium = 10              # cantidad de bacterias que expulsara
-        self.__cant_other = 20                  # cantidad de bacterias que de antibiotico o bacterifago segun el modo                  
+        self.__cant_other = 20                  # cantidad de bacterias que de antibiotico o bacterifago segun el modo
         self.__frecuency_bacterium = 2          # frecuencia con el que expulsara bacterias el spawn bacterium
         self.__frecuency_other = 2              # frecuencia con el que expulsara antibiotico o bacterifago el spawn other
         self.__movements = 0                    # un movimiento es una actualizacion del board, y se usara junto con la frecuencia
                                                 # para controlar los "spawns"
 
-        # self.__reproduction_moves = 3         # todavia no usado
-        # self.__recovery_moves = 6             # todavia no usado
-        # self.__overpopulation_cant = 4        # valor no modificable
-        # self.__exploit_moves = 4              # todavia no usado
-
-
-    def config(self, cant_bact, frec_bact, cant_other, frec_other):
+    def config(self, cant_bact, frec_bact, cant_other, frec_other, mode: Game_Mode):
         if self._game_state != Game_State.NOT_STARTER:
             raise ValueError("El juego no está en el estado START_GAME")
+
+        if not isinstance(mode, Game_Mode):
+            raise ValueError("El modo de juego cargado no es válido!")
         
         if cant_bact < 0 or cant_other < 0:
             raise ValueError("La cantidad de los entes no pueden ser negativas!")
@@ -47,13 +44,13 @@ class GameController:
             raise ValueError("Los valores de las frecuencias deben ser positivos!")
 
         self._game_state = Game_State.CONFIG_GAME
+        self._game_mode = mode
+        self.__board.create_board()
         self._frecuency_bacterium = frec_bact
         self._frecuency_other = frec_other
         self._cant_bacterium = cant_bact
         self._cant_other = cant_other
-        # self.__reproduction_moves = 3
-        # self.__recovery_moves = 6
-        # self.__exploit_moves = 4
+
 
     def generate_bacterium(self):
         if self._game_state != Game_State.START_GAME:
@@ -64,7 +61,7 @@ class GameController:
             move = self._board.get_random_move(spawn[0], spawn[1])
             bacterium = BacteriumNormal(0)
             if move != None:
-                self._board.set_bacterium(move[0], move[1], bacterium)
+                self._board.add_bacterium(move[0], move[1], bacterium)
                 self._cant_bacterium -= 1
 
     def generate_other(self):
@@ -76,11 +73,12 @@ class GameController:
             move = self.__board.get_random_move(spawn[0], spawn[1])
             if move != None:
                 if self.__game_mode == Game_Mode.ANTIBIOTIC:
-                    self._board.set_antibiotics(move[0],move[1], 1)
+                    entity = Antibiotic()
+                    self._board.add_antibiotic(move[0],move[1], entity)
                     self._cant_other -= 1
                 else:
                     ente = Bacteriophage(4)
-                    self._board.set_bacteriophage(move[0], move[1], ente)
+                    self._board.add_bacteriophage(move[0], move[1], ente)
                     self._cant_other -= 1
 
     def generate_entities(self):
@@ -99,22 +97,19 @@ class GameController:
     def refresh_board(self):
         if self._game_state != Game_State.START_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
-        
+
         actualizado = self._board.move_all_entities()
-        # print('m------  \n',actualizado.__str__())
         self.__board = actualizado
         self.generate_entities()
-        # print('a------  \n',actualizado.__str__())
         actualizado.crossing_board()
-        # print('b------  \n',actualizado.__str__())
         self.__movements += 1
 
 
     def stop(self):
         if self.__game_state != Game_State.START_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
-        
-        self.__game_state = Game_State.FINISH_GAME
+
+        self.__game_state = Game_State.NOT_STARTER
 
 
 ############ SETTERS Y GETTERS ###############
@@ -125,16 +120,22 @@ class GameController:
 
     @_game_mode.setter
     def _game_mode(self, mode: Game_Mode):
-        spawn_bacterium = self.__board.get_position_spawn_bacterium()
-        spawn_other = self.__board.get_position_spawn_other()
-        if not (self.__game_state == Game_State.CONFIG_GAME and spawn_bacterium != None and spawn_other != None):
+        # spawn_bacterium = self.__board.get_position_spawn_bacterium()
+        # spawn_other = self.__board.get_position_spawn_other()
+        if not (self.__game_state == Game_State.CONFIG_GAME):
             raise ValueError("El juego no está en el estado CONFIG_GAME o no se configuró uno de los spawn")
-        
         self.__game_mode = mode
+        self._board.set_gameMode(mode.value)
 
     def start_game(self):
-        if not (self.__game_state == Game_State.CONFIG_GAME and self.__game_mode != None):
-            raise ValueError("El juego no está en el estado CONFIG_GAME o no se configuró el modo de juego")
+        if not self.__game_state == Game_State.CONFIG_GAME:
+            raise ValueError("El juego no está en el estado CONFIG_GAME")
+
+        if self.__board.get_position_spawn_bacterium == None:
+            raise ValueError("El spawn de bacterias no está seteado")
+        
+        if self.__board.get_position_spawn_other == None:
+            raise ValueError("El spawn de otro no está seteado")
         
         self.__game_state = Game_State.START_GAME
 
@@ -189,7 +190,7 @@ class GameController:
     def set_spawn_bacterium(self, position):
         if  self._game_state != Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado CONFIG_GAME")
-        
+
         self.__board.set_position_spawn_bacterium(position)
 
     def set_spawn_other(self, position):
@@ -198,8 +199,17 @@ class GameController:
 
         self.__board.set_position_spawn_other(position)
 
+
+
+
     #METODOS PARA IMPLEMENTAR STEPS DE BEHAVE
 
+    def get_rows(self):
+        return self._board._rows
+    
+    def get_columns(self):
+        return self._board._columns
+    
     def count_in_adjacents(self, x, y, ente):
         vecinos = self._board.get_possible_moves(x,y)
         contador = 0
@@ -209,52 +219,56 @@ class GameController:
             b = celda[1]
 
             if ente == "bacteria" or ente == "bacterias":
-                contador += self._board.get_cell(a,b).cant_bacteria()
+                contador += self._board.get_cell(a,b).get_cant_bacteria()
             if ente == "antibiotico" or ente == "antibioticos":
-                contador += self._board.get_cell(a,b)._antibiotics
+                contador += self._board.get_cell(a,b).get_cant_antibiotic()
             if ente == "bacteriofago" or ente == "bacteriofagos":
-                contador += self._board.get_cell(a,b).cant_bacteriophages()
+                contador += self._board.get_cell(a,b).get_cant_bacteriophage()
 
         return contador
-    
+
     def add_entities(self, x, y, n, ente):
         if ente == "antibiotico":
             for _ in range(0,n):
                 self._board.add_antibiotic(x,y,Antibiotic())
         if ente == "bacteriofago":
             for _ in range(0,n):
-                self._board.set_bacteriophage(x,y, Bacteriophage(2))
+                self._board.add_bacteriophage(x,y, Bacteriophage(2))
         if ente == "bacteria normal":
             for _ in range(0,n):
-                self._board.set_bacterium(x,y, BacteriumNormal(1))
+                self._board.add_bacterium(x,y, BacteriumNormal(1))
         if ente == "bacteria debil":
             for _ in range(0,n):
-                self._board.set_bacterium(x,y, BacteriumWeak(1))
+                self._board.add_bacterium(x,y, BacteriumWeak(1))
         if ente == "bacteria fuerte":
             for _ in range(0,n):
-                self._board.set_bacterium(x,y, BacteriumStrong(1))
+                self._board.add_bacterium(x,y, BacteriumStrong(1))
         if ente == "bacteria infectada":
             for _ in range(0,n):
-                self._board.set_bacterium(x,y, BacteriumInfected(1))
+                self._board.add_bacterium(x,y, BacteriumInfected(1))
 
     def count_entities(self, x, y, ente):
         if ente == "antibioticos":
-            return self._board.get_cell(x,y)._antibiotics
+            return self._board.get_cell(x,y).get_cant_antibiotic()
         if ente == "bacterias":
-            return self._board.get_cell(x,y).cant_bacteria()
-        if ente == "bacteria normal" or ente =="bacteria debil" or ente == "bacteria fuerte":
-            return self._board.get_cell(x,y).cant_type_bacterium(ente)
+            return self._board.get_cell(x,y).get_cant_bacteria()
+        if ente == "bacteria normal":
+            return self._board.get_cell(x,y).cant_ente('b')
+        if ente == "bacteria fuerte":
+            return self._board.get_cell(x,y).cant_ente('f')
+        if ente == "bacteria debil":
+            return self._board.get_cell(x,y).cant_ente('d')
         if ente == "bacteriofago" or ente == "bacteriofagos":
-            return self._board.get_cell(x,y).cant_bacteriophages()
-        
+            return self._board.get_cell(x,y).get_cant_bacteriophage()
+
     def add_bacteriophage(self, x, y, power):
-        self._board.set_bacteriophage(x,y, Bacteriophage(power))
+        self._board.add_bacteriophage(x,y, Bacteriophage(power))
 
     def count_infected(self, x, y, grade):
         return self._board.get_cell(x,y).count_infected(grade)
-    
+
     def add_infected(self, x, y, grade):
-        self._board.set_bacterium(x,y, BacteriumInfected(grade))
+        self._board.add_bacterium(x,y, BacteriumInfected(grade))
 
     def count_bacteriophages(self, x, y, power):
         return self._board.get_cell(x,y).count_bacteriophages(power)
@@ -264,24 +278,24 @@ class GameController:
 
     def add_bacterium(self, x, y, moves, type):
         if type == "normal":
-            self._board.add_bacterium_moves(x,y,BacteriumNormal(moves))
+            self._board.add_bacterium(x,y,BacteriumNormal(moves))
         if type == "debil":
-            self._board.add_bacterium_moves(x,y,BacteriumWeak(moves))
+            self._board.add_bacterium(x,y,BacteriumWeak(moves))
         if type == "fuerte":
-            self._board.add_bacterium_moves(x,y,BacteriumStrong(moves))
+            self._board.add_bacterium(x,y,BacteriumStrong(moves))
 
     def move_entity(self, x1, y1, x2, y2, ente):
         #asignacion para que no chille python, pero no hace nada en realidad
         entity_to_move = ente
-        
+
         if ente == "bacteria normal":
-            entity_to_move = self._board.get_cell(x1,y1).get_normal()
+            entity_to_move = self._board.get_cell(x1,y1).get_bacterium('b')
         if ente == "bacteria fuerte":
-            entity_to_move = self._board.get_cell(x1,y1).get_strong()  
+            entity_to_move = self._board.get_cell(x1,y1).get_bacterium('f')
         if ente == "bacteria debil":
-            entity_to_move = self._board.get_cell(x1,y1).get_weak() 
+            entity_to_move = self._board.get_cell(x1,y1).get_bacterium('d')
         if ente == "bacteria infectada":
-            entity_to_move = self._board.get_cell(x1,y1).get_infected()
+            entity_to_move = self._board.get_cell(x1,y1).get_bacterium('i')
         if ente == "bacteriofago":
             entity_to_move = self._board.get_cell(x1,y1).get_bacteriophage()
 
