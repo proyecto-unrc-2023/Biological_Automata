@@ -54,18 +54,20 @@ class Bacterium(Entity):
 class BacteriumNormal(Bacterium):
 
     def reproducir(self):
+      # #genero un numero aleatorio entre 0 y 1
+      random_number = random.random()
+      return self.replicate_with_parameter(random_number)
+
+    def replicate_with_parameter(self, random_number):
       if not self.isReproducible():
         raise ValueError("La bacteria no está en condiciones de reproducirse!")
-      
       mutation_probability = 0.01
-      
-      #genero un numero aleatorio entre 0 y 1
-      random_number = random.random()
       self.moves = 0
       if random_number > mutation_probability:
         return BacteriumNormal(0)
       else:
         return BacteriumStrong(0)
+
 
     def isReproducible(self):
       return self.moves >= 3
@@ -81,7 +83,7 @@ class BacteriumStrong(Bacterium):
     def reproducir(self):
       if not self.isReproducible():
         raise ValueError("La bacteria no está en condiciones de reproducirse!")
-      
+
       self.moves = 0
       return BacteriumStrong(0)
 
@@ -110,19 +112,19 @@ class BacteriumInfected(Bacterium):
 
     def __str__(self):
       return 'i'
-    
+
 class BacteriumWeak(Bacterium):
 
     def isReproducible(self):
       return False
 
-    def isRecoverable(self):      
+    def isRecoverable(self):
       return self.moves >= 6
 
     def recover(self):
       if not self.isRecoverable():
         raise ValueError("La bacteria no está en condiciones de recuperarse!")
-    
+
       return BacteriumStrong(0)
 
     def __str__(self):

@@ -7,9 +7,12 @@ def abrir_juego(context):
     context.game = GameController()
 
 # se configuran los parametros iniciales del juego
-@given("los parametros iniciales del juego son ({a:d},{b:d},{c:d},{d:d})")
-def configurar_juego(context,a,b,c,d):
-    context.game.config(a,b,c,d)
+@given("los parametros iniciales del juego son ({a:d},{b:d},{c:d},{d:d},{modo})")
+def configurar_juego(context,a,b,c,d,modo):
+    if (modo == "antibiotico"):
+        context.game.config(a,b,c,d,Game_Mode.ANTIBIOTIC)
+    if (modo == "bacteriofago"):
+        context.game.config(a,b,c,d,Game_Mode.BACTERIOPHAGE)
 
 # ya se coloco el spawn de bacterias
 @given("se coloco el spawn de bacterias en ({x:d},{y:d})")
@@ -21,18 +24,12 @@ def fijar_spawn_bacteria(context,x,y):
 def fijar_spawn_other(context,x,y):
     context.game.set_spawn_other((x,y))
 
-# se eligio el modo de juego 
-@given("el modo de juego elegido es {modo}")
-def setear_modo_de_juego(context,modo):
+@when("configura el juego con los siguientes parametros ({a:d},{b:d},{c:d},{d:d},{modo})") 
+def configurar_parametros(context,a,b,c,d,modo):
     if (modo == "antibiotico"):
-        context.game._game_mode = Game_Mode.ANTIBIOTIC
+        context.game.config(a,b,c,d,Game_Mode.ANTIBIOTIC)
     if (modo == "bacteriofago"):
-        context.game._game_mode = Game_Mode.BACTERIOPHAGE
-
-
-@when("configura el juego con los siguientes parametros ({a:d},{b:d},{c:d},{d:d})") 
-def configurar_parametros(context,a,b,c,d):
-    context.game.config(a,b,c,d)
+        context.game.config(a,b,c,d,Game_Mode.BACTERIOPHAGE)
 
 @when("el usuario elige la posicion del spawn de bacterias en ({x:d},{y:d})")
 def colocar_spawn_bacteria(context,x,y):
@@ -41,13 +38,6 @@ def colocar_spawn_bacteria(context,x,y):
 @when("el usuario elige la posicion del spawn de la otra entidad en ({x:d},{y:d})")
 def colocar_spawn_other(context,x,y):
     context.game.set_spawn_other((x,y))
-
-@when("el usuario elige el modo de juego {modo}")
-def elegir_modo_de_juego(context, modo):
-    if (modo == "antibiotico"):
-        context.game._game_mode = Game_Mode.ANTIBIOTIC
-    if (modo == "bacteriofago"):
-        context.game._game_mode = Game_Mode.BACTERIOPHAGE
         
 @when("el usuario inicia el juego")
 def iniciar_juego(context):
@@ -55,8 +45,8 @@ def iniciar_juego(context):
 
 @then("se deberia crear un tablero de {x:d}x{y:d}")
 def dimensiones_de_tablero(context,x,y):
-    assert context.game._board._rows == x
-    assert context.game._board._columns == y
+    assert context.game.get_rows() == x
+    assert context.game.get_columns() == y
 
 @then("la cantidad de bacterias de inicio es {c:d}")
 def chequear_bacterias_inicio(context,c):
