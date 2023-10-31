@@ -79,13 +79,12 @@ class Board:
         return res
 
     def __str__(self):
-        res = ''
-        for row_num in range(self.__rows):
-            res += self._row_to_string(self._board[row_num], row_num)
-            if row_num < self.__rows - 1:
-                res += '\n'
-        return res
-
+       res = ''
+       for row_num in range(self.__rows):
+           res += self._row_to_string(self.__board[row_num], row_num)
+           if row_num < self.__rows - 1:
+               res += '\n'
+       return res
     @property
     def _rows(self):
         return self.__rows

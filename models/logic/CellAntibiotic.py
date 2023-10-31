@@ -105,3 +105,8 @@ class CellAntibiotic(Cell):
             if self.get_cant_antibiotic() != other.get_cant_antibiotic():
                 return False
         return True
+
+##para schema
+    @property
+    def _other(self):
+        return self.get_cant_antibiotic()
