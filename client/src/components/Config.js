@@ -266,7 +266,7 @@ return (
             onChange={(e) => setFrecOther(parseInt(e.target.value))}
             />
         </label>
-      <button onClick={handleSaveConfig}>Save change</button>
+      <button onClick={handleSaveConfig}>Play</button>
     </div>
     </>
   );

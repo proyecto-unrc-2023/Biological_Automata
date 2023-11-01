@@ -1,7 +1,6 @@
 /* Estilo para la cuadrícula principal */
 html {
-  /* background-color: rgba(255, 0, 0, 0.466); */
-  background-image: url('../../public/flush.jpg');
+  background-image: url('../../public/Fondo-tex.jpeg');
   filter: contrast(1.1) brightness(0.9);
   background-attachment: fixed;
   background-size: cover;
@@ -19,8 +18,6 @@ html {
 .grid-row {
   display: flex;
   justify-content: center; /* Centra las celdas horizontalmente en la fila */
-  /*margin-bottom: 10px; Espacio entre las filas */
-
 }
 
 
@@ -28,11 +25,8 @@ html {
 .cell {
   width: 35px;
   height: 35px;
-  /*margin-right: 10px;  Espacio entre las celdas */
-  /* Otros estilos de celda según tus preferencias */
   background-color: #00000000;
   border: 1px solid #000000;
-  background-image: url('../../public/textura.png');
   background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
   background-position: center center; /* Centra la imagen vertical y horizontalmente */
   background-repeat: no-repeat;
@@ -127,6 +121,7 @@ html {
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+  animation: mask 1s linear;
 }
 
 
@@ -139,6 +134,7 @@ html {
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+  filter: drop-shadow(0 0 10px rgb(42, 208, 245));  
 }
 
 .bacteriophage{
@@ -150,6 +146,7 @@ html {
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+  animation: mask 1s linear;
 }
 
 .App{
@@ -288,4 +285,36 @@ p{
 p#spawn{
   top: 90%;
   left: 36%;
+}
+
+.grid-row:nth-child(even){
+  background-image: url('../../public/fondo.png');
+  background-size: 77.65px;
+  background-repeat: repeat-x;
+  filter: brightness(1.1);
+  opacity: 1;
+}
+.grid-row:nth-child(odd){
+  background-image: url('../../public/fondo.png');
+  background-size: 77.65px;
+  background-position: 50%;
+  background-repeat: repeat-x;
+  filter: brightness(1.1);
+  opacity: 1;
+}
+
+@keyframes mask{
+0%{
+  filter: brightness(1.7);
+}
+25%{
+  filter: brightness(1);
+  
+}
+50%{
+  filter: brightness(1.7);
+}
+75%{
+  filter: brightness(1);
+}
 }

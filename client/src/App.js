@@ -38,12 +38,19 @@ function App() {
     }
   };
 
+  // useEffect(
+  //   ()=>{
+  //     return() => {
+  //       reproducir();
+  //     };
+  //     },[]
+  // )
 
 
     return (
       <>
 
-      <div className="App" onMouseMove={reproducir}>
+      <div className="App" onMouseEnter={reproducir}>
         {startGame ? (
           <Create_board handleStartGame={handleStartGame} />
         ) : (

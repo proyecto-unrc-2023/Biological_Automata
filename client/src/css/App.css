@@ -1,8 +1,7 @@
 /* Estilo para la cuadrícula principal */
 html {
-  background-image: url('../../public/flush.jpg');
+  background-image: url('../../public/Fondo-tex.jpeg');
   background-attachment: fixed;
-  /* background-repeat: no-repeat; */
   background-size: cover;
   position: relative;
   top: 12%;
@@ -18,8 +17,6 @@ html {
 .grid-row {
   display: flex;
   justify-content: center; /* Centra las celdas horizontalmente en la fila */
-  /*margin-bottom: 10px; Espacio entre las filas */
-
 }
 
 
@@ -27,11 +24,8 @@ html {
 .cell {
   width: 30px;
   height: 30px;
-  /*margin-right: 10px;  Espacio entre las celdas */
-  /* Otros estilos de celda según tus preferencias */
   background-color: #00000000;
   border: 1px solid #000000;
-  background-image: url('../../public/textura.png');
   background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
   background-position: center center; /* Centra la imagen vertical y horizontalmente */
   background-repeat: no-repeat;
