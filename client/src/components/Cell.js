@@ -9,7 +9,7 @@ function Cell({i, j, cellData, gameData}) {
     const { _other, bacterias} = cellData;
 
     let game_mode;
-    if (_game_mode == "Game_Mode.ANTIBIOTIC") {
+    if (_game_mode === "Game_Mode.ANTIBIOTIC") {
       game_mode = 1;
     } else {
       game_mode = 2;
@@ -25,7 +25,7 @@ function Cell({i, j, cellData, gameData}) {
     } else if (spawn_other && spawn_other[0] === i && spawn_other[1] === j && _cant_other > 0) {
       cellClass = "spawnOtherActive";
     }else if (_other !== 0) {
-        if (game_mode == 1){
+        if (game_mode === 1){
           cellClass = "antibiotic";
         } else {
           cellClass = "bacteriophage";

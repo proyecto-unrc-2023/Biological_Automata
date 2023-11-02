@@ -6,7 +6,7 @@ import vir from '../images/bacteriophague.png'
 import '../css/config.css';
 
 
-function Config ({handleStartGame}) {
+function Config ({handleStartGame, id}) {
   const rows = 15;
   const columns = 20;
   const [board, setBoard] = useState([]);
@@ -166,9 +166,10 @@ function Config ({handleStartGame}) {
           frecBact: frecBact,
           frecOther: frecOther,
           gameMode: gameMode,
+          id: id,
         };
 
-      fetch('http://localhost:5000/game/config', {
+      fetch('http://localhost:5000/game/saveConfig', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

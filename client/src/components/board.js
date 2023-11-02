@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 
-function Create_board({handleStartGame }) {
+function Create_board({handleStartGame, id}) {
   const [board, setBoard] = useState([]);
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
 
   const [stopGame, setStopGame] = useState(true);
   const [speed, setSpeed] = useState(1);
-
   //funcion para refrescar la data del game
   const fetchRefreshData = () => {
-    fetch('http://localhost:5000/game/refresh')
+    fetch(`http://localhost:5000/game/refreshgame/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setGameData(data);
@@ -37,7 +36,7 @@ function Create_board({handleStartGame }) {
 
     // Frenar el Juego Con el Boton STOP
   const handleStop_Game = () => {
-    const url = `http://localhost:5000/game/stop`;
+    const url = `http://localhost:5000/game/stopgame/${id}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {

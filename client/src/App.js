@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './css/App.css';
 import Create_board from './components/board';
 import Config from './components/Config';
@@ -7,7 +7,7 @@ import aud from './images/music.mp3'
 function App() {
     const [startGame, setStartGame] = useState(false)
     const [sound, setSound] = useState(0)
-
+    const [id] = useState(Math.floor(Math.random() * 101));
     const handleStartGame = (bool) => {
       setStartGame(bool);
       setSound(1);
@@ -38,23 +38,13 @@ function App() {
     }
   };
 
-  // useEffect(
-  //   ()=>{
-  //     return() => {
-  //       reproducir();
-  //     };
-  //     },[]
-  // )
-
-
     return (
       <>
-
-      <div className="App" onMouseEnter={reproducir}>
+      <div className="App" onMouseMove={reproducir}>
         {startGame ? (
-          <Create_board handleStartGame={handleStartGame} />
+          <Create_board handleStartGame={handleStartGame} id={id} />
         ) : (
-          <Config handleStartGame={handleStartGame} />
+          <Config handleStartGame={handleStartGame} id={id}/>
         )}
 
       </div>
