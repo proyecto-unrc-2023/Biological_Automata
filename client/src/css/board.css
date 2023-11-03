@@ -7,15 +7,18 @@ html {
   position: relative;
   top: 12%;
   cursor: url('../../public/gui/cursor.png'), auto;
+
+
 }
 .grid {
+
   display: flex;
   flex-direction: column; /*filas en vertical */
   align-items: center; /* Centra filas horizontalmente */
   justify-content: center; /* Centra verticalmente */
-  /* border: 1px solid #000000; */
-  /* background-image: url('../../public/sangre2.gif');
-  background-size: auto; */
+  /* border: 1px solid #000000;
+  background-image: url('../../public/sangre2.gif'); */
+
 }
 
 /* Estilo para cada fila de la cuadrícula */
@@ -158,102 +161,6 @@ html {
   grid-template-columns: 15% 70% 15%;
 }
 
-img{
-  width: 90px;
-  height: 90px;
-}
-
-img:hover{
-  cursor: pointer;
-  filter: brightness(1.2) ;
-}
-
-.sss{
-  display: grid;
-  row-gap: 50px;
-  width: 50px;
-  justify-self: center;
-  height: 35rem;
-  position: relative;
-  bottom: 13%;
-}
-
-.sss button{
-  background-color: transparent;
-  border: none;
-  height: 100px;
-}
-
-.modAa{
-  filter: brightness(1.3);
-}
-
-.modAa img{
-  background-color: rgba(128, 128, 128, 0.479);
-}
-.modVa{
-  filter: brightness(1.3);
-}
-.modVa img{
-  background-color: rgba(128, 128, 128, 0.479);
-}
-
-p{
-  color: aliceblue;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  text-shadow: 0 3px 1px #000000;
-  font-size: 1.5rem;
-  position: relative;
-  left: 23%;
-  width: 130px;
-}
-
-#mode{
-  display: flex;
-  position: relative;
-  align-items: center;
-  align-self: center;
-  column-gap: 10px;
-}
-
-#mode img{
-  border: inset;
-}
-
-#params{
-  display: flex;
-  flex-direction:column;
-  align-self: center;
-  align-items: center;
-  text-align: center;
-  row-gap: 20px;
-  width: 200px;
-}
-
-#params label{
-  font-size: large;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  text-shadow: 0 3px 1px #000000;
-  text-wrap: 10px;
-  color: aliceblue;
-}
-
-#params input{
-  height: 25px;
-  width: 100px;
-  background-color: rgba(220, 20, 60, 0.58);
-  border: inset;
-  border-color: -internal-light-dark(rgb(59, 56, 56), rgb(212, 207, 207));
-  color: aliceblue;
-  font-style: bold;
-  text-align: center;
-  font-size: 1rem;
-}
-
-#params button{
-  width: 70px;
-}
-
 .spawnbacAct{
   filter: brightness(1.5);
 }
@@ -262,54 +169,31 @@ p{
   filter: brightness(1.5);
 }
 
-#params button{
-  background-color: rgba(197, 1, 1, 0.71);
-  height: 50px;
-  width: 70px;
-  border-radius: 5px;
-  filter: contrast(1.35);
-  color: aliceblue;
+
+.button {
+  width: 50px; /* Ancho de los botones */
+  height: 50px; /* Alto de los botones */
+  border-radius: 50%; /* Hace que los botones sean redondos */
+  background-size: cover; /* Ajusta la imagen al tamaño del botón */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  cursor: pointer; /* Cambia el cursor cuando se pasa por encima */
 }
 
-#params button:hover{
+button:hover{
   cursor: pointer;
   filter: brightness(1.25);
 }
 
-p#spawn{
-  top: 90%;
-  left: 36%;
+
+
+.stop-button {
+  background-image: url('../../public/gui/stop.png'); /* Ruta de la imagen de STOP */
 }
 
-.grid-row:nth-child(even){
-  background-image: url('../../public/fondo.png');
-  background-size: 77.65px;
-  background-repeat: repeat-x;
-  filter: brightness(1.1);
-  opacity: 1;
-}
-.grid-row:nth-child(odd){
-  background-image: url('../../public/fondo.png');
-  background-size: 77.65px;
-  background-position: 50%;
-  background-repeat: repeat-x;
-  filter: brightness(1.1);
-  opacity: 1;
+.pause-button {
+  background-image: url('../../public/gui/pause.png'); /* Ruta de la imagen de PAUSA */
 }
 
-@keyframes mask{
-0%{
-  filter: brightness(1.7);
+.sonido {
+  background-image: url('../../public/gui/sound.png'); /* Ruta de la imagen de PAUSA */
 }
-25%{
-  filter: brightness(1);
-
-}
-50%{
-  filter: brightness(1.7);
-}
-75%{
-  filter: brightness(1);
-}
-}
-

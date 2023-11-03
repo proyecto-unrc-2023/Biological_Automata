@@ -169,7 +169,7 @@ function Config ({handleStartGame, id}) {
           id: id,
         };
 
-      fetch('http://localhost:5000/game/saveConfig', {
+      fetch(`http://localhost:5000/game/saveConfig`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -241,6 +241,7 @@ return (
             type="number"
             value={cantBact}
             onChange={(e) => setCantBact(parseInt(e.target.value))}
+            min="0"
             />
         </label>
         <label>
@@ -249,6 +250,7 @@ return (
             type="number"
             value={frecBact}
             onChange={(e) => setFrecBact(parseInt(e.target.value))}
+            min="1"
           />
         </label>
         <label>
@@ -257,6 +259,7 @@ return (
             type="number"
             value={cantOther}
             onChange={(e) => setCantOther(parseInt(e.target.value))}
+            min="0"
             />
         </label>
         <label>
@@ -265,6 +268,7 @@ return (
             type="number"
             value={frecOther}
             onChange={(e) => setFrecOther(parseInt(e.target.value))}
+            min="1"
             />
         </label>
       <button onClick={handleSaveConfig}>Play</button>
