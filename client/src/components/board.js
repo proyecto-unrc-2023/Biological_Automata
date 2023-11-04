@@ -82,6 +82,7 @@ function Create_board({handleStartGame, id}) {
 
   const togglePause = () => {
     setStopGame(!stopGame)
+    document.getElementById('pause').classList.toggle('pause');
   };
 
   return (
@@ -109,7 +110,7 @@ function Create_board({handleStartGame, id}) {
         handleStartGame(false); handleStop_Game();}}>
       </button>
 
-      <button className="button pause-button" onClick={() => {
+      <button className="button pause-button" id='pause' onClick={() => {
         togglePause();}}>
       </button>
       </div>

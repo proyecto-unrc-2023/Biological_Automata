@@ -197,3 +197,7 @@ button:hover{
 .sonido {
   background-image: url('../../public/gui/sound.png'); /* Ruta de la imagen de PAUSA */
 }
+
+.pause{
+  filter: brightness(1.2);
+}
