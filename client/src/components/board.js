@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
-
+import '../css/board.css';
 function Create_board({handleStartGame, id}) {
   const [board, setBoard] = useState([]);
   const [boardData, setBoardData] = useState(null);
@@ -105,14 +105,12 @@ function Create_board({handleStartGame, id}) {
       {board}
 
       <div id="controls">
-      <button onClick={() => {
+      <button className="button stop-button" onClick={() => {
         handleStartGame(false); handleStop_Game();}}>
-        STOP
       </button>
 
-      <button onClick={() => {
+      <button className="button pause-button" onClick={() => {
         togglePause();}}>
-        PAUSA
       </button>
       </div>
 

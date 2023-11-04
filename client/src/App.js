@@ -1,19 +1,16 @@
 import React, {useState} from 'react';
-import './css/App.css';
 import Create_board from './components/board';
 import Config from './components/Config';
 import aud from './images/music.mp3'
 
 function App() {
     const [startGame, setStartGame] = useState(false)
-    const [sound, setSound] = useState(0)
     const [id] = useState(Math.floor(Math.random() * 101));
+    const [soundPlaying, setSoundPlaying] = useState(false);
+
     const handleStartGame = (bool) => {
       setStartGame(bool);
-      setSound(1);
     };
-
-
 
     const cargarSonido = function (fuente) {
       const sonido = document.createElement("audio");
@@ -27,27 +24,37 @@ function App() {
   };
 
   // const play = document.querySelector("#btnReproducir");
-  const sonido = cargarSonido(aud);
+  const [sonido] = useState(cargarSonido(aud));
   const reproducir = function() {
-    if (!startGame && sound === 0) {
+    if (!soundPlaying) {
       try {
         sonido.play();
+        setSoundPlaying(true);
       } catch (error) {
 
       }
+    } else if (soundPlaying) {
+      sonido.pause();
+      setSoundPlaying(false);
     }
   };
 
     return (
       <>
-      <div className="App" onMouseMove={reproducir}>
+      <div className="App">
         {startGame ? (
           <Create_board handleStartGame={handleStartGame} id={id} />
         ) : (
           <Config handleStartGame={handleStartGame} id={id}/>
         )}
-
       </div>
+
+      <div>
+        <button className ="button sonido" onClick={reproducir}>
+          {soundPlaying ? 'Pausar' : 'Reproducir'}
+        </button>
+      </div>
+
       </>
     );
   }
