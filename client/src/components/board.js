@@ -90,6 +90,7 @@ function Create_board({handleStartGame, id}) {
     </div>
     <div className="grid">
 
+      <div id='controls-v'>
       <label>Velocidad: </label>
       <input
         type="range" //que aparezca como deslizar
@@ -99,8 +100,11 @@ function Create_board({handleStartGame, id}) {
         value={speed}
         onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
       />
+      </div>
 
       {board}
+
+      <div id="controls">
       <button onClick={() => {
         handleStartGame(false); handleStop_Game();}}>
         STOP
@@ -110,6 +114,7 @@ function Create_board({handleStartGame, id}) {
         togglePause();}}>
         PAUSA
       </button>
+      </div>
 
     </div>
     <div>

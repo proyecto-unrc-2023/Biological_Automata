@@ -30,6 +30,7 @@ html {
   background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
   background-position: center center; /* Centra la imagen vertical y horizontalmente */
   background-repeat: no-repeat;
+  filter: brightness(2) contrast(2) sepia(1);
 
 }
 
@@ -98,6 +99,7 @@ html {
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+  filter: blur(1) brightness(2) contrast(2);
 }
 
 .bacteriumWeak{
@@ -317,4 +319,18 @@ p#spawn{
 75%{
   filter: brightness(1);
 }
+}
+
+#controls-v{
+  position: relative;
+  top: -4%;
+  color: aliceblue;
+  font-weight: bold;
+  font-size: large;
+
+}
+
+#controls, #controls-v{
+  display: flex;
+  column-gap: 30px;
 }
