@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
-
-function Create_board({handleStartGame }) {
+import '../css/board.css';
+function Create_board({handleStartGame, id}) {
   const [board, setBoard] = useState([]);
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
 
   const [stopGame, setStopGame] = useState(true);
   const [speed, setSpeed] = useState(1);
-
   //funcion para refrescar la data del game
   const fetchRefreshData = () => {
-    fetch('http://localhost:5000/game/refresh')
+    fetch(`http://localhost:5000/game/refreshgame/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setGameData(data);
@@ -37,7 +36,7 @@ function Create_board({handleStartGame }) {
 
     // Frenar el Juego Con el Boton STOP
   const handleStop_Game = () => {
-    const url = `http://localhost:5000/game/stop`;
+    const url = `http://localhost:5000/game/stopgame/${id}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -83,6 +82,7 @@ function Create_board({handleStartGame }) {
 
   const togglePause = () => {
     setStopGame(!stopGame)
+    document.getElementById('pause').classList.toggle('pause');
   };
 
   return (
@@ -91,6 +91,7 @@ function Create_board({handleStartGame }) {
     </div>
     <div className="grid">
 
+      <div id='controls-v'>
       <label>Velocidad: </label>
       <input
         type="range" //que aparezca como deslizar
@@ -100,17 +101,19 @@ function Create_board({handleStartGame }) {
         value={speed}
         onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
       />
+      </div>
 
       {board}
-      <button onClick={() => {
+
+      <div id="controls">
+      <button className="button stop-button" onClick={() => {
         handleStartGame(false); handleStop_Game();}}>
-        STOP
       </button>
 
-      <button onClick={() => {
+      <button className="button pause-button" id='pause' onClick={() => {
         togglePause();}}>
-        PAUSA
       </button>
+      </div>
 
     </div>
     <div>

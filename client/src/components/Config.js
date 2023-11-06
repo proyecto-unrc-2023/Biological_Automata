@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import spb from '../images/spb.png'
 import spa from '../images/spa.png'
 import ant from '../images/pill.gif'
+import selec from '../images/seleccion.gif'
 import vir from '../images/bacteriophague.png'
 import '../css/config.css';
 
 
-function Config ({handleStartGame}) {
+function Config ({handleStartGame, id}) {
   const rows = 15;
   const columns = 20;
   const [board, setBoard] = useState([]);
@@ -133,9 +134,17 @@ function Config ({handleStartGame}) {
   const toggleModeAntibiotic = () => {
     setGameMode(1);
     document.getElementById('modA').classList.toggle('modAa');
+    var selec = document.getElementById('selec');
+    if (selec.style.display == 'block') {
+      selec.style.display = "none";
+    } else {
+      selec.style.display = "block";
+    }
+    
     setmodeOne(!modeOne);
     if (modeTwo) {
       document.getElementById('modV').classList.toggle('modVa');
+      document.getElementById('selec2').style.display = "none";
       setmodeTwo(!modeTwo);
     }
   };
@@ -144,9 +153,16 @@ function Config ({handleStartGame}) {
   const toggleModeBacteriophague = () => {
     setGameMode(2);
     document.getElementById('modV').classList.toggle('modVa');
+    var selec = document.getElementById('selec2');
+    if (selec.style.display == 'block') {
+      selec.style.display = "none";
+    } else {
+      selec.style.display = "block";
+    }
     setmodeTwo(!modeTwo);
     if (modeOne) {
       document.getElementById('modA').classList.toggle('modAa');
+      document.getElementById('selec').style.display = "none";
       setmodeOne(!modeOne);
     }
   };
@@ -166,9 +182,10 @@ function Config ({handleStartGame}) {
           frecBact: frecBact,
           frecOther: frecOther,
           gameMode: gameMode,
+          id: id,
         };
 
-      fetch('http://localhost:5000/game/config', {
+      fetch(`http://localhost:5000/game/saveConfig`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -217,11 +234,13 @@ return (
         <p>Game mode</p>
             <div id="mode">
               <button onClick={toggleModeAntibiotic} id='modA'>
-                <img src={ant}></img>
+                <img src={ant} id='ant'></img>
+                <img src={selec} id='selec'></img>
               </button>
 
               <button onClick={toggleModeBacteriophague} id='modV'>
-                <img src={vir}></img>
+                <img src={vir} id='vir'></img>
+                <img src={selec} id='selec2'></img>
                 {/* Elegir Modo Bacteriophage {gameMode === 2 ? "Activado" : "Desactivado"} */}
               </button>
             </div>
@@ -240,6 +259,7 @@ return (
             type="number"
             value={cantBact}
             onChange={(e) => setCantBact(parseInt(e.target.value))}
+            min="0"
             />
         </label>
         <label>
@@ -248,6 +268,7 @@ return (
             type="number"
             value={frecBact}
             onChange={(e) => setFrecBact(parseInt(e.target.value))}
+            min="1"
           />
         </label>
         <label>
@@ -256,6 +277,7 @@ return (
             type="number"
             value={cantOther}
             onChange={(e) => setCantOther(parseInt(e.target.value))}
+            min="0"
             />
         </label>
         <label>
@@ -264,9 +286,10 @@ return (
             type="number"
             value={frecOther}
             onChange={(e) => setFrecOther(parseInt(e.target.value))}
+            min="1"
             />
         </label>
-      <button onClick={handleSaveConfig}>Save change</button>
+      <button onClick={handleSaveConfig}>Play</button>
     </div>
     </>
   );
