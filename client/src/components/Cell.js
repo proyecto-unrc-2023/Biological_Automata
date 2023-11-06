@@ -1,5 +1,4 @@
 import React from 'react';
-
 function Cell({i, j, cellData, gameData}) {
 
   const generateCell = () => {

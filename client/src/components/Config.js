@@ -8,8 +8,8 @@ import '../css/config.css';
 
 
 function Config ({handleStartGame, id}) {
-  const rows = 15;
-  const columns = 20;
+  const rows = 12;
+  const columns = 17;
   const [board, setBoard] = useState([]);
   const [bacteriumMode, setBacteriumMode] = useState(false);
   const [otherMode, setOtherMode] = useState(false);
@@ -31,13 +31,16 @@ function Config ({handleStartGame, id}) {
   // Función para generar el board
   const generateBoard = (_rows, _columns) => {
     const newBoard = [];
+
     for (let i = 0; i < _rows; i++) {
       const row = [];
       for (let j = 0; j < _columns; j++) {
           row.push(<td key={`${i}-${j}`} id={`${i}-${j}`} className="cell" onClick={handleClick}></td>);
       }
+
       newBoard.push(<div key={i} className="grid-row">{row}</div>);
     }
+
     setBoard(newBoard);
   };
 
@@ -140,7 +143,7 @@ function Config ({handleStartGame, id}) {
     } else {
       selec.style.display = "block";
     }
-    
+
     setmodeOne(!modeOne);
     if (modeTwo) {
       document.getElementById('modV').classList.toggle('modVa');
@@ -246,6 +249,7 @@ return (
             </div>
       </div>
     </div>
+    
     <div className="grid">
 
       {board}

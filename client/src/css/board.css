@@ -1,6 +1,6 @@
 /* Estilo para la cuadrícula principal */
 html {
-  background-image: url('../../public/Fondo-tex.jpeg');
+  background-image: url('../../public/fondo.jpeg');
   filter: contrast(1.1) brightness(0.9);
   background-attachment: fixed;
   background-size: cover;
@@ -16,8 +16,8 @@ html {
   flex-direction: column; /*filas en vertical */
   align-items: center; /* Centra filas horizontalmente */
   justify-content: center; /* Centra verticalmente */
-  /* border: 1px solid #000000;
-  background-image: url('../../public/sangre2.gif'); */
+  /* border: 1px solid #000000; */
+  /* background-image: url('../../public/sangre2.gif'); */
 
 }
 
@@ -33,8 +33,8 @@ html {
   width: 35px;
   height: 35px;
   background-color: #00000000;
-  border: 1px solid #000000;
-  background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
+  border: 0px solid #000000;
+  background-size: cover; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
   background-position: center center; /* Centra la imagen vertical y horizontalmente */
   background-repeat: no-repeat;
 
@@ -45,8 +45,7 @@ html {
   height: 35px;
   background-image: url('../images/spb.png');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -56,8 +55,7 @@ html {
   height: 35px;
   background-image: url('../../public/bacterium.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -67,8 +65,7 @@ html {
   height: 35px;
   background-image: url('../images/spa.png');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -78,8 +75,7 @@ html {
   height: 35px;
   background-image: url('../../public/other.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -90,8 +86,7 @@ html {
   height: 35px;
   background-image: url('../../public/entity/BacteriumNormal.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -101,8 +96,7 @@ html {
   height: 35px;
   background-image: url('../../public/entity/BacteriumStrong.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -112,8 +106,7 @@ html {
   height: 35px;
   background-image: url('../../public/entity/bacteriumWeak.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -124,8 +117,7 @@ html {
   height: 35px;
   background-image: url('../../public/entity/bacteriumInfected.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
   animation: mask 1s linear;
@@ -137,8 +129,7 @@ html {
   height: 35px;
   background-image: url('../../public/entity/pill.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
   filter: drop-shadow(0 0 10px rgb(42, 208, 245));
@@ -149,8 +140,7 @@ html {
   height: 35px;
   background-image: url('../../public/entity/bacteriophague.png');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
   animation: mask 1s linear;

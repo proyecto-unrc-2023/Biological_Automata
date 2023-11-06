@@ -24,7 +24,7 @@ class GameController:
         # al iniciar se dejan valores por defecto que el usuario puede modificar si quiere
         self.__game_state = Game_State.NOT_STARTER
         self.__game_mode = None
-        self.__board = Board(15, 20)             # por defecto
+        self.__board = Board(12, 17)             # por defecto
         self.__cant_bacterium = 10              # cantidad de bacterias que expulsara
         # cantidad de bacterias que de antibiotico o bacterifago segun el modo
         self.__cant_other = 20
@@ -42,7 +42,7 @@ class GameController:
 
         if not isinstance(mode, Game_Mode):
             raise ValueError("El modo de juego cargado no es válido!")
-        
+
         if cant_bact < 0 or cant_other < 0:
             raise ValueError(
                 "La cantidad de los entes no pueden ser negativas!")
@@ -143,10 +143,10 @@ class GameController:
 
         if self.__board.get_position_spawn_bacterium == None:
             raise ValueError("El spawn de bacterias no está seteado")
-        
+
         if self.__board.get_position_spawn_other == None:
             raise ValueError("El spawn de otro no está seteado")
-        
+
         self.__game_state = Game_State.START_GAME
 
     @property
@@ -221,10 +221,10 @@ class GameController:
 
     def get_rows(self):
         return self._board._rows
-    
+
     def get_columns(self):
         return self._board._columns
-    
+
     def count_in_adjacents(self, x, y, ente):
         vecinos = self._board.get_possible_moves(x, y)
         contador = 0
