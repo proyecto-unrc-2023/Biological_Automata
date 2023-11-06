@@ -1,7 +1,7 @@
 import pytest
 from models.logic.GameController import GameController, Game_State, Game_Mode
-# from models.logic.Bacterium import *
-
+from models.logic.Game_Mode import Game_Mode
+from models.logic.Game_State import Game_State
 
 @pytest.fixture
 def game_antibiotic():
@@ -24,7 +24,7 @@ def game_bacteriophage():
 def test_initial_game(game_antibiotic):
     game = game_antibiotic
     game = GameController()
-    assert game._game_state == Game_State.NOT_STARTER
+    assert game._game_state == Game_State.NOT_STARTED
     assert game._game_mode == None
     assert game._cant_bacterium == 10
     assert game._cant_other == 20
@@ -45,7 +45,7 @@ def test_config_():
     assert game._game_mode == Game_Mode.ANTIBIOTIC
 
 
-def test_config_state_is_not_NOT_STARTER(game_bacteriophage):
+def test_config_state_is_not_NOT_STARTED(game_bacteriophage):
     game = game_bacteriophage
     game.start_game()
     with pytest.raises(ValueError) as e:
@@ -72,30 +72,9 @@ def test_game_mode_without_configuration():
     with pytest.raises(ValueError) as e:
         game._game_mode = Game_Mode.BACTERIOPHAGE
     assert str(
-        e.value) == "El juego no está en el estado CONFIG_GAME o no se configuró uno de los spawn"
+        e.value) == "El juego no está en el estado CONFIG_GAME"
     assert game._game_mode == None
     assert game._game_state != Game_State.CONFIG_GAME
-
-# def test_game_mode_without_spawn_bacterium():
-#   game = GameController()
-#   game.config(10, 2, 20, 2)
-#   game.set_spawn_other((5,5))
-#   with pytest.raises(ValueError) as e:
-#     game._game_mode = Game_Mode.ANTIBIOTIC
-#   assert str(e.value) == "El juego no está en el estado CONFIG_GAME o no se configuró uno de los spawn"
-#   assert game._game_mode == None
-#   assert game._game_state == Game_State.CONFIG_GAME
-
-# def test_game_mode_without_spawn_other():
-#   game = GameController()
-#   game.config(10, 2, 20, 2)
-#   game.set_spawn_bacterium((5,5))
-#   with pytest.raises(ValueError) as e:
-#     game._game_mode = Game_Mode.BACTERIOPHAGE
-#   assert str(e.value) == "El juego no está en el estado CONFIG_GAME o no se configuró uno de los spawn"
-#   assert game._game_mode == None
-#   assert game._game_state == Game_State.CONFIG_GAME
-
 
 def test_generate_bacterium_Mode_Antibiotic(game_antibiotic):
     game = game_antibiotic
@@ -205,7 +184,7 @@ def test_refresh_board_not_START_GAME(game_antibiotic):
     assert str(e.value) == "El juego no está en el estado START_GAME"
 
 
-def test_stop_NOT_STARTER():
+def test_stop_NOT_STARTED():
     game = GameController()
     with pytest.raises(ValueError) as e:
         game.stop()
@@ -218,10 +197,10 @@ def test_stop_CONFIG_GAME(game_antibiotic):
     with pytest.raises(ValueError) as e:
         game.stop()
     assert str(e.value) == "El juego no está en el estado START_GAME"
-    assert game._game_state != Game_State.NOT_STARTER   # Game_State.NOT_STARTER
+    assert game._game_state != Game_State.NOT_STARTED 
     game.start_game()
     game.stop()
-    assert game._game_state == Game_State.NOT_STARTER
+    assert game._game_state == Game_State.NOT_STARTED
 
 
 def test_set_spawn_bacterium(game_antibiotic):

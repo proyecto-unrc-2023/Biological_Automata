@@ -6,7 +6,7 @@ def test_lithic_state():
     bacterium = BacteriumInfected(4)
     result = bacterium.lithic_State()
     assert result == True
-    bacterium.exploid()
+    bacterium.exploit()
     with pytest.raises(AssertionError):
         assert bacterium == None
 
