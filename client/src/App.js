@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import Create_board from './components/board';
 import Config from './components/Config';
-import aud from './images/music.mp3'
+import MusicControls from './components/MusicControls';
+//import aud from './music/music.mp3'
 
 function App() {
     const [startGame, setStartGame] = useState(false)
@@ -24,23 +25,28 @@ function App() {
   };
 
   // const play = document.querySelector("#btnReproducir");
-  const [sonido] = useState(cargarSonido(aud));
+  // const [sonido] = useState(cargarSonido(aud));
+  const [sonido] = useState(cargarSonido("/music/music.mp3"));
+
   const reproducir = function() {
     if (!soundPlaying) {
       try {
         sonido.play();
         setSoundPlaying(true);
       } catch (error) {
-
       }
     } else if (soundPlaying) {
-      sonido.pause();
-      setSoundPlaying(false);
+      try {
+        sonido.pause();
+        setSoundPlaying(false);
+      } catch (error) {
+      }
     }
   };
 
     return (
       <>
+      <MusicControls />
       <div className="App">
         {startGame ? (
           <Create_board handleStartGame={handleStartGame} id={id} />
@@ -54,9 +60,14 @@ function App() {
           {soundPlaying ? 'Pausar' : 'Reproducir'}
         </button>
       </div>
-
+  
       </>
     );
   }
 
 export default App;
+
+
+
+
+
