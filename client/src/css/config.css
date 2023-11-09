@@ -297,6 +297,10 @@ p#spawn{
   opacity: 1;
 } */
 
+.grid-row{
+  max-width:max-content;
+}
+
 @keyframes mask{
 0%{
   filter: brightness(1.7);

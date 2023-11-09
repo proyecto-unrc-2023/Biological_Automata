@@ -191,3 +191,7 @@ button:hover{
 .pause{
   filter: brightness(1.2);
 }
+
+#captura{
+  align-self: center;  
+}

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 import '../css/board.css';
+import html2canvas from 'html2canvas';
+import cap from '../images/Captura.png';
+
 function Create_board({handleStartGame, id}) {
   const [board, setBoard] = useState([]);
   const [boardData, setBoardData] = useState(null);
@@ -20,46 +23,46 @@ function Create_board({handleStartGame, id}) {
       });
   };
 
-
+  
   const refreshGame = () => {
     fetchRefreshData();
-
+    
     if (gameData === null) {
       return "Cargando...";
     }
-
+    
     const { _rows, _columns } = gameData.games._board;
 
     setBoardData(gameData.games._board._board);
     generateBoard(_rows, _columns);
   };
 
-    // Frenar el Juego Con el Boton STOP
+  // Frenar el Juego Con el Boton STOP
   const handleStop_Game = () => {
     const url = `http://localhost:5000/game/stopgame/${id}`;
     fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-      })
-      .catch(error => {
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+    })
+    .catch(error => {
         console.error('Hubo un error al terminar el juego', error);
       });
-  };
-
-
-  useEffect(() => {
-    if(stopGame){
-      const refreshInterval = setInterval(refreshGame, 1000/speed);
+    };
+    
+    
+    useEffect(() => {
+      if(stopGame){
+        const refreshInterval = setInterval(refreshGame, 1000/speed);
 
       return () => {
         clearInterval(refreshInterval);
       };
     }
   }, [gameData, stopGame, speed]);
-
-
+  
+  
   const generateBoard = (_rows, _columns) => {
     if (!boardData) {
       return; //esto hace que no salga un error cuando no se hizo el refresh XD
@@ -78,6 +81,21 @@ function Create_board({handleStartGame, id}) {
     setBoard(newBoard);
   };
 
+  const captureScreen = async () => {
+    try {
+       const node = document.getElementById('capture');
+       const canvas = await html2canvas(node);
+       const imgData = canvas.toDataURL('image/png');
+      
+       const link = document.createElement('a');
+       link.href = imgData;
+       link.download = 'Tablero.png';
+       link.click();
+   
+    } catch (err) {
+       console.error('Error al capturar la pantalla:', err);
+    }
+   };  
 
   const togglePause = () => {
     setStopGame(!stopGame)
@@ -101,8 +119,9 @@ function Create_board({handleStartGame, id}) {
         onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
       />
       </div>
-
+      <div id='capture'>
       {board}
+      </div>
 
       <div id="controls">
       <button className="button stop-button" onClick={() => {
@@ -115,8 +134,8 @@ function Create_board({handleStartGame, id}) {
       </div>
 
     </div>
-    <div>
-
+    <div id='captura'>
+        <img src={cap} alt='captura-pantalla' onClick={captureScreen}></img>
     </div>
   </>
   );
