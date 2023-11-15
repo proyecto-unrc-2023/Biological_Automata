@@ -1,107 +1,32 @@
 /* Estilo para la cuadrícula principal */
 html {
-  background-image: url('../../public/flush.jpg');
+  background-image: url('../../public/Fondo-tex.jpeg');
+  filter: contrast(1.1) brightness(0.9);
   background-attachment: fixed;
-  /* background-repeat: no-repeat; */
   background-size: cover;
   position: relative;
   top: 12%;
-}
-.grid {
-  display: flex;
-  flex-direction: column; /*filas en vertical */
-  align-items: center; /* Centra filas horizontalmente */
-  justify-content: center; /* Centra verticalmente */
-}
-
-/* Estilo para cada fila de la cuadrícula */
-.grid-row {
-  display: flex;
-  justify-content: center; /* Centra las celdas horizontalmente en la fila */
-  /*margin-bottom: 10px; Espacio entre las filas */
-
+  cursor: url('../../public/gui/cursor.png'), auto;
+  font-family:  -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 
-/*CELDAS */
-.cell {
-  width: 30px;
-  height: 30px;
-  /*margin-right: 10px;  Espacio entre las celdas */
-  /* Otros estilos de celda según tus preferencias */
-  background-color: #00000000;
-  border: 1px solid #000000;
-  background-image: url('../../public/textura.png');
-  background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
-  background-position: center center; /* Centra la imagen vertical y horizontalmente */
-  background-repeat: no-repeat;
-
+.navbar {
+  background-color: #333; /* Color de fondo */
+  overflow: hidden;
 }
 
-.spawnBacterium{
-  width: 30px;
-  height: 30px;
-  background-image: url('../images/spb.png');
-  background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2; /* Color del texto */
+  text-align: center;
+  padding: 14px 16px; /* Espaciado interno */
+  text-decoration: none;
 }
 
-.spawnOther{
-  width: 30px;
-  height: 30px;
-  background-image: url('../images/spa.png');
-  background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
+.navbar a:hover {
+  background-color: #ddd; /* Color de fondo al pasar el ratón */
+  color: black; /* Color del texto al pasar el ratón */
 }
 
-
-.bacterium{
-  width: 30px;
-  height: 30px;
-  background-image: url('../../public/BacteriumNormal.gif');
-  background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-
-.antibiotic{
-  width: 30px;
-  height: 30px;
-  background-image: url('../../public/pill.gif');
-  background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.App{
-  display: grid;
-  grid-template-columns: 100%;
-}
-
-
-.grid button{
-  background-color: rgba(197, 1, 1, 0.71);
-  position: relative;
-  top: 20px;
-  height: 50px;
-  width: 70px;
-  border-radius: 5px;
-  filter: contrast(1.35);
-  color: aliceblue;
-}
-
-.grid button:hover{
-  cursor: pointer;
-  filter: brightness(1.25);
-}

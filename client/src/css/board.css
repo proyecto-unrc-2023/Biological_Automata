@@ -1,0 +1,48 @@
+/* Estilo para la cuadrícula principal */
+
+/*CELDAS */
+
+.spawnbacAct{
+  filter: brightness(1.5);
+}
+
+.spawnothAct{
+  filter: brightness(1.5);
+}
+
+
+.button {
+  width: 50px; /* Ancho de los botones */
+  height: 50px; /* Alto de los botones */
+  border-radius: 50%; /* Hace que los botones sean redondos */
+  background-size: cover; /* Ajusta la imagen al tamaño del botón */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  cursor: pointer; /* Cambia el cursor cuando se pasa por encima */
+}
+
+button:hover{
+  cursor: pointer;
+  filter: brightness(1.25);
+}
+
+
+
+.stop-button {
+  background-image: url('../../public/gui/stop.png'); /* Ruta de la imagen de STOP */
+}
+
+.pause-button {
+  background-image: url('../../public/gui/pause.png'); /* Ruta de la imagen de PAUSA */
+}
+
+.sonido {
+  background-image: url('../../public/gui/sound.png'); /* Ruta de la imagen de PAUSA */
+}
+
+.pause{
+  filter: brightness(1.2);
+}
+
+#captura{
+  align-self: center;
+}

@@ -1,26 +1,20 @@
 /* Estilo para la cuadrícula principal */
-html {
-  /* background-color: rgba(255, 0, 0, 0.466); */
-  background-image: url('../../public/flush.jpg');
-  filter: contrast(1.1) brightness(0.9);
-  background-attachment: fixed;
-  background-size: cover;
-  position: relative;
-  top: 12%;
-}
 .grid {
   display: flex;
   flex-direction: column; /*filas en vertical */
   align-items: center; /* Centra filas horizontalmente */
-  justify-content: center; /* Centra verticalmente */
+  position: relative;
+  left: 100%;
+
+  border: 2px solid #000000;
+  /* background-image: url('../../public/sangre2.gif');
+  background-size: auto; */
 }
 
 /* Estilo para cada fila de la cuadrícula */
 .grid-row {
   display: flex;
   justify-content: center; /* Centra las celdas horizontalmente en la fila */
-  /*margin-bottom: 10px; Espacio entre las filas */
-
 }
 
 
@@ -28,24 +22,28 @@ html {
 .cell {
   width: 35px;
   height: 35px;
-  /*margin-right: 10px;  Espacio entre las celdas */
-  /* Otros estilos de celda según tus preferencias */
-  background-color: #00000000;
-  border: 1px solid #000000;
-  background-image: url('../../public/textura.png');
-  background-size: contain; /* Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
-  background-position: center center; /* Centra la imagen vertical y horizontalmente */
-  background-repeat: no-repeat;
+  /* background-color: #00000000; */
+  /* border: 1px solid #000000; */
+  /* background-size: cover; Ajusta el tamaño para que la imagen se ajuste dentro de la celda */
+  /* background-position: center center; Centra la imagen vertical y horizontalmente */
+  /* background-repeat: no-repeat; */
 
+  background-color: transparent; /* Establece un color de fondo transparente por defecto */
+  transition: background-color 0.3s; /* Agrega una transición suave para la animación */
 }
+
+.cell:hover {
+  background-color: #CA9233; /* Cambia el color de fondo al pasar el mouse sobre la celda */
+  filter: contrast(2); /* Mantiene el filtro de contraste */
+}
+
 
 .spawnBacterium{
   width: 35px;
   height: 35px;
   background-image: url('../images/spb.png');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -55,8 +53,7 @@ html {
   height: 35px;
   background-image: url('../../public/bacterium.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -66,8 +63,7 @@ html {
   height: 35px;
   background-image: url('../images/spa.png');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -77,8 +73,7 @@ html {
   height: 35px;
   background-image: url('../../public/other.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -87,10 +82,9 @@ html {
 .bacterium{
   width: 35px;
   height: 35px;
-  background-image: url('../../public/BacteriumNormal.gif');
+  background-image: url('../../public/entity/BacteriumNormal.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -98,21 +92,20 @@ html {
 .bacteriumStrong{
   width: 35px;
   height: 35px;
-  background-image: url('../../public/BacteriumStrong.gif');
+  background-image: url('../../public/entity/BacteriumStrong.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
+  filter: blur(1) brightness(2) contrast(2);
 }
 
 .bacteriumWeak{
   width: 35px;
   height: 35px;
-  background-image: url('../../public/bacteriumWeak.gif');
+  background-image: url('../../public/entity/bacteriumWeak.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -121,40 +114,35 @@ html {
 .bacteriumInfected{
   width: 35px;
   height: 35px;
-  background-image: url('../../public/bacteriumInfected.gif');
+  background-image: url('../../public/entity/bacteriumInfected.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
+  animation: mask 1s linear;
 }
 
 
 .antibiotic{
   width: 35px;
   height: 35px;
-  background-image: url('../../public/pill.gif');
+  background-image: url('../../public/entity/pill.gif');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
+  filter: drop-shadow(0 0 10px rgb(42, 208, 245));
 }
 
 .bacteriophage{
   width: 35px;
   height: 35px;
-  background-image: url('../../public/bacteriophague.png');
+  background-image: url('../../public/entity/bacteriophague.png');
   background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
+  /* border: 1px solid #000000; */
   background-position: center center;
   background-repeat: no-repeat;
-}
-
-.App{
-  display: grid;
-  grid-template-columns: 15% 70% 15%;
+  animation: mask 1s linear;
 }
 
 img{
@@ -168,7 +156,7 @@ img:hover{
 }
 
 .sss{
-  display: grid;
+  display:flex;
   row-gap: 50px;
   width: 50px;
   justify-self: center;
@@ -187,19 +175,18 @@ img:hover{
   filter: brightness(1.3);
 }
 
-.modAa img{
+.modAa #ant{
   background-color: rgba(128, 128, 128, 0.479);
 }
 .modVa{
   filter: brightness(1.3);
 }
-.modVa img{
+.modVa #vir{
   background-color: rgba(128, 128, 128, 0.479);
 }
 
 p{
   color: aliceblue;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-shadow: 0 3px 1px #000000;
   font-size: 1.5rem;
   position: relative;
@@ -212,11 +199,7 @@ p{
   position: relative;
   align-items: center;
   align-self: center;
-  column-gap: 10px;
-}
-
-#mode img{
-  border: inset;
+  column-gap: 20px;
 }
 
 #params{
@@ -231,7 +214,6 @@ p{
 
 #params label{
   font-size: large;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-shadow: 0 3px 1px #000000;
   text-wrap: 10px;
   color: aliceblue;
@@ -252,24 +234,6 @@ p{
 #params button{
   width: 70px;
 }
-.bacteriophage{
-  width: 35px;
-  height: 35px;
-  background-image: url('../../public/bacteriophague.png');
-  background-size: cover;
-  border: 1px solid #000000;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.spawnbacAct{
-  filter: brightness(1.5);
-}
-
-.spawnothAct{
-  filter: brightness(1.5);
-}
 
 #params button{
   background-color: rgba(197, 1, 1, 0.71);
@@ -289,3 +253,73 @@ p#spawn{
   top: 90%;
   left: 36%;
 }
+
+.grid-row:nth-child(even){
+  background-image: url('../../public/fondo.png');
+  filter: brightness(1.1);
+  opacity: 1;
+}
+.grid-row:nth-child(odd){
+  background-image: url('../../public/fondo.png');
+  filter: brightness(1.1);
+  opacity: 1;
+}
+
+.grid-row{
+  max-width:max-content;
+}
+
+@keyframes mask{
+0%{
+  filter: brightness(1.7);
+}
+25%{
+  filter: brightness(1);
+
+}
+50%{
+  filter: brightness(1.7);
+}
+75%{
+  filter: brightness(1);
+}
+}
+
+#controls-v{
+  color: aliceblue;
+  font-weight: bold;
+  font-size: large;
+  top: -4%;
+  position: relative;
+
+}
+
+#controls{
+  position: relative;
+  top: 4%;
+}
+
+#controls, #controls-v{
+  display: flex;
+  column-gap: 30px;
+}
+
+#controls-v input{
+  accent-color: red;
+}
+
+#selec, #selec2{
+  display: none;
+}
+
+#selec, #selec2{
+  position: relative;
+  bottom: 119%;
+  left: -25%;
+  width: 145%;
+  height: 140%;
+  border: 0;
+}
+
+
+
