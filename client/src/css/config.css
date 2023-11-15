@@ -1,23 +1,10 @@
 /* Estilo para la cuadrícula principal */
-html {
-  background-image: url('../../public/fondo.jpeg');
-  filter: contrast(1.1) brightness(0.9);
-  background-attachment: fixed;
-  background-size: cover;
-  position: relative;
-  top: 12%;
-  cursor: url('../../public/gui/cursor.png'), auto;
-}
 .grid {
   display: flex;
   flex-direction: column; /*filas en vertical */
   align-items: center; /* Centra filas horizontalmente */
-  justify-content: center; /* Centra verticalmente */
   position: relative;
-  top: 11%;
-  left: 22.4%;
-  width: 55%; /* Establece el ancho al 50% del contenedor principal */
-  height: 83%;
+  left: 100%;
 
   border: 2px solid #000000;
   /* background-image: url('../../public/sangre2.gif');
@@ -158,11 +145,6 @@ html {
   animation: mask 1s linear;
 }
 
-.App{
-  display: grid;
-  grid-template-columns: 15% 70% 15%;
-}
-
 img{
   width: 90px;
   height: 90px;
@@ -174,7 +156,7 @@ img:hover{
 }
 
 .sss{
-  display: grid;
+  display:flex;
   row-gap: 50px;
   width: 50px;
   justify-self: center;
@@ -205,7 +187,6 @@ img:hover{
 
 p{
   color: aliceblue;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-shadow: 0 3px 1px #000000;
   font-size: 1.5rem;
   position: relative;
@@ -233,7 +214,6 @@ p{
 
 #params label{
   font-size: large;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-shadow: 0 3px 1px #000000;
   text-wrap: 10px;
   color: aliceblue;
@@ -255,14 +235,6 @@ p{
   width: 70px;
 }
 
-.spawnbacAct{
-  filter: brightness(1.5) drop-shadow(0 0 5px white);
-}
-
-.spawnothAct{
-  filter: brightness(1.5) drop-shadow(0 0 5px white);
-}
-
 #params button{
   background-color: rgba(197, 1, 1, 0.71);
   height: 50px;
@@ -282,20 +254,16 @@ p#spawn{
   left: 36%;
 }
 
-/* .grid-row:nth-child(even){
-  background-image: url('../../public/cuatro.png');
-  background-size: cover;
+.grid-row:nth-child(even){
+  background-image: url('../../public/fondo.png');
   filter: brightness(1.1);
   opacity: 1;
 }
 .grid-row:nth-child(odd){
-  background-image: url('../../public/cuatro.png');
-  background-size: cover;
-  background-position: 50%;
-  background-repeat: repeat-x;
+  background-image: url('../../public/fondo.png');
   filter: brightness(1.1);
   opacity: 1;
-} */
+}
 
 .grid-row{
   max-width:max-content;
@@ -352,3 +320,6 @@ p#spawn{
   height: 140%;
   border: 0;
 }
+
+
+

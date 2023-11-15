@@ -20,26 +20,7 @@ class Game_State(Enum):
 
 class GameController:
 
-    def __init__(self):
-        # al iniciar se dejan valores por defecto que el usuario puede modificar si quiere
-        self.__game_state = Game_State.NOT_STARTER
-        self.__game_mode = None
-        self.__board = Board(12, 17)             # por defecto
-        self.__cant_bacterium = 10              # cantidad de bacterias que expulsara
-        # cantidad de bacterias que de antibiotico o bacterifago segun el modo
-        self.__cant_other = 20
-        # frecuencia con el que expulsara bacterias el spawn bacterium
-        self.__frecuency_bacterium = 2
-        # frecuencia con el que expulsara antibiotico o bacterifago el spawn other
-        self.__frecuency_other = 2
-        # un movimiento es una actualizacion del board, y se usara junto con la frecuencia
-        self.__movements = 0
-        # para controlar los "spawns"
-
-    def config(self, cant_bact, frec_bact, cant_other, frec_other, mode: Game_Mode):
-        if self._game_state != Game_State.NOT_STARTER:
-            raise ValueError("El juego no está en el estado START_GAME")
-
+    def __init__(self, mode: Game_Mode, cant_bact = 10, frec_bact = 2, cant_other = 20, frec_other = 2):
         if not isinstance(mode, Game_Mode):
             raise ValueError("El modo de juego cargado no es válido!")
 
@@ -50,14 +31,21 @@ class GameController:
         if frec_bact <= 0 or frec_other <= 0:
             raise ValueError(
                 "Los valores de las frecuencias deben ser positivos!")
-
-        self._game_state = Game_State.CONFIG_GAME
+        self.__game_state = Game_State.CONFIG_GAME
+        self.__board = Board(12, 17)             # por defecto
         self._game_mode = mode
+        self.__board.set_gameMode(mode.value)
         self.__board.create_board()
-        self._frecuency_bacterium = frec_bact
-        self._frecuency_other = frec_other
-        self._cant_bacterium = cant_bact
-        self._cant_other = cant_other
+        self.__cant_bacterium = cant_bact              # cantidad de bacterias que expulsara
+        # cantidad de bacterias que de antibiotico o bacterifago segun el modo
+        self.__cant_other = cant_other
+        # frecuencia con el que expulsara bacterias el spawn bacterium
+        self.__frecuency_bacterium = frec_bact
+        # frecuencia con el que expulsara antibiotico o bacterifago el spawn other
+        self.__frecuency_other = frec_other
+        # un movimiento es una actualizacion del board, y se usara junto con la frecuencia
+        self.__movements = 0
+        # para controlar los "spawns"
 
     def generate_bacterium(self):
         if self._game_state != Game_State.START_GAME:
