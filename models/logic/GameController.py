@@ -84,11 +84,8 @@ class GameController:
         if self.__game_state != Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado CONFIG_GAME")
 
-        if self.__board.get_position_spawn_bacterium == None:
-            raise ValueError("El spawn de bacterias no está seteado")
-
-        if self.__board.get_position_spawn_other == None:
-            raise ValueError("El spawn de otro no está seteado")
+        if self.__board.get_position_spawn_bacterium == None or self.__board.get_position_spawn_other == None :
+            raise ValueError("Spawn No Setteado")
 
         self.__game_state = Game_State.START_GAME
 
