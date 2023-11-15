@@ -1,14 +1,32 @@
 import pytest
 from models.logic.CellBacteriophage import CellBacteriophage
-from models.logic.Bacterium import BacteriumInfected, BacteriumNormal
-from models.logic.Bacterium import BacteriumWeak, BacteriumStrong
+from models.logic.Bacterium import *
 from models.logic.Bacteriophage import Bacteriophage
-
 
 @pytest.fixture
 def cellBacteriophage():
     return CellBacteriophage()
 
+@pytest.fixture
+def moves_for_explotion():
+    bacterium = Bacterium(0)
+    moves_for_explotion = bacterium.moves_for_explotion
+
+    return moves_for_explotion
+
+@pytest.fixture
+def initial_power():
+    bacterium = Bacterium(0)
+    initial_power_infection = bacterium.power_infection_after_explotion
+
+    return initial_power_infection
+
+@pytest.fixture
+def cant_after_explotion():
+    bacterium = Bacterium(0)
+    cant_after_explotion = bacterium.cant_bacteriophages_after_explotion
+
+    return cant_after_explotion
 
 def test_not_eq_cell_bacteriophage(cellBacteriophage):
     cell_aux = CellBacteriophage()
@@ -47,15 +65,17 @@ def test_to_string_1(cellBacteriophage):
     assert str(cellBacteriophage) == '1b1f1d1i2v'
 
 
-def test_burst_burst_bacteriumInfected(cellBacteriophage):
-    cellBacteriophage.add_bacterium(BacteriumInfected(4))
+def test_burst_burst_bacteriumInfected(cellBacteriophage, moves_for_explotion, cant_after_explotion):
+    cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
     cellBacteriophage.burst_bacteriumInfected(None, None)
-    assert str(cellBacteriophage) == '4v'
+    n = str(cant_after_explotion)
+    assert str(cellBacteriophage) == f'{n}v'
 
 
-def test_3_burst_bacteriumInfected(cellBacteriophage):
-    cellBacteriophage.add_bacterium(BacteriumInfected(4))
-    cellBacteriophage.add_bacterium(BacteriumInfected(4))
-    cellBacteriophage.add_bacterium(BacteriumInfected(4))
+def test_3_burst_bacteriumInfected(cellBacteriophage, moves_for_explotion, cant_after_explotion):
+    cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
+    cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
+    cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
     cellBacteriophage.burst_bacteriumInfected(None, None)
-    assert str(cellBacteriophage) == '12v'
+    n = str(3*cant_after_explotion)
+    assert str(cellBacteriophage) == f'{n}v'

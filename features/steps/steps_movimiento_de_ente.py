@@ -18,7 +18,7 @@ def movimientos_posibles(context,x,y):
 
 @when("un {ente} se mueve desde la celda ({x:d},{y:d}) a una celda aleatoria")
 def entity_se_mueve(context,x,y,ente):
-    board = Board(30,50)
+    board = Board(30,50,4)
     context.new_board = context.game._board.move_entities(x, y, board)
 
 @then("deberia tener {n:d} posibles de movimiento")
