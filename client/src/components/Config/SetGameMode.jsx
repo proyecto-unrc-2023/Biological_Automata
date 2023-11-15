@@ -66,13 +66,13 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
           </div>
       </div>
         <button
-          className='buttonInit'
+          id='buttons-flush'
           onClick={() => handleNextStep(gameMode)}
           disabled={!isNextButtonVisible()}
         >
           Siguiente
         </button>
-        <button className='buttonInit' onClick={() => onViewChange('index')}>
+        <button id='buttons-flush' onClick={() => onViewChange('index')}>
           Anterior
         </button>
     </>

@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Establece la altura al 100% del viewport */
+  height: 90vh; /* Establece la altura al 100% del viewport */
 }
 
 .titleInit {
@@ -28,7 +28,21 @@
   background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
 }
 
+#buttons-flush{
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #4caf50; /* Cambia el color de fondo del botón según tu preferencia */
+  color: white; /* Cambia el color del texto del botón según tu preferencia */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+  left: 45%;
+}
 
+#buttons-flush:hover {
+  background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
+}
 
 .creature-container {
   display: flex;

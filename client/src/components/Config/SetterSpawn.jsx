@@ -132,7 +132,10 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
   return (
     <>
       <div className='sss'>
-        <p id='spawn'>Spawn</p>
+
+<div id='mode-select'>
+
+        <p id='spawn'>Spawn: </p>
 
         <button onClick={toggleSpawnBacterium} id='spawnbac'>
           <img src={spb} alt='Bacterium Spawn'></img>
@@ -142,6 +145,7 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
           <img src={spa} alt='Other Spawn'></img>
         </button>
 
+</div>
         <div className="grid">
           <table><tbody>{board}</tbody></table>
         </div>

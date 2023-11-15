@@ -105,6 +105,9 @@ function Create_board({onViewChange, id}) {
     <>
     <div>
     </div>
+    <div id='captura'>
+        <img src={cap} alt='captura-pantalla' onClick={captureScreen}></img>
+    </div>
     <div className="grid">
 
       <div id='controls-v'>
@@ -135,9 +138,7 @@ function Create_board({onViewChange, id}) {
 
     </div>
 
-    <div id='captura'>
-        <img src={cap} alt='captura-pantalla' onClick={captureScreen}></img>
-    </div>
+
   </>
   );
 }
