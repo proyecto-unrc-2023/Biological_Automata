@@ -39,7 +39,7 @@ Característica: Movimientos de una entidad
 
  Esquema del escenario: Cuando las bacterias se mueven aumenta en 1 su cantidad de movimientos
   Dado que el usuario abrio el juego
-  Y los parametros iniciales del juego son (20,20,20,20,<modo>) 
+  Y se creo el juego con los siguientes parametros (20,20,20,20,<modo>) 
   Y que hay 1 bacteria <tipo> con <mov> movimientos en <pos>
   Cuando se mueve 1 bacteria <tipo> de la celda <pos> a <end>
   Entonces deberia haber 1 bacteria <tipo> con <mov_act> movimientos en <end>
@@ -55,7 +55,7 @@ Característica: Movimientos de una entidad
 
  Esquema del escenario: El grado de infeccion aumenta con los movimientos
    Dado que el usuario abrio el juego
-   Y los parametros iniciales del juego son (20,20,20,20,bacteriofago) 
+   Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago) 
    Y que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado>
    Cuando se mueve 1 bacteria infectada de la celda <pos> a <end>
    Entonces deberia haber 1 bacteria infectada de grado <grado_act> en <end>
@@ -69,7 +69,7 @@ Característica: Movimientos de una entidad
 
  Esquema del escenario: El poder de infeccion disminuye con los movimientos
    Dado que el usuario abrio el juego
-   Y los parametros iniciales del juego son (20,20,20,20,bacteriofago) 
+   Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago) 
    Y que hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
    Cuando se mueve 1 bacteriofago de la celda <pos> a <end>
    Entonces deberia haber 1 bacteriofago con poder de infeccion <poder_act> en <end> 

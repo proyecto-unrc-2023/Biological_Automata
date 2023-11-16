@@ -4,7 +4,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Una bacteria normal o fuerte se reproduce
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,<modo>)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,<modo>)
     Y se configuro los parametros avanzados con (<mov_reproduccion>,3,3,3,3,3,0.1,4)
     Y que hay 1 bacteria <tipo> con <mov_reproduccion> movimientos en <pos>
     Cuando se produce la confrontacion
@@ -22,7 +22,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Una bacteria normal se reproduce con un 0% de probabilidad de mutacion
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,<modo>)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,<modo>)
     Y se configuro los parametros avanzados con (<mov_reproduccion>,3,3,3,3,3,0.0,4)
     Y que hay 1 bacteria <tipo> con <mov_reproduccion> movimientos en <pos>
     Cuando se produce la confrontacion
@@ -40,7 +40,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Una bacteria normal se reproduce con un 100% de probabilidad de mutacion
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,<modo>)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,<modo>)
     Y se configuro los parametros avanzados con (<mov_reproduccion>,3,3,3,3,3,1.0,4)
     Y que hay 1 bacteria <tipo> con <mov_reproduccion> movimientos en <pos>
     Cuando se produce la confrontacion
@@ -58,7 +58,7 @@ Característica: Comportamiento de las entidades
 
  Esquema del escenario: Una bacteria debil no se reproduce
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,antibiotico)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,antibiotico)
     Y se configuro los parametros avanzados con (<mov_reproduccion>,<mov_recuperacion>,3,3,3,3,0.1,4)
     Y que hay 1 bacteria debil con <cant_intermedia> movimientos en <pos>
     Cuando se produce la confrontacion
@@ -73,7 +73,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Bacterias debiles se recuperan
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,antibiotico)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,antibiotico)
     Y se configuro los parametros avanzados con (3,<mov_recuperacion>,3,3,3,3,0.1,4)
     Y que hay 1 bacteria debil con <mov_recuperacion> movimientos en <pos>
     Cuando se produce la confrontacion
@@ -90,7 +90,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Una bacteria infectada explota generando bacteriofagos
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,bacteriofago)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,bacteriofago)
     Y se configuro los parametros avanzados con (3,3,3,<grado_explosion>,<cant_explosion>,<poder_inf_ini>,0.1,4)
     Dado que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado_explosion>
     Cuando se produce la confrontacion
@@ -103,7 +103,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Los bacteriofagos desaparecen cuando queda con poder de infeccion 0
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,bacteriofago)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,bacteriofago)
     Dado que hay <cant> bacteriofago en la celda <pos> con poder de infeccion 0
     Cuando se produce la confrontacion
     Entonces el tablero no deberia tener bacteriofago en <pos>
@@ -118,7 +118,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Los antibioticos desaparecen cuando queda con poder 0
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,antibiotico)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,antibiotico)
     Dado que hay <cant> antibiotico en la celda <pos> con poder 0
     Cuando se produce la confrontacion
     Entonces el tablero no deberia tener antibioticos en <pos>
@@ -134,10 +134,10 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Las bacterias salen del spawn y luego se reproducen
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (1,20,0,3,<modo>)
+    Y se creo el juego con los siguientes parametros (1,20,0,3,<modo>)
     Y se configuro los parametros avanzados con (<mov_reproduccion>,3,3,4,4,4,0.1,4)
     Y se coloco el spawn de bacterias en (0,0)
-    Y se coloco el spawn de la otra entidad en (14,19)
+    Y se coloco el spawn de la otra entidad en (11,16)
     Y el usuario inicio el juego
     Cuando ha pasado <turnos> turno de juego
     Entonces deberian quedar 0 bacterias por salir del spawn
@@ -155,7 +155,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Los bacteriofagos salen del spawn y desaparecen si no encuentran bacterias
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (0,10,<cant_v>,<frec_v>,bacteriofago)
+    Y se creo el juego con los siguientes parametros (0,10,<cant_v>,<frec_v>,bacteriofago)
     Y se configuro los parametros avanzados con (3,3,3,4,4,<poder_infec_ini>,0.1,4)
     Y se coloco el spawn de bacterias en (2,2)
     Y se coloco el spawn de la otra entidad en (5,5)
@@ -174,7 +174,7 @@ Característica: Comportamiento de las entidades
 
   Esquema del escenario: Los antibioticos salen del spawn y se mantienen en el tablero si no hay bacterias
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (0,10,<cant_b>,<frec_b>,antibiotico)
+    Y se creo el juego con los siguientes parametros (0,10,<cant_b>,<frec_b>,antibiotico)
     Y se configuro los parametros avanzados con (3,3,<poder_antibiotico>,4,4,4,0.1,4)
     Y se coloco el spawn de bacterias en (2,2)
     Y se coloco el spawn de la otra entidad en (5,5)
