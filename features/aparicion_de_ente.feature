@@ -34,6 +34,6 @@ Característica: Sale una entidad de un spawn
     Ejemplos:
       |modo        | x1 | y1 | x2 | y2 | cantb | frecb |cant_otro |frec_o|turnos  |cantb_act |cant_o_act|
       |antibiotico | 1  | 1  | 2  | 2  |  25   |  3    |   14     |  2   |  9     |    22    |    9     |
-      |antibiotico | 1  | 1  | 2  | 2  |  14   |  3    |   76     |  5   |  125   |    0     |    51    |
+      |antibiotico | 1  | 1  | 2  | 2  |  14   |  10   |   76     |  5   |  125   |    1     |    51    |
       |bacteriofago| 1  | 1  | 2  | 2  |  90   |  1    |   120    |  4   |  90    |    0     |    97    |
       |bacteriofago| 1  | 1  | 2  | 2  |  17   |  2    |   81     |  7   |  6     |    14    |    80    |

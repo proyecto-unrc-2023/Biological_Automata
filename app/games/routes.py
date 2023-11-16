@@ -1,10 +1,11 @@
-from flask import jsonify, request
+from flask import jsonify, request, session
 from app.games import api
 from Schemas.schemas import *
-from models.logic.GameController import Game_Mode, Game_State, GameController
+from models.logic.GameController import GameController
+from models.logic.Game_Mode import Game_Mode
 from models.logic.Bacterium import *
 from flask_restful import Resource
-from app.games.Game import Game
+from app.games.User import User
 from app import db
 
 
@@ -32,11 +33,14 @@ diccionario = {}
 #api.add_resource(Guardar, '/guardar')
 
 
-class SaveConfig(Resource):
+class New_Game(Resource):
     def options(self):
         return '', 204
 
     def post(self):
+        # if not session.get("user_id"):
+        #     return {"message": "Usuario no autenticado"}, 401
+
         data = request.get_json()
         x_spawn_b = data.get('xBacterium')
         y_spawn_b = data.get('yBacterium')
@@ -61,26 +65,102 @@ class SaveConfig(Resource):
 
         return {"message": "Configuración guardada correctamente"}
 
-api.add_resource(SaveConfig, '/saveConfig')
-
-
 class RefreshGame(Resource):
     def get(self, game_id):
-        game_data = diccionario[game_id]
+        # if not session.get("user_id"):
+        #     return {"message": "Usuario no autenticado"}, 401
+
+        game_data = diccionario.get(game_id)
+
+        if game_data is None:
+            return {"message": "ID de juego no encontrado"}, 404
+
         game_data.refresh_board()
         game_schema = GameSchema()
         result = game_schema.dump(game_data)
         return jsonify({"games": result})
 
-api.add_resource(RefreshGame, '/refreshgame/<int:game_id>')
-
-
 class StopGame(Resource):
     def get(self, game_id):
+        # if not session.get("user_id"):
+        #     return {"message": "Usuario no autenticado"}, 401
+
         game_data = diccionario[game_id]
+
+        if game_data is None:
+            return {"message": "ID de juego no encontrado"}, 404
+
         game_data.stop()
         return {"message": "El juego freno"}
 
+
+##Usuarios
+class RegisterUser(Resource):
+    def options(self):
+        if session.get("user_id"):
+            return {"message": "Ya se tiene un inicio de session de usuario"}, 401
+        return '', 204
+
+    def post(self):
+        data = request.get_json()
+        nickname = data.get('nickname')
+        email = data.get('email')
+        password = data.get('password')
+        repPassword = data.get('repPassword')
+
+        if (password != repPassword):
+            return {"message": "Contraseñas no coinciden"},401
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            return {"message": "El email ya está en uso"},401
+
+        existing_user = User.query.filter_by(nickname=nickname).first()
+        if existing_user:
+            return {"message": "El nickname ya está en uso"},401
+
+
+        user = User(nickname, email, password)
+        user.save_to_db()
+        return {"message": "Usuario Registrado con Exito"}
+
+class LoginUser(Resource):
+    def post(self):
+        data = request.get_json()
+        nickname = data.get('nickname')
+        password = data.get('password')
+
+        user = User.query.filter_by(nickname=nickname).first()
+
+        if not user or not user.check_password(password):
+            return {"message": "Datos invalidos"}, 401
+
+        session['user_id'] = user.id
+        return {
+            "message": "Inicio de sesión exitoso",
+            "user": {
+                "id": user.id,
+                "nickname": user.nickname,
+                }
+            }
+
+
+class Logout(Resource):
+    def get(self):
+        # if not session.get("user_id"):
+        #     return {"message": "Usuario no autenticado"}, 401
+
+        session["user_id"] = None
+        return {"message": "Se ha cerrado session con exito"}
+
+
+api.add_resource(RegisterUser, '/register')
+api.add_resource(LoginUser, '/login')
+api.add_resource(Logout, '/logout')
+
+
+api.add_resource(New_Game, '/saveConfig')
+api.add_resource(RefreshGame, '/refreshgame/<int:game_id>')
 api.add_resource(StopGame, '/stopgame/<int:game_id>')
 
 

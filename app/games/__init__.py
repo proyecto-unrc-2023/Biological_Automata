@@ -8,3 +8,4 @@ api = Api(games_bp)
 
 from app.games import routes
 from app.games import Game
+from app.games import User
