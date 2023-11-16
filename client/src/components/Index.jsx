@@ -34,24 +34,23 @@ function Index({ onViewChange }) {
   return (
 
     <div className="index-container">
+      <div className='background'>
+        <img src={bacteriumLogo} alt="Logo" className="logo" />
+        <h1 className="titleInit">Biological Automata</h1>
 
-      <img src={bacteriumLogo} alt="Logo" className="logo" />
-      <h1 className="titleInit">Biological Automata</h1>
 
+        <div className="creature-container">
+          {creatures.map((creature, index) => (
+            <div key={index} className="creature-card">
+              <img src={creature.image} alt={creature.name} className="creature-image" />
+              <h2>{creature.name}</h2>
+              <p>{creature.description}</p>
+            </div>
+          ))}
+        </div>
 
-      <div className="creature-container">
-        {creatures.map((creature, index) => (
-          <div key={index} className="creature-card">
-            <img src={creature.image} alt={creature.name} className="creature-image" />
-            <h2>{creature.name}</h2>
-            <p>{creature.description}</p>
-          </div>
-        ))}
+        <button className='buttonInit' onClick={() => onViewChange('config')}>Play</button>
       </div>
-
-
-
-      <button className='buttonInit' onClick={() => onViewChange('config')}>Play</button>
     </div>
   );
 }

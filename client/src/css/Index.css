@@ -6,6 +6,24 @@
   align-items: center;
   justify-content: center;
   height: 90vh; /* Establece la altura al 100% del viewport */
+  text-align: center;
+  margin: 0;
+}
+
+.index-container .background {
+  background-attachment: fixed;
+  background-size: cover;
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #ff0000, #000000); /* Degradado de rojo a negro */
+  background-size: 100% 100%;
+  z-index: 0; /* NECESARIO PARA QUE DEJE TOCAR XD*/
+  transition: filter 0.5s ease-in-out;
+  filter: blur(0px);
+
 }
 
 .titleInit {
@@ -46,14 +64,14 @@
 
 .creature-container {
   display: flex;
-  justify-content: space-around;
+  justify-content:center;
   flex-wrap: wrap;
 }
 
 .creature-card {
   width: 200px;
-  margin: 10px;
-  padding: 15px;
+  margin: 5px; /* Reduje el espacio externo */
+  padding: 10px; /* Reduje el espacio interno */
   border: 1px solid #785c5c;
   border-radius: 8px;
   background-color: #be373732;

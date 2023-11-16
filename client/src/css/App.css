@@ -1,11 +1,5 @@
 /* Estilo para la cuadrícula principal */
 html {
-  background-image: url('../../public/Fondo-tex.jpeg');
-  filter: contrast(1.1) brightness(0.9);
-  background-attachment: fixed;
-  background-size: cover;
-  position: relative;
-  /* top: 12%; */
   cursor: url('../../public/gui/cursor.png'), auto;
   font-family:  -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }

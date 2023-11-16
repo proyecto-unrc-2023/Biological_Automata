@@ -83,77 +83,81 @@ function Config({ onViewChange, id }) {
 
   return (
     <>
-      {step === 1 && (
-        <SetterGameMode
-          onViewChange={onViewChange}
-          handleNextStep={handleNextStep}
-          gameMode={gameMode}
-          setGameMode={setGameMode}
-        />
-      )}
+      <div className='config-conteiner'>
+        <div className='background'>
+          {step === 1 && (
+            <SetterGameMode
+              onViewChange={onViewChange}
+              handleNextStep={handleNextStep}
+              gameMode={gameMode}
+              setGameMode={setGameMode}
+            />
+          )}
 
-      {step === 2 && (
-        <SetterSpawn
-          onViewChange={onViewChange}
-          handleNextStep={handleNextStep}
-          handleAntStep={handleAntStep}
-          spawnBacterium={spawnBacterium}
-          setSpawnBacterium={setSpawnBacterium}
-          spawnOther={spawnOther}
-          setSpawnOther={setSpawnOther}
-        />
-      )}
+          {step === 2 && (
+            <SetterSpawn
+              onViewChange={onViewChange}
+              handleNextStep={handleNextStep}
+              handleAntStep={handleAntStep}
+              spawnBacterium={spawnBacterium}
+              setSpawnBacterium={setSpawnBacterium}
+              spawnOther={spawnOther}
+              setSpawnOther={setSpawnOther}
+            />
+          )}
 
-      {step === 3 && (
-        <div id='params'>
-          <label>
-            Cantidad de Bacterias:
-            <input
-              type='number'
-              value={cantBact}
-              onChange={(e) => setCantBact(parseInt(e.target.value))}
-              min='0'
-            />
-          </label>
-          <label>
-            Frecuencia de Bacterias:
-            <input
-              type='number'
-              value={frecBact}
-              onChange={(e) => setFrecBact(parseInt(e.target.value))}
-              min='1'
-            />
-          </label>
-          <label>
-            Cantidad de Other:
-            <input
-              type='number'
-              value={cantOther}
-              onChange={(e) => setCantOther(parseInt(e.target.value))}
-              min='0'
-            />
-          </label>
-          <label>
-            Frecuencia de Other:
-            <input
-              type='number'
-              value={frecOther}
-              onChange={(e) => setFrecOther(parseInt(e.target.value))}
-              min='1'
-            />
-          </label>
-          <button className='buttonInit' onClick={handleNextStep}>
-            PLAY
-          </button>
-          <button className='buttonInit' onClick={handleAntStep}>
-            {' '}
-            Anterior{' '}
-          </button>
-          <button className='buttonInit' onClick={() => onViewChange('index')}>
-            Inicio
-        </button>
-        </div>
-      )}
+          {step === 3 && (
+            <div id='params'>
+              <label>
+                Cantidad de Bacterias:
+                <input
+                  type='number'
+                  value={cantBact}
+                  onChange={(e) => setCantBact(parseInt(e.target.value))}
+                  min='0'
+                />
+              </label>
+              <label>
+                Frecuencia de Bacterias:
+                <input
+                  type='number'
+                  value={frecBact}
+                  onChange={(e) => setFrecBact(parseInt(e.target.value))}
+                  min='1'
+                />
+              </label>
+              <label>
+                Cantidad de Other:
+                <input
+                  type='number'
+                  value={cantOther}
+                  onChange={(e) => setCantOther(parseInt(e.target.value))}
+                  min='0'
+                />
+              </label>
+              <label>
+                Frecuencia de Other:
+                <input
+                  type='number'
+                  value={frecOther}
+                  onChange={(e) => setFrecOther(parseInt(e.target.value))}
+                  min='1'
+                />
+              </label>
+              <button className='buttonInit' onClick={handleNextStep}>
+                PLAY
+              </button>
+              <button className='buttonInit' onClick={handleAntStep}>
+                {' '}
+                Anterior{' '}
+              </button>
+              <button className='buttonInit' onClick={() => onViewChange('index')}>
+                Inicio
+            </button>
+            </div>
+          )}
+      </div>
+    </div>
     </>
   );
 }

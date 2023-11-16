@@ -1,3 +1,18 @@
+.config-conteiner .background {
+  background-attachment: fixed;
+  background-size: cover;
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #ff0000, #000000); /* Degradado de rojo a negro */
+  background-size: 100% 100%;
+  z-index: 0; /* NECESARIO PARA QUE DEJE TOCAR XD*/
+  transition: filter 0.5s ease-in-out;
+  filter: blur(0px);
+}
+
 /* Estilo para la cuadrícula principal */
 .grid {
   display: flex;

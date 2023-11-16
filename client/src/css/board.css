@@ -1,4 +1,20 @@
 /* Estilo para la cuadrícula principal */
+.game-conteiner .background {
+  background-attachment: fixed;
+  background-size: cover;
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('../../public/Fondo-tex.jpeg') center/cover no-repeat fixed;
+  background-size: 100% 100%;
+  z-index: -1; /* NECESARIO PARA QUE DEJE TOCAR XD*/
+  transition: filter 0.5s ease-in-out;
+  filter: blur(0px);
+}
+
+
 
 /*CELDAS */
 

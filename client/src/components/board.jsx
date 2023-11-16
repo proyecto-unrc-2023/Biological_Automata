@@ -103,42 +103,42 @@ function Create_board({onViewChange, id}) {
 
   return (
     <>
-    <div>
-    </div>
-    <div id='captura'>
-        <img src={cap} alt='captura-pantalla' onClick={captureScreen}></img>
-    </div>
-    <div className="grid">
+    <div className='game-conteiner'>
+      <div className='background'>
+        <div id='captura'>
+            <img src={cap} alt='captura-pantalla' onClick={captureScreen}></img>
+        </div>
+        <div className="grid">
 
-      <div id='controls-v'>
-        <label>Velocidad: </label>
-        <input
-          type="range" //que aparezca como deslizar
-          min="0.5"
-          max="5"
-          step="0.1"
-          value={speed}
-          onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
-        />
+          <div id='controls-v'>
+            <label>Velocidad: </label>
+            <input
+              type="range" //que aparezca como deslizar
+              min="0.5"
+              max="5"
+              step="0.1"
+              value={speed}
+              onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
+            />
+          </div>
+
+          <div id='capture'>
+            <table><tbody>{board}</tbody></table>
+          </div>
+
+          <div id="controls">
+            <button className="button stop-button" onClick={() => {
+              onViewChange('index'); handleStop_Game();}}>
+            </button>
+
+            <button className="button pause-button" id='pause' onClick={() => {
+              togglePause();}}>
+            </button>
+          </div>
+
+        </div>
       </div>
-
-      <div id='capture'>
-        <table><tbody>{board}</tbody></table>
-      </div>
-
-      <div id="controls">
-        <button className="button stop-button" onClick={() => {
-          onViewChange('index'); handleStop_Game();}}>
-        </button>
-
-        <button className="button pause-button" id='pause' onClick={() => {
-          togglePause();}}>
-        </button>
-      </div>
-
     </div>
-
-
   </>
   );
 }

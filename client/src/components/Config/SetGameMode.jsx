@@ -65,7 +65,8 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
             </button>
           </div>
       </div>
-        <button
+
+      <button
           id='buttons-flush'
           onClick={() => handleNextStep(gameMode)}
           disabled={!isNextButtonVisible()}
