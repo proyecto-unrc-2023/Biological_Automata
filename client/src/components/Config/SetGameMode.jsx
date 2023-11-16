@@ -53,7 +53,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
   return (
     <>
       <div className='sss'>
-          <p>Game mode</p>
+          <p>Modo de Juego</p>
           <div id='mode'>
             <button onClick={toggleModeAntibiotic} id='modA'>
               <img src={ant} alt='Antibiotic' id='ant'></img>

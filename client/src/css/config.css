@@ -225,11 +225,14 @@ p{
   text-align: center;
   row-gap: 20px;
   width: 250px;
-  position: relative;
+  position:fixed;
   left: 44%;
   top: 15%;
 }
 
+#config .buttonHome{
+  background-color: rgba(220, 20, 60, 0.58);
+}
 #params label{
   font-size: large;
   text-shadow: 0 3px 1px #000000;

@@ -131,6 +131,8 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
 
   return (
     <>
+    <button className='buttonHome' onClick={() => onViewChange('index')}>
+    </button>
       <div className='sss'>
 
         <div id='mode-select'>
@@ -158,9 +160,6 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
         onClick={handleNextStep}
         disabled={!isNextButtonVisible()} >
         Siguiente
-      </button>
-
-      <button className='buttonHome siguiente' id='buttons-flush' onClick={() => onViewChange('index')}>
       </button>
     </>
   );
