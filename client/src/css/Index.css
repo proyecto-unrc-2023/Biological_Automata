@@ -1,0 +1,91 @@
+/* Index.css */
+
+.index-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh; /* Establece la altura al 100% del viewport */
+}
+
+.titleInit {
+  font-size: 2em;
+  color: #ffffff; /* Cambia el color del texto según tu preferencia */
+  margin-bottom: 20px;
+}
+
+.buttonInit {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #4caf50; /* Cambia el color de fondo del botón según tu preferencia */
+  color: white; /* Cambia el color del texto del botón según tu preferencia */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttonInit:hover {
+  background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
+}
+
+#buttons-flush{
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #4caf50; /* Cambia el color de fondo del botón según tu preferencia */
+  color: white; /* Cambia el color del texto del botón según tu preferencia */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+  left: 45%;
+}
+
+#buttons-flush:hover {
+  background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
+}
+
+.creature-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.creature-card {
+  width: 200px;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #785c5c;
+  border-radius: 8px;
+  background-color: #be373732;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+}
+
+.creature-card:hover {
+  transform: scale(1.05);
+}
+
+.creature-image {
+  width: 40%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.creature-card h2 {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: rgb(0, 255, 187);
+}
+
+.creature-card p {
+  position: static;
+  font-size: 1em;
+  text-shadow: none;
+  color: #ffffff;
+  width: 200px;
+}

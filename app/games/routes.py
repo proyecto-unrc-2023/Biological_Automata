@@ -49,12 +49,8 @@ class SaveConfig(Resource):
         frec_other = data.get('frecOther')
         game_mode = data.get('gameMode')
         id = data.get('id')
-        game_data = GameController()
-        if game_mode == 1:
-            game_data.config(cant_bact, frec_bact, cant_other, frec_other, Game_Mode.ANTIBIOTIC)
-        else:
-            game_data.config(cant_bact, frec_bact, cant_other, frec_other, Game_Mode.BACTERIOPHAGE)
 
+        game_data = GameController(Game_Mode(game_mode), cant_bact, frec_bact, cant_other, frec_other)
         game_data.set_spawn_bacterium((x_spawn_b, y_spawn_b))
         game_data.set_spawn_other((x_spawn_o, y_spawn_o))
         game_data.start_game()
@@ -86,6 +82,7 @@ class StopGame(Resource):
         return {"message": "El juego freno"}
 
 api.add_resource(StopGame, '/stopgame/<int:game_id>')
+
 
 
 #game_data = GameController()

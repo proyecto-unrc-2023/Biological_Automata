@@ -5,7 +5,7 @@ Característica: Colisión de entidades
 # Bacterias y antibioticos
   Esquema del escenario: Una bacteria (debil o normal) y un antibiotico colisionan
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (20,20,20,20,antibiotico)
+    Y se creo el juego con los siguientes parametros (20,20,20,20,antibiotico)
     Y que hay 1 antibiotico en la celda <crash> con poder <poder>
     Y que hay 1 bacteria <tipo> en la celda <crash>
     Cuando se produce la confrontacion
@@ -22,7 +22,7 @@ Característica: Colisión de entidades
                        
    Esquema del escenario: Una bacteria fuerte se debilita al tener contacto con un antibiotico
      Dado que el usuario abrio el juego
-     Y los parametros iniciales del juego son (20,20,20,20,antibiotico)
+     Y se creo el juego con los siguientes parametros (20,20,20,20,antibiotico)
      Y que hay 1 antibiotico en la celda <pos> con poder <poder>
      Y que hay 1 bacteria fuerte en la celda <pos>
      Cuando se produce la confrontacion
@@ -38,7 +38,7 @@ Característica: Colisión de entidades
 
    Esquema del escenario: Las bacterias mueren cuando hay mas antibioticos que bacterias en la misma celda
      Dado que el usuario abrio el juego
-     Y los parametros iniciales del juego son (20,20,20,20,antibiotico)
+     Y se creo el juego con los siguientes parametros (20,20,20,20,antibiotico)
      Y que hay 4 antibiotico en la celda <pos> con poder <poder>
      Y que hay 1 bacteria normal en la celda <pos>
      Y que hay 1 bacteria debil en la celda <pos>
@@ -57,7 +57,7 @@ Característica: Colisión de entidades
 # Bacterias y bacteriófagos
   Esquema del escenario: Una bacteria se cruza con un bacteriofago
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (20,20,20,20,bacteriofago)
+    Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago)
     Y se configuro los parametros avanzados con (3,3,3,<mov_explosion>,4,4,0.1,4)
     Y que hay 1 bacteria <tipo> en la celda <crash>
     Y que hay 1 bacteriofago en la celda <crash> con poder de infeccion <poder>
@@ -75,7 +75,7 @@ Característica: Colisión de entidades
 
    Esquema del escenario: Una bacteria infectada no le ocurre nada cuando se cruza con un bacteriófago
      Dado que el usuario abrio el juego
-     Y los parametros iniciales del juego son (20,20,20,20,bacteriofago)
+     Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago)
      Y se configuro los parametros avanzados con (3,3,3,8,4,8,0.1,4)
      Y que hay 1 bacteria infectada en la celda <pos> con grado de infeccion <grado>
      Y que hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
@@ -93,7 +93,7 @@ Característica: Colisión de entidades
 
   Esquema del escenario: Una bacteria es infectada por dos bacteriófagos y sobrevive al encuentro
      Dado que el usuario abrio el juego
-     Y los parametros iniciales del juego son (20,20,20,20,bacteriofago)
+     Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago)
      Y se configuro los parametros avanzados con (3,3,3,<mov_explosion>,4,8,0.1,4)
      Y que hay 1 bacteria <tipo> en la celda <pos>
      Y que hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
@@ -110,7 +110,7 @@ Característica: Colisión de entidades
 
   Esquema del escenario: Una bacteria es infectada por dos bacteriófagos y explota
      Dado que el usuario abrio el juego
-     Y los parametros iniciales del juego son (20,20,20,20,bacteriofago)
+     Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago)
      Y se configuro los parametros avanzados con (3,3,3,<mov_explosion>,<virus_pos_expl>,<poder_infec_ini>,0.1,4)
      Y que hay 1 bacteria <tipo> en la celda <pos>
      Y que hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
@@ -126,8 +126,8 @@ Característica: Colisión de entidades
 
   Esquema del escenario: Sobrepoblación de bacterias se cruzan con un bacteriofago
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (20,20,20,20,bacteriofago)
-     Y se configuro los parametros avanzados con (3,3,3,4,4,4,0.1,<cant_sobrepoblacion>)
+    Y se creo el juego con los siguientes parametros (20,20,20,20,bacteriofago)
+    Y se configuro los parametros avanzados con (3,3,3,4,4,4,0.1,<cant_sobrepoblacion>)
     Y que hay <cant_sobrepoblacion> bacteria <tipo> en la celda <pos>
     Y que hay 1 bacteriofago en la celda <pos> con poder de infeccion <poder>
     Cuando se produce la confrontacion
@@ -143,7 +143,7 @@ Característica: Colisión de entidades
 
   Esquema del escenario: Sobrepoblación con bacterias del mismo tipo
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (20,20,20,20,<modo>)
+    Y se creo el juego con los siguientes parametros (20,20,20,20,<modo>)
     Y se configuro los parametros avanzados con (3,3,3,4,4,4,0.1,<cant_sobrepoblacion>)
     Y que hay <cant_sobrepoblacion> bacteria <tipo> en la celda <pos>
     Cuando se produce la confrontacion
@@ -160,7 +160,7 @@ Característica: Colisión de entidades
 
   Esquema del escenario: Sobrepoblación de bacterias fuerte  y normales
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (20,20,20,20,antibiotico)
+    Y se creo el juego con los siguientes parametros (20,20,20,20,antibiotico)
     Y se configuro los parametros avanzados con (3,3,3,4,4,4,0.1,<cant_sobrepoblacion>)
     Y que hay <cant_normales> bacteria normal en la celda <pos>
     Y que hay <cant_fuertes> bacteria fuerte en la celda <pos>
@@ -177,7 +177,7 @@ Característica: Colisión de entidades
 
   Esquema del escenario: Sobrepoblación de bacterias fuerte/normales con bacterias debiles/infectadas
     Dado que el usuario abrio el juego
-    Y los parametros iniciales del juego son (20,20,20,20,<modo>)
+    Y se creo el juego con los siguientes parametros (20,20,20,20,<modo>)
     Y se configuro los parametros avanzados con (3,3,3,4,4,4,0.1,<cant_sobrepoblacion>)
     Y que hay <cant_vencedor> bacteria <tipo_vencedor> en la celda <pos>
     Y que hay <cant_perdedor> bacteria <tipo_perdedor> en la celda <pos>
