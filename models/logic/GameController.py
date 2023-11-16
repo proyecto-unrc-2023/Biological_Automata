@@ -168,7 +168,7 @@ class GameController:
         if self.count_total("bacterias") == 0 and self._cant_bacterium == 0:
             self.__game_winner = Game_Winner.OTHER
             self.__game_state = Game_State.FINISHED
-        elif self.count_other_in_board == 0 and self._cant_other == 0 and self.count_total_infected == 0:
+        elif self.count_other_in_board() == 0 and self._cant_other == 0 and self.count_total_infected() == 0:
             self.__game_winner = Game_Winner.BACTERIUM
             self.__game_state = Game_State.FINISHED
 
@@ -191,8 +191,7 @@ class GameController:
 
         if self._game_mode == Game_Mode.ANTIBIOTIC:
             cant_other_in_board = self.count_total("antibioticos")
-        
-        if self._game_mode == Game_Mode.BACTERIOPHAGE:
+        elif self._game_mode == Game_Mode.BACTERIOPHAGE:
             cant_other_in_board = self.count_total("bacteriofagos")
 
         return cant_other_in_board
@@ -419,6 +418,7 @@ class GameController:
         if ente == "bacterias":
             return self._board.how_many_entities('bacterias')
         if ente == "antibioticos":
-            return self._board.how_many_entities('a')
+            return self._board.how_many_entities('antibioticos')
         if ente == "bacteriofagos":
             return self._board.how_many_entities('v')
+        

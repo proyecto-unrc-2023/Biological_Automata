@@ -1,7 +1,9 @@
 from flask import jsonify, request
 from app.games import api
 from Schemas.schemas import *
-from models.logic.GameController import Game_Mode, Game_State, GameController
+from models.logic.GameController import Game_Mode, GameController
+from models.logic.Game_State import Game_State
+from models.logic.Game_Winner import Game_Winner
 from models.logic.Bacterium import *
 from flask_restful import Resource
 from app.games.Game import Game
@@ -67,7 +69,8 @@ api.add_resource(SaveConfig, '/saveConfig')
 class RefreshGame(Resource):
     def get(self, game_id):
         game_data = diccionario[game_id]
-        game_data.refresh_board()
+        if game_data._game_state == Game_State.START_GAME:
+            game_data.refresh_board()
         game_schema = GameSchema()
         result = game_schema.dump(game_data)
         return jsonify({"games": result})

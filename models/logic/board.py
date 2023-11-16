@@ -231,6 +231,8 @@ class Board:
                 cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteriophage()
             elif type == 'bacterias':
                 cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteria()
+            elif type == 'antibioticos':
+                cant_entities += self.__board[cell[0]][cell[1]].get_cant_antibiotic()
             else:
                 cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
 
