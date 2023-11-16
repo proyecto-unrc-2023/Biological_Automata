@@ -4,6 +4,7 @@ from models.logic.Antibiotic import Antibiotic
 from models.logic.Bacteriophage import Bacteriophage
 from models.logic.Game_State import Game_State
 from models.logic.Game_Mode import Game_Mode
+from models.logic.Game_Winner import Game_Winner
 class GameController:
 
     def __init__(self, mode: Game_Mode, cant_bact = 10, frec_bact = 2, cant_other = 20, frec_other = 2):
@@ -19,6 +20,7 @@ class GameController:
                 "Los valores de las frecuencias deben ser positivos!")
         self.__game_state = Game_State.CONFIG_GAME
         self.__board = Board(12, 17,4)             # por defecto
+        self.__game_winner = Game_Winner.NOT_DETERMINATED
         self._game_mode = mode
         self.__board.set_gameMode(mode)
         self.__board.create_board()
@@ -73,6 +75,10 @@ class GameController:
     @property
     def _game_mode(self):
         return self.__game_mode
+    
+    @property
+    def _game_winner(self):
+        return self.__game_winner
 
     @_game_mode.setter
     def _game_mode(self, mode: Game_Mode):
@@ -161,6 +167,21 @@ class GameController:
         actualizado.crossing_board()
         self.__movements += 1
 
+        if self.__game_winner == Game_Winner.NOT_DETERMINATED:
+            self.check_winner()
+
+    def check_winner(self):
+        if self.count_total("bacterias") == 0 and self._cant_bacterium == 0:
+            self.__game_winner = Game_Winner.OTHER
+            self.__game_state = Game_State.FINISHED
+        elif self.count_other_in_board == 0 and self._cant_other == 0 and self.count_total_infected == 0:
+            self.__game_winner = Game_Winner.BACTERIUM
+            self.__game_state = Game_State.FINISHED
+
+    def continue_game(self):
+        #if (self.__game_state == Game_State.FINISHED and self.__game_winner == Game_Winner.BACTERIUM):
+            self.__game_state = Game_State.START_GAME
+
     def stop(self):
         if self.__game_state != Game_State.START_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
@@ -171,6 +192,16 @@ class GameController:
         self.__game_mode = None
         self.__board = Board(15, 20, 4)
 
+    def count_other_in_board(self):
+        cant_other_in_board = 0
+
+        if self._game_mode == Game_Mode.ANTIBIOTIC:
+            cant_other_in_board = self.count_total("antibioticos")
+        
+        if self._game_mode == Game_Mode.BACTERIOPHAGE:
+            cant_other_in_board = self.count_total("bacteriofagos")
+
+        return cant_other_in_board
 
     #ALGUNOS SETTERS Y GETTERS
     @property
@@ -350,6 +381,9 @@ class GameController:
     
     def count_bacteriophages(self, x, y, power):
         return self._board.get_cell(x, y).count_bacteriophages(power)
+    
+    def count_total_infected(self):
+        return self._board.how_many_entities('i')
     
     def count_infected(self, x, y, grade):
         return self._board.get_cell(x, y).count_infected(grade)

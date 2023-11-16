@@ -74,6 +74,8 @@ def estado_de_juego(context,estado):
         assert context.game._game_state == Game_State.CONFIG_GAME
     if estado == "STARTED":
         assert context.game._game_state == Game_State.START_GAME
+    if estado == "FINISHED":
+        assert context.game._game_state == Game_State.FINISHED
 
 @then("deberia haber un spawn de bacterias en ({x:d},{y:d})")
 def chequear_pos_spawn_bac(context,x,y):
