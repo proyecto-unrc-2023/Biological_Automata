@@ -11,17 +11,13 @@ CANT_OVERPOPULATION = 4
 
 @pytest.fixture
 def board():
-    board = Board(2, 2, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC) 
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,2, 2, CANT_OVERPOPULATION)
     return board
 
 
 @pytest.fixture
 def board2():
-    board = Board(2, 2, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.BACTERIOPHAGE)  
-    board.create_board()
+    board = Board(Game_Mode.BACTERIOPHAGE,2, 2, CANT_OVERPOPULATION)
     return board
 
 
@@ -61,25 +57,14 @@ def test_set_spawn_other_error(board):
     assert board.get_position_spawn_bacterium() is None
 
 
-def test_eq_board_error(board):
-    board_aux = Board(3, 2, CANT_OVERPOPULATION)
-    board_aux.set_gameMode(Game_Mode.BACTERIOPHAGE)
-    board_aux.create_board()
-    assert not board.__eq__(board_aux)
-
-
 def test_eq_board_error_2(board):
-    board_aux = Board(2, 2,CANT_OVERPOPULATION)
-    board_aux.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board_aux.create_board()
+    board_aux = Board(Game_Mode.ANTIBIOTIC,2, 2, CANT_OVERPOPULATION)
     board_aux.add_antibiotic(1, 1, Antibiotic())
     assert not board.__eq__(board_aux)
 
 
 def test_eq_board(board):
-    board_aux = Board(2, 2, CANT_OVERPOPULATION)
-    board_aux.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board_aux.create_board()
+    board_aux = Board(Game_Mode.ANTIBIOTIC,2, 2, CANT_OVERPOPULATION)
     assert board.__eq__(board_aux)
 
 
@@ -128,9 +113,7 @@ def test_add_bacteria_Normal_board_to_string(board):
 
 
 def test_add_4_x_4_bacteria_Strong_board_to_string():
-    board = Board(4, 4, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,4, 4, CANT_OVERPOPULATION)
     board.add_bacterium(1, 1, BacteriumStrong(0))
     res = str(board)
     expected = ' | | | \n'\
@@ -141,9 +124,7 @@ def test_add_4_x_4_bacteria_Strong_board_to_string():
 
 
 def test_add_3_4_x_4_bacteria_Strong_board_to_string():
-    board = Board(4, 4, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,4, 4, CANT_OVERPOPULATION)
     board.add_bacterium(1, 1, BacteriumStrong(0))
     board.add_bacterium(3, 3, BacteriumNormal(0))
     board.add_bacterium(1, 1, BacteriumNormal(0))
@@ -156,9 +137,7 @@ def test_add_3_4_x_4_bacteria_Strong_board_to_string():
 
 
 def test_4x4_board_to_string():
-    board = Board(4, 4, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,4, 4, CANT_OVERPOPULATION)
     res = board.__str__()
     expected = ' | | | \n'\
                ' | | | \n'\
@@ -167,9 +146,7 @@ def test_4x4_board_to_string():
     assert expected == res
 
 def test_random_move():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,3, 3, CANT_OVERPOPULATION)
     board.add_bacterium(1, 1, BacteriumNormal(0))
     assert board.get_cell(0, 0).is_empty()
     assert board.get_cell(0, 1).is_empty()
@@ -186,9 +163,7 @@ def test_random_move():
 
 
 def test_move_entities_none():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.BACTERIOPHAGE)
-    board.create_board()
+    board = Board(Game_Mode.BACTERIOPHAGE,3, 3, CANT_OVERPOPULATION)
     board.add_bacterium(1, 1, BacteriumNormal(0))
     board.add_bacteriophage(1, 1, Bacteriophage(4))
     new_board = board
@@ -197,9 +172,7 @@ def test_move_entities_none():
 
 
 def test_update_board():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,3, 3, CANT_OVERPOPULATION)
     board.add_antibiotic(2, 2, Antibiotic())
     board.set_position_spawn_bacterium((0, 0))
     board.set_position_spawn_other((2, 1))
@@ -223,9 +196,7 @@ def test_update_board():
 
 
 def test_update_board_1():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.BACTERIOPHAGE)
-    board.create_board()
+    board = Board(Game_Mode.BACTERIOPHAGE,3, 3, CANT_OVERPOPULATION)
     board.add_bacteriophage(2, 2, Bacteriophage(4))
     board.set_position_spawn_bacterium((0, 0))
     board.set_position_spawn_other((2, 1))
@@ -251,9 +222,7 @@ def test_update_board_1():
 
 
 def test_update_board_2():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.BACTERIOPHAGE)
-    board.create_board()
+    board = Board(Game_Mode.BACTERIOPHAGE,3, 3, CANT_OVERPOPULATION)
     board.add_bacterium(0, 1, BacteriumStrong(0))
     board.set_position_spawn_bacterium((0, 0))
     board.set_position_spawn_other((2, 1))
@@ -287,9 +256,7 @@ def test_update_board_2():
 
 
 def test_update_board_2_con_cruzamiento():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,3, 3, CANT_OVERPOPULATION)
     board.add_bacterium(0, 1, BacteriumNormal(0))
     board.add_antibiotic(2, 2, Antibiotic(1))
     board.set_position_spawn_bacterium((0, 0))
@@ -336,9 +303,7 @@ def test_update_board_2_con_cruzamiento():
 
 
 def test_4_x_4_move_entity_bacterium():
-    board = Board(4, 4, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,4, 4, CANT_OVERPOPULATION)
     bacteria = BacteriumStrong(0)
     board.add_bacterium(1, 2, bacteria)
     board = board.move_entity(1, 1, 1, 2, board, bacteria)
@@ -351,9 +316,7 @@ def test_4_x_4_move_entity_bacterium():
 
 
 def test_4_x_4_move_entity_bacteriphage():
-    board = Board(4, 4, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.BACTERIOPHAGE)
-    board.create_board()
+    board = Board(Game_Mode.BACTERIOPHAGE,4, 4, CANT_OVERPOPULATION)
     bacteriophage = Bacteriophage(4)
     board.add_bacteriophage(1, 2, bacteriophage)
     board = board.move_entity(1, 1, 1, 2, board, bacteriophage)
@@ -366,9 +329,7 @@ def test_4_x_4_move_entity_bacteriphage():
 
 
 def test_4_x_4_move_entity_antibiotic():
-    board = Board(4, 4, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.ANTIBIOTIC)
-    board.create_board()
+    board = Board(Game_Mode.ANTIBIOTIC,4, 4, CANT_OVERPOPULATION)
     antibiotic = Antibiotic()
     board.add_antibiotic(1, 2, antibiotic)
     board.add_antibiotic(1, 1, Antibiotic())
@@ -382,9 +343,7 @@ def test_4_x_4_move_entity_antibiotic():
 
 
 def test_update_board_2_con_burst_bacteriophage():
-    board = Board(3, 3, CANT_OVERPOPULATION)
-    board.set_gameMode(Game_Mode.BACTERIOPHAGE)
-    board.create_board()
+    board = Board(Game_Mode.BACTERIOPHAGE,3, 3, CANT_OVERPOPULATION)
     board.add_bacterium(2, 2, BacteriumInfected(3))
     board.set_position_spawn_bacterium((0, 0))
     board.set_position_spawn_other((2, 1))

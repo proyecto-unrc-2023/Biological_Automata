@@ -19,11 +19,9 @@ class GameController:
             raise ValueError(
                 "Los valores de las frecuencias deben ser positivos!")
         self.__game_state = Game_State.CONFIG_GAME
-        self.__board = Board(12, 17,4)             # por defecto
         self.__game_winner = Game_Winner.NOT_DETERMINATED
+        self.__board = Board(mode,12, 17,4)             # por defecto
         self._game_mode = mode
-        self.__board.set_gameMode(mode)
-        self.__board.create_board()
         self.__cant_bacterium = cant_bact              # cantidad de bacterias que expulsara
         # cantidad de bacterias que de antibiotico o bacterifago segun el modo
         self.__cant_other = cant_other
@@ -87,17 +85,13 @@ class GameController:
                 "El juego no está en el estado CONFIG_GAME")
 
         self.__game_mode = mode
-        self._board.set_gameMode(mode)
 
     def start_game(self):
         if self.__game_state != Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado CONFIG_GAME")
 
-        if self.__board.get_position_spawn_bacterium == None:
-            raise ValueError("El spawn de bacterias no está seteado")
-
-        if self.__board.get_position_spawn_other == None:
-            raise ValueError("El spawn de otro no está seteado")
+        if self.__board.get_position_spawn_bacterium == None or self.__board.get_position_spawn_other == None :
+            raise ValueError("Spawn No Setteado")
 
         self.__game_state = Game_State.START_GAME
 
@@ -190,7 +184,7 @@ class GameController:
 
         self.__game_state = Game_State.NOT_STARTED
         self.__game_mode = None
-        self.__board = Board(15, 20, 4)
+        # self.__board = Board(15, 20, 4)
 
     def count_other_in_board(self):
         cant_other_in_board = 0

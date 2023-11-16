@@ -9,15 +9,26 @@ from models.logic.Game_Mode import Game_Mode
 
 class Board:
 
-    def __init__(self, rows, columns, overpopulation):
+    def __init__(self, mode:Game_Mode ,rows, columns, overpopulation):
         self.__position = []
         self.__rows = rows
         self.__columns = columns
         self.__position_spawn_bacterium = None
         self.__position_spawn_other = None
-        self.__board = []
-        self.__game_mode = None
+        self.__game_mode = mode
         self.__cant_overpopulation = overpopulation
+        self.__board = []
+        self.create_board()
+
+    def create_board(self):
+        for _ in range(self.__rows):
+            curr_row = []
+            for _ in range(self.__columns):
+                if self.__game_mode == Game_Mode.ANTIBIOTIC:
+                    curr_row.append(CellAntibiotic())
+                if self.__game_mode == Game_Mode.BACTERIOPHAGE:
+                    curr_row.append(CellBacteriophage())
+            self.__board.append(curr_row)
 
     @property
     def _rows(self):
@@ -31,25 +42,12 @@ class Board:
     def _board(self):
         return self.__board
 
-    def set_gameMode(self, mode):
-        self.__game_mode = mode
-
     def set_cant_overpopulation(self, cant):
         self.__cant_overpopulation = cant
 
-    def create_board(self):
-        for _ in range(self.__rows):
-            curr_row = []
-            for _ in range(self.__columns):
-                if self.__game_mode == Game_Mode.ANTIBIOTIC:
-                    curr_row.append(CellAntibiotic())
-                if self.__game_mode == Game_Mode.BACTERIOPHAGE:
-                    curr_row.append(CellBacteriophage())
-            self.__board.append(curr_row)
-
     def get_cell(self, row, column):
         return self.__board[row][column]
-    
+
     def set_position_spawn_bacterium(self, position):
         try:
             self.__board[position[0]][position[1]].set_spawn()
@@ -123,8 +121,7 @@ class Board:
         return list(set(aux))
 
     def move_all_entities(self):
-        new_board = Board(self.__rows, self.__columns, self.__cant_overpopulation)
-        new_board.set_gameMode(self.__game_mode)
+        new_board = Board(self.__game_mode,self.__rows, self.__columns, self.__cant_overpopulation)
         new_board.create_board()
         new_board.set_position_spawn_bacterium(self.__position_spawn_bacterium)
         new_board.set_position_spawn_other(self.__position_spawn_other)
@@ -147,7 +144,7 @@ class Board:
                 self.__position.extend(celda.get_bacteria())
                 if self.__game_mode == Game_Mode.ANTIBIOTIC:
                     self.__position.extend(celda.get_antibiotics())
-                
+
                 if self.__game_mode == Game_Mode.BACTERIOPHAGE:
                     self.__position.extend(celda.get_bacteriophages())
 
@@ -167,7 +164,7 @@ class Board:
                 if resultMoves is not None:
                     new_x, new_y = resultMoves
                     new_board.add_antibiotic(new_x, new_y, antibiotic)
-        
+
         if (self.__game_mode == Game_Mode.BACTERIOPHAGE):
             for bacteriophage in self.__board[x][y].get_bacteriophages():
                 resultMoves = self.get_random_move(x, y)
@@ -247,7 +244,7 @@ class Board:
                 counter += self.get_cell(row, column).count_antibiotic(power)
 
         return counter
-    
+
     def move_entity(self, new_x, new_y, x, y, board, entity):
         if isinstance(entity, Bacterium):
             entity.add_move()
