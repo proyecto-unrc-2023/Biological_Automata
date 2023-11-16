@@ -145,14 +145,13 @@ function Config({ onViewChange, id }) {
                 />
               </label>
               <button className='buttonInit' onClick={handleNextStep}>
-                PLAY
+                Jugar
               </button>
               <button className='buttonInit' onClick={handleAntStep}>
                 {' '}
                 Anterior{' '}
               </button>
-              <button className='buttonInit' onClick={() => onViewChange('index')}>
-                Inicio
+              <button className='buttonHome' onClick={() => onViewChange('index')}>
             </button>
             </div>
           )}

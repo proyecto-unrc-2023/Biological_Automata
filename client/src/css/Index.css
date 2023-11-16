@@ -42,6 +42,21 @@
   transition: background-color 0.3s;
 }
 
+.buttonHome{
+  padding: 13px 25px;
+  font-size: 1em;
+  background-color: #4caf50;
+  width: 37px;
+  height: 37px;
+  background-image: url('../images/home.png');
+  border: none;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 .buttonInit:hover {
   background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
 }

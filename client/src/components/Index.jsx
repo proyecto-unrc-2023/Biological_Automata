@@ -49,7 +49,7 @@ function Index({ onViewChange }) {
           ))}
         </div>
 
-        <button className='buttonInit' onClick={() => onViewChange('config')}>Play</button>
+        <button className='buttonInit' onClick={() => onViewChange('config')}>Comenzar</button>
       </div>
     </div>
   );

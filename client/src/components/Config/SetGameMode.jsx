@@ -65,6 +65,9 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
             </button>
           </div>
       </div>
+      <button id='buttons-flush' onClick={() => onViewChange('index')}>
+          Anterior
+        </button>
 
       <button
           id='buttons-flush'
@@ -73,9 +76,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
         >
           Siguiente
         </button>
-        <button id='buttons-flush' onClick={() => onViewChange('index')}>
-          Anterior
-        </button>
+        
     </>
   );
 }

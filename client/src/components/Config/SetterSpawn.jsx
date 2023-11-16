@@ -150,6 +150,7 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
             <table><tbody>{board}</tbody></table>
         </div>
       </div>
+      <button className='buttonInit' onClick={handleAntStep} > Anterior </button>
 
       <button
         className='buttonInit'
@@ -158,10 +159,7 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
         Siguiente
       </button>
 
-      <button className='buttonInit' onClick={handleAntStep} > Anterior </button>
-
-      <button className='buttonInit' onClick={() => onViewChange('index')}>
-          Inicio
+      <button className='buttonHome' onClick={() => onViewChange('index')}>
       </button>
     </>
   );
