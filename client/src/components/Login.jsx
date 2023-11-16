@@ -34,28 +34,32 @@ function Login({ onViewChange, id }) {
   };
 
   return (
-    <div className='login-content'>
+    <div className='register-content'>
       <div className='background'>
-        <label>
-          Usuario:
-          <input
-            type='text'
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-          />
-        </label>
-        <label>
-          Contraseña:
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
+        <div className='content-form'>
+          <label>
+            Usuario:
+            <input
+              type='text'
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </label>
+          <label>
+            Contraseña:
+            <input
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
 
-        <button className='buttonInit' onClick={handleUserLogin}>
-          Iniciar Sesión
-        </button>
+          <button className='buttonInit' onClick={handleUserLogin}>
+            Iniciar Sesión
+          </button>
+
+          <button className='buttonInit' onClick={() => onViewChange('index')}>Volver</button>
+        </div>
       </div>
     </div>
   );

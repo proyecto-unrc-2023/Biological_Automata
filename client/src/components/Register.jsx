@@ -45,42 +45,45 @@ function Register({ onViewChange, id }) {
   return (
     <div className='register-content'>
       <div className='background'>
-          <label>
-            Nickname:
-            <input
-              type='text'
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Contraseña:
-            <input
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <label>
-            Repetir contraseña:
-            <input
-              type='password'
-              value={repPassword}
-              onChange={(e) => setRepPassword(e.target.value)}
-            />
-          </label>
-          <button className='buttonInit' onClick={handleRegisterUser}>
-            Registrar
-          </button>
+        <div className='content-form'>
+            <label>
+              Nickname:
+              <input
+                type='text'
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
+            <label>
+              Contraseña:
+              <input
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+            <label>
+              Repetir contraseña:
+              <input
+                type='password'
+                value={repPassword}
+                onChange={(e) => setRepPassword(e.target.value)}
+              />
+            </label>
+            <button className='buttonInit' onClick={handleRegisterUser}>
+              Registrar
+            </button>
 
+            <button className='buttonInit' onClick={() => onViewChange('index')}>Volver</button>
+          </div>
         </div>
       </div>
   );
