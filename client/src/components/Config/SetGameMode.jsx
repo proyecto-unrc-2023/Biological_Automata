@@ -71,6 +71,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
 
       <button
           id='buttons-flush'
+          className='siguiente'
           onClick={() => handleNextStep(gameMode)}
           disabled={!isNextButtonVisible()}
         >

@@ -60,5 +60,5 @@ button:hover{
 }
 
 #captura{
-  align-self: center;
+  display: flex;
 }

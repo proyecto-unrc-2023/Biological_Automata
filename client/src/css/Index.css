@@ -46,8 +46,9 @@
   padding: 13px 25px;
   font-size: 1em;
   background-color: #4caf50;
-  width: 37px;
-  height: 37px;
+  top: 0.4%;
+  width: 38px;
+  height: 38px;
   background-image: url('../images/home.png');
   border: none;
   background-size: cover;
@@ -121,4 +122,8 @@
   text-shadow: none;
   color: #ffffff;
   width: 200px;
+}
+
+.siguiente{
+  margin-left: 10px;
 }

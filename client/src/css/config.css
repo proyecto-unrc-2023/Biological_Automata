@@ -208,15 +208,14 @@ p{
   color: aliceblue;
   text-shadow: 0 3px 1px #000000;
   font-size: 2.5rem;
-  align-self: center;
+  position: relative;
+  left: 25%;
 }
 
 #mode{
   display: flex;
   position: relative;
-  align-items: center;
-  align-self: center;
-  column-gap: 20px;
+  left: -5%;
 }
 
 #params{
@@ -228,7 +227,7 @@ p{
   width: 250px;
   position: relative;
   left: 44%;
-  top: 30%;
+  top: 15%;
 }
 
 #params label{
@@ -269,24 +268,29 @@ p{
 }
 
 p#spawn{
-  top: 90%;
-  left: 36%;
+  /* top: 90%; */
+  left: 1%;
 }
 
 .grid-row:nth-child(even){
   background-image: url('../../public/fondo.png');
+  background-size: 74.1px;
+  background-repeat: repeat-x;
   filter: brightness(1.1);
   opacity: 1;
 }
 .grid-row:nth-child(odd){
   background-image: url('../../public/fondo.png');
+  background-size: 74.1px;
+  background-position: 46.5%;
   filter: brightness(1.1);
+  background-repeat: repeat-x;
   opacity: 1;
 }
 
-.grid-row{
+/* .grid-row{
   max-width:max-content;
-}
+} */
 
 @keyframes mask{
 0%{
@@ -346,7 +350,7 @@ p#spawn{
 }
 
 #mode{
-  column-gap: 14%;
+  column-gap: 15%;
 }
 
 
@@ -361,6 +365,8 @@ p#spawn{
 
 #captura img{
   position: relative;
-  width: 7%;
-  height: 7%;
+  width: 6%;
+  height: 6%;
+  left: 90%;
 }
+
