@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 import '../css/board.css';
-import html2canvas from 'html2canvas';
+//import html2canvas from 'html2canvas';
 import cap from '../images/Captura.png';
 
 function Create_board({onViewChange, id}) {
@@ -111,7 +111,7 @@ function Create_board({onViewChange, id}) {
         <div className="grid">
 
           <div id='controls-v'>
-            <label>Velocidad: </label>
+            <label>Velocidad:</label>
             <input
               type="range" //que aparezca como deslizar
               min="0.5"
