@@ -51,10 +51,6 @@ button:hover{
   background-image: url('../../public/gui/pause.png'); /* Ruta de la imagen de PAUSA */
 }
 
-.sonido {
-  background-image: url('../../public/gui/sound.png'); /* Ruta de la imagen de PAUSA */
-}
-
 .pause{
   filter: brightness(1.2);
 }
