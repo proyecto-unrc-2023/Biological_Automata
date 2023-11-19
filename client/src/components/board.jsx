@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 import '../css/board.css';
-//import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas';
 import cap from '../images/Captura.png';
 
 function Create_board({onViewChange, id}) {
@@ -14,6 +14,11 @@ function Create_board({onViewChange, id}) {
 
   //funcion para refrescar la data del game
   const fetchRefreshData = () => {
+    if (gameData && gameData.games && gameData.games._game_state === "Game_State.FINISHED") {
+      // No hacer el fetch si el juego ha terminado
+      return;
+    }
+
     fetch(`http://localhost:5000/game/refreshgame/${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -22,20 +27,6 @@ function Create_board({onViewChange, id}) {
       .catch((error) => {
         console.error('Error no se agarró el JSON', error);
       });
-  };
-
-
-  const refreshGame = () => {
-    fetchRefreshData();
-
-    if (gameData === null) {
-      return "Cargando...";
-    }
-
-    const { _rows, _columns } = gameData.games._board;
-
-    setBoardData(gameData.games._board._board);
-    generateBoard(_rows, _columns);
   };
 
   // Frenar el Juego Con el Boton STOP
@@ -62,7 +53,7 @@ function Create_board({onViewChange, id}) {
       const row = [];
       for (let j = 0; j < _columns; j++) {
         const cellData = boardData[i][j];
-        row.push( <Cell i={i} j={j} cellData={cellData} gameData={gameData}/> );  //Componente que crea la celda
+        row.push(<Cell key={`${i}-${j}`} i={i} j={j} cellData={cellData} gameData={gameData} />);  //Componente que crea la celda
       }
       newBoard.push(<tr key={i} className="grid-row" children={row} />);
     }
@@ -92,14 +83,35 @@ function Create_board({onViewChange, id}) {
   };
 
   useEffect(() => {
-    if(stopGame){
-      const refreshInterval = setInterval(refreshGame, 1000/speed);
-
+    const refreshGame = () => {
+      fetchRefreshData();
+  
+      if (gameData === null) {
+        return "Cargando...";
+      }
+  
+      const { _board } = gameData.games._board;
+  
+      // Actualizar el estado del tablero directamente
+      setBoardData(_board);
+    };
+  
+    // Llamar a generateBoard después de cada actualización de boardData
+    if (boardData) {
+      const { _rows, _columns } = gameData.games._board;
+      generateBoard(_rows, _columns);
+    }
+  
+    if (stopGame) {
+      const refreshInterval = setInterval(refreshGame, 1000 / speed);
+  
       return () => {
         clearInterval(refreshInterval);
       };
     }
-  }, [gameData, stopGame, speed]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardData, gameData, stopGame, speed]);
 
   return (
     <>
@@ -124,6 +136,31 @@ function Create_board({onViewChange, id}) {
 
           <div id='capture'>
             <table><tbody>{board}</tbody></table>
+          </div>
+
+          <div id='messages'>
+            {gameData && gameData.games && (
+              <>
+                {gameData.games._game_winner && (
+                  <>
+                    {gameData.games._game_winner === "Game_Winner.BACTERIUM" && (
+                      <p className="message">Ganaron las bacterias. ¡No lograste combatirlas!</p>
+                    )}
+                    {gameData.games._game_winner === "Game_Winner.OTHER" && (
+                      <p className="message">
+                        Ganaron {gameData.games._game_mode === "Game_Mode.ANTIBIOTIC"
+                          ? "los antibióticos"
+                          : "los bacteriófagos"}. ¡Felicitaciones!
+                      </p>
+                    )}
+                    {/* Si no hay ganador, ocupar espacio con un mensaje o elemento vacío */}
+                    {gameData.games._game_winner === "Game_Winner.NOT_DETERMINATED" && (
+                      <p className="invisible-text">Texto oculto</p>
+                    )}
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           <div id="controls">

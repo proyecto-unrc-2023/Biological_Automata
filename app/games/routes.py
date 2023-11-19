@@ -3,6 +3,7 @@ from app.games import api
 from Schemas.schemas import *
 from models.logic.GameController import GameController
 from models.logic.Game_Mode import Game_Mode
+from models.logic.Game_State import Game_State
 from models.logic.Bacterium import *
 from flask_restful import Resource
 from app.games.User import User
@@ -75,7 +76,9 @@ class RefreshGame(Resource):
         if game_data is None:
             return {"message": "ID de juego no encontrado"}, 404
 
-        game_data.refresh_board()
+        if game_data._game_state == Game_State.START_GAME:
+            game_data.refresh_board()
+
         game_schema = GameSchema()
         result = game_schema.dump(game_data)
         return jsonify({"games": result})

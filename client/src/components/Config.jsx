@@ -130,7 +130,7 @@ function Config({ onViewChange, id }) {
                 />
               </label>
               <label>
-                Cantidad de Other:
+                Cantidad de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
                 <input
                   type='number'
                   value={cantOther}
@@ -139,7 +139,7 @@ function Config({ onViewChange, id }) {
                 />
               </label>
               <label>
-                Frecuencia de Other:
+                Frecuencia de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
                 <input
                   type='number'
                   value={frecOther}

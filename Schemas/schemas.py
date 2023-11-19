@@ -15,5 +15,7 @@ class GameSchema(Schema):
     spawn_bacterium = fields.Tuple((fields.Integer(), fields.Integer()), required=True)
     spawn_other = fields.Tuple((fields.Integer(), fields.Integer()), required=True)
     _game_mode = fields.Str()
+    _game_state = fields.Str()
+    _game_winner = fields.Str()
     _cant_bacterium = fields.Int()
     _cant_other = fields.Int()

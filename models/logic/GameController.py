@@ -177,14 +177,10 @@ class GameController:
             self.__game_state = Game_State.START_GAME
 
     def stop(self):
-        if self.__game_state != Game_State.START_GAME:
+        if self.__game_state == Game_State.NOT_STARTED or self.__game_state == Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
 
         self.__game_state = Game_State.NOT_STARTED
-
-        self.__game_state = Game_State.NOT_STARTED
-        self.__game_mode = None
-        # self.__board = Board(15, 20, 4)
 
     def count_other_in_board(self):
         cant_other_in_board = 0

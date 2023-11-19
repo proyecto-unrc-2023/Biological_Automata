@@ -16,9 +16,9 @@ def chequear_total_antibioticos_con_poder(context,n,power):
 def chequear_total_entes(context,n,ente):
     assert context.game.count_total(ente) == n 
     
-@then("el ganador deberia ser {ente}")
+@then("el ganador deberia ser la {ente}")
 def chequear_ganador(context, ente):
     if ente == 'bacteria':
         assert context.game._game_winner == Game_Winner.BACTERIUM
-    if ente == 'la otra entidad':
+    if ente == 'otra entidad':
         assert context.game._game_winner == Game_Winner.OTHER
