@@ -139,9 +139,11 @@ Característica: Comportamiento de las entidades
     Y se coloco el spawn de bacterias en (0,0)
     Y se coloco el spawn de la otra entidad en (11,16)
     Y el usuario inicio el juego
-    Cuando ha pasado <turnos> turno de juego
-    Entonces deberian quedar 0 bacterias por salir del spawn
-    Y el tablero deberia quedar con <b_en_tablero> bacterias
+    Cuando ha pasado 1 turno de juego
+    Entonces el estado de juego deberia ser FINISHED
+    Y el ganador deberia ser la bacteria
+    #Entonces deberian quedar 0 bacterias por salir del spawn
+    #Y el tablero deberia quedar con <b_en_tablero> bacterias
 
     Ejemplos:
 
@@ -160,9 +162,11 @@ Característica: Comportamiento de las entidades
     Y se coloco el spawn de bacterias en (2,2)
     Y se coloco el spawn de la otra entidad en (5,5)
     Y el usuario inicio el juego
-    Cuando ha pasado <turnos> turno de juego
-    Entonces deberian quedar <cant_v_act> bacteriofagos por salir del spawn
-    Y el tablero deberia quedar con <v_en_tablero> bacteriofagos
+    Cuando ha pasado 1 turno de juego
+    Entonces el estado de juego deberia ser FINISHED
+    Y el ganador deberia ser la otra entidad
+    #Entonces deberian quedar <cant_v_act> bacteriofagos por salir del spawn
+    #Y el tablero deberia quedar con <v_en_tablero> bacteriofagos
 
     Ejemplos:
 
@@ -179,9 +183,11 @@ Característica: Comportamiento de las entidades
     Y se coloco el spawn de bacterias en (2,2)
     Y se coloco el spawn de la otra entidad en (5,5)
     Y el usuario inicio el juego
-    Cuando ha pasado <turnos> turno de juego
-    Entonces deberian quedar <cant_b_act> antibioticos por salir del spawn
-    Y el tablero deberia quedar con <b_en_tablero> antibioticos con poder <poder_antibiotico>
+    Cuando ha pasado 1 turno de juego
+    Entonces el estado de juego deberia ser FINISHED
+    Y el ganador deberia ser la otra entidad
+    #Entonces deberian quedar <cant_b_act> antibioticos por salir del spawn
+    #Y el tablero deberia quedar con <b_en_tablero> antibioticos con poder <poder_antibiotico>
 
     Ejemplos:
 

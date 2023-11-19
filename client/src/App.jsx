@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import './css/App.css'
 import Index from './components/Index';
-import Create_board from './components/board';
+import Register from './components/Register';
+import Login from './components/Login';
 import Config from './components/Config';
+import Create_board from './components/board';
 import MusicControls from './components/MusicControls';
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
 
     const views = {
       index: Index,
+      register: Register,
+      login: Login,
       config: Config,
       game: Create_board,
 

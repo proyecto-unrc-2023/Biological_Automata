@@ -131,6 +131,8 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
 
   return (
     <>
+    <button className='buttonHome' onClick={() => onViewChange('index')}>
+    </button>
       <div className='sss'>
 
         <div id='mode-select'>
@@ -150,16 +152,14 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
             <table><tbody>{board}</tbody></table>
         </div>
       </div>
-      <button className='buttonInit' onClick={handleAntStep} > Anterior </button>
+      <button id='buttons-flush' onClick={handleAntStep} > Anterior </button>
 
       <button
-        className='buttonInit'
+          id='buttons-flush'
+          className='siguiente'
         onClick={handleNextStep}
         disabled={!isNextButtonVisible()} >
         Siguiente
-      </button>
-
-      <button className='buttonHome' onClick={() => onViewChange('index')}>
       </button>
     </>
   );

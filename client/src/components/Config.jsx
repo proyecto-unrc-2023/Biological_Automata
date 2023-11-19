@@ -107,6 +107,9 @@ function Config({ onViewChange, id }) {
           )}
 
           {step === 3 && (
+          <div id='config'>
+            <button className='buttonHome' onClick={() => onViewChange('index')}>
+            </button>
             <div id='params'>
               <label>
                 Cantidad de Bacterias:
@@ -127,7 +130,7 @@ function Config({ onViewChange, id }) {
                 />
               </label>
               <label>
-                Cantidad de Other:
+                Cantidad de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
                 <input
                   type='number'
                   value={cantOther}
@@ -136,7 +139,7 @@ function Config({ onViewChange, id }) {
                 />
               </label>
               <label>
-                Frecuencia de Other:
+                Frecuencia de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
                 <input
                   type='number'
                   value={frecOther}
@@ -151,9 +154,8 @@ function Config({ onViewChange, id }) {
                 {' '}
                 Anterior{' '}
               </button>
-              <button className='buttonHome' onClick={() => onViewChange('index')}>
-            </button>
             </div>
+          </div>
           )}
       </div>
     </div>

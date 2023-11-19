@@ -56,5 +56,15 @@ button:hover{
 }
 
 #captura{
-  align-self: center;
+  display: flex;
+}
+
+#messages .message {
+  position: initial; /* O utiliza 'static' para el posicionamiento predeterminado */
+  font-size: 18px; /* Puedes ajustar el tamaño de la fuente según tus necesidades */
+}
+
+.invisible-text {
+  visibility: hidden;
+  font-size: 18px;
 }
