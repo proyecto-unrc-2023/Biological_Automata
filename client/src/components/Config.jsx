@@ -8,6 +8,7 @@ function Config({ onViewChange, id }) {
 
   const [spawnBacterium, setSpawnBacterium] = useState(null);
   const [spawnOther, setSpawnOther] = useState(null);
+  const [showMore, setShowMore] = useState(false);
 
   // Valores predeterminados y valores editables
   const [cantBact, setCantBact] = useState(10);
@@ -15,6 +16,14 @@ function Config({ onViewChange, id }) {
   const [cantOther, setCantOther] = useState(20);
   const [frecOther, setFrecOther] = useState(2);
   const [gameMode, setGameMode] = useState(null);
+  const [movesReproduction, setMovesReproduction] = useState(10);
+  const [movesRecovery, setMovesRecovery] = useState(6);
+  const [powerAntibiotic, setPowerAntibiotic] = useState(3);
+  const [movesExplotion, setMovesExplotion] = useState(4);
+  const [virusAfterExplotion, setVirusAfterExplotion] = useState(4);
+  const [initialPowerInfection, setInitialPowerInfection] = useState(4);
+  const [mutationProbability, setMutationProbability] = useState(0.1);
+  const [cantOverpopulation, setCantOverpopulation] = useState(4);
 
   const handleNextStep = () => {
     if (step === 1) {
@@ -54,6 +63,14 @@ function Config({ onViewChange, id }) {
         frecOther: frecOther,
         gameMode: gameMode,
         id: id,
+        movesReproduction: movesReproduction,
+        movesRecovery: movesRecovery,
+        powerAntibiotic: powerAntibiotic,
+        movesExplotion: movesExplotion,
+        virusAfterExplotion: virusAfterExplotion,
+        initialPowerInfection: initialPowerInfection,
+        mutationProbability: mutationProbability,
+        cantOverpopulation: cantOverpopulation,
       };
 
       fetch(`http://localhost:5000/game/saveConfig`, {
@@ -110,7 +127,7 @@ function Config({ onViewChange, id }) {
           <div id='config'>
             <button className='buttonHome' onClick={() => onViewChange('index')}>
             </button>
-            <div id='params'>
+            <div id='params' className='params'>
               <label>
                 Cantidad de Bacterias:
                 <input
@@ -155,10 +172,109 @@ function Config({ onViewChange, id }) {
                 Anterior{' '}
               </button>
             </div>
+
+            <div id='advanced-params' className='params'>
+              {/* Botón para mostrar/ocultar el segundo grupo */}
+              <button className='buttonShowMore' onClick={() => setShowMore(!showMore)}>
+                {showMore ? "Ocultar" : "Conf. Avanzada"}
+              </button>
+
+              {/* Mostrar el segundo grupo solo si showMore es verdadero */}
+              {showMore && (
+                <>
+                  
+                  <label>
+                    Mov. reproducción:
+                    <input
+                      type='number'
+                      value={movesReproduction}
+                      onChange={(e) => setMovesReproduction(parseInt(e.target.value))}
+                      min='1'
+                    />
+                  </label>
+                  <label>
+                    Cant. sobrepoblación:
+                    <input
+                      type='number'
+                      value={cantOverpopulation}
+                      onChange={(e) => setCantOverpopulation(parseInt(e.target.value))}
+                      min='1'
+                    />
+                  </label>
+                  {gameMode === 1 && (
+                    <>
+                      <label>
+                        Mov. recuperación:
+                        <input
+                          type='number'
+                          value={movesRecovery}
+                          onChange={(e) => setMovesRecovery(parseInt(e.target.value))}
+                          min='1'
+                        />
+                      </label>
+                      <label>
+                        Poder antibióticos:
+                        <input
+                          type='number'
+                          value={powerAntibiotic}
+                          onChange={(e) => setPowerAntibiotic(parseInt(e.target.value))}
+                          min='0'
+                        />
+                      </label>
+                      <label>
+                        Probabilidad de mutación:
+                        <input
+                          type='number'
+                          value={mutationProbability}
+                          onChange={(e) => setMutationProbability(parseFloat(e.target.value))}
+                          max='1'
+                          min='0'
+                        />
+                      </label>
+                    </>
+                  )}
+
+                  {gameMode === 2 && (
+                    <>
+                      <label>
+                        Mov. explosión:
+                        <input
+                          type='number'
+                          value={movesExplotion}
+                          onChange={(e) => setMovesExplotion(parseInt(e.target.value))}
+                          min='1'
+                        />
+                      </label>
+                      <label>
+                        Virus después explosión:
+                        <input
+                          type='number'
+                          value={virusAfterExplotion}
+                          onChange={(e) => setVirusAfterExplotion(parseInt(e.target.value))}
+                          min='1'
+                        />
+                      </label>
+                      <label>
+                        Poder infeccion inicial:
+                        <input
+                          type='number'
+                          value={initialPowerInfection}
+                          onChange={(e) => setInitialPowerInfection(parseInt(e.target.value))}
+                          min='1'
+                        />
+                      </label>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+
+
+
           </div>
           )}
+        </div>
       </div>
-    </div>
     </>
   );
 }

@@ -54,10 +54,21 @@ class New_Game(Resource):
         frec_other = data.get('frecOther')
         game_mode = data.get('gameMode')
         id = data.get('id')
+        moves_reproduction = data.get('movesReproduction')
+        moves_recovery = data.get('movesRecovery')
+        power_antibiotic = data.get('powerAntibiotic')
+        moves_explotion = data.get('movesExplotion')
+        virus_after_explotion = data.get('virusAfterExplotion')
+        initial_power_infection = data.get('initialPowerInfection')
+        mutation_probability = data.get('mutationProbability')
+        cant_overpopulation = data.get('cantOverpopulation')
 
         game_data = GameController(Game_Mode(game_mode), cant_bact, frec_bact, cant_other, frec_other)
         game_data.set_spawn_bacterium((x_spawn_b, y_spawn_b))
         game_data.set_spawn_other((x_spawn_o, y_spawn_o))
+        game_data.advanced_config(moves_reproduction, moves_recovery, power_antibiotic,
+                                 moves_explotion, virus_after_explotion, initial_power_infection,
+                                 mutation_probability, cant_overpopulation)
         game_data.start_game()
         config_id = id
 
