@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../css/MusicControls.css'; // Importa el archivo CSS
 //import React, { useRef, useState } from 'react';
 
-
 const cargarSonido = function (fuente) {
   const sonido = document.createElement("audio");
   sonido.src = fuente;

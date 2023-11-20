@@ -3,6 +3,7 @@ import Cell from './Cell';
 import '../css/board.css';
 import html2canvas from 'html2canvas';
 import cap from '../images/Captura.png';
+import MusicControls from './MusicControls';
 
 function Create_board({onViewChange, id}) {
   const [board, setBoard] = useState([]);
@@ -115,6 +116,7 @@ function Create_board({onViewChange, id}) {
 
   return (
     <>
+    <MusicControls />
     <div className='game-conteiner'>
       <div className='background'>
         <div id='captura'>
