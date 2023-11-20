@@ -9,7 +9,7 @@ import MusicControls from './components/MusicControls';
 
 function App() {
     const [viewComponent, setViewComponent] = useState('index')
-    const [id] = useState(Math.floor(Math.random() * 101));
+    const [id, setId] = useState(null);
 
     const handleViewChange = (view) => {
       setViewComponent(view);
@@ -38,7 +38,7 @@ function App() {
       <MusicControls />
 
       <div>
-        <CurrentViewComponent onViewChange={handleViewChange} id = {id} />
+        <CurrentViewComponent onViewChange={handleViewChange} id = {id} setId = {setId} />
       </div>
       </>
     );

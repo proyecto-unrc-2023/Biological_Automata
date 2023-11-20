@@ -3,7 +3,7 @@ import SetterGameMode from './Config/SetGameMode';
 import SetterSpawn from './Config/SetterSpawn';
 import '../css/config.css';
 
-function Config({ onViewChange, id }) {
+function Config({ onViewChange, setId}) {
   const [step, setStep] = useState(1);
 
   const [spawnBacterium, setSpawnBacterium] = useState(null);
@@ -62,7 +62,6 @@ function Config({ onViewChange, id }) {
         frecBact: frecBact,
         frecOther: frecOther,
         gameMode: gameMode,
-        id: id,
         movesReproduction: movesReproduction,
         movesRecovery: movesRecovery,
         powerAntibiotic: powerAntibiotic,
@@ -73,7 +72,7 @@ function Config({ onViewChange, id }) {
         cantOverpopulation: cantOverpopulation,
       };
 
-      fetch(`http://localhost:5000/game/saveConfig`, {
+      fetch(`http://localhost:5000/game/newgame`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,15 +83,19 @@ function Config({ onViewChange, id }) {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
+          return response.json(); // Parsear la respuesta JSON
+        })
+        .then((data) => {
+          setId(data.id); // Obtener el ID devuelto por el backend
           onViewChange('game');
+          // Usa el gameId como necesites en tu aplicación
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
         });
-    } else {
-      console.error('Error: No se ha proporcionado spawns o modo de juego');
     }
   };
+
 
   const isValidNumbers = (...numbers) => {
     return numbers.every((num) => !isNaN(num) && num >= 0);
@@ -182,7 +185,7 @@ function Config({ onViewChange, id }) {
               {/* Mostrar el segundo grupo solo si showMore es verdadero */}
               {showMore && (
                 <>
-                  
+
                   <label>
                     Mov. reproducción:
                     <input

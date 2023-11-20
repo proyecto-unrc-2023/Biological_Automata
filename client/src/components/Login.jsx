@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Login({ onViewChange, id }) {
+function Login({ onViewChange}) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
 
