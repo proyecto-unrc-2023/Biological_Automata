@@ -233,14 +233,14 @@ p{
 #config .buttonHome{
   background-color: rgba(220, 20, 60, 0.58);
 }
-#params label{
+.params label{
   font-size: large;
   text-shadow: 0 3px 1px #000000;
   text-wrap: 10px;
   color: aliceblue;
 }
 
-#params input{
+.params input{
   height: 25px;
   width: 150px;
   background-color: rgba(220, 20, 60, 0.58);
@@ -252,11 +252,11 @@ p{
   font-size: 1rem;
 }
 
-#params button{
+.params button{
   width: 70px;
 }
 
-#params button{
+.params button{
   background-color: rgba(197, 1, 1, 0.71);
   height: 50px;
   width: auto;
@@ -265,7 +265,7 @@ p{
   color: aliceblue;
 }
 
-#params button:hover{
+.params button:hover{
   cursor: pointer;
   filter: brightness(1.25);
 }
@@ -371,5 +371,23 @@ p#spawn{
   width: 6%;
   height: 6%;
   left: 90%;
+}
+
+#config {
+  display: flex;
+  flex-direction: row; /* Alinea los contenedores en fila */
+}
+
+#advanced-params {
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  text-align: center;
+  row-gap: 20px;
+  width: 250px;
+  position:fixed;
+  left: 70%;
+  top: 4.55%;
+  margin-right: 20px; /* Ajusta el espacio entre los contenedores según sea necesario */
 }
 

@@ -126,3 +126,14 @@
 .siguiente{
   margin-left: 10px;
 }
+
+#user-init{
+  position: relative;
+  left: -10%;
+}
+
+.logo{
+  position: relative;
+  left: -6%;
+  top: 3%;
+}

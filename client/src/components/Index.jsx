@@ -35,8 +35,8 @@ function Index({ onViewChange }) {
 
     <div className="index-container">
       <div className='background'>
-        <button className='buttonInit' onClick={() => onViewChange('register')}>Registrar</button>
-        <button className='buttonInit' onClick={() => onViewChange('login')}>Login</button>
+        <button className='buttonInit' id='user-init' onClick={() => onViewChange('register')}>Registrar</button>
+        <button className='buttonInit' id='user-init' onClick={() => onViewChange('login')}>Login</button>
 
 
         <img src={bacteriumLogo} alt="Logo" className="logo" />
