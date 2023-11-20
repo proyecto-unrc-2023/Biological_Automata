@@ -5,7 +5,6 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Config from './components/Config';
 import Create_board from './components/board';
-import MusicControls from './components/MusicControls';
 
 function App() {
     const [viewComponent, setViewComponent] = useState('index')
@@ -34,8 +33,6 @@ function App() {
         <a href="#" onClick={() => setViewComponent('config')}>Jugar</a>
         <a href="#">Créditos</a>
       </div> */}
-
-      <MusicControls />
 
       <div>
         <CurrentViewComponent onViewChange={handleViewChange} id = {id} setId = {setId} />
