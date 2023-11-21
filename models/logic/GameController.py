@@ -248,6 +248,15 @@ class GameController:
     @property
     def _movements(self):
         return self.__movements
+    
+    #para Schema
+    @property
+    def _max_power_other(self):
+        if self.__game_mode == Game_Mode.ANTIBIOTIC:
+            return self.__power_antibiotic
+        
+        if self.__game_mode == Game_Mode.BACTERIOPHAGE:
+            return self.__initial_power_infection
 
     def set_moves_for_reproduction(self, moves_for_reproduction):
         if moves_for_reproduction < 0:

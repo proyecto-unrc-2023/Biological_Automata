@@ -1,6 +1,7 @@
 from models.logic.cell import Cell
 from models.logic.Bacterium import BacteriumStrong, BacteriumWeak
 from models.logic.Antibiotic import Antibiotic
+import random
 
 
 class CellAntibiotic(Cell):
@@ -112,6 +113,16 @@ class CellAntibiotic(Cell):
     @property
     def _other(self):
         return self.get_cant_antibiotic()
+    
+    @property
+    def _power_other(self):
+        power = 0
+
+        if self.__antibiotics != []:
+            selected = random.choice(self.__antibiotics)
+            power = selected.get_power()
+        
+        return power
 
 #para behave
     def count_antibiotic(self,power):
