@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Login({ onViewChange}) {
+function Login({onViewChange, setId}) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
-
   const handleUserLogin = () => {
     if (nickname !== '' && password !== '') {
       const data = {
@@ -13,7 +12,7 @@ function Login({ onViewChange}) {
       };
 
       fetch(`http://localhost:5000/game/login`, {
-        method: 'POST', // Cambiado a POST
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -23,6 +22,16 @@ function Login({ onViewChange}) {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
+          return response.json();
+        })
+        .then((data) => {
+          // extraemos el id de la data
+          const userId = data.user.id;
+          //lo guardamos en el localStorage
+          sessionStorage.setItem('userId', userId);
+          setId(sessionStorage.getItem('userId'));
+
+          // Redirrecionamos las vistas al inicio
           onViewChange('index');
         })
         .catch((error) => {
@@ -32,6 +41,7 @@ function Login({ onViewChange}) {
       console.error('Error: Por favor, completa todos los campos');
     }
   };
+
 
   return (
     <div className='register-content'>

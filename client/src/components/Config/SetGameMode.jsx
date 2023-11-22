@@ -77,7 +77,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
         >
           Siguiente
         </button>
-        
+
     </>
   );
 }

@@ -30,18 +30,50 @@ const creatures = [
   },
 ];
 
-function Index({ onViewChange }) {
-  return (
 
+
+function Index({ onViewChange, id, setId }) {
+  // Verifica si id esta vacio pero hay valor en el localStorage...
+  if (!id && sessionStorage.getItem('userId')) {
+    setId(sessionStorage.getItem('userId'));
+  }
+
+  const isLoggedIn = id || sessionStorage.getItem('userId');
+  const canStartGame = id !== null || sessionStorage.getItem('userId') !== null;
+
+  const handleLogoutUser = () => {
+    if (isLoggedIn) {
+      sessionStorage.removeItem('userId');
+      setId(null);
+    } else {
+      console.error('Error: No se ha iniciado sesión en ninguna cuenta');
+    }
+  };
+
+  const handleStartGame = () => {
+    if (canStartGame) {
+      onViewChange('config');
+    } else {
+      console.error('Error: No se puede comenzar el juego, no se ha iniciado sesión');
+    }
+  };
+
+  return (
     <div className="index-container">
       <div className='background'>
-        <button className='buttonInit' id='user-init' onClick={() => onViewChange('register')}>Registrar</button>
-        <button className='buttonInit' id='user-init' onClick={() => onViewChange('login')}>Login</button>
+        {!isLoggedIn && (
+          <div>
+            <button className='buttonInit' id='user-init' onClick={() => onViewChange('register')}>Registrar</button>
+            <button className='buttonInit' id='user-init' onClick={() => onViewChange('login')}>Login</button>
+          </div>
+        )}
 
+        {isLoggedIn && (
+          <button className='buttonInit' id='user-init' onClick={() => handleLogoutUser()}>Logout</button>
+        )}
 
         <img src={bacteriumLogo} alt="Logo" className="logo" />
         <h1 className="titleInit">Biological Automata</h1>
-
 
         <div className="creature-container">
           {creatures.map((creature, index) => (
@@ -53,16 +85,10 @@ function Index({ onViewChange }) {
           ))}
         </div>
 
-        <button className='buttonInit' onClick={() => onViewChange('config')}>Comenzar</button>
+        <button className='buttonInit' onClick={handleStartGame}>Comenzar</button>
       </div>
     </div>
   );
 }
 
 export default Index;
-
-
-
-
-
-

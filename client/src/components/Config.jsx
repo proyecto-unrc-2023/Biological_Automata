@@ -4,7 +4,7 @@ import SetterSpawn from './Config/SetterSpawn';
 import '../css/config.css';
 import Tooltip from './Tooltip';
 
-function Config({ onViewChange, setId}) {
+function Config({ onViewChange, setId, id}) {
   const [step, setStep] = useState(1);
 
   const [spawnBacterium, setSpawnBacterium] = useState(null);
@@ -53,43 +53,45 @@ function Config({ onViewChange, setId}) {
       gameMode !== null &&
       isValidNumbers(cantBact, cantOther, frecBact, frecOther)
     ) {
-      const data = {
-        xBacterium: spawnBacterium.split('-').map(Number)[0],
-        yBacterium: spawnBacterium.split('-').map(Number)[1],
-        xOther: spawnOther.split('-').map(Number)[0],
-        yOther: spawnOther.split('-').map(Number)[1],
-        cantBact: cantBact,
-        cantOther: cantOther,
-        frecBact: frecBact,
-        frecOther: frecOther,
-        gameMode: gameMode,
-        movesReproduction: movesReproduction,
-        movesRecovery: movesRecovery,
-        powerAntibiotic: powerAntibiotic,
-        movesExplotion: movesExplotion,
-        virusAfterExplotion: virusAfterExplotion,
-        initialPowerInfection: initialPowerInfection,
-        mutationProbability: mutationProbability,
-        cantOverpopulation: cantOverpopulation,
-      };
+      const xBacterium = spawnBacterium.split('-').map(Number)[0];
+      const yBacterium = spawnBacterium.split('-').map(Number)[1];
+      const xOther = spawnOther.split('-').map(Number)[0];
+      const yOther = spawnOther.split('-').map(Number)[1];
 
       fetch(`http://localhost:5000/game/newgame`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          xBacterium,
+          yBacterium,
+          xOther,
+          yOther,
+          cantBact,
+          cantOther,
+          frecBact,
+          frecOther,
+          gameMode,
+          id,
+          movesReproduction,
+          movesRecovery,
+          powerAntibiotic,
+          movesExplotion,
+          virusAfterExplotion,
+          initialPowerInfection,
+          mutationProbability,
+          cantOverpopulation,
+        }),
       })
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          return response.json(); // Parsear la respuesta JSON
+          return response.json();
         })
         .then((data) => {
-          setId(data.id); // Obtener el ID devuelto por el backend
           onViewChange('game');
-          // Usa el gameId como necesites en tu aplicación
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
@@ -140,7 +142,7 @@ function Config({ onViewChange, setId}) {
                   value={cantBact}
                   onChange={(e) => setCantBact(parseInt(e.target.value))}
                   min='0'
-                />  
+                />
                 </Tooltip>
               </label>
               <label>
