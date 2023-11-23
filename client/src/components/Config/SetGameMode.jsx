@@ -56,10 +56,12 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
           <p>Modo de Juego</p>
           <div id='mode'>
             <button onClick={toggleModeAntibiotic} id='modA'>
+              <p className='description'>Antibiotico</p>
               <img src={ant} alt='Antibiotic' id='ant'></img>
               <img src={selec} alt='seleccion' id='selec'></img>
             </button>
             <button onClick={toggleModeBacteriophague} id='modV'>
+              <p className='description'>Bacteriofago</p>
               <img src={vir} alt='vir' id='vir'></img>
               <img src={selec} alt='seleccion' id='selec2'></img>
             </button>
@@ -77,7 +79,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
         >
           Siguiente
         </button>
-        
+
     </>
   );
 }

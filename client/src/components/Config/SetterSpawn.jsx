@@ -140,10 +140,12 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
 
           <button onClick={toggleSpawnBacterium} id='spawnbac'>
               <img src={spb} alt='Bacterium Spawn'></img>
+              <p className='description'>Bacteria</p>
           </button>
 
           <button onClick={toggleSpawnOther} id='spawnoth'>
               <img src={spa} alt='Other Spawn'></img>
+              <p className='description'>Other</p>
           </button>
         </div>
 

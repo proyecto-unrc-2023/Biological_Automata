@@ -13,8 +13,6 @@ from app import db
 diccionario = {}
 
 class New_Game(Resource):
-    game_id = 1  # Variable para llevar la cuenta de los juegos creados
-
     def options(self):
         return '', 204
 
@@ -33,6 +31,7 @@ class New_Game(Resource):
         frec_other = data.get('frecOther')
         frec_other = data.get('frecOther')
         game_mode = data.get('gameMode')
+        id = data.get('id')
         moves_reproduction = data.get('movesReproduction')
         moves_recovery = data.get('movesRecovery')
         power_antibiotic = data.get('powerAntibiotic')
@@ -49,12 +48,10 @@ class New_Game(Resource):
                                  moves_explotion, virus_after_explotion, initial_power_infection,
                                  mutation_probability, cant_overpopulation)
         game_data.start_game()
-        config_id = New_Game.game_id
-        New_Game.game_id += 1
-        diccionario[config_id] = game_data
+        diccionario[id] = game_data
 
 
-        return {"id": config_id, "message": "Configuración guardada correctamente"}
+        return {"id": id, "message": "Configuración guardada correctamente"}
 
 class RefreshGame(Resource):
     def get(self, game_id):
@@ -64,7 +61,7 @@ class RefreshGame(Resource):
         game_data = diccionario.get(game_id)
 
         if game_data is None:
-            return {"message": "ID de juego no encontrado"}, 404
+            return {"message": "ID de juego no encontrado"}, 401
 
         if game_data._game_state == Game_State.FINISHED:
             return {"message": "Juego Terminado"}, 404
@@ -158,5 +155,5 @@ api.add_resource(Logout, '/logout')
 
 
 api.add_resource(New_Game, '/newgame')
-api.add_resource(RefreshGame, '/refreshgame/<int:game_id>')
-api.add_resource(StopGame, '/stopgame/<int:game_id>')
+api.add_resource(RefreshGame, '/refreshgame/<string:game_id>')
+api.add_resource(StopGame, '/stopgame/<string:game_id>')

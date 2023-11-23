@@ -391,3 +391,11 @@ p#spawn{
   margin-right: 20px; /* Ajusta el espacio entre los contenedores según sea necesario */
 }
 
+
+.description{
+  color: aliceblue;
+  text-shadow: 0 3px 1px #000000;
+  font-size: 1rem;
+  position: relative;
+  left: 0%;
+}

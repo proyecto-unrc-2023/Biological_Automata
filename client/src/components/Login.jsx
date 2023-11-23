@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Login({ onViewChange}) {
+function Login({ onViewChange, setId }) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+  const [stayLoggedIn, setStayLoggedIn] = useState(false); // Nuevo estado para mantener la sesión
 
   const handleUserLogin = () => {
     if (nickname !== '' && password !== '') {
@@ -13,7 +14,7 @@ function Login({ onViewChange}) {
       };
 
       fetch(`http://localhost:5000/game/login`, {
-        method: 'POST', // Cambiado a POST
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -23,6 +24,17 @@ function Login({ onViewChange}) {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
+          return response.json();
+        })
+        .then((data) => {
+          const userId = data.user.id;
+          //Si elije no cerrar session lo guarda en el localStorage
+          if (stayLoggedIn) {
+            localStorage.setItem('userId', userId);
+          } else {
+            sessionStorage.setItem('userId', userId);
+          }
+          setId(userId);
           onViewChange('index');
         })
         .catch((error) => {
@@ -58,7 +70,19 @@ function Login({ onViewChange}) {
             Iniciar Sesión
           </button>
 
-          <button className='buttonInit' onClick={() => onViewChange('index')}>Volver</button>
+          <button className='buttonInit' onClick={() => onViewChange('index')}>
+            Volver
+          </button>
+
+          {/* Botón para mantener la sesión */}
+          <label>
+            <input
+              type='checkbox'
+              checked={stayLoggedIn}
+              onChange={() => setStayLoggedIn(!stayLoggedIn)}
+            />
+            No cerrar sesión
+          </label>
         </div>
       </div>
     </div>
@@ -66,3 +90,4 @@ function Login({ onViewChange}) {
 }
 
 export default Login;
+
