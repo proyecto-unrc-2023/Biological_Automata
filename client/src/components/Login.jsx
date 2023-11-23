@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Login({onViewChange, setId}) {
+function Login({ onViewChange, setId }) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+  const [stayLoggedIn, setStayLoggedIn] = useState(false); // Nuevo estado para mantener la sesión
+
   const handleUserLogin = () => {
     if (nickname !== '' && password !== '') {
       const data = {
@@ -25,13 +27,14 @@ function Login({onViewChange, setId}) {
           return response.json();
         })
         .then((data) => {
-          // extraemos el id de la data
           const userId = data.user.id;
-          //lo guardamos en el localStorage
-          sessionStorage.setItem('userId', userId);
-          setId(sessionStorage.getItem('userId'));
-
-          // Redirrecionamos las vistas al inicio
+          //Si elije no cerrar session lo guarda en el localStorage
+          if (stayLoggedIn) {
+            localStorage.setItem('userId', userId);
+          } else {
+            sessionStorage.setItem('userId', userId);
+          }
+          setId(userId);
           onViewChange('index');
         })
         .catch((error) => {
@@ -41,7 +44,6 @@ function Login({onViewChange, setId}) {
       console.error('Error: Por favor, completa todos los campos');
     }
   };
-
 
   return (
     <div className='register-content'>
@@ -68,7 +70,19 @@ function Login({onViewChange, setId}) {
             Iniciar Sesión
           </button>
 
-          <button className='buttonInit' onClick={() => onViewChange('index')}>Volver</button>
+          <button className='buttonInit' onClick={() => onViewChange('index')}>
+            Volver
+          </button>
+
+          {/* Botón para mantener la sesión */}
+          <label>
+            <input
+              type='checkbox'
+              checked={stayLoggedIn}
+              onChange={() => setStayLoggedIn(!stayLoggedIn)}
+            />
+            No cerrar sesión
+          </label>
         </div>
       </div>
     </div>
@@ -76,3 +90,4 @@ function Login({onViewChange, setId}) {
 }
 
 export default Login;
+

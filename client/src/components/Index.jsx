@@ -33,17 +33,28 @@ const creatures = [
 
 
 function Index({ onViewChange, id, setId }) {
-  // Verifica si id esta vacio pero hay valor en el localStorage...
-  if (!id && sessionStorage.getItem('userId')) {
-    setId(sessionStorage.getItem('userId'));
+  if (!id) {
+    const sessionStorageId = sessionStorage.getItem('userId');
+    const localStorageId = localStorage.getItem('userId');
+
+    if (sessionStorageId) {
+      setId(sessionStorageId);
+    } else if (localStorageId) {
+      setId(localStorageId);
+    }
   }
 
-  const isLoggedIn = id || sessionStorage.getItem('userId');
-  const canStartGame = id !== null || sessionStorage.getItem('userId') !== null;
+  const isLoggedIn = id || sessionStorage.getItem('userId') || localStorage.getItem('userId');
+  const canStartGame = id !== null || sessionStorage.getItem('userId') !== null || localStorage.getItem('userId') !== null;
+
 
   const handleLogoutUser = () => {
     if (isLoggedIn) {
-      sessionStorage.removeItem('userId');
+      if (localStorage.getItem('userId')) {
+        localStorage.removeItem('userId');
+      } else {
+        sessionStorage.removeItem('userId');
+      }
       setId(null);
     } else {
       console.error('Error: No se ha iniciado sesión en ninguna cuenta');
