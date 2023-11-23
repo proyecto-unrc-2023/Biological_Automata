@@ -1,7 +1,8 @@
 from marshmallow import Schema, fields
 
 class CellSchema(Schema):
-    bacterias = fields.List(fields.Str())
+    #bacterias = fields.List(fields.Str())
+    _info_bacteria = fields.Tuple((fields.Str(), fields.Int()), required=True)
     _other = fields.Int()
     _power_other = fields.Int()
 
@@ -21,3 +22,4 @@ class GameSchema(Schema):
     _cant_bacterium = fields.Int()
     _cant_other = fields.Int()
     _max_power_other = fields.Int()
+    _moves_for_explotion = fields.Int()

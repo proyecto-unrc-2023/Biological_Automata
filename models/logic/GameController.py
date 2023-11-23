@@ -257,6 +257,10 @@ class GameController:
         
         if self.__game_mode == Game_Mode.BACTERIOPHAGE:
             return self.__initial_power_infection
+        
+    @property
+    def _moves_for_explotion(self):
+        return self.__moves_for_explotion
 
     def set_moves_for_reproduction(self, moves_for_reproduction):
         if moves_for_reproduction < 0:

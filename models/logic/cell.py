@@ -129,3 +129,15 @@ class Cell:
             array.append(bacterium.__str__())
 
         return array
+    
+    @property
+    def _info_bacteria(self):
+        type = ''
+        moves = 0
+        
+        if self.__bacteria != []:
+            selected = random.choice(self.__bacteria)
+            type = selected.__str__()
+            moves = selected.moves
+
+        return (type, moves)
