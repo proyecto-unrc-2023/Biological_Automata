@@ -3,7 +3,7 @@ import spb from '../../images/spb.png'
 import spa from '../../images/spa.png'
 import '../../css/config.css';
 
-function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacterium, setSpawnOther }) {
+function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacterium, setSpawnOther, gameMode }) {
   const rows = 12;
   const columns = 17;
   const [bacteriumMode, setBacteriumMode] = useState(false);
@@ -145,7 +145,7 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
 
           <button onClick={toggleSpawnOther} id='spawnoth'>
               <img src={spa} alt='Other Spawn'></img>
-              <p className='description'>Other</p>
+              <p className='description'>{gameMode === 1 ? "Antibiótico" : "Bacteriófago"}</p>
           </button>
         </div>
 

@@ -126,6 +126,7 @@ function Config({ onViewChange, setId, id}) {
               setSpawnBacterium={setSpawnBacterium}
               spawnOther={spawnOther}
               setSpawnOther={setSpawnOther}
+              gameMode={gameMode}
             />
           )}
 
