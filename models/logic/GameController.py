@@ -20,17 +20,14 @@ class GameController:
                 "Los valores de las frecuencias deben ser positivos!")
         self.__game_state = Game_State.CONFIG_GAME
         self.__game_winner = Game_Winner.NOT_DETERMINATED
-        self.__board = Board(mode,12, 17,4)             # por defecto
+        self.__board = Board(mode,12,17,4)     
         self._game_mode = mode
-        self.__cant_bacterium = cant_bact              # cantidad de bacterias que expulsara
-        # cantidad de bacterias que de antibiotico o bacterifago segun el modo
+        self.__cant_bacterium = cant_bact       
         self.__cant_other = cant_other
-        # frecuencia con el que expulsara bacterias el spawn bacterium
         self.__frecuency_bacterium = frec_bact
-        # frecuencia con el que expulsara antibiotico o bacterifago el spawn other
         self.__frecuency_other = frec_other
-        # un movimiento es una actualizacion del board, y se usara junto con la frecuencia
         self.__movements = 0
+
         #atributos correspondientes a la configuracion avanzada
         self.__moves_for_reproduction = 20
         self.__moves_for_recovery = 6
@@ -172,15 +169,11 @@ class GameController:
             self.__game_winner = Game_Winner.BACTERIUM
             self.__game_state = Game_State.FINISHED
 
-    def continue_game(self):
-        #if (self.__game_state == Game_State.FINISHED and self.__game_winner == Game_Winner.BACTERIUM):
-            self.__game_state = Game_State.START_GAME
-
     def stop(self):
         if self.__game_state == Game_State.NOT_STARTED or self.__game_state == Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
 
-        self.__game_state = Game_State.NOT_STARTED
+        self.__game_state = Game_State.FINISHED
 
     def count_other_in_board(self):
         cant_other_in_board = 0

@@ -177,7 +177,7 @@ def test_stop_CONFIG_GAME(game_antibiotic):
     assert game._game_state != Game_State.NOT_STARTED
     game.start_game()
     game.stop()
-    assert game._game_state == Game_State.NOT_STARTED
+    assert game._game_state == Game_State.FINISHED
 
 
 def test_set_spawn_bacterium(game_antibiotic):
