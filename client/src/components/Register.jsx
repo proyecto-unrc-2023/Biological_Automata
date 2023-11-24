@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Register({ onViewChange}) {
+function Register({componentChange}) {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +32,7 @@ function Register({ onViewChange}) {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          onViewChange('index');
+          componentChange('index');
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
@@ -82,7 +82,7 @@ function Register({ onViewChange}) {
               Registrar
             </button>
 
-            <button className='buttonInit' onClick={() => onViewChange('index')}>Volver</button>
+            <button className='buttonInit' onClick={() => componentChange('index')}>Volver</button>
           </div>
         </div>
       </div>

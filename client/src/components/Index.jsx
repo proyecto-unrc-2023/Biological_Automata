@@ -32,7 +32,7 @@ const creatures = [
 
 
 
-function Index({ onViewChange, id, setId }) {
+function Index({ componentChange, id, setId }) {
   if (!id) {
     const sessionStorageId = sessionStorage.getItem('userId');
     const localStorageId = localStorage.getItem('userId');
@@ -63,7 +63,7 @@ function Index({ onViewChange, id, setId }) {
 
   const handleStartGame = () => {
     if (canStartGame) {
-      onViewChange('config');
+      componentChange('config');
     } else {
       console.error('Error: No se puede comenzar el juego, no se ha iniciado sesión');
     }
@@ -74,8 +74,8 @@ function Index({ onViewChange, id, setId }) {
       <div className='background'>
         {!isLoggedIn && (
           <div>
-            <button className='buttonInit' id='user-init' onClick={() => onViewChange('register')}>Registrar</button>
-            <button className='buttonInit' id='user-init' onClick={() => onViewChange('login')}>Login</button>
+            <button className='buttonInit' id='user-init' onClick={() => componentChange('register')}>Registrar</button>
+            <button className='buttonInit' id='user-init' onClick={() => componentChange('login')}>Login</button>
           </div>
         )}
 

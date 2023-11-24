@@ -3,7 +3,7 @@ import ant from '../../images/pill.gif';
 import selec from '../../images/seleccion.gif';
 import vir from '../../images/bacteriophague.png';
 
-function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode }) {
+function SetterGameMode({ componentChange, handleNextStep, gameMode, setGameMode }) {
   const [modeOne, setmodeOne] = useState(false);
   const [modeTwo, setmodeTwo] = useState(false);
 
@@ -67,7 +67,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
             </button>
           </div>
       </div>
-      <button id='buttons-flush' onClick={() => onViewChange('index')}>
+      <button id='buttons-flush' onClick={() => componentChange('index')}>
           Anterior
         </button>
 

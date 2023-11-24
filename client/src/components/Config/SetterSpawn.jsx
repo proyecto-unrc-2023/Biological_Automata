@@ -3,7 +3,7 @@ import spb from '../../images/spb.png'
 import spa from '../../images/spa.png'
 import '../../css/config.css';
 
-function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacterium, setSpawnOther, gameMode }) {
+function SetterSpawn({componentChange, handleNextStep, handleAntStep, setSpawnBacterium, setSpawnOther, gameMode }) {
   const rows = 12;
   const columns = 17;
   const [bacteriumMode, setBacteriumMode] = useState(false);
@@ -131,7 +131,7 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
 
   return (
     <>
-    <button className='buttonHome' onClick={() => onViewChange('index')}>
+    <button className='buttonHome' onClick={() => componentChange('index')}>
     </button>
       <div className='sss'>
 

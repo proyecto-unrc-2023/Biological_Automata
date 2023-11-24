@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Login({ onViewChange, setId }) {
+function Login({componentChange, setId }) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false); // Nuevo estado para mantener la sesión
@@ -35,7 +35,7 @@ function Login({ onViewChange, setId }) {
             sessionStorage.setItem('userId', userId);
           }
           setId(userId);
-          onViewChange('index');
+          componentChange('index');
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
@@ -70,7 +70,7 @@ function Login({ onViewChange, setId }) {
             Iniciar Sesión
           </button>
 
-          <button className='buttonInit' onClick={() => onViewChange('index')}>
+          <button className='buttonInit' onClick={() => componentChange('index')}>
             Volver
           </button>
 
