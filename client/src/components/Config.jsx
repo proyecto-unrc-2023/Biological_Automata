@@ -4,7 +4,7 @@ import SetterSpawn from './Config/SetterSpawn';
 import '../css/config.css';
 import Tooltip from './Tooltip';
 
-function Config({ onViewChange, setId, id}) {
+function Config({ componentChange, setId, id}) {
   const [step, setStep] = useState(1);
 
   const [spawnBacterium, setSpawnBacterium] = useState(null);
@@ -91,7 +91,7 @@ function Config({ onViewChange, setId, id}) {
           return response.json();
         })
         .then((data) => {
-          onViewChange('game');
+          componentChange('game');
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
@@ -110,7 +110,7 @@ function Config({ onViewChange, setId, id}) {
         <div className='background'>
           {step === 1 && (
             <SetterGameMode
-              onViewChange={onViewChange}
+              componentChange={componentChange}
               handleNextStep={handleNextStep}
               gameMode={gameMode}
               setGameMode={setGameMode}
@@ -119,7 +119,7 @@ function Config({ onViewChange, setId, id}) {
 
           {step === 2 && (
             <SetterSpawn
-              onViewChange={onViewChange}
+              componentChange={componentChange}
               handleNextStep={handleNextStep}
               handleAntStep={handleAntStep}
               spawnBacterium={spawnBacterium}
@@ -132,7 +132,7 @@ function Config({ onViewChange, setId, id}) {
 
           {step === 3 && (
           <div id='config'>
-            <button className='buttonHome' onClick={() => onViewChange('index')}>
+            <button className='buttonHome' onClick={() => componentChange('index')}>
             </button>
             <div id='params' className='params'>
               <label>
