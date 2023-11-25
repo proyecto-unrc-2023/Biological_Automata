@@ -31,6 +31,35 @@ def test_initial_game(game_antibiotic):
     assert game._movements == 0
 
 
+def test_invalid_game_mode():
+    with pytest.raises(ValueError) as e:
+        GameController("Modo de juego invalido")
+    assert str(e.value) == "El modo de juego cargado no es válido!"
+
+def test_negative_entity_counts():
+    with pytest.raises(ValueError) as e:
+        GameController(Game_Mode.ANTIBIOTIC, cant_bact=-5, cant_other=-10)
+    assert str(e.value) == "La cantidad de los entes no pueden ser negativas!"
+
+def test_zero_frequencies():
+    with pytest.raises(ValueError) as e:
+        GameController(Game_Mode.ANTIBIOTIC, frec_bact=0, frec_other=-2)
+    assert str(e.value) == "Los valores de las frecuencias deben ser positivos!"
+
+def set_spawn_bacterium_exception():
+    game = GameController(Game_Mode.ANTIBIOTIC)
+    game.start_game()
+    with pytest.raises(ValueError) as e:
+        game.set_spawn_bacterium((0, 0))
+    assert str(e.value) == "El juego no está en el estado CONFIG_GAME"
+
+def set_spawn_other_exception():
+    game = GameController(Game_Mode.ANTIBIOTIC)
+    game.start_game()
+    with pytest.raises(ValueError) as e:
+        game.set_spawn_other((3, 3))
+    assert str(e.value) == "El juego no está en el estado CONFIG_GAME"
+
 def test_start_state_is_not_NOT_CONFIG(game_bacteriophage):
     game = game_bacteriophage
     game.start_game()
@@ -44,14 +73,6 @@ def test_game_mode(game_antibiotic):
     game.start_game()
     assert game._game_mode == Game_Mode.ANTIBIOTIC
     assert game._game_state == Game_State.START_GAME
-
-
-# def test_game_mode_not_CONFIG_GAME():
-#   game = GameController(Game_Mode.ANTIBIOTIC,10, 2, 20, 2)
-#   with pytest.raises(ValueError) as e:
-#     game.start_game()
-#   assert str(e.value) == "Spawn No Setteado"
-
 
 def test_generate_bacterium_Mode_Antibiotic(game_antibiotic):
     game = game_antibiotic

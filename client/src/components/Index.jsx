@@ -9,24 +9,19 @@ const creatures = [
   {
     name: 'Bacteria',
     image: bacterium,
-    description:
-      <>
-      Estos microorganismos unicelulares puedes verlo como los enemigos principales del juego.
-      <br />
-      Son muy abundantes y pueden reproducirce rapidamente CUIDADO!.
-    </>,
+    description: 'Estos microorganismos unicelulares puedes verlo como los enemigos principales del juego. Son muy abundantes y pueden reproducirce rapidamente CUIDADO!'
   },
 
   {
-    name: 'Antibiotico',
+    name: 'Antibiótico',
     image: antibiotic,
     description: 'Combaten las infecciones bacterianas en personas y animales. Funcionan matando las bacterias o dificultando su crecimiento y multiplicación.',
   },
 
   {
-    name: 'Bacteriofago',
+    name: 'Bacteriófago',
     image: bacteriophageImage,
-    description: 'Se aprovechan naturalmente de las bacterias al infectarlas y replicarse dentro de ellas hasta que estallan, matando a su huésped microbiano y reproduciendose en el proceso',
+    description: 'Se aprovechan naturalmente de las bacterias al infectarlas y replicarse dentro de ellas hasta que estallan, matando a su huésped microbiano y reproduciendose en el proceso.',
   },
 ];
 

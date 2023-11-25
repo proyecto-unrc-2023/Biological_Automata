@@ -227,7 +227,7 @@ class Board:
         occupied_cells = self.where_are_entities()
         cant_entities = 0
         for cell in occupied_cells:
-            if type == 'v':
+            if type == 'bacteriofagos':
                 cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteriophage()
             elif type == 'bacterias':
                 cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteria()
