@@ -238,15 +238,6 @@ class Board:
 
         return cant_entities
 
-    def count_total_antibiotics(self, power):
-        counter = 0
-
-        for row in range(self.__rows):
-            for column in range(self.__columns):
-                counter += self.get_cell(row, column).count_antibiotic(power)
-
-        return counter
-
     def move_entity(self, new_x, new_y, x, y, board, entity):
         if isinstance(entity, Bacterium):
             entity.add_move()
