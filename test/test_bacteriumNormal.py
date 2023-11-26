@@ -1,9 +1,6 @@
 import pytest
 from models.logic.Bacterium import *
 
-# from unittest.mock import patch
-# import random
-
 @pytest.fixture
 def bacterium_normal():
     return BacteriumNormal(0)
@@ -16,36 +13,6 @@ def always_zero():
 @pytest.fixture
 def always_one():
     return lambda: 1.0
-
-#def zero():
-#    return 0.0
-#class TestClass():
-#
-#    def __init__(self, random_gen=random.random):
-#        self.random_generator = random_gen
-#
-#    def new_value(self):
-#        return self.random_generator()
-#
-#
-#def test_1():
-#    tc = TestClass(zero)
-#    assert 0.0 == tc.new_value()
-#
-#
-#always_zero = lambda: 0.0
-#always_one = lambda: 1.0
-#
-#def test_2():
-#    tc = TestClass(always_zero)
-#    assert 0.0 == tc.new_value()
-#
-#
-#def test_3():
-#    tc = TestClass(always_one)
-#    assert 1.0 == tc.new_value()
-    #bact = BacteriumNormal(8, RandomMock(1))
-    #bact2 = BacteriumNormal(8)
 
 def test_bacteriumNormal_error_reproducible(bacterium_normal):
     moves_for_reproduction = bacterium_normal.moves_for_reproduction

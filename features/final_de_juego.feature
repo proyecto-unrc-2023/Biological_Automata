@@ -22,6 +22,48 @@ Característica: El juego termina
     |antibiotico |83    |72       |70    |
     |bacteriofago|96    |110      |100   |
 
+  Esquema del escenario: No hay un ganador si existen bacterias y antibioticos en el tablero
+    Dado se creo el juego con los siguientes parametros (0,20,0,3,antibiotico)
+    Y se coloco el spawn de bacterias en (2,2)
+    Y se coloco el spawn de antibiotico en (10,10)
+    Y que hay 1 bacteria normal en la celda (0,0)
+    Y que hay 1 antibiotico en la celda (11,16) 
+    Y el usuario inicio el juego
+    Cuando ha pasado <turnos> turno de juego
+    Entonces el estado de juego deberia ser STARTED
+    Y el ganador deberia ser NO DETERMINADO
+
+    Ejemplos:
+
+    |turnos |
+    | 1     |
+    | 2     |
+    | 3     |
+    | 4     |
+    | 5     |
+
+  Esquema del escenario: Ganan las bacterias si desaparecen los bacteriofagos del tablero
+    Dado se creo el juego con los siguientes parametros (0,20,0,3,bacteriofago)
+    Y se configuro los parametros avanzados con (3,3,3,4,4,<poder_infec_ini>,0.1,4)
+    Y se coloco el spawn de bacterias en (2,2)
+    Y se coloco el spawn de bacteriofago en (10,10)
+    Y que hay 1 bacteria normal en la celda (0,0)
+    Y que hay 1 bacteriofago en la celda (11,16) 
+    Y el usuario inicio el juego
+    Cuando ha pasado <turnos> turno de juego
+    Entonces el estado de juego deberia ser <estado>
+    Y el ganador deberia ser <ganador>
+
+    Ejemplos:
+
+    |poder_infec_ini|turnos |estado  | ganador      |  
+    |       3       | 2     |STARTED |NO DETERMINADO|
+    |       4       | 3     |STARTED |NO DETERMINADO|
+    |       5       | 4     |STARTED |NO DETERMINADO|
+    |       3       | 3     |FINISHED|BACTERIA      |
+    |       4       | 4     |FINISHED|BACTERIA      |
+    |       5       | 5     |FINISHED|BACTERIA      |
+
   Esquema del escenario: Ganan las bacterias si no existe otro tipo de entidad en el juego
     Dado se creo el juego con los siguientes parametros (<cant>,20,0,3,<modo>)
     Y se coloco el spawn de bacterias en (0,0)
