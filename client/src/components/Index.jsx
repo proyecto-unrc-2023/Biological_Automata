@@ -40,7 +40,7 @@ function Index({ componentChange, id, setId }) {
   }
 
   const isLoggedIn = id || sessionStorage.getItem('userId') || localStorage.getItem('userId');
-  const canStartGame = id !== null || sessionStorage.getItem('userId') !== null || localStorage.getItem('userId') !== null;
+  const canStartGame = id !== null;
 
 
   const handleLogoutUser = () => {

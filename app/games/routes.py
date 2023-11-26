@@ -32,6 +32,16 @@ class New_Game(Resource):
         frec_other = data.get('frecOther')
         game_mode = data.get('gameMode')
         id = data.get('id')
+        if cant_bact < 0 or cant_other < 0:
+            return {"message": "Las cantidades que salen del spawn no pueden ser negativas!"}
+        if frec_bact <= 0 or frec_other <= 0:
+            return {"message": "Las frecuencias deben ser positivas!"}
+
+        game_data = GameController(Game_Mode(game_mode), cant_bact, frec_bact, cant_other, frec_other)
+        game_data.set_spawn_bacterium((x_spawn_b, y_spawn_b))
+        game_data.set_spawn_other((x_spawn_o, y_spawn_o))
+
+
         moves_reproduction = data.get('movesReproduction')
         moves_recovery = data.get('movesRecovery')
         power_antibiotic = data.get('powerAntibiotic')
@@ -41,35 +51,28 @@ class New_Game(Resource):
         mutation_probability = data.get('mutationProbability')
         cant_overpopulation = data.get('cantOverpopulation')
 
-        if cant_bact < 0 or cant_other < 0:
-            return {"message": "Las cantidades que salen del spawn no pueden ser negativas!"}
-        if frec_bact <= 0 or frec_other <= 0:
-            return {"message": "Las frecuencias deben ser positivas!"}
         if moves_reproduction <= 0 or moves_recovery <= 0 or moves_explotion <= 0:
-            return {"message": "Los movimientos deben ser positivos"} 
+            return {"message": "Los movimientos deben ser positivos"}
         if power_antibiotic <= 0 or virus_after_explotion <= 0 or initial_power_infection <= 0:
             return {"message": "Los valores iniciales para los antibioticos y bacteriofagos deben ser positivos!"}
         if mutation_probability < 0 or mutation_probability > 1:
             return {"message": "La probabilidad de mutacion debe estar entre 0 y 1"}
         if cant_overpopulation <= 1:
             return {"message": "La cantidad para sobrepoblación debe ser mayor a 1!"}
-        
-        game_data = GameController(Game_Mode(game_mode), cant_bact, frec_bact, cant_other, frec_other)
-        game_data.set_spawn_bacterium((x_spawn_b, y_spawn_b))
-        game_data.set_spawn_other((x_spawn_o, y_spawn_o))
+
         game_data.advanced_config(moves_reproduction, moves_recovery, power_antibiotic,
                                  moves_explotion, virus_after_explotion, initial_power_infection,
                                  mutation_probability, cant_overpopulation)
         game_data.start_game()
-        diccionario[id] = game_data
+        if id in diccionario:
+            del diccionario[id]
 
+        diccionario[id] = game_data
 
         return {"id": id, "message": "Configuración guardada correctamente"}
 
 class RefreshGame(Resource):
     def get(self, game_id):
-        # if not session.get("user_id"):
-        #     return {"message": "Usuario no autenticado"}, 401
 
         game_data = diccionario.get(game_id)
 
@@ -105,8 +108,6 @@ class StopGame(Resource):
 ##Usuarios
 class RegisterUser(Resource):
     def options(self):
-        if session.get("user_id"):
-            return {"message": "Ya se tiene un inicio de session de usuario"}, 401
         return '', 204
 
     def post(self):

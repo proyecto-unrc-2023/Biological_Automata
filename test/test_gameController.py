@@ -24,6 +24,8 @@ def test_initial_game(game_antibiotic):
     game = game_antibiotic
     assert game._game_state == Game_State.CONFIG_GAME
     assert game._game_mode == Game_Mode.ANTIBIOTIC
+    assert game.get_rows() == 12
+    assert game.get_columns() == 17
     assert game._cant_bacterium == 10
     assert game._cant_other == 20
     assert game._frecuency_bacterium == 2
@@ -73,6 +75,24 @@ def test_game_mode(game_antibiotic):
     game.start_game()
     assert game._game_mode == Game_Mode.ANTIBIOTIC
     assert game._game_state == Game_State.START_GAME
+
+def test_init_cant_bacterium():
+    with pytest.raises(ValueError) as e:
+        game_controller = GameController(Game_Mode.BACTERIOPHAGE,-1, 2, 20, 2)
+    assert str(e.value) == "La cantidad de los entes no pueden ser negativas!"
+
+def test_init_frec_bacterium():
+    with pytest.raises(ValueError) as e:
+        game_controller = GameController(Game_Mode.BACTERIOPHAGE,1, -1, 20, 2)
+    assert str(e.value) == "Los valores de las frecuencias deben ser positivos!"
+
+
+def test_advanced_config(game_antibiotic):
+    game = game_antibiotic
+    game.advanced_config(3,3,3,3,3,3,1,3)
+    assert game._max_power_other == 3
+    assert game._moves_for_explotion == 3
+
 
 def test_generate_bacterium_Mode_Antibiotic(game_antibiotic):
     game = game_antibiotic
@@ -246,6 +266,25 @@ def test_spawn_other_antibiotic(game_antibiotic):
         x, y).get_cant_antibiotic() > 0 for (x, y) in moves_n)
     assert antibiotic_found
 
+def test_spawn_other(game_antibiotic):
+    game = game_antibiotic
+    pos = (4, 4)
+    assert game._game_mode == Game_Mode.ANTIBIOTIC
+    game.start_game()
+    with pytest.raises(ValueError) as e:
+        game.set_spawn_other(pos)
+    assert str(e.value) == "El juego no está en el estado CONFIG_GAME"
+
+
+def test_spawn_bacterium_error(game_bacteriophage):
+    game = game_bacteriophage
+    pos = (4, 4)
+    assert game._game_mode == Game_Mode.BACTERIOPHAGE
+    game.start_game()
+    with pytest.raises(ValueError) as e:
+        game.set_spawn_bacterium(pos)
+    assert str(e.value) == "El juego no está en el estado CONFIG_GAME"
+
 
 def test_spawn_bacteriophage(game_bacteriophage):
     game = game_bacteriophage
@@ -278,4 +317,39 @@ def test_count_in_adjacents_mode_bacteriophages(game_bacteriophage):
     game.refresh_board()
     count = game.count_in_adjacents(3, 3, 'bacteriofago')
     assert count == 1
+
+
+def test_add_and_count_entities(game_antibiotic):
+    game = game_antibiotic
+    game.add_bacterium(0,0,0,"normal")
+    game.add_bacterium(0,0,0,"debil")
+    game.add_bacterium(0,0,0,"fuerte")
+    game.add_antibiotic(0,0,3)
+    assert game.count_bacteria_with_moves(0,0,"normal",0) == 1
+    assert game.count_antibiotics(0,0,3) == 1
+
+    #assert game.count_total_infected() == 1
+    assert game.count_entities(0,0,"bacterias") == 3
+    assert game.count_entities(0,0,"antibioticos") == 1
+    assert game.count_entities(0,0,"bacteria normal") == 1
+    assert game.count_entities(0,0,"bacteria fuerte") == 1
+    assert game.count_entities(0,0,"bacteria debil") == 1
+
+
+def test_move_entity(game_antibiotic):
+    game = game_antibiotic
+    game.add_entities(6,6,1,"bacteria normal")
+    game.add_entities(6,6,1,"bacteria debil")
+    game.add_entities(6,6,1,"bacteria fuerte")
+    game.add_entities(6,6,2,"antibiotico")
+
+    game.move_entity(6,6,7,7,"bacteria normal")
+    game.move_entity(6,6,7,7,"bacteria debil")
+    game.move_entity(6,6,7,7,"bacteria fuerte")
+
+    assert game.count_entities(7,7,"bacterias") == 3
+    assert game.count_entities(7,7,"bacteria normal") == 1
+    assert game.count_entities(7,7,"bacteria fuerte") == 1
+    assert game.count_entities(7,7,"bacteria debil") == 1
+
 

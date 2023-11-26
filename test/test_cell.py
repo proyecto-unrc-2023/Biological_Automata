@@ -71,9 +71,12 @@ def test_to_string_cell(cell):
     cell.add_bacterium(BacteriumStrong(2))
     cell.add_bacterium(BacteriumWeak(4))
     cell.add_bacterium(BacteriumInfected(1))
+    assert cell.bacterias == ["b", "f", "d", "i"]
     assert cell.get_cant_bacteria() == 4
+
     assert str(cell) == '1b1f1d1i'
 
+    assert cell.count_bacteria_with_moves("normal", 2) == 1
 
 def test_overpoblation(cell, cant_overpopulation):
     for _ in range (cant_overpopulation):

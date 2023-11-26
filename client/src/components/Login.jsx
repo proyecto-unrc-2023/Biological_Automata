@@ -28,13 +28,16 @@ function Login({componentChange, setId }) {
         })
         .then((data) => {
           const userId = data.user.id;
+          const IdString = userId.toString();
+
           //Si elije no cerrar session lo guarda en el localStorage
           if (stayLoggedIn) {
-            localStorage.setItem('userId', userId);
+            localStorage.setItem('userId', IdString);
           } else {
-            sessionStorage.setItem('userId', userId);
+            sessionStorage.setItem('userId', IdString);
           }
-          setId(userId);
+
+          setId(IdString);
           componentChange('index');
         })
         .catch((error) => {

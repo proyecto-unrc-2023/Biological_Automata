@@ -91,7 +91,9 @@ function Config({ componentChange, setId, id}) {
           return response.json();
         })
         .then((data) => {
-          componentChange('game');
+          if(data.id === id) {
+            componentChange('game');
+          }
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
