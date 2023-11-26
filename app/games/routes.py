@@ -1,4 +1,4 @@
-from flask import jsonify, request, session
+from flask import jsonify, request
 from app.games import api
 from Schemas.schemas import *
 from models.logic.GameController import GameController
@@ -7,7 +7,6 @@ from models.logic.Game_State import Game_State
 from models.logic.Bacterium import *
 from flask_restful import Resource
 from app.games.User import User
-from app import db
 
 
 diccionario = {}
@@ -17,9 +16,6 @@ class New_Game(Resource):
         return '', 204
 
     def post(self):
-        # if not session.get("user_id"):
-        #     return {"message": "Usuario no autenticado"}, 401
-
         data = request.get_json()
         x_spawn_b = data.get('xBacterium')
         y_spawn_b = data.get('yBacterium')
@@ -90,9 +86,6 @@ class RefreshGame(Resource):
 
 class StopGame(Resource):
     def get(self, game_id):
-        # if not session.get("user_id"):
-        #     return {"message": "Usuario no autenticado"}, 401
-
         game_data = diccionario[game_id]
 
         if game_data is None:
@@ -144,7 +137,6 @@ class LoginUser(Resource):
         if not user or not user.check_password(password):
             return {"message": "Datos invalidos"}, 401
 
-        session['user_id'] = user.id
         return {
             "message": "Inicio de sesión exitoso",
             "user": {
@@ -156,10 +148,6 @@ class LoginUser(Resource):
 
 class Logout(Resource):
     def get(self):
-        # if not session.get("user_id"):
-        #     return {"message": "Usuario no autenticado"}, 401
-
-        session["user_id"] = None
         return {"message": "Se ha cerrado session con exito"}
 
 
