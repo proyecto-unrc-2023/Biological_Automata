@@ -6,7 +6,7 @@ describe("<Create_Game />", () =>{
   let table;
   let BarraVelocidad;
   beforeEach(() =>{
-    render(<Create_Game handleStartGame={true} />);
+    render(<Create_Game />);
     BarraVelocidad = screen.getByText(/Velocidad:/i);
     table = screen.getByRole('table');
   });

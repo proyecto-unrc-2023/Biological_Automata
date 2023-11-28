@@ -5,6 +5,7 @@ describe("<Register />", () =>{
   let IngNickname;
   let IngEmail;
   let RepContraseña;
+  let IngContraseña;
   let BotonRegistrar;
   
   beforeEach(() =>{
@@ -12,6 +13,7 @@ describe("<Register />", () =>{
     IngNickname = screen.getByLabelText(/Nickname:/i);
     IngEmail = screen.getByLabelText(/Email:/i);
     RepContraseña = screen.getByLabelText(/Repetir contraseña:/i);
+    IngContraseña = screen.getByLabelText('Contraseña:');
     BotonRegistrar = screen.getByRole('button', {name: /Registrar/i});
 
   
@@ -21,5 +23,6 @@ describe("<Register />", () =>{
     expect(IngEmail).toBeInTheDocument();
     expect(RepContraseña).toBeInTheDocument();
     expect(BotonRegistrar).toBeInTheDocument();
+    expect(IngContraseña).toBeInTheDocument();
   });
 });
