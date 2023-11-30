@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/MusicControls.css'; // Importa el archivo CSS
-//import React, { useRef, useState } from 'react';
 
 const cargarSonido = function (fuente) {
   const sonido = document.createElement("audio");
@@ -14,7 +13,10 @@ const cargarSonido = function (fuente) {
 
 const MusicControls = () => {
   const [playlist, setPlaylist] = useState([]);
-  const amount_song = 12;
+  const amount_song = 11;
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audio] = useState(cargarSonido(playlist[currentSongIndex]));
 
   useEffect(() => {
     const tempPlaylist = [];
@@ -24,15 +26,14 @@ const MusicControls = () => {
     setPlaylist(tempPlaylist);
   }, [amount_song]);
 
-  const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audio] = useState(cargarSonido(playlist[currentSongIndex]));
-
   useEffect(() => {
     audio.src = playlist[currentSongIndex];
-    if (isPlaying) {
-      audio.play();
-    }
+    audio.load(); // Carga explícita para reiniciar la carga de la canción
+    audio.addEventListener('loadedmetadata', () => {
+      if (isPlaying) {
+        audio.play();
+      }
+    });
   }, [currentSongIndex, isPlaying, audio, playlist]);
 
   const play = () => {
@@ -58,7 +59,7 @@ const MusicControls = () => {
       setCurrentSongIndex(0); // Vuelve al inicio si estás en la última canción
     }
   };
-
+  
   return (
     <div className="music-controls-container">
       <audio ref={audio} />

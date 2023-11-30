@@ -4,6 +4,7 @@ import '../css/board.css';
 import html2canvas from 'html2canvas';
 import cap from '../images/Captura.png';
 import MusicControls from './MusicControls';
+import Winner from './Winner';
 
 function Create_board({onViewChange, id}) {
   const [board, setBoard] = useState([]);
@@ -11,7 +12,6 @@ function Create_board({onViewChange, id}) {
   const [gameData, setGameData] = useState(null);
   const [stopGame, setStopGame] = useState(true);
   const [speed, setSpeed] = useState(1);
-
 
   //funcion para refrescar la data del game
   const fetchRefreshData = () => {
@@ -92,7 +92,7 @@ function Create_board({onViewChange, id}) {
       }
   
       const { _board } = gameData.games._board;
-  
+      
       // Actualizar el estado del tablero directamente
       setBoardData(_board);
     };
@@ -133,41 +133,31 @@ function Create_board({onViewChange, id}) {
               step="0.1"
               value={speed}
               onChange={(e) => setSpeed(parseFloat(e.target.value))} //toma el valor seleccionado y lo transforma en float
-            />
+              />
           </div>
 
           <div id='capture'>
-            <table><tbody>{board}</tbody></table>
-          </div>
-
-          <div id='messages'>
-            {gameData && gameData.games && (
-              <>
-                {gameData.games._game_winner && (
-                  <>
-                    {gameData.games._game_winner === "Game_Winner.BACTERIUM" && (
-                      <p className="message">Ganaron las bacterias. ¡No lograste combatirlas!</p>
-                    )}
-                    {gameData.games._game_winner === "Game_Winner.OTHER" && (
-                      <p className="message">
-                        Ganaron {gameData.games._game_mode === "Game_Mode.ANTIBIOTIC"
-                          ? "los antibióticos"
-                          : "los bacteriófagos"}. ¡Felicitaciones!
-                      </p>
-                    )}
-                    {/* Si no hay ganador, ocupar espacio con un mensaje o elemento vacío */}
-                    {gameData.games._game_winner === "Game_Winner.NOT_DETERMINATED" && (
-                      <p className="invisible-text">Texto oculto</p>
-                    )}
-                  </>
-                )}
-              </>
-            )}
+            <table>
+              <tbody>
+                {board}
+              </tbody>
+            </table>
+            <div id='messages'>
+              {gameData && gameData.games && (
+                gameData.games._game_winner !== 'Game_Winner.NOT_DETERMINATED' && (
+                  <Winner winnerType={gameData.games._game_winner} />
+                )
+              )}
+            </div>
           </div>
 
           <div id="controls">
-            <button className="button stop-button" onClick={() => {
-              onViewChange('index'); handleStop_Game();}}>
+            <button
+              className="button stop-button" onClick={() => {
+                onViewChange('index');
+                handleStop_Game();
+              }}
+              >
             </button>
 
             <button className="button pause-button" id='pause' onClick={() => {

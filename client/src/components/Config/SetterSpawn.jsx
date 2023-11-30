@@ -102,6 +102,13 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
         document.getElementById('spawnoth').classList.toggle('spawnothAct');
         setspOth(0);
       }
+      document.addEventListener('mousemove', (e) => {
+        const xPos = e.pageX;
+        const yPos = e.pageY;
+        let m = document.querySelector('.cursor-bacterium');
+        m.style.left = xPos+'px';
+        m.style.top = yPos+'px';
+      })
     }
   };
 
@@ -118,6 +125,13 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
         document.getElementById('spawnbac').classList.toggle('spawnbacAct');
         setspBact(0);
       }
+      document.addEventListener('mousemove', (e) => {
+        const xPos = e.pageX;
+        const yPos = e.pageY;
+        let m = document.querySelector('.cursor-other');
+        m.style.left = xPos+'px';
+        m.style.top = yPos+'px';
+      })
     };
   };
 
@@ -149,6 +163,8 @@ function SetterSpawn({onViewChange, handleNextStep, handleAntStep, setSpawnBacte
 
 
         <div className="grid">
+            {{otherMode} && <div className="cursor-other"></div>}
+            {{bacteriumMode} && <div className="cursor-bacterium"></div>}
             <table><tbody>{board}</tbody></table>
         </div>
       </div>

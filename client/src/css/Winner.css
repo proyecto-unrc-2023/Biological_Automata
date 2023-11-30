@@ -1,0 +1,17 @@
+.winning-image {
+  width: 50%; /* Ajusta el ancho máximo de la imagen al contenedor */
+  height: 50%; /* Ajusta automáticamente la altura para mantener la proporción original */
+  position: absolute; /* Posiciona la imagen de forma absoluta */
+  top: 50%; /* Coloca la parte superior de la imagen en el centro vertical */
+  left: 50%; /* Coloca la izquierda de la imagen en el centro horizontal */
+  transform: translate(-50%, -50%); /* Centra la imagen exactamente en el centro */
+  z-index: 2; /* Asegura que la imagen esté sobre otros elementos si es necesario */
+
+  opacity: 0; /* Inicia la opacidad en 0 para que la imagen esté inicialmente invisible */
+  transition: opacity 2s ease-in-out; /* Agrega una transición de opacidad con duración de 0.5 segundos y una función de temporización suave */
+}
+
+/* Clase para mostrar la imagen */
+.show {
+  opacity: 1;
+}

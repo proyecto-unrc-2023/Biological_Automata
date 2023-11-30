@@ -53,7 +53,6 @@ class New_Game(Resource):
         New_Game.game_id += 1
         diccionario[config_id] = game_data
 
-
         return {"id": config_id, "message": "Configuración guardada correctamente"}
 
 class RefreshGame(Resource):
@@ -68,7 +67,6 @@ class RefreshGame(Resource):
 
         if game_data._game_state == Game_State.FINISHED:
             return {"message": "Juego Terminado"}, 404
-
 
         game_data.refresh_board()
         game_schema = GameSchema()
@@ -116,7 +114,6 @@ class RegisterUser(Resource):
         existing_user = User.query.filter_by(nickname=nickname).first()
         if existing_user:
             return {"message": "El nickname ya está en uso"},401
-
 
         user = User(nickname, email, password)
         user.save_to_db()
