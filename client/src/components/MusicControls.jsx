@@ -17,6 +17,7 @@ const MusicControls = () => {
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio] = useState(cargarSonido(playlist[currentSongIndex]));
+  const [isActionInProgress, setIsActionInProgress] = useState(false);
 
   useEffect(() => {
     const tempPlaylist = [];
@@ -28,13 +29,20 @@ const MusicControls = () => {
 
   useEffect(() => {
     audio.src = playlist[currentSongIndex];
-    audio.load(); // Carga explícita para reiniciar la carga de la canción
-    audio.addEventListener('loadedmetadata', () => {
-      if (isPlaying) {
-        audio.play();
-      }
-    });
-  }, [currentSongIndex, isPlaying, audio, playlist]);
+    if (isPlaying) {
+      audio.play();
+    }
+  }, [currentSongIndex, audio, playlist, isPlaying]);
+
+  const performActionWithDelay = (actionFunction) => {
+    if (!isActionInProgress) {
+      setIsActionInProgress(true);
+      actionFunction();
+      setTimeout(() => {
+        setIsActionInProgress(false);
+      }, 1000); // Espera 1 segundo antes de habilitar la acción nuevamente
+    }
+  };
 
   const play = () => {
     setIsPlaying(true);
@@ -45,19 +53,23 @@ const MusicControls = () => {
   };
 
   const previous = () => {
-    if (currentSongIndex > 0) {
-      setCurrentSongIndex(currentSongIndex - 1);
-    }else {
-      setCurrentSongIndex(playlist.length - 1); // Vuelve al ultimo si estás en la primera canción
-    }
+    performActionWithDelay(() => {
+      if (currentSongIndex > 0) {
+        setCurrentSongIndex(currentSongIndex - 1);
+      } else {
+        setCurrentSongIndex(playlist.length - 1);
+      }
+    });
   };
   
   const next = () => {
-    if (currentSongIndex < playlist.length - 1) {
-      setCurrentSongIndex(currentSongIndex + 1); // Avanza al siguiente índice
-    } else {
-      setCurrentSongIndex(0); // Vuelve al inicio si estás en la última canción
-    }
+    performActionWithDelay(() => {
+      if (currentSongIndex < playlist.length - 1) {
+        setCurrentSongIndex(currentSongIndex + 1);
+      } else {
+        setCurrentSongIndex(0);
+      }
+    });
   };
   
   return (

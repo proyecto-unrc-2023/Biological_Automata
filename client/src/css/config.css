@@ -391,26 +391,6 @@ p#spawn{
   margin-right: 20px; /* Ajusta el espacio entre los contenedores según sea necesario */
 }
 
-.cursor-bacterium {
-  width: 10%;
-  height: 10%;
-  background-image: url('../../public/bacterium.gif');  
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: absolute;
-  z-index: 2;
-}
-
-.cursor-other {
-  width: 10%;
-  height: 10%;
-  background-image: url('../../public/other.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: absolute;
-  z-index: 2;
-}
-
 .description{
   color: aliceblue;
   text-shadow: 0 3px 1px #000000;
