@@ -255,6 +255,7 @@ function Config({ componentChange, setId, id}) {
                           onChange={(e) => setMutationProbability(parseFloat(e.target.value))}
                           max='1'
                           min='0'
+                          step='0.05'
                         />
                         </Tooltip>
                       </label>
