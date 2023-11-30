@@ -58,6 +58,10 @@ button:hover{
 #captura{
   display: flex;
 }
+#captura img{
+  top: 100px;
+  z-index: 100;
+}
 
 #messages .message {
   position: initial; /* O utiliza 'static' para el posicionamiento predeterminado */

@@ -410,3 +410,11 @@ p#spawn{
   position: absolute;
   z-index: 2;
 }
+
+.description{
+  color: aliceblue;
+  text-shadow: 0 3px 1px #000000;
+  font-size: 1rem;
+  position: relative;
+  left: 0%;
+}

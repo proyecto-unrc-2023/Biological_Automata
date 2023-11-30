@@ -12,25 +12,21 @@ class GameController:
             raise ValueError("El modo de juego cargado no es válido!")
 
         if cant_bact < 0 or cant_other < 0:
-            raise ValueError(
-                "La cantidad de los entes no pueden ser negativas!")
+            raise ValueError("La cantidad de los entes no pueden ser negativas!")
 
         if frec_bact <= 0 or frec_other <= 0:
-            raise ValueError(
-                "Los valores de las frecuencias deben ser positivos!")
+            raise ValueError("Los valores de las frecuencias deben ser positivos!")
+    
         self.__game_state = Game_State.CONFIG_GAME
         self.__game_winner = Game_Winner.NOT_DETERMINATED
-        self.__board = Board(mode,12, 17,4)             # por defecto
+        self.__board = Board(mode,12,17,4)     
         self._game_mode = mode
-        self.__cant_bacterium = cant_bact              # cantidad de bacterias que expulsara
-        # cantidad de bacterias que de antibiotico o bacterifago segun el modo
+        self.__cant_bacterium = cant_bact       
         self.__cant_other = cant_other
-        # frecuencia con el que expulsara bacterias el spawn bacterium
         self.__frecuency_bacterium = frec_bact
-        # frecuencia con el que expulsara antibiotico o bacterifago el spawn other
         self.__frecuency_other = frec_other
-        # un movimiento es una actualizacion del board, y se usara junto con la frecuencia
         self.__movements = 0
+
         #atributos correspondientes a la configuracion avanzada
         self.__moves_for_reproduction = 20
         self.__moves_for_recovery = 6
@@ -172,22 +168,18 @@ class GameController:
             self.__game_winner = Game_Winner.BACTERIUM
             self.__game_state = Game_State.FINISHED
 
-    def continue_game(self):
-        #if (self.__game_state == Game_State.FINISHED and self.__game_winner == Game_Winner.BACTERIUM):
-            self.__game_state = Game_State.START_GAME
-
     def stop(self):
         if self.__game_state == Game_State.NOT_STARTED or self.__game_state == Game_State.CONFIG_GAME:
             raise ValueError("El juego no está en el estado START_GAME")
 
-        self.__game_state = Game_State.NOT_STARTED
+        self.__game_state = Game_State.FINISHED
 
     def count_other_in_board(self):
         cant_other_in_board = 0
 
         if self._game_mode == Game_Mode.ANTIBIOTIC:
             cant_other_in_board = self.count_total("antibioticos")
-        elif self._game_mode == Game_Mode.BACTERIOPHAGE:
+        if self._game_mode == Game_Mode.BACTERIOPHAGE:
             cant_other_in_board = self.count_total("bacteriofagos")
 
         return cant_other_in_board
@@ -216,18 +208,10 @@ class GameController:
     @property
     def _frecuency_bacterium(self):
         return self.__frecuency_bacterium
-
-    @_frecuency_bacterium.setter
-    def _frecuency_bacterium(self, new_frec):
-        self.__frecuency_bacterium = new_frec
-
+    
     @property
     def _frecuency_other(self):
         return self.__frecuency_other
-
-    @_frecuency_other.setter
-    def _frecuency_other(self, new_frec):
-        self.__frecuency_other = new_frec
 
     @property
     def _cant_bacterium(self):
@@ -248,16 +232,29 @@ class GameController:
     @property
     def _movements(self):
         return self.__movements
+    
+    #para Schema
+    @property
+    def _max_power_other(self):
+        if self.__game_mode == Game_Mode.ANTIBIOTIC:
+            return self.__power_antibiotic
+        
+        if self.__game_mode == Game_Mode.BACTERIOPHAGE:
+            return self.__initial_power_infection
+        
+    @property
+    def _moves_for_explotion(self):
+        return self.__moves_for_explotion
 
     def set_moves_for_reproduction(self, moves_for_reproduction):
-        if moves_for_reproduction < 0:
-            raise ValueError("La cantidad de movimientos para reproducirse no puede ser negativa!")
+        if moves_for_reproduction <= 0:
+            raise ValueError("La cantidad de movimientos para reproducirse debe ser positiva!")
 
         self.__moves_for_reproduction = moves_for_reproduction
 
     def set_moves_for_recovery(self, moves_for_recovery):
-        if moves_for_recovery < 0:
-            raise ValueError("La cantidad de movimientos para recuperarse no puede ser negativa!")
+        if moves_for_recovery <= 0:
+            raise ValueError("La cantidad de movimientos para recuperarse debe ser positiva!")
 
         self.__moves_for_recovery = moves_for_recovery
 
@@ -268,8 +265,8 @@ class GameController:
         self.__power_antibiotic = power_antibiotic
 
     def set_moves_for_explotion(self, moves_for_explotion):
-        if moves_for_explotion < 0:
-            raise ValueError("La cantidad de movimientos para explotar no puede ser negativa!")
+        if moves_for_explotion <= 0:
+            raise ValueError("La cantidad de movimientos para explotar debe ser positiva!")
 
         self.__moves_for_explotion = moves_for_explotion
 
@@ -292,7 +289,7 @@ class GameController:
         self.__mutation_probability = mutation_probability
 
     def set_cant_overpopulation(self, cant_overpopulation):
-        if cant_overpopulation < 1:
+        if cant_overpopulation <= 1:
             raise ValueError("La cantidad para sobrepoblación debe ser mayor a 1!")
 
         self.__cant_overpopulation = cant_overpopulation
@@ -364,10 +361,7 @@ class GameController:
             
     def count_antibiotics(self,x,y,power):
         return self._board.get_cell(x,y).count_antibiotic(power)
-        
-    def count_total_antibiotics(self, power):
-        return self._board.count_total_antibiotics(power)
-    
+
     def count_bacteriophages(self, x, y, power):
         return self._board.get_cell(x, y).count_bacteriophages(power)
     
@@ -416,5 +410,5 @@ class GameController:
         if ente == "antibioticos":
             return self._board.how_many_entities('antibioticos')
         if ente == "bacteriofagos":
-            return self._board.how_many_entities('v')
+            return self._board.how_many_entities('bacteriofagos')
         

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import SetterGameMode from './Config/SetGameMode';
 import SetterSpawn from './Config/SetterSpawn';
 import '../css/config.css';
+import Tooltip from './Tooltip';
 
-function Config({ onViewChange, setId}) {
+function Config({ componentChange, setId, id}) {
   const [step, setStep] = useState(1);
 
   const [spawnBacterium, setSpawnBacterium] = useState(null);
@@ -52,43 +53,47 @@ function Config({ onViewChange, setId}) {
       gameMode !== null &&
       isValidNumbers(cantBact, cantOther, frecBact, frecOther)
     ) {
-      const data = {
-        xBacterium: spawnBacterium.split('-').map(Number)[0],
-        yBacterium: spawnBacterium.split('-').map(Number)[1],
-        xOther: spawnOther.split('-').map(Number)[0],
-        yOther: spawnOther.split('-').map(Number)[1],
-        cantBact: cantBact,
-        cantOther: cantOther,
-        frecBact: frecBact,
-        frecOther: frecOther,
-        gameMode: gameMode,
-        movesReproduction: movesReproduction,
-        movesRecovery: movesRecovery,
-        powerAntibiotic: powerAntibiotic,
-        movesExplotion: movesExplotion,
-        virusAfterExplotion: virusAfterExplotion,
-        initialPowerInfection: initialPowerInfection,
-        mutationProbability: mutationProbability,
-        cantOverpopulation: cantOverpopulation,
-      };
+      const xBacterium = spawnBacterium.split('-').map(Number)[0];
+      const yBacterium = spawnBacterium.split('-').map(Number)[1];
+      const xOther = spawnOther.split('-').map(Number)[0];
+      const yOther = spawnOther.split('-').map(Number)[1];
 
       fetch(`http://localhost:5000/game/newgame`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          xBacterium,
+          yBacterium,
+          xOther,
+          yOther,
+          cantBact,
+          cantOther,
+          frecBact,
+          frecOther,
+          gameMode,
+          id,
+          movesReproduction,
+          movesRecovery,
+          powerAntibiotic,
+          movesExplotion,
+          virusAfterExplotion,
+          initialPowerInfection,
+          mutationProbability,
+          cantOverpopulation,
+        }),
       })
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          return response.json(); // Parsear la respuesta JSON
+          return response.json();
         })
         .then((data) => {
-          setId(data.id); // Obtener el ID devuelto por el backend
-          onViewChange('game');
-          // Usa el gameId como necesites en tu aplicación
+          if(data.id === id) {
+            componentChange('game');
+          }
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
@@ -107,7 +112,7 @@ function Config({ onViewChange, setId}) {
         <div className='background'>
           {step === 1 && (
             <SetterGameMode
-              onViewChange={onViewChange}
+              componentChange={componentChange}
               handleNextStep={handleNextStep}
               gameMode={gameMode}
               setGameMode={setGameMode}
@@ -116,22 +121,24 @@ function Config({ onViewChange, setId}) {
 
           {step === 2 && (
             <SetterSpawn
-              onViewChange={onViewChange}
+              componentChange={componentChange}
               handleNextStep={handleNextStep}
               handleAntStep={handleAntStep}
               spawnBacterium={spawnBacterium}
               setSpawnBacterium={setSpawnBacterium}
               spawnOther={spawnOther}
               setSpawnOther={setSpawnOther}
+              gameMode={gameMode}
             />
           )}
 
           {step === 3 && (
           <div id='config'>
-            <button className='buttonHome' onClick={() => onViewChange('index')}>
+            <button className='buttonHome' onClick={() => componentChange('index')}>
             </button>
             <div id='params' className='params'>
               <label>
+               <Tooltip text="Cantidad de bacterias que saldrán del spawn">
                 Cantidad de Bacterias:
                 <input
                   type='number'
@@ -139,8 +146,10 @@ function Config({ onViewChange, setId}) {
                   onChange={(e) => setCantBact(parseInt(e.target.value))}
                   min='0'
                 />
+                </Tooltip>
               </label>
               <label>
+              <Tooltip text="Cantidad de pasos que pasan entre cada spawneo de bacterias">
                 Frecuencia de Bacterias:
                 <input
                   type='number'
@@ -148,17 +157,21 @@ function Config({ onViewChange, setId}) {
                   onChange={(e) => setFrecBact(parseInt(e.target.value))}
                   min='1'
                 />
+                </Tooltip>
               </label>
               <label>
-                Cantidad de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
-                <input
-                  type='number'
-                  value={cantOther}
-                  onChange={(e) => setCantOther(parseInt(e.target.value))}
-                  min='0'
-                />
+                <Tooltip text={`Cantidad de ${gameMode === 1 ? "antibióticos" : "bacteriófagos"} que saldrán del spawn`}>
+                  Cantidad de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
+                  <input
+                    type='number'
+                    value={cantOther}
+                    onChange={(e) => setCantOther(parseInt(e.target.value))}
+                    min='0'
+                  />
+                </Tooltip>
               </label>
               <label>
+                <Tooltip text={`Cantidad de pasos que pasan entre cada spawneo de ${gameMode === 1 ? "antibióticos" : "bacteriófagos"}`}>
                 Frecuencia de {gameMode === 1 ? "Antibióticos" : "Bacteriófagos"}:
                 <input
                   type='number'
@@ -166,6 +179,7 @@ function Config({ onViewChange, setId}) {
                   onChange={(e) => setFrecOther(parseInt(e.target.value))}
                   min='1'
                 />
+                </Tooltip>
               </label>
               <button className='buttonInit' onClick={handleNextStep}>
                 Jugar
@@ -187,6 +201,7 @@ function Config({ onViewChange, setId}) {
                 <>
 
                   <label>
+                    <Tooltip text="Cantidad de movimientos que necesitan las bacterias para reproducirse">
                     Mov. reproducción:
                     <input
                       type='number'
@@ -194,8 +209,10 @@ function Config({ onViewChange, setId}) {
                       onChange={(e) => setMovesReproduction(parseInt(e.target.value))}
                       min='1'
                     />
+                    </Tooltip>
                   </label>
                   <label>
+                  <Tooltip text="Cantidad de bacterias en una celda que produce sobrepoblación">
                     Cant. sobrepoblación:
                     <input
                       type='number'
@@ -203,10 +220,12 @@ function Config({ onViewChange, setId}) {
                       onChange={(e) => setCantOverpopulation(parseInt(e.target.value))}
                       min='1'
                     />
+                    </Tooltip>
                   </label>
                   {gameMode === 1 && (
                     <>
                       <label>
+                        <Tooltip text="Cantidad de movimientos que necesita una bacteria débil para recuperarse">
                         Mov. recuperación:
                         <input
                           type='number'
@@ -214,8 +233,10 @@ function Config({ onViewChange, setId}) {
                           onChange={(e) => setMovesRecovery(parseInt(e.target.value))}
                           min='1'
                         />
+                        </Tooltip>
                       </label>
                       <label>
+                        <Tooltip text="Poder con el que los antibióticos salen del spawn">
                         Poder antibióticos:
                         <input
                           type='number'
@@ -223,8 +244,10 @@ function Config({ onViewChange, setId}) {
                           onChange={(e) => setPowerAntibiotic(parseInt(e.target.value))}
                           min='0'
                         />
+                        </Tooltip>
                       </label>
                       <label>
+                        <Tooltip text="Probabilidad de mutación cuando una bacteria se reproduce">
                         Probabilidad de mutación:
                         <input
                           type='number'
@@ -233,6 +256,7 @@ function Config({ onViewChange, setId}) {
                           max='1'
                           min='0'
                         />
+                        </Tooltip>
                       </label>
                     </>
                   )}
@@ -240,6 +264,7 @@ function Config({ onViewChange, setId}) {
                   {gameMode === 2 && (
                     <>
                       <label>
+                        <Tooltip text="Cantidad de pasos que necesita una bacteria infectada para explotar">
                         Mov. explosión:
                         <input
                           type='number'
@@ -247,8 +272,10 @@ function Config({ onViewChange, setId}) {
                           onChange={(e) => setMovesExplotion(parseInt(e.target.value))}
                           min='1'
                         />
+                        </Tooltip>
                       </label>
                       <label>
+                        <Tooltip text="Cantidad de bacteriófagos que salen después de la explosión">
                         Virus después explosión:
                         <input
                           type='number'
@@ -256,8 +283,10 @@ function Config({ onViewChange, setId}) {
                           onChange={(e) => setVirusAfterExplotion(parseInt(e.target.value))}
                           min='1'
                         />
+                        </Tooltip>
                       </label>
                       <label>
+                        <Tooltip text="Poder de infección con el que comienzan los bacteriófagos">
                         Poder infeccion inicial:
                         <input
                           type='number'
@@ -265,6 +294,7 @@ function Config({ onViewChange, setId}) {
                           onChange={(e) => setInitialPowerInfection(parseInt(e.target.value))}
                           min='1'
                         />
+                        </Tooltip>
                       </label>
                     </>
                   )}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import '../css/Register-Login.css';
 
-function Login({ onViewChange}) {
+function Login({componentChange, setId }) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+  const [stayLoggedIn, setStayLoggedIn] = useState(false); // Nuevo estado para mantener la sesión
 
   const handleUserLogin = () => {
     if (nickname !== '' && password !== '') {
@@ -13,7 +14,7 @@ function Login({ onViewChange}) {
       };
 
       fetch(`http://localhost:5000/game/login`, {
-        method: 'POST', // Cambiado a POST
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -23,7 +24,21 @@ function Login({ onViewChange}) {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          onViewChange('index');
+          return response.json();
+        })
+        .then((data) => {
+          const userId = data.user.id;
+          const IdString = userId.toString();
+
+          //Si elije no cerrar session lo guarda en el localStorage
+          if (stayLoggedIn) {
+            localStorage.setItem('userId', IdString);
+          } else {
+            sessionStorage.setItem('userId', IdString);
+          }
+
+          setId(IdString);
+          componentChange('index');
         })
         .catch((error) => {
           console.error('Hubo un error al enviar los datos', error);
@@ -58,7 +73,19 @@ function Login({ onViewChange}) {
             Iniciar Sesión
           </button>
 
-          <button className='buttonInit' onClick={() => onViewChange('index')}>Volver</button>
+          <button className='buttonInit' onClick={() => componentChange('index')}>
+            Volver
+          </button>
+
+          {/* Botón para mantener la sesión */}
+          <label>
+            <input
+              type='checkbox'
+              checked={stayLoggedIn}
+              onChange={() => setStayLoggedIn(!stayLoggedIn)}
+            />
+            No cerrar sesión
+          </label>
         </div>
       </div>
     </div>
@@ -66,3 +93,4 @@ function Login({ onViewChange}) {
 }
 
 export default Login;
+

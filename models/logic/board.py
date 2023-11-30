@@ -227,7 +227,7 @@ class Board:
         occupied_cells = self.where_are_entities()
         cant_entities = 0
         for cell in occupied_cells:
-            if type == 'v':
+            if type == 'bacteriofagos':
                 cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteriophage()
             elif type == 'bacterias':
                 cant_entities += self.__board[cell[0]][cell[1]].get_cant_bacteria()
@@ -237,15 +237,6 @@ class Board:
                 cant_entities += self.__board[cell[0]][cell[1]].cant_ente(type)
 
         return cant_entities
-
-    def count_total_antibiotics(self, power):
-        counter = 0
-
-        for row in range(self.__rows):
-            for column in range(self.__columns):
-                counter += self.get_cell(row, column).count_antibiotic(power)
-
-        return counter
 
     def move_entity(self, new_x, new_y, x, y, board, entity):
         if isinstance(entity, Bacterium):

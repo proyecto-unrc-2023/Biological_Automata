@@ -4,38 +4,31 @@ import Index from './components/Index';
 import Register from './components/Register';
 import Login from './components/Login';
 import Config from './components/Config';
-import Create_board from './components/board';
+import Create_Game from './components/GameBoard';
 
 function App() {
-    const [viewComponent, setViewComponent] = useState('index')
+    const [selectComponent, setSelectComponent] = useState('index')
     const [id, setId] = useState(null);
 
-    const handleViewChange = (view) => {
-      setViewComponent(view);
+    const handleComponentChange = (view) => {
+      setSelectComponent(view);
     };
 
-    const views = {
+    const components = {
       index: Index,
       register: Register,
       login: Login,
       config: Config,
-      game: Create_board,
+      game: Create_Game,
 
     };
 
-    const CurrentViewComponent = views[viewComponent];
+    const CurrentComponent = components[selectComponent];
 
     return (
       <>
-
-      {/* <div className="navbar">
-        <a href="#" onClick={() => setViewComponent('index')}>Inicio</a>
-        <a href="#" onClick={() => setViewComponent('config')}>Jugar</a>
-        <a href="#">Créditos</a>
-      </div> */}
-
       <div>
-        <CurrentViewComponent onViewChange={handleViewChange} id = {id} setId = {setId} />
+        <CurrentComponent componentChange={handleComponentChange} id = {id} setId = {setId} />
       </div>
       </>
     );

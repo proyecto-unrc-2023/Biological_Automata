@@ -1,6 +1,7 @@
 from models.logic.cell import Cell
 from models.logic.Bacterium import BacteriumInfected
 from models.logic.Bacteriophage import Bacteriophage
+import random
 
 class CellBacteriophage(Cell):
 
@@ -118,6 +119,15 @@ class CellBacteriophage(Cell):
     def _other(self):
         return self.get_cant_bacteriophage()
 
+    @property
+    def _power_other(self):
+        power = 0
+
+        if self.__bacteriophages != []:
+            selected = random.choice(self.__bacteriophages)
+            power = selected.get_infection()
+        
+        return power
 # METODOS PARA BEHAVE
 
     def count_infected(self, grade):

@@ -3,13 +3,13 @@ from models.logic.Bacterium import *
 from unittest.mock import patch
 
 def test_bacterium_constructor_validate_moves():
-    valid_moves = [0,1,2,3]  # Algunas valores positivos
+    valid_moves = [0,1,2,3] 
     for valid_move in valid_moves:
         bacterium = Bacterium(valid_move)
         assert bacterium.moves == valid_move
 
 def test_bacterium_constructor_negative_moves():
-    valid_moves = [-3,-2,-1]  # Algunas valores negativos
+    valid_moves = [-3,-2,-1]  
     for negative_move in valid_moves:
         bacterium = Bacterium(negative_move)
         assert bacterium.moves == 0

@@ -22,6 +22,5 @@ describe("<Login />", () =>{
     expect(IngContraseña).toBeInTheDocument();
     expect(BotonInic).toBeInTheDocument();
     expect(BotonVolver).toBeInTheDocument();
-
   });
 });

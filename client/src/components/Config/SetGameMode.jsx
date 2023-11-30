@@ -3,7 +3,7 @@ import ant from '../../images/pill.gif';
 import selec from '../../images/seleccion.gif';
 import vir from '../../images/bacteriophague.png';
 
-function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode }) {
+function SetterGameMode({ componentChange, handleNextStep, gameMode, setGameMode }) {
   const [modeOne, setmodeOne] = useState(false);
   const [modeTwo, setmodeTwo] = useState(false);
 
@@ -56,16 +56,18 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
           <p>Modo de Juego</p>
           <div id='mode'>
             <button onClick={toggleModeAntibiotic} id='modA'>
+              <p className='description'>Antibiótico</p>
               <img src={ant} alt='Antibiotic' id='ant'></img>
               <img src={selec} alt='seleccion' id='selec'></img>
             </button>
             <button onClick={toggleModeBacteriophague} id='modV'>
+              <p className='description'>Bacteriófago</p>
               <img src={vir} alt='vir' id='vir'></img>
               <img src={selec} alt='seleccion' id='selec2'></img>
             </button>
           </div>
       </div>
-      <button id='buttons-flush' onClick={() => onViewChange('index')}>
+      <button id='buttons-flush' onClick={() => componentChange('index')}>
           Anterior
         </button>
 
@@ -77,7 +79,7 @@ function SetterGameMode({ onViewChange, handleNextStep, gameMode, setGameMode })
         >
           Siguiente
         </button>
-        
+
     </>
   );
 }

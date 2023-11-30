@@ -3,10 +3,9 @@
 Característica: Sale una entidad de un spawn
 
   Esquema del escenario: Aparece un ente al lado del spawn después del primer turno
-    Dado que el usuario abrio el juego
-    Y se creo el juego con los siguientes parametros (<cantb>,<frecb>,<cant_otro>,<frec_o>,<modo>)
+    Dado se creo el juego con los siguientes parametros (<cantb>,<frecb>,<cant_otro>,<frec_o>,<modo>)
     Y se coloco el spawn de bacterias en (<x1>,<y1>)
-    Y se coloco el spawn de la otra entidad en (<x2>,<y2>)
+    Y se coloco el spawn de <modo> en (<x2>,<y2>)
     Y el usuario inicio el juego
     Cuando ha pasado 1 turno de juego
     Entonces deberian quedar <cantb_act> bacterias por salir del spawn
@@ -22,10 +21,9 @@ Característica: Sale una entidad de un spawn
       |bacteriofago| 1  | 1  | 4  | 4  |  17   |  2    |   81     |  7   |    16    |    80    |
 
   Esquema del escenario: Aparecen entes de cada uno de los spawn después de varios turnos
-    Dado que el usuario abrio el juego
-    Y se creo el juego con los siguientes parametros (<cantb>,<frecb>,<cant_otro>,<frec_o>,<modo>)
+    Dado se creo el juego con los siguientes parametros (<cantb>,<frecb>,<cant_otro>,<frec_o>,<modo>)
     Y se coloco el spawn de bacterias en (<x1>,<y1>)
-    Y se coloco el spawn de la otra entidad en (<x2>,<y2>)
+    Y se coloco el spawn de <modo> en (<x2>,<y2>)
     Y el usuario inicio el juego
     Cuando ha pasado <turnos> turno de juego
     Entonces deberian quedar <cantb_act> bacterias por salir del spawn

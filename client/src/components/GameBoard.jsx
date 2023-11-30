@@ -6,7 +6,7 @@ import cap from '../images/Captura.png';
 import MusicControls from './MusicControls';
 import Winner from './Winner';
 
-function Create_board({onViewChange, id}) {
+function Create_Game({componentChange, id}) {
   const [board, setBoard] = useState([]);
   const [boardData, setBoardData] = useState(null);
   const [gameData, setGameData] = useState(null);
@@ -86,26 +86,26 @@ function Create_board({onViewChange, id}) {
   useEffect(() => {
     const refreshGame = () => {
       fetchRefreshData();
-  
+
       if (gameData === null) {
         return "Cargando...";
       }
-  
+
       const { _board } = gameData.games._board;
       
       // Actualizar el estado del tablero directamente
       setBoardData(_board);
     };
-  
+
     // Llamar a generateBoard después de cada actualización de boardData
     if (boardData) {
       const { _rows, _columns } = gameData.games._board;
       generateBoard(_rows, _columns);
     }
-  
+
     if (stopGame) {
       const refreshInterval = setInterval(refreshGame, 1000 / speed);
-  
+
       return () => {
         clearInterval(refreshInterval);
       };
@@ -152,12 +152,8 @@ function Create_board({onViewChange, id}) {
           </div>
 
           <div id="controls">
-            <button
-              className="button stop-button" onClick={() => {
-                onViewChange('index');
-                handleStop_Game();
-              }}
-              >
+            <button className="button stop-button" onClick={() => {
+              componentChange('index'); handleStop_Game();}}>
             </button>
 
             <button className="button pause-button" id='pause' onClick={() => {
@@ -172,4 +168,4 @@ function Create_board({onViewChange, id}) {
   );
 }
 
-export default Create_board;
+export default Create_Game;

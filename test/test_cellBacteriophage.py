@@ -40,7 +40,7 @@ def test_add_bacteriophage(cellBacteriophage):
     assert cellBacteriophage.get_cant_bacteriophage() == 1
     assert str(cellBacteriophage) == '1v'
     assert cellBacteriophage.get_bacteriophages()[0].get_infection() == 4
-
+    assert cellBacteriophage._power_other == 4
 
 def test_add_bacteriophage_and_bacterium_eq(cellBacteriophage):
     cellBacteriophage.add_bacterium(BacteriumNormal(0))
@@ -59,6 +59,7 @@ def test_to_string_1(cellBacteriophage):
     cellBacteriophage.add_bacterium(BacteriumInfected(0))
     cellBacteriophage.add_bacterium(BacteriumWeak(0))
     assert cellBacteriophage.get_cant_bacteriophage() == 0
+    assert cellBacteriophage._other == 0
     cellBacteriophage.add_bacteriophage(Bacteriophage(4))
     cellBacteriophage.add_bacteriophage(Bacteriophage(4))
     assert cellBacteriophage.get_cant_bacteriophage() == 2
@@ -76,6 +77,19 @@ def test_3_burst_bacteriumInfected(cellBacteriophage, moves_for_explotion, cant_
     cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
     cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
     cellBacteriophage.add_bacterium(BacteriumInfected(moves_for_explotion))
+    assert cellBacteriophage.count_infected(moves_for_explotion) == 3
     cellBacteriophage.burst_bacteriumInfected(None, None)
     n = str(3*cant_after_explotion)
     assert str(cellBacteriophage) == f'{n}v'
+
+def test_set_bacteriophages(cellBacteriophage):
+    cell = cellBacteriophage
+    b = Bacteriophage(3)
+    cell.add_bacteriophage(b)
+    assert cell.count_bacteriophages(3) == 1
+    array = []
+    cell.set_bacteriophages(array)
+    assert cell.get_bacteriophages() == array
+
+
+
