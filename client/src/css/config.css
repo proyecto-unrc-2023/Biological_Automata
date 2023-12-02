@@ -398,3 +398,12 @@ p#spawn{
   position: relative;
   left: 0%;
 }
+
+#setGameMode {
+  width: 130%; 
+  margin-left: -25%; 
+}
+
+#buttons-flush{
+  left: 42.75%;
+}

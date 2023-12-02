@@ -5,7 +5,7 @@ const Winner = ({ winnerType }) => {
   const getImageSource = () => {
     switch (winnerType) {
       case 'Game_Winner.BACTERIUM':
-        return './image/GameOver.png';
+        return './image/GameOver2.png';
       case 'Game_Winner.OTHER':
         return './image/YouWin.png';
       default:

@@ -28,6 +28,11 @@ class New_Game(Resource):
         frec_other = data.get('frecOther')
         game_mode = data.get('gameMode')
         id = data.get('id')
+
+        registred_user = User.query.filter_by(id=id).first()
+
+        if registred_user is None:
+            return {"message": "El usuario no está registrado en la base de datos"}, 404
         if cant_bact < 0 or cant_other < 0:
             return {"message": "Las cantidades que salen del spawn no pueden ser negativas!"}, 400
         if frec_bact <= 0 or frec_other <= 0:

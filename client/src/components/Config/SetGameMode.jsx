@@ -53,7 +53,7 @@ function SetterGameMode({ componentChange, handleNextStep, gameMode, setGameMode
   return (
     <>
       <div className='sss'>
-          <p>Modo de Juego</p>
+          <p id='setGameMode'>Modo de Juego</p>
           <div id='mode'>
             <button onClick={toggleModeAntibiotic} id='modA'>
               <p className='description'>Antibiótico</p>
@@ -69,7 +69,7 @@ function SetterGameMode({ componentChange, handleNextStep, gameMode, setGameMode
       </div>
       <button id='buttons-flush' onClick={() => componentChange('index')}>
           Anterior
-        </button>
+      </button>
 
       <button
           id='buttons-flush'
@@ -78,7 +78,7 @@ function SetterGameMode({ componentChange, handleNextStep, gameMode, setGameMode
           disabled={!isNextButtonVisible()}
         >
           Siguiente
-        </button>
+      </button>
 
     </>
   );
