@@ -34,3 +34,11 @@
   background-image: url("../../public/image/next.png");
   border-radius: 0 30px 30px 0;
 }
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}

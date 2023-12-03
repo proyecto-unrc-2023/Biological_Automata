@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../css/MusicControls.css'; // Importa el archivo CSS
 
-const cargarSonido = function (fuente) {
-  const sonido = document.createElement("audio");
-  sonido.src = fuente;
-  sonido.setAttribute("preload", "auto");
-  sonido.setAttribute("loop", "true");
-  sonido.style.display = "none";
-  document.body.appendChild(sonido);
-  return sonido;
-};
-
-const MusicControls = () => {
+const MusicControls = ({ selectComponent }) => {
   const [playlist, setPlaylist] = useState([]);
   const amount_song = 11;
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio] = useState(cargarSonido(playlist[currentSongIndex]));
+  const audioRef = useRef(null);
   const [isActionInProgress, setIsActionInProgress] = useState(false);
 
   useEffect(() => {
@@ -28,11 +18,14 @@ const MusicControls = () => {
   }, [amount_song]);
 
   useEffect(() => {
-    audio.src = playlist[currentSongIndex];
-    if (isPlaying) {
-      audio.play();
+    if (audioRef.current){
+      audioRef.current.src = playlist[currentSongIndex];
+      audioRef.current.loop = true;
+      if (isPlaying) {
+        audioRef.current.play();
+      }
     }
-  }, [currentSongIndex, audio, playlist, isPlaying]);
+  }, [currentSongIndex, playlist, isPlaying]);
 
   const performActionWithDelay = (actionFunction) => {
     if (!isActionInProgress) {
@@ -73,20 +66,15 @@ const MusicControls = () => {
   };
   
   return (
-    <div className="music-controls-container">
-      <audio ref={audio} />
-      <button onClick={previous} className="button-music previous-music">
-      </button>
+    <div className={`music-controls-container ${selectComponent === 'game' ? 'visible' : 'hidden'}`}>
+      <audio ref={audioRef} />
+      <button onClick={previous} className="button-music previous-music"></button>
       {isPlaying ? (
-        <button onClick={pause} className="button-music pause-music">
-        </button>
+        <button onClick={pause} className="button-music pause-music"></button>
       ) : (
-        <button onClick={play} className="button-music play-music">
-        </button>
+        <button onClick={play} className="button-music play-music"></button>
       )}
-      <button onClick={next} className="button-music next-button">
-      </button>
-
+      <button onClick={next} className="button-music next-button"></button>
     </div>
   );
 };

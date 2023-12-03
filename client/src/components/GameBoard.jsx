@@ -3,7 +3,6 @@ import Cell from './Cell';
 import '../css/board.css';
 import html2canvas from 'html2canvas';
 import cap from '../images/Captura.png';
-import MusicControls from './MusicControls';
 import Winner from './Winner';
 
 function Create_Game({componentChange, id}) {
@@ -116,7 +115,6 @@ function Create_Game({componentChange, id}) {
 
   return (
     <>
-    <MusicControls />
     <div className='game-conteiner'>
       <div className='background'>
         <div id='captura'>
