@@ -5,7 +5,7 @@ const MusicControls = ({ selectComponent }) => {
   const [playlist, setPlaylist] = useState([]);
   const amount_song = 11;
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef(null);
   const [isActionInProgress, setIsActionInProgress] = useState(false);
 
@@ -21,11 +21,11 @@ const MusicControls = ({ selectComponent }) => {
     if (audioRef.current){
       audioRef.current.src = playlist[currentSongIndex];
       audioRef.current.loop = true;
-      if (isPlaying) {
+      if ((selectComponent === 'game') && isPlaying) {
         audioRef.current.play();
       }
     }
-  }, [currentSongIndex, playlist, isPlaying]);
+  }, [currentSongIndex, playlist, isPlaying, selectComponent]);
 
   const performActionWithDelay = (actionFunction) => {
     if (!isActionInProgress) {
@@ -33,7 +33,7 @@ const MusicControls = ({ selectComponent }) => {
       actionFunction();
       setTimeout(() => {
         setIsActionInProgress(false);
-      }, 1000); // Espera 1 segundo antes de habilitar la acción nuevamente
+      }, 500); // Espera 0.5 segundo antes de habilitar la acción nuevamente
     }
   };
 
