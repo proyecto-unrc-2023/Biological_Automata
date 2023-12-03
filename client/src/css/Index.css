@@ -1,0 +1,139 @@
+/* Index.css */
+
+.index-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh; /* Establece la altura al 100% del viewport */
+  text-align: center;
+  margin: 0;
+}
+
+.index-container .background {
+  background-attachment: fixed;
+  background-size: cover;
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #ff0000, #000000); /* Degradado de rojo a negro */
+  background-size: 100% 100%;
+  z-index: 0; /* NECESARIO PARA QUE DEJE TOCAR XD*/
+  transition: filter 0.5s ease-in-out;
+  filter: blur(0px);
+
+}
+
+.titleInit {
+  font-size: 2em;
+  color: #ffffff; /* Cambia el color del texto según tu preferencia */
+  margin-bottom: 20px;
+}
+
+.buttonInit {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #4caf50; /* Cambia el color de fondo del botón según tu preferencia */
+  color: white; /* Cambia el color del texto del botón según tu preferencia */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttonHome{
+  background-color: #4caf50;
+  top: 0.4%;
+  width: 60px;
+  height: 60px;
+  float: right;
+  background-image: url('../images/home.png');
+  border: none;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.buttonInit:hover {
+  background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
+}
+
+#buttons-flush{
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #4caf50; /* Cambia el color de fondo del botón según tu preferencia */
+  color: white; /* Cambia el color del texto del botón según tu preferencia */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+  left: 45%;
+}
+
+#buttons-flush:hover {
+  background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
+}
+
+.creature-container {
+  display: flex;
+  justify-content:center;
+  flex-wrap: wrap;
+}
+
+.creature-card {
+  width: 200px;
+  margin: 5px; /* Reduje el espacio externo */
+  padding: 10px; /* Reduje el espacio interno */
+  border: 1px solid #785c5c;
+  border-radius: 8px;
+  background-color: #be373732;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+}
+
+.creature-card:hover {
+  transform: scale(1.05);
+}
+
+.creature-image {
+  width: 40%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.creature-card h2 {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: rgb(0, 255, 187);
+}
+
+.creature-card p {
+  position: static;
+  font-size: 1em;
+  text-shadow: none;
+  color: #ffffff;
+  width: 200px;
+}
+
+.siguiente{
+  margin-left: 10px;
+}
+
+#user-init{
+  position: relative;
+  left: -10%;
+}
+
+.logo{
+  position: relative;
+  left: -6%;
+  top: 3%;
+}

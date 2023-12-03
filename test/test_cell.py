@@ -1,13 +1,22 @@
 import pytest
 
 from models.logic.cell import Cell
-from models.logic.Bacterium import BacteriumNormal, BacteriumStrong
-from models.logic.Bacterium import BacteriumWeak, BacteriumInfected
-
+from models.logic.Bacterium import *
 
 @pytest.fixture
 def cell():
-    return Cell()
+    return (Cell())
+
+@pytest.fixture
+def moves_for_reproduction():
+    bacterium = Bacterium(0)
+    moves_for_reproduction = bacterium.moves_for_reproduction
+
+    return moves_for_reproduction
+
+@pytest.fixture
+def cant_overpopulation():
+    return 4
 
 # CELL TEST
 
@@ -59,20 +68,23 @@ def test_add_bacterium(cell):
 
 def test_to_string_cell(cell):
     cell.add_bacterium(BacteriumNormal(2))
-    cell.add_bacterium(BacteriumStrong(4))
+    cell.add_bacterium(BacteriumStrong(2))
     cell.add_bacterium(BacteriumWeak(4))
     cell.add_bacterium(BacteriumInfected(1))
+    assert cell.bacterias == ["b", "f", "d", "i"]
     assert cell.get_cant_bacteria() == 4
+
     assert str(cell) == '1b1f1d1i'
 
+    assert cell.count_bacteria_with_moves("normal", 2) == 1
 
-def test_overpoblation_strongest(cell):
-    cell.add_bacterium(BacteriumNormal(0))
-    cell.add_bacterium(BacteriumNormal(0))
-    cell.add_bacterium(BacteriumWeak(0))
-    cell.add_bacterium(BacteriumStrong(0))
+def test_overpoblation(cell, cant_overpopulation):
+    for _ in range (cant_overpopulation):
+        cell.add_bacterium(BacteriumNormal(0))
+        cell.add_bacterium(BacteriumStrong(0))
+
     cell.overpopulation(None, None)
-    assert str(cell) == '1f'
+    assert cell.get_cant_bacteria() == 1
 
 
 def test_cant_ente_bacterium(cell):
@@ -87,51 +99,41 @@ def test_cant_ente_bacterium(cell):
     assert cell.cant_ente('d') == 1
 
 
-def test_overpoblation_without_strongest(cell):
-    cell.add_bacterium(BacteriumNormal(0))
-    cell.add_bacterium(BacteriumNormal(0))
-    cell.add_bacterium(BacteriumWeak(0))
-    cell.add_bacterium(BacteriumWeak(0))
+def test_overpoblation_without_strongest(cell, cant_overpopulation):
+    for _ in range (cant_overpopulation):
+        cell.add_bacterium(BacteriumNormal(0))
+        cell.add_bacterium(BacteriumWeak(0))
+
     cell.overpopulation(None, None)
+
     assert str(cell) == '1b'
 
 
-def test_overpoblation_debiles(cell):
-    cell.add_bacterium(BacteriumWeak(0))
-    cell.add_bacterium(BacteriumWeak(0))
-    cell.add_bacterium(BacteriumWeak(0))
-    cell.add_bacterium(BacteriumWeak(0))
+def test_overpoblation_debiles(cell, cant_overpopulation):
+    for _ in range (cant_overpopulation):
+        cell.add_bacterium(BacteriumWeak(0))
+
     cell.overpopulation(None, None)
     assert str(cell) == '1d'
 
 
-def test_update_cell_with_1_bacterium_ready_to_reproduce(cell):
-    cell.add_bacterium(BacteriumNormal(3))
+def test_update_cell_with_1_bacterium_ready_to_reproduce(cell, moves_for_reproduction):
+    cell.add_bacterium(BacteriumNormal(moves_for_reproduction))
     cell.update_for_reproduction(None, None)
     assert cell.get_cant_bacteria() == 2
 
 
-def test_update_cell_with_1_bacterium_not_ready_to_reproduce(cell):
-    cell.add_bacterium(BacteriumNormal(2))
+def test_update_cell_with_1_bacterium_not_ready_to_reproduce(cell, moves_for_reproduction):
+    cell.add_bacterium(BacteriumNormal(moves_for_reproduction-1))
     cell.update_for_reproduction(None, None)
     assert str(cell) == '1b'
 
 
-def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell):
-    cell.add_bacterium(BacteriumNormal(3))
-    cell.add_bacterium(BacteriumNormal(3))
-    cell.add_bacterium(BacteriumNormal(3))
-    cell.add_bacterium(BacteriumNormal(3))
+def test_update_cell_with_4_bacterium_normal_ready_to_reproduce(cell, cant_overpopulation, moves_for_reproduction):
+    for _ in range (cant_overpopulation):
+        cell.add_bacterium(BacteriumNormal(moves_for_reproduction))
+
     cell.overpopulation(None, None)
     cell.update_for_reproduction(None, None)
     assert cell.get_cant_bacteria() == 2
 
-# def test_add_move_to_bacteriums(cell):
-#     cell.add_bacterium(0, 'f')
-#     cell.add_bacterium(0, 'f')
-#     cell.add_bacterium(0, 'f')
-
-# CELL OF BACTERIOPHAGES TEST
-
-
-# CELL OF ANTIBIOTIC TEST

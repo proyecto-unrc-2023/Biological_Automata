@@ -34,26 +34,22 @@ class Cell:
 
     def update_for_reproduction(self, x, y):
         for bacterium in self.__bacteria:
-            # chequeo las bacterias que están en condiciones de reproducirse
             if bacterium.isReproducible():
-                new_bacterium = bacterium.reproducir()
+                new_bacterium = bacterium.reproduce()
                 new_bacterium.set_pos(x, y)
                 self.__bacteria.append(new_bacterium)
                 self.__cant_bacteria += 1
 
     def overpopulation(self, x, y):
-        live = None
-        # ciclo para quedarme con la bacteria más fuerte de la celda
+        only_normal_and_strong = []
         for bacterium in self.__bacteria:
-            if not isinstance(bacterium, BacteriumStrong):
-                if isinstance(bacterium, BacteriumNormal):
-                    live = bacterium
-            else:
-                live = bacterium
-                break
+            if isinstance(bacterium, BacteriumNormal) or isinstance(bacterium, BacteriumStrong):
+                only_normal_and_strong.append(bacterium)
 
-        if live is None:
-            live = self.__bacteria[0]
+        if only_normal_and_strong != []:
+            live = random.choice(only_normal_and_strong)
+        else:
+            live = random.choice(self.__bacteria)
 
         self.__bacteria.clear()
         live.set_pos(x, y)
@@ -133,3 +129,15 @@ class Cell:
             array.append(bacterium.__str__())
 
         return array
+    
+    @property
+    def _info_bacteria(self):
+        type = ''
+        moves = 0
+        
+        if self.__bacteria != []:
+            selected = random.choice(self.__bacteria)
+            type = selected.__str__()
+            moves = selected.moves
+
+        return (type, moves)

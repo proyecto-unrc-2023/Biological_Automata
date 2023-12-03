@@ -1,6 +1,7 @@
 import os
 from app import create_app
 from app import db
+from app.games import Game
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 

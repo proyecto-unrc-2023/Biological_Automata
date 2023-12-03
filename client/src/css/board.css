@@ -1,0 +1,74 @@
+/* Estilo para la cuadrícula principal */
+.game-conteiner .background {
+  background-attachment: fixed;
+  background-size: cover;
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('../../public/Fondo-tex.jpeg') center/cover no-repeat fixed;
+  background-size: 100% 100%;
+  z-index: -1; /* NECESARIO PARA QUE DEJE TOCAR XD*/
+  transition: filter 0.5s ease-in-out;
+  filter: blur(0px);
+}
+
+
+
+/*CELDAS */
+
+.spawnbacAct{
+  filter: brightness(1.5);
+}
+
+.spawnothAct{
+  filter: brightness(1.5);
+}
+
+
+.button {
+  width: 50px; /* Ancho de los botones */
+  height: 50px; /* Alto de los botones */
+  border-radius: 50%; /* Hace que los botones sean redondos */
+  background-size: cover; /* Ajusta la imagen al tamaño del botón */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  cursor: pointer; /* Cambia el cursor cuando se pasa por encima */
+}
+
+button:hover{
+  cursor: pointer;
+  filter: brightness(1.25);
+}
+
+
+
+.stop-button {
+  background-image: url('../../public/gui/stop.png'); /* Ruta de la imagen de STOP */
+}
+
+.pause-button {
+  background-image: url('../../public/gui/pause.png'); /* Ruta de la imagen de PAUSA */
+}
+
+.pause{
+  filter: brightness(1.2);
+}
+
+#captura{
+  display: flex;
+}
+#captura img{
+  top: 100px;
+  z-index: 100;
+}
+
+#messages .message {
+  position: initial; /* O utiliza 'static' para el posicionamiento predeterminado */
+  font-size: 18px; /* Puedes ajustar el tamaño de la fuente según tus necesidades */
+}
+
+.invisible-text {
+  visibility: hidden;
+  font-size: 18px;
+}

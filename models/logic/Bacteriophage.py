@@ -23,17 +23,8 @@ class Bacteriophage(Entity):
     def add_move(self):
         self.__infection -= 1
 
-    # Eliminacion
-    def __del__(self):
-        del self
-
     def moment_death(self):
         return self.__infection == 0
-
-    # Muerte del virus despues de un determinado tiempo
-    def degradation(self):
-        if (self.moment_death()):
-            del self
 
     def __str__(self):
         return 'v'

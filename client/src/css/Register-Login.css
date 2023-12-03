@@ -1,0 +1,65 @@
+/* Register-Login.css */
+
+/* Estilos generales */
+.register-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #ff0000, #000000); /* Degradado de rojo a negro */
+  z-index: 0; /* NECESARIO PARA QUE DEJE TOCAR XD*/
+}
+
+.register-content .background {
+  background-color: rgba(255, 103, 83, 0.708);
+  width: 100vw;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los labels */
+.register-content label {
+  display: block;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Estilos para los inputs */
+.register-content input[type='text'],
+.register-content input[type='email'],
+.register-content input[type='password'] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.register-content input[type='text']:focus,
+.register-content input[type='email']:focus,
+.register-content input[type='password']:focus {
+  border-color: #86b7fe;
+}
+
+/* Estilos para el botón */
+.register-content .buttonInit {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.register-content .buttonInit:hover {
+  background-color: #45a049;
+}

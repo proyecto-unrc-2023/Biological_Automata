@@ -19,6 +19,11 @@ def agregar_bacteria_infectada(context, num, x, y, grado):
     for _ in range(num):
         context.game.add_infected(x,y,grado)
 
+@given('que hay {num:d} antibiotico en la celda ({x:d},{y:d}) con poder {poder:d}')
+def agregar_antibiotico(context, num, x, y, poder):
+    for _ in range(num):
+        context.game.add_antibiotic(x,y,poder)
+
 @when('se produce la confrontacion')
 def crossing_table(context):
     context.game._board.crossing_board()
@@ -30,6 +35,10 @@ def chequear_eliminacion_ente(context,ente,x,y):
 @then('el tablero deberia tener {num:d} {ente} en ({x:d},{y:d})')
 def chequear_cantidad_entes(context,num,ente,x,y):
     assert context.game.count_entities(x,y,ente) == num
+
+@then('deberia haber {num:d} antibiotico de poder {poder:d} en ({x:d},{y:d})')
+def chequear_antibioticos(context,num,x,y,poder):
+    assert context.game.count_antibiotics(x,y,poder) == num
 
 @then('deberia haber {num:d} bacteria infectada de grado {grado:d} en ({x:d},{y:d})')
 def chequear_infectadas_en_celda(context,num, grado, x, y):

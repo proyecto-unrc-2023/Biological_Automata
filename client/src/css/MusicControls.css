@@ -1,0 +1,44 @@
+/* MusicControls.css */
+
+/* Estilo del contenedor principal */
+.music-controls-container {
+  position: relative; /* Posiciona de forma relativa para que los elementos internos usen coordenadas relativas a este contenedor */
+}
+
+.button-music {
+  width: 70px;
+  height: 60px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* Estilos específicos para cada botón */
+
+.previous-music {
+  background-image: url("../../public/image/previous.png");
+  border-radius: 30px 0 0 30px;
+}
+
+.play-music {
+  width: 46px;
+  background-image: url("../../public/image/play.png");
+}
+
+.pause-music {
+  width: 46px;
+  background-image: url("../../public/image/pause.png");
+}
+
+.next-button {
+  background-image: url("../../public/image/next.png");
+  border-radius: 0 30px 30px 0;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
